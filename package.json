@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Xenolune/tipouitaculte#readme",
   "dependencies": {
+    "dateformat": "^3.0.3",
     "discord.js": "^11.5.1",
     "express": "^4.17.1",
     "pg": "^7.12.1",
