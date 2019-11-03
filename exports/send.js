@@ -1,7 +1,8 @@
-module.exports = function(target, msg) {
-  if(target) {
-    Discord.channels.get(target).send(content)
+module.exports = function(target, content, origin) {
+  let type = Discord.channels.get(target) ? "channels" : Discord.users.get(target) ? "users" : "error"
+  if(type != "error"){
+    Discord[type].get(target).send(content)
       .then(sentMsg => Event.emit("send", sentMsg))
-      .catch(error => Event.emit("error", "send", "erreur inattendue", msg))
-  } else Event.emit("error", "send", "destination invalide", msg)
+      .catch(error => Event.emit("error", "sendRoot", "erreur inattendue", error))
+  } else Event.emit("error", "sendRoot", "destination invalide", origin)
 }

@@ -16,8 +16,8 @@ Discord.login( CFG.discordToken )
 Discord.once(
   "ready", () => {
     console.log(TiCuDate("log") + " : Connexion à Discord.")
-    Discord.guilds.get(PUB.debug.maxilog).send(TiCuDate("log") + " : Reconnexion.")
-    Discord.guilds.get(PUB.debug.minilog).send("Coucou, je suis de retour ♥")
+    Discord.channels.get(PUB.debug.maxilog).send(TiCuDate("log") + " : Reconnexion.")
+    Discord.channels.get(PUB.debug.minilog).send("Coucou, je suis de retour ♥")
     TiCu.Server.AutoInvite()
   }
 )

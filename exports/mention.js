@@ -41,7 +41,7 @@ module.exports = function(param) {
       if(Discord.users.find("username", param)) {
         type = "user"
         target = Discord.users.find("username", param)
-      } else if(Discord.guilds.get(PUB.tipoui.commu).members.find("displayName", param) {
+      } else if(Discord.guilds.get(PUB.tipoui.commu).members.find("displayName", param)) {
         type = "user"
         target = Discord.guilds.get(PUB.tipoui.commu).members.find("displayName", param)
       } else if(Discord.guilds.get(PUB.tipoui.commu).channels.find("name", param)) {

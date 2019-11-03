@@ -3,6 +3,6 @@ module.exports = function(msg) {
   {
     let params = msg.content.substring(1).split(/ +/)
     let cmd = params.shift().toLowerCase()
-    TiCu.Commands.Prefixed[cmd] : TiCu.Authorizations("prefixed", cmd, msg) ? TiCu.Command.Prefixed[cmd].run(params, msg) : Event.emit("error", cmd, "notAllowed", msg) : Event.emit("error", "noCmd", "", msg)
+    TiCu.Commands.prefixed[cmd] ? TiCu.Authorizations("prefixed", cmd, msg) ? TiCu.Commands.prefixed[cmd].run(params, msg) : Event.emit("error", cmd, "notAllowed", msg) : Event.emit("error", "noCmd", "", msg)
   }
 }
