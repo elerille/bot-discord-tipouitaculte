@@ -4,7 +4,7 @@ module.exports = function() {
         function(req, res) {
             Discord.channels.get(PUB.inviteChannel)
                 .createInvite({maxUses : 1, maxAge : 300})
-                .then(invite => {res.send(invite.url);})
+                .then(invite => {res.send(invite.url);Event.emit("ServerPage", req)})
         }
     )
 }
