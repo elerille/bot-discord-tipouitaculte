@@ -10,8 +10,14 @@ module.exports = function() {
     },
     Commands : {
       prefixed : {
-        send : require("./commands/prefixed/send.js")()
+        send : require("./commands/prefixed/send.js")(),
+        roles : require("./commands/prefixed/roles.js")()
+      },
+      auto : {
+        dm : require("./commands/auto/dm.js"),
+        quarantaine : require("./commands/auto/quarantaine.js")
       }
+
     }
   }
   global.TiCuDate = require("./ticudate.js")
