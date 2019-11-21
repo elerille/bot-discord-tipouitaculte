@@ -14,7 +14,7 @@ module.exports = function(params, msg) {
       channels : "Bots Vigilant·es",
       authors : "Tous",
       roleNames : "Tous",
-      schema : "!role <+|ajouter|add|addRoles> <target> <[roles]>\nou\n!role <-|enlever|retirer|supprimer|remove|removeRoles> <target> <[roles]>)"
+      schema : "!role <target> <+|ajouter|add|addRoles> <[roles]>\nou\n!role <target> <-|enlever|retirer|supprimer|remove|removeRoles> <[roles]>)"
     },
     run : function(params, msg) {
       let action, target
@@ -230,8 +230,8 @@ module.exports = function(params, msg) {
           case "ntwitch":
           case "notif_twitch":
           case "n_twitch":
-          case "620630188757221386":
-            roles.push("620630188757221386")
+          case "578282808859164672":
+            roles.push("578282808859164672")
             break
           case "17":
           case "actu":
@@ -273,7 +273,6 @@ module.exports = function(params, msg) {
           case "588446918670286858":
             roles.push("588446918670286858")
             break
-          /*
           case "20":
           case "quarantaine":
           case "cave":
@@ -287,7 +286,6 @@ module.exports = function(params, msg) {
           case "458559408667099136":
             roles.push("458559408667099136")
             break
-          */
           default:
             roles = false
         }
@@ -295,13 +293,12 @@ module.exports = function(params, msg) {
       if(target) {
         if(action) {
           if(roles) {
-            for(i=0;i<roles.length;i++) {
-              target[action](roles)
-              TiCu.Log.Prefixed.Roles(target, action, roles, msg)
-            }
-          } else Event.emit("error", "roles", "rôle invalide", msg)
-        } else Event.emit("error", "roles", "ajouter ou enlever ?", msg)
-      } else Event.emit("error", "roles", "destination invalide", msg)
+            target[action](roles)
+              .then(() => TiCu.Log.Prefixed.Roles(target, action, roles, msg))
+              .catch(() => TiCu.Log.Error("roles", "erreur API", msg))
+          } else TiCu.Log.Error("roles", "rôle invalide", msg)
+        } else TiCu.Log.Error( "roles", "ajouter ou enlever ?", msg)
+      } else TiCu.Log.Error( "roles", "destination invalide", msg)
     }
   }
 }

@@ -17,7 +17,7 @@ module.exports = function(params, msg) {
       schema : "!send <target> <content>"
     },
     run : function(params, msg) {
-      let crop = new RegExp(/^(!send\s+[^\s]+\s+)/, )
+      let crop = new RegExp(/^(!send\s+[^\s]+\s+)/)
       let target = TiCu.Mention(params[0]).id
       let content = msg.content.match(crop) ? msg.content.substring(msg.content.match(crop)[0].length) : false
       if(target) {
@@ -26,10 +26,10 @@ module.exports = function(params, msg) {
           if(type){
             Discord[type].get(target).send(content)
               .then(sentMsg => TiCu.Log.Prefixed.Send(msg, sentMsg))
-              .catch(error => Event.emit("error", "send", "erreur inattendue", error))
-          } else Event.emit("error", "send", "envoyer à un rôle ?", origin)
-        } else Event.emit("error", "send", "erreur invalide", msg)
-      } else Event.emit("error", "send", "destination invalide", msg)
+              .catch(error => TiCu.Log.Error("send", "erreur inattendue " + error, msg))
+          } else TiCu.Log.Error("send", "envoyer à un rôle ?", msg)
+        } else TiCu.Log.Error("send", "erreur invalide", msg)
+      } else TiCu.Log.Error("send", "destination invalide", msg)
     }
   }
 }

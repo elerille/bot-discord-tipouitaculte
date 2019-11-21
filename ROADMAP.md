@@ -1,26 +1,22 @@
 command parser
-  auto commands {
+  auto commands
     nom
     description
     schema
-    autorisations {
+    autorisations
       salons
       users
-    }
     trigger
     run
-  }
-  reaction responses {
+  reaction responses
     nom
     description
     emoji
-    autorisations {
+    autorisations
       message
       salons
       users
-    }
     run
-  }
 
 routines
   xp
@@ -28,17 +24,14 @@ routines
     give
     remove
     checklevel
-      autovote()
-    log()
+    autovote
+
   vote
     type
     stop
     check
-    log()
 
 commands
   help
-  mise en quarantaine
   raid
   color
-  
