@@ -12,11 +12,11 @@ function updateVotes(reaction, msg) {
 module.exports = function() {
   return {
     Init : (type, expectedEmojis, msg) => {
-      TiCu.Collections.Collectors[msg.id] = msg.createReactionCollector(filterReactions(expectedEmojis))
-      TiCu.Collections.Collectors[msg.id].on("collect", (reaction) =>
-        TiCu.Collections.Collected(type, reaction, msg))
-      TiCu.Collections.Collectors[msg.id].on("end", (reaction, reason)  =>
-        TiCu.Collections.Done(type, reaction, reason, msg))
+      TiCu.VotesCollections.Collectors[msg.id] = msg.createReactionCollector(filterReactions(expectedEmojis))
+      TiCu.VotesCollections.Collectors[msg.id].on("collect", (reaction) =>
+        TiCu.VotesCollections.Collected(type, reaction, msg))
+      TiCu.VotesCollections.Collectors[msg.id].on("end", (reaction, reason)  =>
+        TiCu.VotesCollections.Done(type, reaction, reason, msg))
     },
     Startup : (file) => {},
     Collectors : {},
