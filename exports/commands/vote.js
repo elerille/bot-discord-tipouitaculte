@@ -54,8 +54,8 @@ module.exports = function(params, msg) {
                   await newMsg.react("🛑")
                   await newMsg.react("⏱")
                 })
-              TiCu.VoteCollections.Init(type, ["✅","⚪","🛑","⏱"], newMsg)
-              TiCu.Log.Prefixed.Vote.Anon(type, params, newMsg, msg)
+              TiCu.VotesCollections.Init(type, ["✅","⚪","🛑","⏱"], newMsg)
+              TiCu.Log.Commands.Vote.Anon(type, params, newMsg, msg)
             } else TiCu.Log.Error("vote", "erreur d'enregistrement du vote", msg)
           })
       } else if(msg.channel.id === PUB.tipoui.salleDesVotes) {return TiCu.Log.Error("vote", "seuls les votes anonymisés sont autorisés dans <#" + PUB.tipoui.salleDesVotes + ">")}
@@ -65,7 +65,7 @@ module.exports = function(params, msg) {
           await msg.react("🛑")
           await msg.react("⏱")
         })
-        TiCu.Log.Prefixed.Vote.Public(msg)
+        TiCu.Log.Commands.Vote.Public(msg)
       }
     }
   }
