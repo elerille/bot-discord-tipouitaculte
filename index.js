@@ -33,7 +33,7 @@ Discord.once("ready", () => {
     console.log(TiCu.Date("log") + " : Connexion à Discord.")
     maxilog.send(TiCu.Date("log") + " : Reconnexion.")
     minilog.send("Coucou, je suis de retour ♥")
-    TiCu.VotesCollections.startup()
+    TiCu.VotesCollections.Startup()
     Server.get(
       "/discord/invite",
       function(req, res) {
