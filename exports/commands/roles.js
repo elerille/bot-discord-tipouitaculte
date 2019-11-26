@@ -14,7 +14,7 @@ module.exports = function(params, msg) {
       channels : "Bots Vigilant·es",
       authors : "Tous",
       roleNames : "Tous",
-      schema : "!role <target> <+|ajouter|add|addRoles> <[roles]>\nou\n!role <target> <-|enlever|retirer|supprimer|remove|removeRoles> <[roles]>)"
+      schema : "!role <target> <+|ajouter|add|addRoles> <[roles]>\nou\n!role <target> <-|enlever|retirer|supprimer|remove|removeRoles> <[roles]>"
     },
     run : function(params, msg) {
       let action, target

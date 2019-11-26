@@ -15,10 +15,7 @@ global.TiCu = {
   json : require("./exports/json.js"),
   Mention : require("./exports/mention.js"),
   Authorizations : require("./exports/authorizations.js"),
-  VotesCollections : require("./exports/collections.js")(),
-  DM : require("./exports/dm.js"),
-  Quarantaine : require("./exports/quarantaine.js"),
-  Parser : require("./exports/parser.js"),
+  VotesCollections : require("./exports/voteCollections.js")(),
   Commands : {
     quarantaine : require("./exports/commands/quarantaine.js")(),
     roles : require("./exports/commands/roles.js")(),
