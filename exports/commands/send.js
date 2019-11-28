@@ -11,10 +11,12 @@ module.exports = function(params, msg) {
       roles : {
         type: "any"
     },
+      name : "Send",
+      desc : "Envoyer un message par l'intermédiaire de ce bot.",
+      schema : "!send <target> <texte>",
       channels : "Bots Vigilant·es",
       authors : "Tous",
-      roleNames : "Tous",
-      schema : "!send <target> <content>"
+      roleNames : "Tous"
     },
     run : function(params, msg) {
       let crop = new RegExp(/^(!send\s+[^\s]+\s+)/)

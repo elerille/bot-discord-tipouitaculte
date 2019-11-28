@@ -15,10 +15,12 @@ module.exports = function(params, msg) {
       roles : {
         type: "any"
     },
+      name : "Quarantaine",
+      desc : "Mettre ou retirer eun membre de la quarantaine, afin de régler des problèmes en privé, ou vérifier son statut de quarantaine.",
+      schema : "!quarantaine <@> <+|ajouter|add> (raison)\nou\n!quarantaine <@> <-|enlever|retirer|supprimer|remove> (raison)\nou\n!quarantaine <target> <statut|status>",
       channels : "Bots Vigilant·es",
       authors : "Tous",
-      roleNames : "Tous",
-      schema : "!quarantaine <target> <+|ajouter|add> (raison)\nou\n!role <target> <-|enlever|retirer|supprimer|remove> (raison)\nou\n!quarantaine <target> <statut|status>"
+      roleNames : "Tous"
     },
     run : function(params, msg) {
       let crop = new RegExp(/^(!quarantaine\s+[^\s]+\s+[^\s]+\s+)/)
@@ -54,12 +56,11 @@ module.exports = function(params, msg) {
                           try {
                             target.addRole(PUB.tipoui.quarantaineRole)
                             target.removeRoles(roles)
-                              .then(TiCu.Log.Prefixed.Quarantaine(true, target, reason, msg))
+                              .then(TiCu.Log.Commands.Quarantaine(true, target, reason, msg))
                           } catch {TiCu.Log.Error("quarantaine", "erreur de modification des rôles", msg)}
                         } else TiCu.Log.Error("quarantaine", "impossible d'enregistrer les rôles actuels", msg)
                       } else {
-                        TiCu.Log.Error("quarantaine", "annulation", msg)
-                        return
+                        return TiCu.Log.Error("quarantaine", "annulation", msg)
                       }
                     })
                     .catch(collected => {
@@ -108,8 +109,7 @@ module.exports = function(params, msg) {
                             } else TiCu.Log.Error("quarantaine", "erreur de suppression des données de quarantaine", msg)
                           } else TiCu.Log.Error("quarantaine", "impossible de récupérer les rôles passés", msg)
                         } else {
-                          TiCu.Log.Error("quarantaine", "annulation", msg)
-                          return
+                          return TiCu.Log.Error("quarantaine", "annulation", msg)
                         }
                       })
                       .catch(collected => {

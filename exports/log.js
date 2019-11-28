@@ -30,23 +30,19 @@ module.exports = function() {
       maxilog.send(TiCu.Date("log") + " : Server\nServed Page : " + req)
     },
     Commands : {
-      Send : function(cmdMsg, newMsg) {
-          let author = cmdMsg.member ? cmdMsg.member.displayName : cmdMsg.author.name
-          maxilog.send(TiCu.Date("log") + " : Send \n" + author + " a envoyé un message vers `" + newMsg.channel.toString() + "`\n" + newMsg.url)
-          maxilog.send(newMsg.toString())
-          minilog.send(author + " a envoyé un message vers " + newMsg.channel.toString())
-          cmdMsg.react("✅")
-      },
-      Roles : function(target, action, roles, msg) {
-        let author = msg.member ? msg.member.displayName : msg.author.name
-        let roleNames = ""
-        for(i=0;i<roles.length;i++) {
-          roleNames += "`" + tipoui.roles.get(roles[i]).name + "` "
+      Color : function(action, color, msg) {
+        if(action === "switched") {
+          if(color === "turquoise") {
+            maxilog.send(TiCu.Date("log") + " : Color\n" + msg.member.displayName + " a réinitialisé sa couleur.")
+            msg.react("✅")
+          } else {
+            maxilog.send(TiCu.Date("log") + " : Color\n" + msg.member.displayName + " a adopté la couleur " + color + ".")
+            msg.react("✅")
+          }
         }
-        action = (action === "addRoles") ? "ajoué" : "enlevé"
-        minilog.send(author + " a " + action + " des rôles à " + target.displayName)
-        maxilog.send(TiCu.Date("log") + " : Roles\n" + author + " a " + action + " des rôles à " + target.displayName + "\n" + roleNames)
-        msg.react("✅")
+        if(action === "deleted") {
+          maxilog.send(TiCu.Date("log") + " : Color\n" + "La couleur " + color + " a été supprimée.")
+        }
       },
       Quarantaine : function(action, target, reason, msg) {
         let author = msg.member ? msg.member.displayName : msg.author.name
@@ -63,6 +59,24 @@ module.exports = function() {
           minilog.send("Raison : " + reason)
           maxilog.send("Raison : " + reason)
         }
+      },
+      Roles : function(target, action, roles, msg) {
+        let author = msg.member ? msg.member.displayName : msg.author.name
+        let roleNames = ""
+        for(i=0;i<roles.length;i++) {
+          roleNames += "`" + tipoui.roles.get(roles[i]).name + "` "
+        }
+        action = (action === "addRoles") ? "ajoué" : "enlevé"
+        minilog.send(author + " a " + action + " des rôles à " + target.displayName)
+        maxilog.send(TiCu.Date("log") + " : Roles\n" + author + " a " + action + " des rôles à " + target.displayName + "\n" + roleNames)
+        msg.react("✅")
+      },
+      Send : function(cmdMsg, newMsg) {
+        let author = cmdMsg.member ? cmdMsg.member.displayName : cmdMsg.author.name
+        maxilog.send(TiCu.Date("log") + " : Send \n" + author + " a envoyé un message vers `" + newMsg.channel.toString() + "`\n" + newMsg.url)
+        maxilog.send(newMsg.toString())
+        minilog.send(author + " a envoyé un message vers " + newMsg.channel.toString())
+        cmdMsg.react("✅")
       },
       Vote : {
         Public : function(msg) {

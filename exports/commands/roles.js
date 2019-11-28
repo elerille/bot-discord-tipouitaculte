@@ -11,10 +11,12 @@ module.exports = function(params, msg) {
       roles : {
         type: "any"
     },
+      name : "Roles",
+      desc : "Ajouter ou retirer des rôles à eun membre du serveur",
+      schema : "!role <@> <+|ajouter|add|addRoles> <[roles]>\nou\n!role <@> <-|enlever|retirer|supprimer|remove|removeRoles> <[roles]>",
       channels : "Bots Vigilant·es",
       authors : "Tous",
-      roleNames : "Tous",
-      schema : "!role <target> <+|ajouter|add|addRoles> <[roles]>\nou\n!role <target> <-|enlever|retirer|supprimer|remove|removeRoles> <[roles]>"
+      roleNames : "Tous"
     },
     run : function(params, msg) {
       let action, target
@@ -25,13 +27,14 @@ module.exports = function(params, msg) {
         case "ajouter":
         case "add":
         case "+":
-        case "addRoles":
+        case "addroles":
           action = "addRoles"
           break
         case "enlever":
         case "retirer":
         case "supprimer":
         case "remove":
+        case "removeroles":
         case "-":
         case "removeRoles":
           action = "removeRoles"
@@ -287,7 +290,7 @@ module.exports = function(params, msg) {
             roles.push("458559408667099136")
             break
           default:
-            roles = false
+            return TiCu.Log.Error("roles", "rôle invalide :" + params[i], msg)
         }
       }
       if(target) {
@@ -296,7 +299,7 @@ module.exports = function(params, msg) {
             target[action](roles)
               .then(() => TiCu.Log.Prefixed.Roles(target, action, roles, msg))
               .catch(() => TiCu.Log.Error("roles", "erreur API", msg))
-          } else TiCu.Log.Error("roles", "rôle invalide", msg)
+          } else TiCu.Log.Error("roles", "liste de rôles invalide", msg)
         } else TiCu.Log.Error( "roles", "ajouter ou enlever ?", msg)
       } else TiCu.Log.Error( "roles", "destination invalide", msg)
     }

@@ -12,10 +12,12 @@ module.exports = function(params, msg) {
       roles : {
         type: "any"
     },
+      name : "Vote",
+      desc : "Lancer un vote public ou anonymisé, éventuellement pour kick/ban/turquoise.",
+      schema : "!vote <anon|anonyme> <turquoise|kick|ban> <@>\nou\n!vote <anon|anonyme> <texte> (texte)\nou\n!vote (texte)",
       channels : "Tous (public ou anon) ou Automodération/Salle des Votes (anon+kick/ban) ou Salle des Votes (anon+turquoise)",
       authors : "Tous",
-      roleNames : "Tous",
-      schema : "!vote <anon|anonyme> <turquoise|kick|ban> <@tag|ID>\nou\n!vote <anon|anonyme> <texte> (texte)\nou\n!vote (texte)"
+      roleNames : "Tous"
     },
     run : function(params, msg) {
       let crop, target

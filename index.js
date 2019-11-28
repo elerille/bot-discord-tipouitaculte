@@ -17,6 +17,7 @@ global.TiCu = {
   Authorizations : require("./exports/authorizations.js"),
   VotesCollections : require("./exports/voteCollections.js")(),
   Commands : {
+    help : require("./exports/commands/help.js"),
     quarantaine : require("./exports/commands/quarantaine.js")(),
     roles : require("./exports/commands/roles.js")(),
     send : require("./exports/commands/send.js")(),
@@ -95,5 +96,17 @@ Discord.on("guildMemberRemove", usr => {
     minilog.send("Départ de " + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
   } else return
 })
+Discord.on("guildMemberUpdate", (oldUsr, newUsr) => {
+  if(newUsr.roles.get(PUB.tipoui.luxure)) {
+    if(!newUsr.roles.get(PUB.tipoui.hammer) && newUsr.roles.get(PUB.tipoui.demolisseureuse)) {newUsr.addRole(PUB.tipoui.hammer)}
+    else if(newUsr.roles.get(PUB.tipoui.hammer) && !newUsr.roles.get(PUB.tipoui.demolisseureuse)) {newUsr.removeRole(PUB.tipoui.hammer)}
+    if(!newUsr.roles.get(PUB.tipoui.naughty) && newUsr.roles.get(PUB.tipoui.grrrrl)) {newUsr.addRole(PUB.tipoui.naughty)}
+    else if(newUsr.roles.get(PUB.tipoui.naughty) && !newUsr.roles.get(PUB.tipoui.grrrrl)) {newUsr.removeRole(PUB.tipoui.naughty)}
+  } else if(oldUsr.roles.get(PUB.tipoui.luxure) && !newUsr.roles.get(PUB.tipoui.luxure)) {
+    if(newUsr.roles.get(PUB.tipoui.hammer)) {newUsr.removeRole(PUB.tipoui.hammer)}
+    if(newUsr.roles.get(PUB.tipoui.naughty)) {newUsr.removeRole(PUB.tipoui.naughty)}
+  }
+})
+
 // Server
 Server.listen(3000);
