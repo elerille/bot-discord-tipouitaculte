@@ -9,19 +9,22 @@ global.DB = new SequelizeDB(CFG.sequelizeURL)
 global.Discord = new DiscordNPM.Client()
 global.Event = new EventsModule.EventEmitter()
 global.PUB = require("./public.json");
+global.VotesFile = "private/votes.json";
+global.VotesEmojis = ["✅","⚪","🛑","⏱"];
 global.TiCu = {
   Date : require("./exports/date.js"),
-  Log : require("./exports/log.js")(),
+  Log : require("./exports/log.js"),
   json : require("./exports/json.js"),
   Mention : require("./exports/mention.js"),
   Authorizations : require("./exports/authorizations.js"),
-  VotesCollections : require("./exports/voteCollections.js")(),
+  VotesCollections : require("./exports/voteCollections.js"),
   Commands : {
     help : require("./exports/commands/help.js"),
-    quarantaine : require("./exports/commands/quarantaine.js")(),
-    roles : require("./exports/commands/roles.js")(),
-    send : require("./exports/commands/send.js")(),
-    vote : require("./exports/commands/vote.js")()
+    quarantaine : require("./exports/commands/quarantaine.js"),
+    roles : require("./exports/commands/roles.js"),
+    send : require("./exports/commands/send.js"),
+    vote : require("./exports/commands/vote.js"),
+    color: require("./exports/commands/color.js")
   }
 }
 
