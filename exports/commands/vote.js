@@ -46,7 +46,7 @@ module.exports = {
           json.content[newMsg.id].chan = newMsg.channel.id
           json.content[newMsg.id].type = type
           if(target) {json.content[newMsg.id].target = target.id}
-          json.content[newMsg.id].votes = {"oui":[], "non":[], "blanc":[], "délai":[]}
+          json.content[newMsg.id].votes = {"oui":[], "non":[], "blanc":[], "delai":[]}
           if(TiCu.json(json)) {
             newMsg.react("✅")
               .then(async function() {
