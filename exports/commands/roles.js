@@ -14,7 +14,7 @@ module.exports = {
     desc : "Ajouter ou retirer des rôles à eun membre du serveur",
     schema : "!role <@> <+|ajouter|add|addRoles> <[roles]>\nou\n!role <@> <-|enlever|retirer|supprimer|remove|removeRoles> <[roles]>",
     channels : "Bots Vigilant·es",
-    authors : "Tous",
+    authors : "Toustes",
     roleNames : "Tous"
   },
   run : function(params, msg) {

@@ -14,7 +14,7 @@ module.exports = {
     desc : "Envoyer un message par l'intermédiaire de ce bot.",
     schema : "!send <target> <texte>",
     channels : "Bots Vigilant·es",
-    authors : "Tous",
+    authors : "Toustes",
     roleNames : "Tous"
   },
   run : function(params, msg) {

@@ -12,9 +12,9 @@ module.exports = {
   },
     name : "Vote",
     desc : "Lancer un vote public ou anonymisé, éventuellement pour kick/ban/turquoise.",
-    schema : "!vote <anon|anonyme> <turquoise|kick|ban> <@>\nou\n!vote <anon|anonyme> <texte> (texte)\nou\n!vote (texte)",
+    schema : "!vote <anon|anonyme> <turquoise|kick|ban> <@>\nou\n!vote <anon|anonyme> <text> (texte)\nou\n!vote (texte)",
     channels : "Tous (public ou anon) ou Automodération/Salle des Votes (anon+kick/ban) ou Salle des Votes (anon+turquoise)",
-    authors : "Tous",
+    authors : "Toustes",
     roleNames : "Tous"
   },
   run : function(params, msg) {

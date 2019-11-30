@@ -14,7 +14,7 @@ module.exports = {
     desc : "Liste toutes les commandes, ou seulement celles que vous pouvez utiliser dans ce salon (par défaut), détaille l'usage d'une commande, ou explique le format des \"schémas\" de commandes.",
     schema : "!help (full|commande|schema)",
     channels : "Tous",
-    authors : "Tous",
+    authors : "Toustes",
     roleNames : "Tous"
   },
   run : function(params, msg) {
@@ -22,12 +22,14 @@ module.exports = {
     let embed = new DiscordNPM.RichEmbed()
     embed.setColor(38600)
     if(TiCu.Commands[target]) {
+      let cmd = TiCu.Commands[target].authorizations
       embed.setTitle(cmd.name)
       embed.addField("Description", cmd.desc)
       embed.addField("Schéma", cmd.schema)
       embed.addBlankField()
-      embed.add
-      msg.channel.send("Voici la liste exhaustive de mes fonctions :")
+      embed.addField("Salons :", cmd.channels, true)
+      embed.addField("Utilisateurices :", cmd.authors, true)
+      embed.addField("Rôles :", cmd.roleNames, true)
       msg.channel.send({ embed })
     } else if(target === "full") {
       Object.keys(TiCu.Commands).forEach((key, i, array) => {
@@ -37,7 +39,7 @@ module.exports = {
       msg.channel.send("Voici la liste exhaustive de mes fonctions :")
       msg.channel.send({ embed })
     } else if(target === "schema") {
-      embed.setTitle("La description individuelle des commandes propose un champ \"Schéma\" pour savoir comment utiliser la commande associée.")
+      embed.setTitle("La description individuelle des commandes propose un champ \"Schéma\" pour expliciter son fonctionnement.")
       embed.addField("`!commande`", "appel de la commande, le message commence par un `!` et le nom de la commande.")
       embed.addField("`<obligatoire>`", "entre chevrons, ce paramètre doit impérativement être renseigné lors de l'appel de la commande.")
       embed.addField("`[liste]`", "entre crochets, ce paramètre est une liste de 1 ou plusieurs éléments, séparés par des caractères d'espacement (tout espace unicode, y compris retour à la ligne), obligatoires pour l'appel de la commande.")
@@ -47,9 +49,9 @@ module.exports = {
       embed.addField("`role`", "le mot-clef \"role\" signifie que le paramètre attendu permet de trouver un rôle sur Tipoui, d'après la liste donnée par la commande `!help rolesList`")
       embed.addField("`target`", "le mot-clef \"target\" signifie que le paramètre attendu permet de trouver une cible, qui peut être, selon le contexte, eun membre, un salon et/ou un rôle - par mention, ID ou nom en texte brut")
       embed.addField("`text`", "le mot-clef \"text\" signifie que tout le reste du texte du message sera transmis suite à cette commande.")
-      embed.addField("", "Pour les commandes ne comportant pas de paramètre `texte`, tout contenu faisant suite aux paramètres nécessaires ne sera pas traîté.")
-      embed.addField("", "Les mots-clefs qui ne font pas partie de cette liste doivent être renseignés tels quels dans la commande (ils font généralement partie d'un groupe de paramètres variables, comme `(pile|face)` ou `<add|addRole|ajouter>` ...).")
-      embed.addField("", "Par ailleurs, les paramètres de commande ne sont pas sensibles à la casse, de telle sorte que `addRole`, `ADDROLE` ou `addrole` seront tous traités de la même façon.")
+      embed.addField("+", "Pour les commandes ne comportant pas de paramètre `texte`, tout contenu faisant suite aux paramètres nécessaires ne sera pas traîté.")
+      embed.addField("+", "Les mots-clefs qui ne font pas partie de cette liste doivent être renseignés tels quels dans la commande (ils font généralement partie d'un groupe de paramètres variables, comme `(pile|face)` ou `<add|addRole|ajouter>` ...).")
+      embed.addField("+", "Par ailleurs, les paramètres de commande ne sont pas sensibles à la casse, de telle sorte que `addRole`, `ADDROLE` ou `addrole` seront tous traités de la même façon.")
       msg.channel.send(embed)
     } else if(target === "rolesList") {
       embed.addField("TROLL", "Ouais j'ai pas encore fait cette liste à la noix mdr")
@@ -60,7 +62,6 @@ module.exports = {
           if(TiCu.Authorizations(key, msg)) {
             let cmd = TiCu.Commands[key].authorizations
             embed.addField(cmd.name, cmd.desc)
-            embed.addField("Schéma", cmd.schema)
           }
         }
       })

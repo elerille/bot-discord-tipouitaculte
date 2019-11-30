@@ -41,6 +41,7 @@ module.exports = {
       }
       if(action === "deleted") {
         maxilog.send(TiCu.Date("log") + " : Color\n" + "La couleur " + color + " a été supprimée.")
+        msg.react("✔")
       }
     },
     Quarantaine : function(action, target, reason, msg) {

@@ -100,6 +100,9 @@ Discord.on("guildMemberRemove", usr => {
   } else return
 })
 Discord.on("guildMemberUpdate", (oldUsr, newUsr) => {
+  if(newUsr.roles.get(PUB.tipoui.turquoise) && !oldUsr.roles.get(PUB.tipoui.turquoise)) {
+    newUsr.addRole(PUB.tipoui.turquoiseColor)
+  }
   if(newUsr.roles.get(PUB.tipoui.luxure)) {
     if(!newUsr.roles.get(PUB.tipoui.hammer) && newUsr.roles.get(PUB.tipoui.demolisseureuse)) {newUsr.addRole(PUB.tipoui.hammer)}
     else if(newUsr.roles.get(PUB.tipoui.hammer) && !newUsr.roles.get(PUB.tipoui.demolisseureuse)) {newUsr.removeRole(PUB.tipoui.hammer)}
