@@ -32,6 +32,9 @@ module.exports = {
   VoteCollector : function(msg) {
     maxilog.send(TiCu.Date("log") + " : VoteCollections\nInitialisation du vote pour le message\n" + msg.url)
   },
+  VoteDone : function (reason, type, target, msg) {
+    maxilog.send(TiCu.Date("log") + " : VoteDone\nFin du vote pour le message\n" + msg.url + "\nVote de " + type + " pour " + tipoui.members.get(target).displayName)
+  },
   ServerPage : function(req) {
     maxilog.send(TiCu.Date("log") + " : Server\nServed Page : " + req)
   },
