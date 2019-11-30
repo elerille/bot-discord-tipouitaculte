@@ -25,6 +25,13 @@ module.exports = {
     maxilog.send(embed)
     msg.react("💬")
   },
+  VoteUpdate : function(usr, emoji, msg) {
+    maxilog.send(TiCu.Date("log") + " : VoteCollections\n" + usr.displayName + " a voté " + emoji + " sur le vote :\n" + msg.url)
+    usr.send("Votre vote `" + emoji + "` a bien été pris en compte.\n" + msg.url)
+  },
+  VoteCollector : function(msg) {
+    maxilog.send(TiCu.Date("log") + " : VoteCollections\nInitialisation du vote pour le message\n" + msg.url)
+  },
   ServerPage : function(req) {
     maxilog.send(TiCu.Date("log") + " : Server\nServed Page : " + req)
   },
