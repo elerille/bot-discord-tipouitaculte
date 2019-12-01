@@ -114,5 +114,7 @@ module.exports = {
     } else {
       TiCu.Log.VoteDone(reason, type, msg, target)
     }
+    delete votesJSON[msg.id]
+    fs.writeFileSync(VotesFile, JSON.stringify(votesJSON, null, 2))
   }
 }
