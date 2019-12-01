@@ -26,7 +26,7 @@ module.exports = {
     let action = params[1]
     let target
     if(TiCu.Mention(params[0])) {target = TiCu.Mention(params[0])} else return TiCu.Log.Error("quarantaine", "cible invalide", msg)
-    let reason = params[2] ? true : false
+    let reason = !!params[2]
     if(reason) {reason = msg.content.substring(msg.content.match(crop)[1].length)}
     switch(action) {
       case "+":
@@ -44,7 +44,7 @@ module.exports = {
                   .awaitReactions(filter, { max: 1, time: 10000, errors: ["time"] })
                   .then(collected => {
                     const reaction = collected.firstKey();
-                    if (reaction == "👍") {
+                    if (reaction === "👍") {
                       let roles = []
                       target.roles.array().forEach((role, i) => {if(!(role.name.match(colorRole) || role.name === "@everyone" || role.name === "@here" || role.id === PUB.tipoui.nso)) {roles.push(role.id)}})
                       let json = {"action": "write","content": {}}
@@ -63,7 +63,7 @@ module.exports = {
                     }
                   })
                   .catch(collected => {
-                    collected ? null : Event.emit("cancelAwait", "quarantaine", target)
+                    if (!collected) Event.emit("cancelAwait", "quarantaine", target)
                   })
               })
             })
@@ -75,11 +75,6 @@ module.exports = {
       case "supprimer":
       case "remove":
         if((target.roles.get(PUB.tipoui.quarantaineRole))) {
-          obj = {
-            "function" : "removeQuarantaine",
-            "params" : [target.id, reason, msg],
-            "more" : msg.author.id
-          }
           msg.reply("voulez-vous sortir <@" + target.id + "> de quarantaine ?")
             .then(newMsg => {
               newMsg
@@ -91,7 +86,7 @@ module.exports = {
                     .awaitReactions(filter, { max: 1, time: 10000, errors: ["time"] })
                     .then(collected => {
                       const reaction = collected.firstKey();
-                      if (reaction == "👍") {
+                      if (reaction === "👍") {
                         let jsonRead = {"action": "read"}
                         jsonRead.target =  quarantaineFile
                         let read = TiCu.json(jsonRead)
@@ -112,7 +107,7 @@ module.exports = {
                       }
                     })
                     .catch(collected => {
-                      collected ? null : Event.emit("cancelAwait", "quarantaine", target)
+                      if (!collected) Event.emit("cancelAwait", "quarantaine", target)
                     })
                 })
             })
@@ -122,7 +117,6 @@ module.exports = {
       case "statut":
         let status = !(target.roles.get(PUB.tipoui.quarantaineRole)) ? "est" : "n'est pas"
         return msg.reply("<@" + target.id + "> " + status + " en quarantaine.")
-        break
       default:
         return TiCu.Log.Error("quarantaine", "action non reconnue", msg)
       }

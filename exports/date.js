@@ -1,4 +1,4 @@
-var dateFormat = require("dateformat")
+let dateFormat = require("dateformat")
 dateFormat.i18n = {
     dayNames: [
         "Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi",
