@@ -8,7 +8,32 @@ emojiTable[VotesEmojis[3]] = "delai";
 function filterReactions(expectedEmojis) {
   return (reaction, user) => {return (!user.bot) && (expectedEmojis.includes(reaction.emoji.name))}
 }
-function updateVotes(reaction) {
+
+function checkThreshold(vote, collector) {
+  if (vote.threshold === -1) {
+    return false
+  }
+  switch (vote.type) {
+    case "ban":
+    case "kick":
+    case "text":
+      if (vote.votes.oui.length >= vote.threshold) {
+        collector.stop("oui")
+      }
+      break
+    case "turquoise":
+    default:
+      if (vote.votes.oui.length >= vote.threshold) {
+        collector.stop("oui")
+      } else if (vote.votes.non.length >= vote.threshold) {
+        collector.stop("non")
+      } else if (vote.votes.delai.length >= vote.threshold) {
+        collector.stop("delai")
+      }
+  }
+}
+
+function updateVotes(reaction, collector) {
   let votesJSON = JSON.parse(fs.readFileSync(VotesFile))
   let msg = reaction.message
   let user
@@ -33,14 +58,16 @@ function updateVotes(reaction) {
   }
   votesJSON[msg.id].votes[emojiTable[reaction.emoji.name]].push(user)
   fs.writeFileSync(VotesFile, JSON.stringify(votesJSON, null, 2))
+  checkThreshold(votesJSON[msg.id], collector)
   TiCu.Log.VoteUpdate(user, emojiTable[reaction.emoji.name], msg)
 }
+
 function createCollector(type, msg) {
   TiCu.VotesCollections.Collectors[msg.id] = msg.createReactionCollector(filterReactions(VotesEmojis));
-  TiCu.VotesCollections.Collectors[msg.id].on("collect", (reaction) =>
-    TiCu.VotesCollections.Collected(type, reaction))
-  TiCu.VotesCollections.Collectors[msg.id].on("end", (reaction, reason)  =>
-    TiCu.VotesCollections.Done(type, reaction, reason, msg))
+  TiCu.VotesCollections.Collectors[msg.id].on("collect", (reaction, collector) =>
+    TiCu.VotesCollections.Collected(type, reaction, collector))
+  TiCu.VotesCollections.Collectors[msg.id].on("end", (reactions, reason)  =>
+    TiCu.VotesCollections.Done(type, reactions, reason, msg))
   TiCu.Log.VoteCollector(msg)
 }
 
@@ -59,10 +86,35 @@ module.exports = {
     }
   },
   Collectors : {},
-  Collected : (type, reaction) => {
-      updateVotes(reaction)
+  Collected : (type, reaction, collector) => {
+      updateVotes(reaction, collector)
   },
-  Done : (type, reaction, reason, msg) => {
-      return maxilog.send("done with " + type)
+  Done : (type, reactions, reason, msg) => {
+    let votesJSON = JSON.parse(fs.readFileSync(VotesFile))
+    let target = votesJSON[msg.id].target
+    if (reason === "oui") {
+      switch (type) {
+        case "ban":
+          tipoui.members.get(target).ban()
+            .then(() => TiCu.Log.VoteDone(reason, type, msg, target))
+          break
+        case "kick":
+          tipoui.members.get(target).kick()
+            .then(() => TiCu.Log.VoteDone(reason, type, msg, target))
+          break
+        case "turquoise":
+          tipoui.members.get(target).addRoles([PUB.tipoui.turquoise, PUB.tipoui.turquoiseColor])
+            .then(() => TiCu.Log.VoteDone(reason, type, msg, target))
+          break
+        case "text":
+        default:
+          TiCu.Log.VoteDone(reason, type, msg)
+          break
+      }
+    } else {
+      TiCu.Log.VoteDone(reason, type, msg, target)
+    }
+    delete votesJSON[msg.id]
+    fs.writeFileSync(VotesFile, JSON.stringify(votesJSON, null, 2))
   }
 }
