@@ -1,4 +1,16 @@
-const fs = require("fs")
+function voteThreshold(type) {
+  switch (type) {
+    case "kick":
+      return 8
+    case "ban":
+      return 12
+    case "turquoise":
+      return Math.floor(tipoui.roles.get(PUB.tipoui.turquoise).members.size/10)
+    case "text":
+      return -1
+  }
+}
+
 module.exports = {
   authorizations : {
     chans : {
@@ -19,7 +31,7 @@ module.exports = {
   },
   run : function(params, msg) {
     let crop, target
-    let anon = (params[0] === "anon" || params[0] === "anonyme") ? true : false
+    let anon = params[0] === "anon" || params[0] === "anonyme"
     let type = params[1]
     if(anon){
       if(type === "kick" || type === "ban") {
@@ -33,8 +45,8 @@ module.exports = {
           if(params[2]) {target = TiCu.Mention(params[2])}
           else { return TiCu.Log.Error("vote", "les votes de passage Turquoise nécessitent une cible")}
         } else {return TiCu.Log.Error("vote", "les votes de passage Turquoise sont restreints au salon <#" + PUB.tipoui.salleDesVotes + ">", msg)}
-      } else if(type != "text") {return TiCu.Log.Error("vote", "quel type de vote ?", msg)}
-      if(typeof target != "object" && type != "text") {return TiCu.Log.Error("vote", "cible invalide")}
+      } else if(type !== "text") {return TiCu.Log.Error("vote", "quel type de vote ?", msg)}
+      if(typeof target != "object" && type !== "text") {return TiCu.Log.Error("vote", "cible invalide")}
       crop = new RegExp(/^!vote\s+[^\s]+\s+/)
       if(!msg.content.match(crop)) {return TiCu.Log.Error("vote", "il manque des paramètres", msg)}
       msg.channel.send(msg.content.substring(msg.content.match(crop)[0].length))
@@ -46,6 +58,7 @@ module.exports = {
           json.content[newMsg.id].chan = newMsg.channel.id
           json.content[newMsg.id].type = type
           if(target) {json.content[newMsg.id].target = target.id}
+          json.content[newMsg.id].threshold = voteThreshold(type)
           json.content[newMsg.id].votes = {"oui":[], "non":[], "blanc":[], "delai":[]}
           if(TiCu.json(json)) {
             newMsg.react("✅")
