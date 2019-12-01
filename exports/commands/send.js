@@ -26,7 +26,7 @@ module.exports = {
         let type = Discord.channels.get(target) ? "channels" : Discord.users.get(target) ? "users" : false
         if(type){
           Discord[type].get(target).send(content)
-            .then(sentMsg => TiCu.Log.Prefixed.Send(msg, sentMsg))
+            .then(sentMsg => TiCu.Log.Commands.Send(msg, sentMsg))
             .catch(error => TiCu.Log.Error("send", "erreur inattendue " + error, msg))
         } else TiCu.Log.Error("send", "envoyer à un rôle ?", msg)
       } else TiCu.Log.Error("send", "erreur invalide", msg)

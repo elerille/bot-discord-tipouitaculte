@@ -63,7 +63,6 @@ module.exports = {
       }
     },
     Quarantaine : function(action, target, reason, msg) {
-      let author = msg.member ? msg.member.displayName : msg.author.name
       if(action) {
         minilog.send(msg.member.displayName + "a mis " + target.displayName + " en quarantaine.")
         maxilog.send(TiCu.Date("log") + " : Quarantaine\n" + msg.member.displayName + " a mis " + target.displayName + " en quarantaine.")

@@ -52,9 +52,9 @@ Discord.once("ready", () => {
     )
   })
 Discord.on("message", (msg) => {
-  if(msg.author.id != PUB.tipouitaculte && msg.author.id != PUB.licorne) {
+  if(msg.author.id !== PUB.tipouitaculte && msg.author.id !== PUB.licorne) {
     if(msg.channel.type === "dm" ) {
-      let user = tipoui.members.get(msg.author.id) ? tipoui.members.get(msg.author.id) : false
+      let user = tipoui.members.get(msg.author.id) ? tipoui.members.get(msg.author.id) : undefined
       if(user) {
         let embed = new DiscordNPM.RichEmbed()
           .setColor(user.displayColor)
@@ -85,19 +85,19 @@ Discord.on("message", (msg) => {
     }
   }
 })
-Discord.on("messageReactionAdd", (msg, usr) => {return})
-Discord.on("messageReactionRemove", (msg, usr) => {return})
+Discord.on("messageReactionAdd", (msg, usr) => {})
+Discord.on("messageReactionRemove", (msg, usr) => {})
 Discord.on("guildMemberAdd", usr => {
   if(usr.guild.id === tipoui.id) {
     maxilog.send(TiCu.Date("log") + " : Arrivée de membre\n" + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
     minilog.send("Arrivée de " + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
-  } else return
+  }
 })
 Discord.on("guildMemberRemove", usr => {
   if(usr.guild.id === tipoui.id) {
     maxilog.send(TiCu.Date("log") + " : Départ de membre\n" + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
     minilog.send("Départ de " + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
-  } else return
+  }
 })
 Discord.on("guildMemberUpdate", (oldUsr, newUsr) => {
   if(newUsr.roles.get(PUB.tipoui.turquoise) && !oldUsr.roles.get(PUB.tipoui.turquoise)) {

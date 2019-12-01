@@ -17,7 +17,7 @@ module.exports = function(param) {
       target = Discord.channels.get(param.match(snow)[1])
       break
     case "discriminated":
-      target = tipoui.members.find(e => e.tag === param)
+      target = tipoui.members.find(e => e.user.tag === param)
       break
     case "snow":
       if(tipoui.members.get(param.match(snow)[1])) {
@@ -31,8 +31,8 @@ module.exports = function(param) {
       }
       break
     case "text":
-      if(tipoui.members.find(e => e.userName === param)) {
-        target = tipoui.members.find(e => e.userName === param)
+      if(tipoui.members.find(e => e.user.username === param)) {
+        target = tipoui.members.find(e => e.user.username === param)
       } else if(tipoui.members.find(e => e.displayName === param)) {
         target = tipoui.members.find(e => e.displayName === param)
       } else if(tipoui.channels.find(e => e.name === param)) {

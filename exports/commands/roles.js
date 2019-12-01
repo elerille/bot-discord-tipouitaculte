@@ -42,7 +42,7 @@ module.exports = {
         action = false
     }
     params.shift()
-    for(i=0;i<params.length;i++) {
+    for(let i=0;i<params.length;i++) {
       let temp = params[i].toLowerCase()
       switch(temp) {
         case "1":
@@ -296,7 +296,7 @@ module.exports = {
       if(action) {
         if(roles) {
           target[action](roles)
-            .then(() => TiCu.Log.Prefixed.Roles(target, action, roles, msg))
+            .then(() => TiCu.Log.Commands.Roles(target, action, roles, msg))
             .catch(() => TiCu.Log.Error("roles", "erreur API", msg))
         } else TiCu.Log.Error("roles", "liste de rôles invalide", msg)
       } else TiCu.Log.Error( "roles", "ajouter ou enlever ?", msg)

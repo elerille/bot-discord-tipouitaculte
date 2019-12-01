@@ -1,5 +1,5 @@
 function checkRoleUsage(role, usr, msg) {
-  if((role.members.size === 1 && role.members.get(msg.member.id) || role.members.size === 0) && role.name != "#11e0e6") {
+  if((role.members.size === 1 && role.members.get(msg.member.id) || role.members.size === 0) && role.name !== "#11e0e6") {
     let roleName = role.name
     role.delete()
     TiCu.Log.Commands.Color("deleted", roleName, msg)
