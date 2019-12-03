@@ -3,3 +3,5 @@ deployment:
       tasks:
         - export DEPLOYPATH=/home/tipouiqxa/tipouitaculte
         - /bin/cp -r * $DEPLOYPATH
+        - /bin/cp -r exports/* $DEPLOYPATH/exports/
+        - /bin/cp -r exports/commands* $DEPLOYPATH/exports/commands
