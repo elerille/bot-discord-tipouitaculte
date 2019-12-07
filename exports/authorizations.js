@@ -27,11 +27,13 @@ module.exports = {
   },
   Reaction : function(reactionFunction, reaction, usr) {
     let messages = authorized(reactionFunction.authorizations.messages, reaction.message.id)
-    console.log(messages)
     let salons = authorized(reactionFunction.authorizations.salons, reaction.message.channel.id)
-    console.log(salons)
     let users = authorized(reactionFunction.authorizations.users, usr.id)
-    console.log(users)
     return messages && salons && users
+  },
+  Auto : function(autoCommand, msg) {
+    let salons = authorized(autoCommand.authorizations.salons, msg.channel.id)
+    let users = authorized(autoCommand.authorizations.users, msg.author.id)
+    return salons && users
   }
 }

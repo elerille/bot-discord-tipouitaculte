@@ -28,6 +28,9 @@ global.TiCu = {
   },
   Reactions : {
     heart : require("./exports/reactions/heart.js")
+  },
+  Auto : {
+    suchTruc : require("./exports/auto/suchTruc.js")
   }
 }
 
@@ -54,6 +57,15 @@ Discord.once("ready", () => {
       }
     )
   })
+
+function parseForAutoCommands(msg) {
+  for (const autoCommand of Object.values(TiCu.Auto)) {
+    if (msg.content.indexOf(autoCommand.trigger) !== -1 && TiCu.Authorizations.Auto(autoCommand, msg)) {
+      autoCommand.run(msg)
+    }
+  }
+}
+
 Discord.on("message", (msg) => {
   if(msg.author.id !== PUB.tipouitaculte && msg.author.id !== PUB.licorne) {
     if(msg.channel.type === "dm" ) {
@@ -85,6 +97,8 @@ Discord.on("message", (msg) => {
       let params = msg.content.substring(1).split(/\s+/)
       let cmd = params.shift().toLowerCase()
       TiCu.Commands[cmd] ? TiCu.Authorizations.Command(cmd, msg) ? TiCu.Commands[cmd].run(params, msg) : TiCu.Log.Error(cmd, "permissions manquantes", msg) : msg.react("❓")
+    } else {
+      parseForAutoCommands(msg)
     }
   }
 })
