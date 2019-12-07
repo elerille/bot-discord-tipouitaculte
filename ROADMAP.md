@@ -1,37 +1,37 @@
-command parser
-  auto commands
-    nom
-    description
-    schema
-    autorisations
-      salons
-      users
-    trigger
-    run
-  reaction responses
-    nom
-    description
-    emoji
-    autorisations
-      message
-      salons
-      users
-    run
+* command parser
+  * auto commands
+    * nom
+    * description
+    * schema
+    * autorisations
+       *  salons
+       *  users
+    * trigger
+    * run
+  * reaction responses
+    * nom
+    * description
+    * emoji
+    * autorisations
+       * message
+       * salons
+       * users
+    * run
 
-routines
-  xp
-    auto
-    give
-    remove
-    checklevel
-    autovote
+* routines
+  * xp
+    * auto
+    * give
+    * remove
+    * checklevel
+    * autovote
 
-  vote
-    type
-    stop
-    check
+  * vote
+    * type
+    * stop
+    * check
 
-commands
-  help
-  raid
-  color
+* commands
+  * help
+  * raid
+  * color

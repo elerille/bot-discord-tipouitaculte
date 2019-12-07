@@ -59,7 +59,7 @@ module.exports = {
     } else if(!target) {
       Object.keys(TiCu.Commands).forEach((key, i, array) => {
         if(key !== "help") {
-          if(TiCu.Authorizations(key, msg)) {
+          if(TiCu.Authorizations.Command(key, msg)) {
             let cmd = TiCu.Commands[key].authorizations
             embed.addField(cmd.name, cmd.desc)
           }

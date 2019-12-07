@@ -113,5 +113,30 @@ module.exports = {
         msg.delete()
       }
     }
+  },
+  ReactionError: function(reaction, usr, type) {
+    let errorText;
+    if (type === "add") {
+      errorText = tipoui.members.get(usr.id).displayName + " tried to trigger a bot reaction by reacting to " + reaction.message.url + " with " + reaction.emoji.name
+    } else {
+      errorText = tipoui.members.get(usr.id).displayName + " tried to trigger a bot reaction by deleting their reaction " + reaction.emoji.name + " to " + reaction.message.url
+    }
+    maxilog.send(TiCu.Date("log") + " : ReactionError\nSomething went wrong with authorizations\n" + errorText)
+  },
+  Reactions: {
+    genericReaction : function(reaction, usr, type) {
+      if (type === "add") {
+        maxilog.send(TiCu.Date("log") + " : ReactionAdd\n" + tipoui.members.get(usr.id).displayName + " a réagit à " + reaction.message.url + " avec " + reaction.emoji.name)
+      } else {
+        maxilog.send(TiCu.Date("log") + " : ReactionRemove\n" +tipoui.members.get(usr.id).displayName + " a supprimé sa réaction " + reaction.emoji.name + " à " + reaction.message.url)
+      }
+    },
+    Heart : function(reaction, usr, type) {
+      if (type === "add") {
+        maxilog.send(TiCu.Date("log") + " : ReactionHeartAdd\n" + tipoui.members.get(usr.id).displayName + " a ajouté un coeur à " + reaction.message.url)
+      } else {
+        maxilog.send(TiCu.Date("log") + " : ReactionHeartRemove\n" +tipoui.members.get(usr.id).displayName + " a retiré un coeur à " + reaction.message.url)
+      }
+    }
   }
 }

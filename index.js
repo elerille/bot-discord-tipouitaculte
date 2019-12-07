@@ -25,6 +25,9 @@ global.TiCu = {
     send : require("./exports/commands/send.js"),
     vote : require("./exports/commands/vote.js"),
     color: require("./exports/commands/color.js")
+  },
+  Reactions : {
+    heart : require("./exports/reactions/heart.js")
   }
 }
 
@@ -41,7 +44,7 @@ Discord.once("ready", () => {
     Server.get(
       "/discord/invite",
       function(req, res) {
-        Discord.channels.get(PUB.inviteChannel)
+        Discord.channels.get(PUB.tipoui.invite)
           .createInvite({maxUses : 1, maxAge : 300})
           .then(invite => {
             res.send(invite.url)
@@ -81,12 +84,38 @@ Discord.on("message", (msg) => {
     } else if(msg.content.match(/^![a-zA-Z]/)) {
       let params = msg.content.substring(1).split(/\s+/)
       let cmd = params.shift().toLowerCase()
-      TiCu.Commands[cmd] ? TiCu.Authorizations(cmd, msg) ? TiCu.Commands[cmd].run(params, msg) : TiCu.Log.Error(cmd, "permissions manquantes", msg) : msg.react("❓")
+      TiCu.Commands[cmd] ? TiCu.Authorizations.Command(cmd, msg) ? TiCu.Commands[cmd].run(params, msg) : TiCu.Log.Error(cmd, "permissions manquantes", msg) : msg.react("❓")
     }
   }
 })
-Discord.on("messageReactionAdd", (msg, usr) => {})
-Discord.on("messageReactionRemove", (msg, usr) => {})
+
+/**
+ * Find the right reaction response and run the relevant command
+ * @param reaction MessageReaction
+ * @param usr User
+ * @param type "add" | "remove"
+ */
+function parseReaction(reaction, usr, type) {
+  if (!usr.bot) {
+    let found = false
+    for (const reactionFunction of Object.values(TiCu.Reactions)) {
+      if (reaction.emoji.name === reactionFunction.emoji) {
+        if (TiCu.Authorizations.Reaction(reactionFunction, reaction, usr)) {
+          reactionFunction.run(reaction, usr, type)
+        } else TiCu.Log.ReactionError(reaction, usr, type)
+        found = true
+      }
+    }
+    if (!found) TiCu.Log.Reactions.genericReaction(reaction, usr, type)
+  }
+}
+
+Discord.on("messageReactionAdd", (reaction, usr) => {
+  parseReaction(reaction, usr, "add")
+})
+Discord.on("messageReactionRemove", (reaction, usr) => {
+  parseReaction(reaction, usr, "remove")
+})
 Discord.on("guildMemberAdd", usr => {
   if(usr.guild.id === tipoui.id) {
     maxilog.send(TiCu.Date("log") + " : Arrivée de membre\n" + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
