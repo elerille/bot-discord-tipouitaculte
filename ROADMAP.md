@@ -32,6 +32,6 @@
     * check
 
 * commands
-  * help
   * raid
-  * color
+  
+* webhook github updates PUB.tipoui.bots + minilog + maxilog
