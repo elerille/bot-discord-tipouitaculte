@@ -27,7 +27,7 @@ module.exports = {
     roleNames : "Tous"
   },
   run : function(params, msg) {
-    let input = params[0]
+    let input = params[0].toLowerCase()
     let usr = msg.member
     let oldRole = usr.roles.find(e => e.name.match(colorHexa))
     let newRole = tipoui.roles.find(e => e.hexColor === input)
