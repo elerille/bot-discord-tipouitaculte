@@ -94,8 +94,11 @@ Discord.on("message", (msg) => {
           .then(newMsg => TiCu.Log.Quarantaine("envoyé", newMsg, msg))
       }
     } else if(msg.content.match(/^![a-zA-Z]/)) {
-      let params = msg.content.substring(1).split(/\s+/)
-      let cmd = params.shift().toLowerCase()
+      let params = []
+      msg.content.substring(1).split(/\s+/).forEach(value => {
+        params.push(value.toLowerCase())
+      })
+      let cmd = params.shift()
       TiCu.Commands[cmd] ? TiCu.Authorizations.Command(cmd, msg) ? TiCu.Commands[cmd].run(params, msg) : TiCu.Log.Error(cmd, "permissions manquantes", msg) : msg.react("❓")
     } else {
       parseForAutoCommands(msg)
