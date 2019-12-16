@@ -19,12 +19,13 @@ global.TiCu = {
   Authorizations : require("./exports/authorizations.js"),
   VotesCollections : require("./exports/voteCollections.js"),
   Commands : {
+    color: require("./exports/commands/color.js"),
     help : require("./exports/commands/help.js"),
+    list : require("./exports/commands/list.js"),
     quarantaine : require("./exports/commands/quarantaine.js"),
     roles : require("./exports/commands/roles.js"),
     send : require("./exports/commands/send.js"),
-    vote : require("./exports/commands/vote.js"),
-    color: require("./exports/commands/color.js")
+    vote : require("./exports/commands/vote.js")
   },
   Reactions : {
     heart : require("./exports/reactions/heart.js")

@@ -10,9 +10,10 @@
     "vigi": "554773912374870058",
     "invite": "355042383249014784",
     "miniLog": "425379017055797258",
-    "maxiLog": "620649266557222912",
+    "maxiLog": "655950138568867841",
     "bots": "398825094019022852",
-    "botsecret": "641333805445283850",
+    "botsecret": "468843915500322826",
+    "debug": "641333805445283850",
     "automoderation": "551780962686468111",
     "salleDesVotes": "437317393144872970",
     "quarantaineUser": "588452032839680031",
@@ -33,5 +34,116 @@
     "maxilog": "638754930789974016",
     "bots": "529744451669721110",
     "botsecret": "641294953473114112"
-  }
+  },
+  "servers": {
+    "commu": "355041348476338182",
+    "vigi": "554773912374870058",
+    "debug": "519618688010158090"
+  },
+  "users": {
+    "tipouitaculte": "638410922527817748",
+    "tentaculte": "430020470897770516",
+    "electrolune": "442965211054473216",
+    "pluralkit": "466378653216014359",
+    "licorne": "417400498706972692",
+    "xenolune": "222028577405665283"
+  },
+  "salons": {
+    "invite": "355042383249014784",
+    "miniLog": "425379017055797258",
+    "maxiLog": "620649266557222912",
+    "bots": "398825094019022852",
+    "botsecret": "641333805445283850",
+    "automoderation": "551780962686468111",
+    "salleDesVotes": "437317393144872970",
+    "quarantaineUser": "588452032839680031",
+    "quarantaineVigi": "469268187335360532"
+  },
+  "roles": {
+    "quarantaineRole": "458559408667099136",
+    "nso": "420333202142396426",
+    "turquoise": "396989117164158978",
+    "turquoiseColor": "649433183087099944",
+    "luxure": "507916444701556739",
+    "demolisseureuse": "355060952422416386",
+    "hammer": "507916432462577715",
+    "grrrrl": "396988815266545665",
+    "naughty": "507916442826571776"
+  },
+  "rolesA": [
+    [
+      "355047698698862592",
+      "pho",
+      "phos",
+      "phosphate",
+      "phosphatealumine",
+      "phosphatedalumine"
+    ], [
+      "396989117164158978",
+      "tutu",
+      "turquoise"
+    ], [
+      "355060952422416386",
+      "démo",
+      "démolisseur",
+      "démolisseuse",
+      "démolisseureuse",
+      "patriarcaca"
+    ], [
+      "396991048993341440",
+      "queer"
+    ], [
+      "396988815266545665",
+      "girl",
+      "grrrl",
+      "grrrrl"
+    ], [
+      "455720096799653902",
+      "cpc",
+      "certainementpascis",
+      "pascis",
+      "cisn't"
+    ], [
+      "439068938123345940",
+      "ace",
+      "acecake"
+    ], [
+      "525280639386386462",
+      "aro",
+      "arrow",
+      "arobow",
+      "aromantique"
+    ], [
+      "507916444701556739",
+      "luxure",
+      "luxureon",
+      "grandbain",
+      "grandsbains",
+      "salonchaud",
+      "salonschauds"
+    ], [
+      "451734752181878786",
+      "pourfendeureuse",
+      "pourfendeur",
+      "pourfendeuse",
+      "pourfendeureusedecismecs",
+      "misandre",
+      "cismisandre",
+      "misandrie",
+      "cismisandrie"
+    ], [
+      "522444644999495680",
+      "vote",
+      "votant",
+      "votante",
+      "votant·e",
+      "votant.e"
+    ], [
+      "458559408667099136",
+      "quarantaine",
+      "oubliettes",
+      "azkaban",
+      "goulag"
+    ]
+  ]
 }

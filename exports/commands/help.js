@@ -23,13 +23,14 @@ module.exports = {
     embed.setColor(38600)
     if(TiCu.Commands[target]) {
       let cmd = TiCu.Commands[target].authorizations
-      embed.setTitle(cmd.name)
-      embed.addField("Description", cmd.desc)
-      embed.addField("Schéma", cmd.schema)
-      embed.addBlankField()
-      embed.addField("Salons :", cmd.channels, true)
-      embed.addField("Utilisateurices :", cmd.authors, true)
-      embed.addField("Rôles :", cmd.roleNames, true)
+      embed
+        .setTitle(cmd.name)
+        .addField("Description", cmd.desc)
+        .addField("Schéma", cmd.schema)
+        .addBlankField()
+        .addField("Salons :", cmd.channels, true)
+        .addField("Utilisateurices :", cmd.authors, true)
+        .addField("Rôles :", cmd.roleNames, true)
       msg.channel.send({ embed })
     } else if(target === "full") {
       Object.keys(TiCu.Commands).forEach((key, i, array) => {
@@ -39,22 +40,32 @@ module.exports = {
       msg.channel.send("Voici la liste exhaustive de mes fonctions :")
       msg.channel.send({ embed })
     } else if(target === "schema") {
-      embed.setTitle("La description individuelle des commandes propose un champ \"Schéma\" pour expliciter son fonctionnement.")
-      embed.addField("`!commande`", "appel de la commande, le message commence par un `!` et le nom de la commande.")
-      embed.addField("`<obligatoire>`", "entre chevrons, ce paramètre doit impérativement être renseigné lors de l'appel de la commande.")
-      embed.addField("`[liste]`", "entre crochets, ce paramètre est une liste de 1 ou plusieurs éléments, séparés par des caractères d'espacement (tout espace unicode, y compris retour à la ligne), obligatoires pour l'appel de la commande.")
-      embed.addField("`(optionnel)`", "entre parenthèses, ce paramètre est facultatif et ne doit pas obligatoirement être présent pour faire fonctionner cette commande.")
-      embed.addField(`|`, "la barre verticale permet de délimiter les variantes d'un paramètre. Par exemple, !piece (pile|face) signifie que l'on peut choisir si l'on gagne avec pile ou avec face.")
-      embed.addField(`@`, "l'arobase signifie que le paramètre attendu permet de trouver eun membre de Tipoui - par mention (<@638410922527817748>), ID (638410922527817748), tag (TipouiTaCulte#4219), nom d'utilisateurice (TipouiTaCulte) ou encore pseudo sur le serveur (💠TipouiTaCulte (x)).")
-      embed.addField("`role`", "le mot-clef \"role\" signifie que le paramètre attendu permet de trouver un rôle sur Tipoui, d'après la liste donnée par la commande `!help rolesList`")
-      embed.addField("`target`", "le mot-clef \"target\" signifie que le paramètre attendu permet de trouver une cible, qui peut être, selon le contexte, eun membre, un salon et/ou un rôle - par mention, ID ou nom en texte brut")
-      embed.addField("`text`", "le mot-clef \"text\" signifie que tout le reste du texte du message sera transmis suite à cette commande.")
-      embed.addField("+", "Pour les commandes ne comportant pas de paramètre `texte`, tout contenu faisant suite aux paramètres nécessaires ne sera pas traîté.")
-      embed.addField("+", "Les mots-clefs qui ne font pas partie de cette liste doivent être renseignés tels quels dans la commande (ils font généralement partie d'un groupe de paramètres variables, comme `(pile|face)` ou `<add|addRole|ajouter>` ...).")
-      embed.addField("+", "Par ailleurs, les paramètres de commande ne sont pas sensibles à la casse, de telle sorte que `addRole`, `ADDROLE` ou `addrole` seront tous traités de la même façon.")
+      embed
+        .setTitle("La description individuelle des commandes propose un champ \"Schéma\" pour expliciter son fonctionnement.")
+        .addField("`!commande`", "appel de la commande, le message commence par un `!` et le nom de la commande.")
+        .addField("`<obligatoire>`", "entre chevrons, ce paramètre doit impérativement être renseigné lors de l'appel de la commande.")
+        .addField("`[liste]`", "entre crochets, ce paramètre est une liste de 1 ou plusieurs éléments, séparés par des caractères d'espacement (tout espace unicode, y compris retour à la ligne), obligatoires pour l'appel de la commande.")
+        .addField("`(optionnel)`", "entre parenthèses, ce paramètre est facultatif et ne doit pas obligatoirement être présent pour faire fonctionner cette commande.")
+        .addField(`|`, "la barre verticale permet de délimiter les variantes d'un paramètre. Par exemple, !piece (pile|face) signifie que l'on peut choisir si l'on gagne avec pile ou avec face.")
+        .addField(`@`, "l'arobase signifie que le paramètre attendu permet de trouver eun membre de Tipoui - par mention (<@638410922527817748>), ID (638410922527817748), tag (TipouiTaCulte#4219), nom d'utilisateurice (TipouiTaCulte) ou encore pseudo sur le serveur (💠TipouiTaCulte (x)).")
+        .addField("`role`", "le mot-clef \"role\" signifie que le paramètre attendu permet de trouver un rôle sur Tipoui, d'après la liste donnée par la commande `!help rolesList`")
+        .addField("`target`", "le mot-clef \"target\" signifie que le paramètre attendu permet de trouver une cible, qui peut être, selon le contexte, eun membre, un salon et/ou un rôle - par mention, ID ou nom en texte brut")
+        .addField("`text`", "le mot-clef \"text\" signifie que tout le reste du texte du message sera transmis suite à cette commande.")
+        .addField("+", "Pour les commandes ne comportant pas de paramètre `texte`, tout contenu faisant suite aux paramètres nécessaires ne sera pas traîté.")
+        .addField("+", "Les mots-clefs qui ne font pas partie de cette liste doivent être renseignés tels quels dans la commande (ils font généralement partie d'un groupe de paramètres variables, comme `(pile|face)` ou `<add|addRole|ajouter>` ...).")
+        .addField("+", "Par ailleurs, les paramètres de commande ne sont pas sensibles à la casse, de telle sorte que `addRole`, `ADDROLE` ou `addrole` seront tous traités de la même façon.")
       msg.channel.send(embed)
-    } else if(target === "rolesList") {
-      embed.addField("TROLL", "Ouais j'ai pas encore fait cette liste à la noix mdr")
+    } else if(target === "roleslist") {
+      embed
+        .setColor(38600)
+        .setTitle("Liste des rôles et alias pour la commande !roles")
+      for(let i=0;i<PUB.rolesA.length;i++) {
+        let values = ""
+        for(let j=1;j<PUB.rolesA[i].length;j++) {
+          values += PUB.rolesA[i][j] + "\n"
+        }
+        embed.addField(PUB.rolesA[i][0], values, true)
+      }
       msg.channel.send({ embed })
     } else if(!target) {
       Object.keys(TiCu.Commands).forEach((key, i, array) => {
