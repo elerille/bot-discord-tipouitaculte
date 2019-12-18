@@ -15,15 +15,18 @@ module.exports = {
   Command : function(cmd, msg) {
     let target = TiCu.Commands[cmd].authorizations
     let chan = authorized(target.chans, msg.channel.id)
-    let role = target.roles.type === "any" ?
-      true :
-      target.roles.type === "whitelist" ?
-        target.roles.list.find(e => e === msg.author.roles.get(e)) :
-        target.roles.type === "blacklist" ?
-          !target.roles.list.find(e => e === msg.author.roles.get(e)) :
-          false
     let auth = authorized(target.auths, msg.author.id)
-    return (chan && ( role || auth ))
+    let role
+    if(target.roles.type != "any") {
+      let array = Array.from(msg.member.roles.values())
+      let filtered = array.filter(e => target.roles.list.includes(e.id))
+      if(target.roles.type === "whitelist") {
+        role = filtered.length ? true : false
+      } else {
+        role = filtered.length ? false : true
+      }
+    } else role = true
+    return chan && role && auth
   },
   Reaction : function(reactionFunction, reaction, usr) {
     let messages = authorized(reactionFunction.authorizations.messages, reaction.message.id)

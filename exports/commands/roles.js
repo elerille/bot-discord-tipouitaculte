@@ -42,7 +42,7 @@ module.exports = {
     }
     for(let i=2;i<params.length;i++) {
       for(let j=0;j<PUB.rolesA.length;j++) {
-        if(PUB.roles[j].find(k => k === params[i])) {
+        if(PUB.rolesA[j].find(k => k === params[i])) {
           roles.push(PUB.rolesA[j][0])
           break
         }
@@ -51,7 +51,6 @@ module.exports = {
     if(target) {
       if(action) {
         if(roles && roles.length === params.length - 2) {
-          console.log(roles)
           target[action](roles)
             .then(() => TiCu.Log.Commands.Roles(target, action, roles, msg))
             .catch(() => TiCu.Log.Error("roles", "erreur API", msg))

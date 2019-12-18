@@ -27,7 +27,6 @@ module.exports = {
         .setTitle(cmd.name)
         .addField("Description", cmd.desc)
         .addField("Schéma", cmd.schema)
-        .addBlankField()
         .addField("Salons :", cmd.channels, true)
         .addField("Utilisateurices :", cmd.authors, true)
         .addField("Rôles :", cmd.roleNames, true)

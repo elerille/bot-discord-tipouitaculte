@@ -44,9 +44,23 @@ module.exports = {
     }
   },
   ServerPage : function(req) {
-    maxilog.send(TiCu.Date("log") + " : Server\nServed Page : " + req)
+    maxilog.send(TiCu.Date("log") + " : Server\nServed Page : " + req.path)
   },
   Commands : {
+    Ban : function(target, reason, msg) {
+      maxilog.send(TiCu.Date("log") + " : Ban \n" + msg.member.displayName + " a banni " + target.username + " / " + target.id + ".")
+      minilog.send(msg.member.displayName + " a banni " + target.username + ".")
+      if(reason) {
+        maxilog.send("Raison : " + reason)
+        minilog.send("Raison : " + reason)
+      }
+      msg.react("✅")
+    },
+    Bienvenue : function(target, msg) {
+      maxilog.send(TiCu.Date("log") + " : Bienvenue \n" + msg.member.displayName + " a souhaité la bienvenue à " + target.displayName + " / " + target.id + ".")
+      minilog.send(msg.member.displayName + " a souhaité la bienvenue à " + target.displayName + ".")
+      tipoui.channels.get(PUB.tipoui.invite).send("Bienvenue " + target.displayName + " ! <:patatecoeur:585795622846857256>\nTe voici désormais Phosphate d'Alumine. N'hésite pas à m'envoyer un message privé si tu as des questions sur le serveur ou un message à transmettre aux Vigiliant·es.\nNous espérons que tu seras à ton aise et que tout se passera bien.")
+    },
     Color : function(action, color, msg) {
       if(action === "switched") {
         if(color === "turquoise") {
@@ -62,14 +76,29 @@ module.exports = {
         msg.react("✔")
       }
     },
+    Kick : function(target, reason, msg) {
+      maxilog.send(TiCu.Date("log") + " : Kick \n" + msg.member.displayName + " a kické " + target.username + " / " + target.id + ".")
+      minilog.send(msg.member.displayName + " a kické " + target.username + ".")
+      if(reason) {
+        maxilog.send("Raison : " + reason)
+        minilog.send("Raison : " + reason)
+      }
+      msg.react("✅")
+    },
+    Purifier : function(target, msg) {
+      maxilog.send(TiCu.Date("log") + " : Purifier \n" + msg.member.displayName + " a ajouté " + target.displayName + " parmi les Pourfendeureuses de Cismecs.")
+      minilog.send(msg.member.displayName + " a ajouté " + target.displayName + " parmi les Pourfendeureuses de Cismecs.")
+      msg.react("✅")
+    },
     Quarantaine : function(action, target, reason, msg) {
       if(action) {
         minilog.send(msg.member.displayName + "a mis " + target.displayName + " en quarantaine.")
-        maxilog.send(TiCu.Date("log") + " : Quarantaine\n" + msg.member.displayName + " a mis " + target.displayName + " en quarantaine.")
+        maxilog.send(TiCu.Date("log") + " : Quarantaine\n" + msg.member.displayName + " a mis " + target.displayName + " / " + target.id + " en quarantaine.")
+        tipoui.channels.get(PUB.tipoui.quarantaineUser).send("<@" + target.id + ">, tu as été placé·e en quarantaine. Tous les messages que tu transmetras dans ce salon seront transmis aux Vigilant·es, comme lorsque tu m'envoie un message privé, et je m'occuperais de transmettre leurs réponses.\n⚠Quitter le serveur alors que tu es ici te vaudra un ban immédiat.⚠")
         msg.react("✅")
       } else {
         minilog.send(msg.member.displayName + "a enlevé " + target.displayName + " de quarantaine.")
-        maxilog.send(TiCu.Date("log") + " : Quarantaine\n" + msg.member.displayName + " a enlevé " + target.displayName + " de quarantaine.")
+        maxilog.send(TiCu.Date("log") + " : Quarantaine\n" + msg.member.displayName + " a enlevé " + target.displayName + " / " + target.id + " de quarantaine.")
         msg.react("✅")
       }
       if(reason) {
@@ -78,7 +107,7 @@ module.exports = {
       }
     },
     Roles : function(target, action, roles, msg) {
-      let author = msg.member ? msg.member.displayName : msg.author.name
+      let author = msg.member ? msg.member.displayName : msg.author.username
       let roleNames = ""
       for(i=0;i<roles.length;i++) {
         roleNames += "`" + tipoui.roles.get(roles[i]).name + "` "
@@ -89,7 +118,7 @@ module.exports = {
       msg.react("✅")
     },
     Send : function(cmdMsg, newMsg) {
-      let author = cmdMsg.member ? cmdMsg.member.displayName : cmdMsg.author.name
+      let author = cmdMsg.member ? cmdMsg.member.displayName : cmdMsg.author.username
       maxilog.send(TiCu.Date("log") + " : Send \n" + author + " a envoyé un message vers `" + newMsg.channel.toString() + "`\n" + newMsg.url)
       maxilog.send(newMsg.toString())
       minilog.send(author + " a envoyé un message vers " + newMsg.channel.toString())

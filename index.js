@@ -19,9 +19,13 @@ global.TiCu = {
   Authorizations : require("./exports/authorizations.js"),
   VotesCollections : require("./exports/voteCollections.js"),
   Commands : {
+    ban : require("./exports/commands/ban.js"),
+    bienvenue : require("./exports/commands/bienvenue.js"),
     color: require("./exports/commands/color.js"),
     help : require("./exports/commands/help.js"),
+    kick : require("./exports/commands/kick.js"),
     list : require("./exports/commands/list.js"),
+    purifier : require("./exports/commands/purifier.js"),
     quarantaine : require("./exports/commands/quarantaine.js"),
     roles : require("./exports/commands/roles.js"),
     send : require("./exports/commands/send.js"),
@@ -39,8 +43,8 @@ global.TiCu = {
 Discord.login( CFG.discordToken )
 Discord.once("ready", () => {
     global.tipoui = Discord.guilds.get(PUB.tipoui.commu)
-    global.maxilog = Discord.channels.get(PUB.debug.maxilog)
-    global.minilog = Discord.channels.get(PUB.debug.minilog)
+    global.maxilog = Discord.channels.get(PUB.tipoui.maxilog)
+    global.minilog = Discord.channels.get(PUB.tipoui.minilog)
     console.log(TiCu.Date("log") + " : Connexion à Discord.")
     maxilog.send(TiCu.Date("log") + " : Reconnexion.")
     minilog.send("Coucou, je suis de retour ♥")
@@ -72,13 +76,22 @@ Discord.on("message", (msg) => {
     if(msg.channel.type === "dm" ) {
       let user = tipoui.members.get(msg.author.id) ? tipoui.members.get(msg.author.id) : undefined
       if(user) {
-        let embed = new DiscordNPM.RichEmbed()
-          .setColor(user.displayColor)
-          .setAuthor(user.displayName, user.user.avatarURL, msg.url)
-          .setDescription(msg.content)
-          .setTimestamp()
-        tipoui.channels.get(PUB.tipoui.botsecret).send(embed)
-          .then(() => TiCu.Log.DM(embed, msg))
+        if(!user.roles.find(e => e === PUB.tipoui.quarantaineRole)) {
+          let embed = new DiscordNPM.RichEmbed()
+            .setColor(user.displayColor)
+            .setAuthor(user.displayName, user.user.avatarURL, msg.url)
+            .setDescription(msg.content)
+            .setTimestamp()
+          if(msg.attachments) {
+            let attachments = Array.from(msg.attachments.values())
+            for(i=0;i<attachments.length;i++){
+              embed.addField("Pièce-jointe URL #" + i, attachments[i].url)
+              embed.addField("Pièce-jointe ProxyURL #" + i, attachments[i].proxyURL)
+            }
+          }
+          tipoui.channels.get(PUB.tipoui.botsecret).send(embed)
+            .then(() => TiCu.Log.DM(embed, msg))
+        } else msg.reply("utilise plutôt <#" + PUB.tipoui.quarantaineUser + "> s'il te plaît. Ce message n'a pas été transmis.")
       } else msg.reply("je ne parle qu'aux gens de Tipoui ♥")
     } else if(msg.channel.id === PUB.tipoui.quarantaineUser || msg.channel.id === PUB.tipoui.quarantaineVigi) {
       if(msg.channel.id === PUB.tipoui.quarantaineUser) {
@@ -88,6 +101,13 @@ Discord.on("message", (msg) => {
           .setAuthor(user.displayName, user.user.avatarURL, msg.url)
           .setDescription(msg.content)
           .setTimestamp()
+        if(msg.attachments) {
+          let attachments = Array.from(msg.attachments.values())
+          for(i=0;i<attachments.length;i++){
+            embed.addField("Pièce-jointe URL #" + i, attachments[i].url)
+            embed.addField("Pièce-jointe ProxyURL #" + i, attachments[i].proxyURL)
+          }
+        }
         tipoui.channels.get(PUB.tipoui.quarantaineVigi).send(embed)
           .then(newMsg => TiCu.Log.Quarantaine("reçu", newMsg, msg))
       } else if(msg.channel.id === PUB.tipoui.quarantaineVigi) {
@@ -124,7 +144,7 @@ function parseReaction(reaction, usr, type) {
         found = true
       }
     }
-    if (!found) TiCu.Log.Reactions.genericReaction(reaction, usr, type)
+    /* if (!found) TiCu.Log.Reactions.genericReaction(reaction, usr, type) */
   }
 }
 
@@ -138,6 +158,7 @@ Discord.on("guildMemberAdd", usr => {
   if(usr.guild.id === tipoui.id) {
     maxilog.send(TiCu.Date("log") + " : Arrivée de membre\n" + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
     minilog.send("Arrivée de " + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
+    tipoui.channels.get(PUB.tipoui.genTP).send("Oh ! Bienvenue <@" + usr.id + "> ! Je te laisse lire les Saintes Règles, rajouter tes pronoms dans ton pseudo et nous faire une ptite présentation dans le salon qui va bien :heart:\nSi tu n'as pas fait vérifier ton numéro de téléphone ou d'abonnement Nitro, il va aussi te falloir aussi attendre 10 petites minutes que Discord s'assure tu n'es pas une sorte d'ordinateur mutant venu de l'espace... Même si en vrai ça serait trop cool quand même !")
   }
 })
 Discord.on("guildMemberRemove", usr => {
@@ -149,6 +170,8 @@ Discord.on("guildMemberRemove", usr => {
 Discord.on("guildMemberUpdate", (oldUsr, newUsr) => {
   if(newUsr.roles.get(PUB.tipoui.turquoise) && !oldUsr.roles.get(PUB.tipoui.turquoise)) {
     newUsr.addRole(PUB.tipoui.turquoiseColor)
+    newUsr.addRole(PUB.tipoui.votesRole)
+    tipoui.channels.get(PUB.tipoui.genTutu).send("Bienvenue parmi les 💠Turquoises <@" + newUsr.id + "> ! <:turquoise_heart:417784485724028938>\nTu as désormais accès à de nouveaux salons, notamment <#453706061031931905> où tu pourras découvrir les spécificités de cette promotion. Par ailleurs, n'hésite pas à consulter <#453702956315836436> pour voir les rôles auxquels tu peux prétendre, et demande-les-moi par message privé.")
   }
   if(newUsr.roles.get(PUB.tipoui.luxure)) {
     if(!newUsr.roles.get(PUB.tipoui.hammer) && newUsr.roles.get(PUB.tipoui.demolisseureuse)) {newUsr.addRole(PUB.tipoui.hammer)}
