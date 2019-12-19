@@ -2,9 +2,9 @@
 const CFG = require("./private.json")
 const EXPRESS = require("express")
 const DiscordNPM = require("discord.js")
-const SequelizeDB = require("sequelize")
 const EventsModule = require("events")
 global.Server = EXPRESS()
+global.SequelizeDB = require("sequelize")
 global.DB = new SequelizeDB(CFG.sequelizeURL)
 global.Discord = new DiscordNPM.Client()
 global.Event = new EventsModule.EventEmitter()
@@ -15,6 +15,7 @@ global.TiCu = {
   Date : require("./exports/date.js"),
   Log : require("./exports/log.js"),
   json : require("./exports/json.js"),
+  Xp : require("./exports/xp.js"),
   Mention : require("./exports/mention.js"),
   Authorizations : require("./exports/authorizations.js"),
   VotesCollections : require("./exports/voteCollections.js"),
