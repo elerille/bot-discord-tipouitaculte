@@ -172,5 +172,25 @@ module.exports = {
     SuchTruc: function(msg) {
       maxilog.send(TiCu.Date("log") + " : SuchTruc\nSuch Log, much info !" + msg.url)
     }
+  },
+  XP: {
+    newEntry: function(entry) {
+      maxilog.send(`${TiCu.Date("log")} : newXPMember\n${tipoui.members.get(entry.id).displayName} was added to the XP system`)
+    },
+    levelChange: function(entry, previousLevel) {
+      maxilog.send(`${TiCu.Date("log")} : levelChange\n${tipoui.members.get(entry.id).displayName} changed level from ${previousLevel} to ${entry.level}`)
+    },
+    statusChange: function(entry) {
+      maxilog.send(`${TiCu.Date("log")} : XPMemberStatusChange\n${tipoui.members.get(entry.id).displayName} is now ${entry.activated ? 'in' : 'out of'} the XP system`)
+    },
+    error: function(type, target) {
+      switch(type) {
+        case TiCu.Xp.errorTypes.MULTIPLEUPDATE:
+          maxilog.send(`${TiCu.Date("log")} : XP ERROR\nThere was a problem updating the XP for ${tipoui.members.get(target).displayName} : updated multiple entries`)
+          break;
+        default:
+          maxilog.send(`${TiCu.Date("log")} : XP ERROR\nGeneric error, sorry for the lack of information`)
+      }
+    }
   }
 }

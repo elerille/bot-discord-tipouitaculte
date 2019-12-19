@@ -2,9 +2,9 @@
 const CFG = require("./private.json")
 const EXPRESS = require("express")
 const DiscordNPM = require("discord.js")
-const SequelizeDB = require("sequelize")
 const EventsModule = require("events")
 global.Server = EXPRESS()
+global.SequelizeDB = require("sequelize")
 global.DB = new SequelizeDB(CFG.sequelizeURL)
 global.Discord = new DiscordNPM.Client()
 global.Event = new EventsModule.EventEmitter()
@@ -15,6 +15,7 @@ global.TiCu = {
   Date : require("./exports/date.js"),
   Log : require("./exports/log.js"),
   json : require("./exports/json.js"),
+  Xp : require("./exports/xp.js"),
   Mention : require("./exports/mention.js"),
   Authorizations : require("./exports/authorizations.js"),
   VotesCollections : require("./exports/voteCollections.js"),
@@ -73,6 +74,7 @@ function parseForAutoCommands(msg) {
 
 Discord.on("message", (msg) => {
   if(msg.author.id !== PUB.tipouitaculte && msg.author.id !== PUB.licorne) {
+    TiCu.Xp.processXpFromMessage('add', msg)
     if(msg.channel.type === "dm" ) {
       let user = tipoui.members.get(msg.author.id) ? tipoui.members.get(msg.author.id) : undefined
       if(user) {
@@ -127,6 +129,12 @@ Discord.on("message", (msg) => {
   }
 })
 
+Discord.on("messageDelete", (msg) => {
+  if(msg.author.id !== PUB.tipouitaculte && msg.author.id !== PUB.licorne) {
+    TiCu.Xp.processXpFromMessage('remove', msg)
+  }
+})
+
 /**
  * Find the right reaction response and run the relevant command
  * @param reaction MessageReaction
@@ -149,9 +157,11 @@ function parseReaction(reaction, usr, type) {
 }
 
 Discord.on("messageReactionAdd", (reaction, usr) => {
+  TiCu.Xp.reactionXp('add', reaction, usr)
   parseReaction(reaction, usr, "add")
 })
 Discord.on("messageReactionRemove", (reaction, usr) => {
+  TiCu.Xp.reactionXp('remove', reaction, usr)
   parseReaction(reaction, usr, "remove")
 })
 Discord.on("guildMemberAdd", usr => {
