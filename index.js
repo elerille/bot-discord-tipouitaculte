@@ -74,6 +74,7 @@ function parseForAutoCommands(msg) {
 
 Discord.on("message", (msg) => {
   if(msg.author.id !== PUB.tipouitaculte && msg.author.id !== PUB.licorne) {
+    TiCu.Xp.processXpFromMessage('add', msg)
     if(msg.channel.type === "dm" ) {
       let user = tipoui.members.get(msg.author.id) ? tipoui.members.get(msg.author.id) : undefined
       if(user) {
@@ -128,6 +129,12 @@ Discord.on("message", (msg) => {
   }
 })
 
+Discord.on("messageDelete", (msg) => {
+  if(msg.author.id !== PUB.tipouitaculte && msg.author.id !== PUB.licorne) {
+    TiCu.Xp.processXpFromMessage('remove', msg)
+  }
+})
+
 /**
  * Find the right reaction response and run the relevant command
  * @param reaction MessageReaction
@@ -150,9 +157,11 @@ function parseReaction(reaction, usr, type) {
 }
 
 Discord.on("messageReactionAdd", (reaction, usr) => {
+  TiCu.Xp.reactionXp('add', reaction, usr)
   parseReaction(reaction, usr, "add")
 })
 Discord.on("messageReactionRemove", (reaction, usr) => {
+  TiCu.Xp.reactionXp('remove', reaction, usr)
   parseReaction(reaction, usr, "remove")
 })
 Discord.on("guildMemberAdd", usr => {

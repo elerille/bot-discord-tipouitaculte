@@ -180,6 +180,9 @@ module.exports = {
     levelChange: function(entry, previousLevel) {
       maxilog.send(`${TiCu.Date("log")} : levelChange\n${tipoui.members.get(entry.id).displayName} changed level from ${previousLevel} to ${entry.level}`)
     },
+    statusChange: function(entry) {
+      maxilog.send(`${TiCu.Date("log")} : XPMemberStatusChange\n${tipoui.members.get(entry.id).displayName} is now ${entry.activated ? 'in' : 'out of'} the XP system`)
+    },
     error: function(type, target) {
       switch(type) {
         case TiCu.Xp.errorTypes.MULTIPLEUPDATE:
