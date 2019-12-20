@@ -30,7 +30,7 @@ module.exports = {
                 msg.channel.send(`Le compte de ${TiCu.Mention(params[0]).displayName} est ${entry.activated ? 'activé' : 'désactivé'} dans le système`)
               } else {
                 msg.channel.send('Impossible de retrouver votre cible dans le système')
-                TiCu.Log.Commands.XPStatus.Error(target)
+                TiCu.Log.Commands.XPStatus(target)
               }
             }
           )
@@ -52,7 +52,7 @@ module.exports = {
               msg.channel.send( `Votre compte est ${entry.activated ? 'activé' : 'désactivé'} dans le système`)
             } else {
               msg.channel.send('Impossible de retrouver votre cible dans le système')
-              TiCu.Log.Commands.XPStatus.Error(msg.author.id)
+              TiCu.Log.Commands.XPStatus(msg.author.id)
             }
           }
         )

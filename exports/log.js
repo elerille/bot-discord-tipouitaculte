@@ -145,10 +145,11 @@ module.exports = {
     Level: function(target) {
       maxilog.send(`${TiCu.Date("log")} : Level\nImpossible de retrouver l'entrée correspondant à l'id membre ${target} en base de donnée`)
     },
-    XPStatus: {
-      Error: function(target) {
-        maxilog.send(`${TiCu.Date("log")} : Level\nImpossible de retrouver l'entrée correspondant à l'id membre ${target} en base de donnée`)
-      }
+    XPStatus: function(target) {
+      maxilog.send(`${TiCu.Date("log")} : XPStatus\nImpossible de retrouver l'entrée correspondant à l'id membre ${target} en base de donnée`)
+    },
+    Xp: function(msg, target, value, give) {
+      maxilog.send(`${TiCu.Date("log")} : XP\n${tipoui.members.get(msg.author.id).displayName} ${give ? 'gave' : 'took'} ${value} XP ${give ? 'to' : 'from'} ${target}`)
     }
   },
   ReactionError: function(reaction, usr, type) {
