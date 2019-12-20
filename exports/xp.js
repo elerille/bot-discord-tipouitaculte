@@ -15,7 +15,8 @@ const LEVELMAX = 100
 
 const multiplierRoles = [
   PUB.tipoui.armu,
-  PUB.tipoui.nitro
+  PUB.tipoui.nitro,
+  PUB.tipoui.utip
 ]
 
 const whitelistCategories = Object.values(PUB.xpWhitelistCategories)
@@ -116,6 +117,12 @@ module.exports = {
                 this.updateXp(type, XPREACTEDTO, reaction.message.author.id)
             }
         }
+    },
+    getMember: function(id) {
+        return MemberXP.findByPk(id)
+    },
+    getXpByLevel: function(level) {
+        return xpByLevel(level)
     },
     changeMemberStatus: function(target, activated) {
         MemberXP.update({

@@ -141,6 +141,9 @@ module.exports = {
         maxilog.send(newMsg.content)
         msg.delete()
       }
+    },
+    Level: function(target) {
+      maxilog.send(`${TiCu.Date("log")} : Level\nImpossible de retrouver l'entrée correspondant à l'id membre ${target} en base de donnée`)
     }
   },
   ReactionError: function(reaction, usr, type) {

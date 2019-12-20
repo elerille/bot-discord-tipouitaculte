@@ -30,7 +30,8 @@ global.TiCu = {
     quarantaine : require("./exports/commands/quarantaine.js"),
     roles : require("./exports/commands/roles.js"),
     send : require("./exports/commands/send.js"),
-    vote : require("./exports/commands/vote.js")
+    vote : require("./exports/commands/vote.js"),
+    level : require("./exports/commands/level.js")
   },
   Reactions : {
     heart : require("./exports/reactions/heart.js")
