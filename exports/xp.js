@@ -82,7 +82,7 @@ function updateLevel(level, target) {
 
 function levelChange(entry, newLevel, previousLevel) {
   TiCu.Log.XP.levelChange(entry, previousLevel)
-  if (newLevel > previousLevel && newLevel%4 === 0) {
+  if (newLevel > previousLevel && newLevel%4 === 0 && newLevel !== 0) {
     TiCu.Commands.vote.autoTurquoise(entry.id, newLevel/4)
   }
 }
