@@ -12,7 +12,7 @@ module.exports = {
     },
     name : "Level",
     desc : "Afficher le niveau d'un membre.",
-    schema : "!level <@>",
+    schema : "!level (@)",
     channels : "🦄la-maison-de-la-bot ",
     authors : "Toustes",
     roleNames : "Tous"
