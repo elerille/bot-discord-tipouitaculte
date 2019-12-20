@@ -88,7 +88,7 @@ module.exports = {
   autoTurquoise: function(targetId, voteNumber) {
     const targetMember = tipoui.members.get(targetId)
     if (targetMember && !targetMember.roles.get(PUB.tipoui.turquoise)) {
-      tipoui.channels.get(PUB.tipoui.debug).send(`Vote automatique de passage Turquoise #${voteNumber} pour ${targetMember}`)
+      tipoui.channels.get(PUB.tipoui.salleDesVotes).send(`Vote automatique de passage Turquoise #${voteNumber} pour ${targetMember}`)
         .then(newMsg => {
           if (TiCu.json(createJsonForAnonVote(newMsg, targetMember, 'turquoise'))) {
             addReactionsToMessage(newMsg)
