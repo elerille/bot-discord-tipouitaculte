@@ -144,6 +144,11 @@ module.exports = {
     },
     Level: function(target) {
       maxilog.send(`${TiCu.Date("log")} : Level\nImpossible de retrouver l'entrée correspondant à l'id membre ${target} en base de donnée`)
+    },
+    XPStatus: {
+      Error: function(target) {
+        maxilog.send(`${TiCu.Date("log")} : Level\nImpossible de retrouver l'entrée correspondant à l'id membre ${target} en base de donnée`)
+      }
     }
   },
   ReactionError: function(reaction, usr, type) {
@@ -188,6 +193,9 @@ module.exports = {
     },
     error: function(type, target) {
       switch(type) {
+        case TiCu.Xp.errorTypes.NOUPDATE:
+          maxilog.send(`${TiCu.Date("log")} : XP ERROR\nThere was a problem updating the XP for ${tipoui.members.get(target).displayName} : no entries updated`)
+          break;
         case TiCu.Xp.errorTypes.MULTIPLEUPDATE:
           maxilog.send(`${TiCu.Date("log")} : XP ERROR\nThere was a problem updating the XP for ${tipoui.members.get(target).displayName} : updated multiple entries`)
           break;

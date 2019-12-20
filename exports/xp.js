@@ -90,7 +90,9 @@ module.exports = {
                         returning: true
                     }).then(
                         ([numberUpdated, entries]) => {
-                            if (numberUpdated !== 1) {
+                            if (numberUpdated === 0) {
+                                TiCu.Log.XP.error(this.errorTypes.NOUPDATE, target)
+                            } else if (numberUpdated !== 1) {
                                 TiCu.Log.XP.error(this.errorTypes.MULTIPLEUPDATE, target)
                             } else {
                                 if (newLevel !== entry.level) {
@@ -124,7 +126,7 @@ module.exports = {
     getXpByLevel: function(level) {
         return xpByLevel(level)
     },
-    changeMemberStatus: function(target, activated) {
+    changeMemberStatus: function(target, activated, msg) {
         MemberXP.update({
             activated: activated
         }, {
@@ -134,9 +136,12 @@ module.exports = {
             returning: true
         }).then(
           ([numberUpdated, entries]) => {
-              if (numberUpdated !== 1) {
+              if (numberUpdated === 0) {
+                  TiCu.Log.XP.error(this.errorTypes.NOUPDATE, target)
+              } else if (numberUpdated !== 1) {
                   TiCu.Log.XP.error(this.errorTypes.MULTIPLEUPDATE, target)
               } else {
+                  if (msg) msg.channel.send(`Le compte de ${TiCu.Mention(target).displayName} est maintenant ${entries[0].activated ? 'activé' : 'désactivé'} dans le système`)
                   TiCu.Log.XP.statusChange(entries[0])
               }
           }
@@ -151,6 +156,7 @@ module.exports = {
         })
     },
     errorTypes: {
-        MULTIPLEUPDATE: 'multipleUpdate'
+        MULTIPLEUPDATE: 'multipleUpdate',
+        NOUPDATE: 'noUpdate'
     }
 }

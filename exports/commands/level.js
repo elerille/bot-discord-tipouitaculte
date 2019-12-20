@@ -13,7 +13,7 @@ module.exports = {
     name : "Level",
     desc : "Afficher le niveau d'un membre.",
     schema : "!level (@)",
-    channels : "🦄la-maison-de-la-bot ",
+    channels : "🦄la-maison-de-la-bot",
     authors : "Toustes",
     roleNames : "Tous"
   },
@@ -23,16 +23,20 @@ module.exports = {
      TiCu.Xp.getMember(target).then(
        entry => {
          if (entry) {
-           const totalXpForNextLevel = TiCu.Xp.getXpByLevel(entry.level + 1)
-           const totalXpForCurrentLevel = TiCu.Xp.getXpByLevel(entry.level)
-           const xpInLevelForMember = entry.xp - totalXpForCurrentLevel
-           const relativeXpForNextLevel = totalXpForNextLevel - totalXpForCurrentLevel
-           const completionPercentage = Math.floor(xpInLevelForMember / relativeXpForNextLevel * 100)
+           if (entry.activated) {
+             const totalXpForNextLevel = TiCu.Xp.getXpByLevel(entry.level + 1)
+             const totalXpForCurrentLevel = TiCu.Xp.getXpByLevel(entry.level)
+             const xpInLevelForMember = entry.xp - totalXpForCurrentLevel
+             const relativeXpForNextLevel = totalXpForNextLevel - totalXpForCurrentLevel
+             const completionPercentage = Math.floor(xpInLevelForMember / relativeXpForNextLevel * 100)
 
-           msg.channel.send(
-             `${memberParam ? memberParam.displayName + ' est' : 'Vous êtes'} au niveau ${entry.level} avec un total de ${Math.floor(entry.xp)}XP\n` +
-             `Le prochain niveau nécessite ${totalXpForNextLevel}XP et ${memberParam ? memberParam.displayName + ' est' : 'vous êtes'} à ${completionPercentage}% de complétion du niveau`
-           )
+             msg.channel.send(
+               `${memberParam ? memberParam.displayName + ' est' : 'Vous êtes'} au niveau ${entry.level} avec un total de ${Math.floor(entry.xp)}XP\n` +
+               `Le prochain niveau nécessite ${totalXpForNextLevel}XP et ${memberParam ? memberParam.displayName + ' est' : 'vous êtes'} à ${completionPercentage}% de complétion du niveau`
+             )
+           } else {
+             msg.channel.send(`${memberParam ? 'Le compte de ' + memberParam.displayName : 'Votre compte'} est désactivé dans le système`)
+           }
          } else {
            msg.channel.send('Impossible de retrouver votre cible dans le système')
            TiCu.Log.Commands.Level(target)
