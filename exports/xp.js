@@ -80,6 +80,13 @@ function updateLevel(level, target) {
   )
 }
 
+function levelChange(entry, newLevel, previousLevel) {
+  TiCu.Log.XP.levelChange(entry, previousLevel)
+  if (newLevel > previousLevel && newLevel%4 === 0) {
+    TiCu.Commands.vote.autoTurquoise(entry.id, newLevel/4)
+  }
+}
+
 module.exports = {
   updateXp: function (type, value, target) {
     let booster = 1
@@ -110,7 +117,7 @@ module.exports = {
                 TiCu.Log.XP.error(this.errorTypes.MULTIPLEUPDATE, target)
               } else {
                 if (newLevel !== entry.level) {
-                  TiCu.Log.XP.levelChange(entries[0], entry.level)
+                  levelChange(entries[0], newLevel, entry.level)
                 }
               }
             }
@@ -140,7 +147,7 @@ module.exports = {
                 } else if (numberUpdated !== 1) {
                   TiCu.Log.XP.error(this.errorTypes.MULTIPLEUPDATE, entries[i].id)
                 } else {
-                  TiCu.Log.XP.levelChange(subEntries[0], previousLevel)
+                  levelChange(subEntries[0], currentLevel, previousLevel)
                 }
               }
             )
@@ -200,6 +207,7 @@ module.exports = {
     })
   },
   errorTypes: {
+    AUTOVOTE: 'autovote',
     MULTIPLEUPDATE: 'multipleUpdate',
     NOUPDATE: 'noUpdate'
   }

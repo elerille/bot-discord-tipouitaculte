@@ -140,6 +140,10 @@ module.exports = {
         }
         maxilog.send(newMsg.content)
         msg.delete()
+      },
+      AutoTurquoise: function(newMsg, target, voteNumber) {
+        minilog.send(`Un nouveau vote anonyme automatique de passage Turquoise (#${voteNumber}) a été lancé pour ${TiCu.Mention(target)}`)
+        maxilog.send(newMsg.content)
       }
     },
     Level: function(target) {
@@ -194,6 +198,9 @@ module.exports = {
     },
     error: function(type, target) {
       switch(type) {
+        case TiCu.Xp.errorTypes.AUTOVOTE:
+          maxilog.send(`${TiCu.Date("log")} : XP ERROR\nThere was a problem launching the Turquoise auto vote for ${tipoui.members.get(target).displayName}`)
+          break;
         case TiCu.Xp.errorTypes.NOUPDATE:
           maxilog.send(`${TiCu.Date("log")} : XP ERROR\nThere was a problem updating the XP for ${tipoui.members.get(target).displayName} : no entries updated`)
           break;
