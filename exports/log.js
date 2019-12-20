@@ -140,7 +140,20 @@ module.exports = {
         }
         maxilog.send(newMsg.content)
         msg.delete()
+      },
+      AutoTurquoise: function(newMsg, target, voteNumber) {
+        minilog.send(`Un nouveau vote anonyme automatique de passage Turquoise (#${voteNumber}) a été lancé pour ${TiCu.Mention(target)}`)
+        maxilog.send(newMsg.content)
       }
+    },
+    Level: function(target) {
+      maxilog.send(`${TiCu.Date("log")} : Level\nImpossible de retrouver l'entrée correspondant à l'id membre ${target} en base de donnée`)
+    },
+    XPStatus: function(target) {
+      maxilog.send(`${TiCu.Date("log")} : XPStatus\nImpossible de retrouver l'entrée correspondant à l'id membre ${target} en base de donnée`)
+    },
+    Xp: function(msg, target, value, give) {
+      maxilog.send(`${TiCu.Date("log")} : XP\n${tipoui.members.get(msg.author.id).displayName} ${give ? 'gave' : 'took'} ${value} XP ${give ? 'to' : 'from'} ${target}`)
     }
   },
   ReactionError: function(reaction, usr, type) {
@@ -185,6 +198,12 @@ module.exports = {
     },
     error: function(type, target) {
       switch(type) {
+        case TiCu.Xp.errorTypes.AUTOVOTE:
+          maxilog.send(`${TiCu.Date("log")} : XP ERROR\nThere was a problem launching the Turquoise auto vote for ${tipoui.members.get(target).displayName}`)
+          break;
+        case TiCu.Xp.errorTypes.NOUPDATE:
+          maxilog.send(`${TiCu.Date("log")} : XP ERROR\nThere was a problem updating the XP for ${tipoui.members.get(target).displayName} : no entries updated`)
+          break;
         case TiCu.Xp.errorTypes.MULTIPLEUPDATE:
           maxilog.send(`${TiCu.Date("log")} : XP ERROR\nThere was a problem updating the XP for ${tipoui.members.get(target).displayName} : updated multiple entries`)
           break;
