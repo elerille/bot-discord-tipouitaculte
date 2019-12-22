@@ -75,6 +75,25 @@ function parseForAutoCommands(msg) {
   }
 }
 
+function createEmbedCopy(msg, user, edited = false, previousContent) {
+  let embed = new DiscordNPM.RichEmbed()
+    .setColor(user.displayColor)
+    .setAuthor(user.displayName, user.user.avatarURL, msg.url)
+    .setDescription(edited ? previousContent : msg.content)
+    .setTimestamp()
+  if (edited) {
+    embed.addField("Message édité", msg.content)
+  }
+  if(msg.attachments) {
+    let attachments = Array.from(msg.attachments.values())
+    for(let i=0;i<attachments.length;i++){
+      embed.addField("Pièce-jointe URL #" + i, attachments[i].url)
+      embed.addField("Pièce-jointe ProxyURL #" + i, attachments[i].proxyURL)
+    }
+  }
+  return embed
+}
+
 Discord.on("message", (msg) => {
   if(msg.author.id !== PUB.tipouitaculte && msg.author.id !== PUB.licorne) {
     TiCu.Xp.processXpFromMessage('add', msg)
@@ -82,18 +101,7 @@ Discord.on("message", (msg) => {
       let user = tipoui.members.get(msg.author.id) ? tipoui.members.get(msg.author.id) : undefined
       if(user) {
         if(!user.roles.find(e => e === PUB.tipoui.quarantaineRole)) {
-          let embed = new DiscordNPM.RichEmbed()
-            .setColor(user.displayColor)
-            .setAuthor(user.displayName, user.user.avatarURL, msg.url)
-            .setDescription(msg.content)
-            .setTimestamp()
-          if(msg.attachments) {
-            let attachments = Array.from(msg.attachments.values())
-            for(i=0;i<attachments.length;i++){
-              embed.addField("Pièce-jointe URL #" + i, attachments[i].url)
-              embed.addField("Pièce-jointe ProxyURL #" + i, attachments[i].proxyURL)
-            }
-          }
+          let embed = createEmbedCopy(msg, user)
           tipoui.channels.get(PUB.tipoui.botsecret).send(embed)
             .then(() => TiCu.Log.DM(embed, msg))
         } else msg.reply("utilise plutôt <#" + PUB.tipoui.quarantaineUser + "> s'il te plaît. Ce message n'a pas été transmis.")
@@ -101,19 +109,7 @@ Discord.on("message", (msg) => {
     } else if(msg.channel.id === PUB.tipoui.quarantaineUser || msg.channel.id === PUB.tipoui.quarantaineVigi) {
       if(msg.channel.id === PUB.tipoui.quarantaineUser) {
         let user = msg.member
-        let embed = new DiscordNPM.RichEmbed()
-          .setColor(user.displayColor)
-          .setAuthor(user.displayName, user.user.avatarURL, msg.url)
-          .setDescription(msg.content)
-          .setTimestamp()
-        if(msg.attachments) {
-          let attachments = Array.from(msg.attachments.values())
-          for(i=0;i<attachments.length;i++){
-            embed.addField("Pièce-jointe URL #" + i, attachments[i].url)
-            embed.addField("Pièce-jointe ProxyURL #" + i, attachments[i].proxyURL)
-          }
-        }
-        tipoui.channels.get(PUB.tipoui.quarantaineVigi).send(embed)
+        tipoui.channels.get(PUB.tipoui.quarantaineVigi).send(createEmbedCopy(msg, user))
           .then(newMsg => TiCu.Log.Quarantaine("reçu", newMsg, msg))
       } else if(msg.channel.id === PUB.tipoui.quarantaineVigi) {
         tipoui.channels.get(PUB.tipoui.quarantaineUser).send(msg.content)
@@ -141,6 +137,20 @@ Discord.on("messageDelete", (msg) => {
 Discord.on("messageUpdate", (oldMsg, newMsg) => {
   if(oldMsg.author.id !== PUB.tipouitaculte && oldMsg.author.id !== PUB.licorne) {
     TiCu.Xp.processXpMessageUpdate(oldMsg, newMsg)
+    if(newMsg.channel.type === "dm" ) {
+      let user = tipoui.members.get(newMsg.author.id) ? tipoui.members.get(newMsg.author.id) : undefined
+      if(user) {
+        if(!user.roles.find(e => e === PUB.tipoui.quarantaineRole)) {
+          let previousBotEmbed = tipoui.channels.get(PUB.tipoui.botsecret).messages.find(
+            msg => msg.author.bot && msg.embeds && msg.embeds[0].author.url === oldMsg.url
+          )
+          if (previousBotEmbed) {
+            let embed = createEmbedCopy(newMsg, user, true, previousBotEmbed.embeds[0].description)
+            previousBotEmbed.edit(embed).then(() => TiCu.Log.UpdatedDM(embed, newMsg))
+          } else TiCu.Log.UpdatedDM(undefined, newMsg, 'Could not find previous bot message to update')
+        }
+      }
+    }
   }
 })
 
