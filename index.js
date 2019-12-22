@@ -94,6 +94,12 @@ function createEmbedCopy(msg, user, edited = false, previousContent) {
   return embed
 }
 
+function retrieveMessageForEdit(originMsg, channel) {
+  return tipoui.channels.get(channel).messages.find(
+    msg => msg.author.bot && msg.embeds && msg.embeds[0].author.url === originMsg.url
+  )
+}
+
 Discord.on("message", (msg) => {
   if(msg.author.id !== PUB.tipouitaculte && msg.author.id !== PUB.licorne) {
     TiCu.Xp.processXpFromMessage('add', msg)
@@ -141,14 +147,26 @@ Discord.on("messageUpdate", (oldMsg, newMsg) => {
       let user = tipoui.members.get(newMsg.author.id) ? tipoui.members.get(newMsg.author.id) : undefined
       if(user) {
         if(!user.roles.find(e => e === PUB.tipoui.quarantaineRole)) {
-          let previousBotEmbed = tipoui.channels.get(PUB.tipoui.botsecret).messages.find(
-            msg => msg.author.bot && msg.embeds && msg.embeds[0].author.url === oldMsg.url
-          )
+          const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.tipoui.botsecret)
           if (previousBotEmbed) {
             let embed = createEmbedCopy(newMsg, user, true, previousBotEmbed.embeds[0].description)
             previousBotEmbed.edit(embed).then(() => TiCu.Log.UpdatedDM(embed, newMsg))
           } else TiCu.Log.UpdatedDM(undefined, newMsg, 'Could not find previous bot message to update')
         }
+      }
+    } else if(newMsg.channel.id === PUB.tipoui.quarantaineUser || newMsg.channel.id === PUB.tipoui.quarantaineVigi) {
+      if (newMsg.channel.id === PUB.tipoui.quarantaineUser) {
+        const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.tipoui.quarantaineVigi)
+        if (previousBotEmbed) {
+          let embed = createEmbedCopy(newMsg, newMsg.member, true, previousBotEmbed.embeds[0].description)
+          previousBotEmbed.edit(embed).then(msgEdited => TiCu.Log.UpdatedQuarantaine("reçu", msgEdited, newMsg))
+        } else TiCu.Log.UpdatedQuarantaine("reçu", undefined, newMsg, 'Could not find previous bot message to update')
+      } else if(newMsg.channel.id === PUB.tipoui.quarantaineVigi) {
+        const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.tipoui.quarantaineUser)
+        if (previousBotEmbed) {
+          let embed = createEmbedCopy(newMsg, newMsg.member, true, previousBotEmbed.embeds[0].description)
+          previousBotEmbed.edit(embed).then(msgEdited => TiCu.Log.UpdatedQuarantaine("envoyé", msgEdited, newMsg))
+        } else TiCu.Log.UpdatedQuarantaine("envoyé", undefined, newMsg, 'Could not find previous bot message to update')
       }
     }
   }

@@ -20,6 +20,14 @@ module.exports = {
     maxilog.send(TiCu.Date("log") + " : Quarantaine - " + type + "\n" + newMsg.url)
     msg.react("💬")
   },
+  UpdatedQuarantaine : function(type, newMsg, msg, error = undefined) {
+    if (error !== undefined) {
+      maxilog.send(`${TiCu.Date("log")} : UpdatedQuarantaine Error\n${error}`)
+    } else {
+      maxilog.send(TiCu.Date("log") + " : UpdatedQuarantaine - " + type + "\n" + newMsg.url)
+      msg.react("✅")
+    }
+  },
   DM : function(embed, msg) {
     maxilog.send(TiCu.Date("log") + " : DM")
     maxilog.send(embed)
