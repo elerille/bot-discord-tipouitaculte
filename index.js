@@ -5,8 +5,8 @@ const DiscordNPM = require("discord.js")
 const EventsModule = require("events")
 global.Server = EXPRESS()
 global.SequelizeDB = require("sequelize")
-global.DB = new SequelizeDB(CFG.sequelizeURL, {logging: false})
-global.Discord = new DiscordNPM.Client()
+global.DB = new SequelizeDB(CFG.sequelizeURL)
+global.Discord = new DiscordNPM.Client({disabledEvents: ['TYPING_START']})
 global.Event = new EventsModule.EventEmitter()
 global.PUB = require("./public.json");
 global.VotesFile = "private/votes.json";
@@ -135,6 +135,12 @@ Discord.on("message", (msg) => {
 Discord.on("messageDelete", (msg) => {
   if(msg.author.id !== PUB.tipouitaculte && msg.author.id !== PUB.licorne) {
     TiCu.Xp.processXpFromMessage('remove', msg)
+  }
+})
+
+Discord.on("messageUpdate", (oldMsg, newMsg) => {
+  if(oldMsg.author.id !== PUB.tipouitaculte && oldMsg.author.id !== PUB.licorne) {
+    TiCu.Xp.processXpMessageUpdate(oldMsg, newMsg)
   }
 })
 
