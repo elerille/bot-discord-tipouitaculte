@@ -25,6 +25,14 @@ module.exports = {
     maxilog.send(embed)
     msg.react("💬")
   },
+  UpdatedDM : function(embed, msg, error = undefined) {
+    if (error !== undefined) {
+      maxilog.send(`${TiCu.Date("log")} : UpdatedDM Error\n${error}`)
+    } else {
+      maxilog.send(TiCu.Date("log") + " : UpdatedDM", embed)
+      msg.react("✅")
+    }
+  },
   VoteUpdate : function(usr, emoji, msg) {
     const user = tipoui.members.get(usr)
     maxilog.send(TiCu.Date("log") + " : VoteCollections\n" + user.displayName + " a voté " + emoji + " sur le vote :\n" + msg.url)
