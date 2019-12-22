@@ -1,3 +1,35 @@
+function generateProgressionBar(percentage) {
+  const complete = '▰'
+  const incomplete = '▱'
+  let bar = ""
+  for (let i=0;i<10;i++) {
+    if (percentage >= (i+1)*10) {
+      bar += complete
+    } else {
+      bar += incomplete
+    }
+  }
+  return bar
+}
+
+function makeEmbed(user, msg, entry) {
+  const totalXpForNextLevel = TiCu.Xp.getXpByLevel(entry.level + 1)
+  const totalXpForCurrentLevel = TiCu.Xp.getXpByLevel(entry.level)
+  const xpInLevelForMember = entry.xp - totalXpForCurrentLevel
+  const relativeXpForNextLevel = totalXpForNextLevel - totalXpForCurrentLevel
+  const completionPercentage = Math.floor(xpInLevelForMember / relativeXpForNextLevel * 100)
+  const embed = new DiscordNPM.RichEmbed()
+    .setColor(user.displayColor)
+    .setAuthor(`Niveau de ${user.displayName}`, user.user.avatarURL, msg.url)
+  embed.addField("Niveau", entry.level, true)
+  embed.addField("Expérience", Math.floor(entry.xp), true)
+  if (user.roles.get(PUB.tipoui.turquoise)) {
+    embed.addField("Prochain niveau dans", relativeXpForNextLevel)
+    embed.addField("Complétion du niveau", `${completionPercentage}%\n${generateProgressionBar(completionPercentage)}`, true)
+  }
+  return embed
+}
+
 module.exports = {
   authorizations : {
     chans : {
@@ -24,16 +56,7 @@ module.exports = {
        entry => {
          if (entry) {
            if (entry.activated) {
-             const totalXpForNextLevel = TiCu.Xp.getXpByLevel(entry.level + 1)
-             const totalXpForCurrentLevel = TiCu.Xp.getXpByLevel(entry.level)
-             const xpInLevelForMember = entry.xp - totalXpForCurrentLevel
-             const relativeXpForNextLevel = totalXpForNextLevel - totalXpForCurrentLevel
-             const completionPercentage = Math.floor(xpInLevelForMember / relativeXpForNextLevel * 100)
-
-             msg.channel.send(
-               `${memberParam ? memberParam.displayName + ' est' : 'Vous êtes'} au niveau ${entry.level} avec un total de ${Math.floor(entry.xp)}XP\n` +
-               `Le prochain niveau nécessite ${totalXpForNextLevel}XP et ${memberParam ? memberParam.displayName + ' est' : 'vous êtes'} à ${completionPercentage}% de complétion du niveau`
-             )
+             msg.channel.send(makeEmbed(tipoui.members.get(target), msg, entry))
            } else {
              msg.channel.send(`${memberParam ? 'Le compte de ' + memberParam.displayName : 'Votre compte'} est désactivé dans le système`)
            }

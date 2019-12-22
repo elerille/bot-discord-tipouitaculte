@@ -1,11 +1,11 @@
 // Init
 const CFG = require("./private.json")
 const EXPRESS = require("express")
-const DiscordNPM = require("discord.js")
 const EventsModule = require("events")
 global.Server = EXPRESS()
 global.SequelizeDB = require("sequelize")
 global.DB = new SequelizeDB(CFG.sequelizeURL)
+global.DiscordNPM = require("discord.js")
 global.Discord = new DiscordNPM.Client({disabledEvents: ['TYPING_START']})
 global.Event = new EventsModule.EventEmitter()
 global.PUB = require("./public.json");
