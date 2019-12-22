@@ -151,7 +151,8 @@ Discord.on("messageUpdate", (oldMsg, newMsg) => {
  * @param type "add" | "remove"
  */
 function parseReaction(reaction, usr, type) {
-  if (!usr.bot) {
+  if (!usr.bot && !reaction.message.author.bot) {
+    TiCu.Xp.reactionXp(type, reaction, usr)
     let found = false
     for (const reactionFunction of Object.values(TiCu.Reactions)) {
       if (reaction.emoji.name === reactionFunction.emoji) {
@@ -166,11 +167,9 @@ function parseReaction(reaction, usr, type) {
 }
 
 Discord.on("messageReactionAdd", (reaction, usr) => {
-  TiCu.Xp.reactionXp('add', reaction, usr)
   parseReaction(reaction, usr, "add")
 })
 Discord.on("messageReactionRemove", (reaction, usr) => {
-  TiCu.Xp.reactionXp('remove', reaction, usr)
   parseReaction(reaction, usr, "remove")
 })
 Discord.on("guildMemberAdd", usr => {
