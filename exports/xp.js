@@ -87,6 +87,11 @@ function levelChange(entry, newLevel, previousLevel) {
   }
 }
 
+function xpFromMessage(msg) {
+  const charNb = msg.content.length
+  return charNb * XPPERCHARACTER * Math.pow(Math.ceil(charNb / CHARACTERSJUMPRATE), CHARACTERJUMPPOWER) * (msg.channel.parent.id === PUB.xpWhitelistCategories.discordtainment ? DISCORDTAINMENTMULTIPLIER : 1)
+}
+
 module.exports = {
   updateXp: function (type, value, target) {
     let booster = 1
@@ -158,9 +163,14 @@ module.exports = {
   },
   processXpFromMessage: function (type, msg) {
     if (systemAccessAuthorised(msg)) {
-      const charNb = msg.content.length
-      const xp = charNb * XPPERCHARACTER * Math.pow(Math.ceil(charNb / CHARACTERSJUMPRATE), CHARACTERJUMPPOWER) * (msg.channel.parent.id === PUB.xpWhitelistCategories.discordtainment ? DISCORDTAINMENTMULTIPLIER : 1)
-      this.updateXp(type, xp, msg.author.id)
+      this.updateXp(type, xpFromMessage(msg), msg.author.id)
+    }
+  },
+  processXpMessageUpdate: function (oldMsg, newMsg) {
+    if (systemAccessAuthorised(oldMsg)) {
+      const oldXp = xpFromMessage(oldMsg)
+      const newXp = xpFromMessage(newMsg)
+      this.updateXp('add', newXp - oldXp, oldMsg.author.id)
     }
   },
   reactionXp: function (type, reaction, usr) {
