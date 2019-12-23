@@ -5,18 +5,18 @@ function voteThreshold(type) {
     case "ban":
       return 12
     case "turquoise":
-      return Math.floor(tipoui.roles.get(PUB.tipoui.turquoise).members.size/10)
+      return Math.floor(tipoui.roles.get(PUB.tipoui.turquoise).members.size*42/100)
     case "text":
       return -1
   }
 }
 
 function addReactionsToMessage(msg) {
-  msg.react("✅")
+  msg.react(VotesEmojis[0])
     .then(async function() {
-      await msg.react("⚪")
-      await msg.react("🛑")
-      await msg.react("⏱")
+      await msg.react(VotesEmojis[1])
+      await msg.react(VotesEmojis[2])
+      await msg.react(VotesEmojis[3])
     })
 }
 
@@ -57,13 +57,12 @@ module.exports = {
     let type = params[1]
     if(anon){
       if(type === "kick" || type === "ban") {
-        /* if(msg.channel.id === PUB.tipoui.salleDesVotes || msg.channel.id === PUB.tipoui.automoderation) { */
-        if(msg.channel.id === PUB.debug.botsecret) {
+        if(msg.channel.id === PUB.tipoui.salleDesVotes || msg.channel.id === PUB.tipoui.automoderation) {
           if(params[2]) {target = TiCu.Mention(params[2])}
           else { return TiCu.Log.Error("vote", "les votes de kick et de ban nécessitent une cible")}
         } else {return TiCu.Log.Error("vote", "les votes de kick et de ban sont restreints aux salons <#" + PUB.tipoui.automoderation + "> et <#" + PUB.tipoui.salleDesVotes +">", msg)}
       } else if(type === "turquoise") {
-        if(msg.channel.id === PUB.tipoui.salleDesVotes) {
+        if(msg.channel.id === PUB.tipoui.debug) {
           if(params[2]) {target = TiCu.Mention(params[2])}
           else { return TiCu.Log.Error("vote", "les votes de passage Turquoise nécessitent une cible")}
         } else {return TiCu.Log.Error("vote", "les votes de passage Turquoise sont restreints au salon <#" + PUB.tipoui.salleDesVotes + ">", msg)}
@@ -71,7 +70,7 @@ module.exports = {
       if(typeof target != "object" && type !== "text") {return TiCu.Log.Error("vote", "cible invalide")}
       crop = new RegExp(/^!vote\s+[^\s]+\s+/)
       if(!msg.content.match(crop)) {return TiCu.Log.Error("vote", "il manque des paramètres", msg)}
-      msg.channel.send(msg.content.substring(msg.content.match(crop)[0].length))
+      msg.channel.send(TiCu.VotesCollections.CreateEmbedAnon(target, type, voteThreshold(type)))
         .then(newMsg => {
           if(TiCu.json(createJsonForAnonVote(newMsg, target, type))) {
             addReactionsToMessage(newMsg)

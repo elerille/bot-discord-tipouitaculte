@@ -5,6 +5,12 @@ emojiTable[VotesEmojis[1]] = "non";
 emojiTable[VotesEmojis[2]] = "blanc";
 emojiTable[VotesEmojis[3]] = "delai";
 
+const results = {
+  oui: "Proposition validée",
+  non: "Proposition rejetée",
+  delai: "Proposition ajournée"
+}
+
 function filterReactions(expectedEmojis) {
   return (reaction, user) => {return (!user.bot) && (expectedEmojis.includes(reaction.emoji.name))}
 }
@@ -22,6 +28,21 @@ function checkThreshold(vote, collector) {
       }
       break
     case "turquoise":
+      let nbVotes = 0
+      for (const votes of Object.values(vote.votes)) {
+        nbVotes += votes.length
+      }
+      if (nbVotes >= vote.threshold) {
+        const nbVotesDelay = vote.votes.delai.length
+        if (nbVotesDelay >= nbVotes) {
+          collector.stop("delai")
+        } else if ((vote.votes.oui.length + vote.votes.blanc.length/2) / (nbVotes - nbVotesDelay) >= 0.75) {
+          collector.stop("oui")
+        } else {
+          collector.stop("non")
+        }
+      }
+      break
     default:
       if (vote.votes.oui.length >= vote.threshold) {
         collector.stop("oui")
@@ -57,7 +78,22 @@ function updateVotes(reaction, collector) {
     )
   }
   votesJSON[msg.id].votes[emojiTable[reaction.emoji.name]].push(user)
+  if (votesJSON[msg.id].type === "turquoise" && emojiTable[reaction.emoji.name] !== alreadyVoted) {
+    if (emojiTable[reaction.emoji.name] === "delai") {
+      votesJSON[msg.id].threshold++
+    } else if (alreadyVoted === "delai") {
+      votesJSON[msg.id].threshold--
+    }
+  }
   fs.writeFileSync(VotesFile, JSON.stringify(votesJSON, null, 2))
+  reaction.message.edit(
+    TiCu.VotesCollections.CreateEmbedAnon(
+      tipoui.members.get(votesJSON[msg.id].target),
+      votesJSON[msg.id].type,
+      votesJSON[msg.id].threshold,
+      votesJSON[msg.id]
+    )
+  )
   checkThreshold(votesJSON[msg.id], collector)
   TiCu.Log.VoteUpdate(user, emojiTable[reaction.emoji.name], msg)
 }
@@ -114,7 +150,36 @@ module.exports = {
     } else {
       TiCu.Log.VoteDone(reason, type, msg, target)
     }
+    msg.edit(
+      TiCu.VotesCollections.CreateEmbedAnon(
+        tipoui.members.get(votesJSON[msg.id].target),
+        votesJSON[msg.id].type,
+        votesJSON[msg.id].threshold,
+        votesJSON[msg.id],
+        results[reason]
+      )
+    )
     delete votesJSON[msg.id]
     fs.writeFileSync(VotesFile, JSON.stringify(votesJSON, null, 2))
+  },
+  CreateEmbedAnon: (target, type, threshold, voteJson = undefined, result = undefined) => {
+    let nbVotes = 0
+    if (voteJson !== undefined) {
+      for (const votes of Object.values(voteJson.votes)) {
+        nbVotes += votes.length
+      }
+    }
+    const embed = new DiscordNPM.RichEmbed()
+      .setColor(target.displayColor)
+      .setAuthor(`Vote de ${type === "turquoise" ? "passage" : ""} ${type.toUpperCase()} pour ${target.displayName}`, target.user.avatarURL)
+    for (const emoji of VotesEmojis) {
+      embed.addField(emoji, voteJson !== undefined ? voteJson.votes[emojiTable[emoji]].length : 0, emoji !== VotesEmojis[3])
+    }
+    embed.addField("Votes nécessaires", threshold, true)
+    embed.addField("Votes actuels", nbVotes, true)
+    if (result !== undefined) {
+      embed.addField("Résultat du vote", result)
+    }
+    return embed
   }
 }
