@@ -36,10 +36,10 @@ global.TiCu = {
     xp : require("./exports/commands/xp.js")
   },
   Reactions : {
-    heart : require("./exports/reactions/heart.js")
+    // heart : require("./exports/reactions/heart.js")
   },
   Auto : {
-    suchTruc : require("./exports/auto/suchTruc.js")
+    // suchTruc : require("./exports/auto/suchTruc.js")
   }
 }
 
