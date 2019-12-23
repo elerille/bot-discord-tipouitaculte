@@ -15,6 +15,6 @@ module.exports = {
   },
   run : function(msg) {
     msg.reply("Much auto reaction !")
-    TiCu.Log.Auto.SuchTruc(msg)
+    // TiCu.Log.Auto.SuchTruc(msg)
   }
 }
