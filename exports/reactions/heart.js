@@ -17,6 +17,6 @@ module.exports = {
     }
   },
   run : function(reaction, usr, type) {
-    TiCu.Log.Reactions.Heart(reaction, usr, type)
+    // TiCu.Log.Reactions.Heart(reaction, usr, type)
   }
 }
