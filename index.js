@@ -179,7 +179,7 @@ Discord.on("messageUpdate", (oldMsg, newMsg) => {
  * @param type "add" | "remove"
  */
 function parseReaction(reaction, usr, type) {
-  if (!usr.bot && !reaction.message.author.bot) {
+  if (!usr.bot && !reaction.message.author.bot && reaction.message.guild.id === PUB.tipoui.commu) {
     TiCu.Xp.reactionXp(type, reaction, usr)
     let found = false
     for (const reactionFunction of Object.values(TiCu.Reactions)) {
