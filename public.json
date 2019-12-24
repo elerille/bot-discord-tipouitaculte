@@ -137,7 +137,7 @@
   "roles": {
     "quarantaineRole": {
       "id": "458559408667099136",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "458559408667099136",
@@ -150,7 +150,7 @@
     },
     "nso": {
       "id": "420333202142396426",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": false,
       "alias": [
         "420333202142396426",
@@ -159,7 +159,7 @@
     },
     "phosphate": {
       "id": "355047698698862592",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "355047698698862592",
@@ -172,7 +172,7 @@
     },
     "pourfendeureuse": {
       "id": "451734752181878786",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "451734752181878786",
@@ -188,7 +188,7 @@
     },
     "turquoise": {
       "id": "396989117164158978",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "396989117164158978",
@@ -198,7 +198,7 @@
     },
     "turquoiseColor": {
       "id": "649433183087099944",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": false,
       "alias": [
         "649433183087099944",
@@ -207,7 +207,7 @@
     },
     "luxure": {
       "id": "507916444701556739",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "507916444701556739",
@@ -221,7 +221,7 @@
     },
     "demolisseureuse": {
       "id": "355060952422416386",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "355060952422416386",
@@ -234,7 +234,7 @@
     },
     "hammer": {
       "id": "507916432462577715",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": false,
       "alias": [
         "507916432462577715",
@@ -243,7 +243,7 @@
     },
     "grrrrl": {
       "id": "396988815266545665",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "396988815266545665",
@@ -254,7 +254,7 @@
     },
     "naughty": {
       "id": "507916442826571776",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": false,
       "alias": [
         "507916442826571776",
@@ -263,7 +263,7 @@
     },
     "queer": {
       "id": "396991048993341440",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "396991048993341440",
@@ -272,7 +272,7 @@
     },
     "certainementpascis": {
       "id": "455720096799653902",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias":[
         "455720096799653902",
@@ -284,7 +284,7 @@
     },
     "ace": {
       "id": "439068938123345940",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "439068938123345940",
@@ -294,7 +294,7 @@
     },
     "aro": {
       "id": "525280639386386462",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "525280639386386462",
@@ -306,7 +306,7 @@
     },
     "vote": {
       "id": "522444644999495680",
-      "xpMultiplicator": 0,
+      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "522444644999495680",
@@ -319,7 +319,7 @@
     },
     "armu": {
       "id": "355279700492550146",
-      "xpMultiplicator": 0.4,
+      "xpAddedMultiplicator": 0.4,
       "givable": false,
       "alias": [
         "355279700492550146",
@@ -328,7 +328,7 @@
     },
     "nitro": {
       "id": "585563517109927977",
-      "xpMultiplicator": 0.4,
+      "xpAddedMultiplicator": 0.4,
       "givable": false,
       "alias": [
         "585563517109927977",
@@ -337,7 +337,7 @@
     },
     "utip": {
       "id": "540538037747056652",
-      "xpMultiplicator": 0.4,
+      "xpAddedMultiplicator": 0.4,
       "givable": false,
       "alias": [
         "540538037747056652",

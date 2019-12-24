@@ -91,7 +91,7 @@ module.exports = {
   updateXp: function (type, value, target) {
     let booster = 1
     for (const role of Object.values(PUB.tipoui.roles)) {
-      if (tipoui.members.get(target).roles.get(role.id)) booster = booster + role.xpMultiplicator
+      if (tipoui.members.get(target).roles.get(role.id)) booster = booster + role.xpAddedMultiplicator
     }
     value = value * booster
     MemberXP.findOrCreate({where: {id: target}, defaults: {level: 0, xp: 0, activated: true}}).then(
