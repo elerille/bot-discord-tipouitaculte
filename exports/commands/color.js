@@ -31,10 +31,10 @@ module.exports = {
     let usr = msg.member
     let oldRole = usr.roles.find(e => e.name.match(colorHexa))
     let newRole = tipoui.roles.find(e => e.hexColor === input)
-    if(usr.roles.get(PUB.tipoui.turquoise)) {
+    if(usr.roles.get(PUB.roles.turquoise.id)) {
       if(input === "none" || input === "remove" || input === "reset" || input === "enlever" || input === "réinitialiser" || input === "turquoise" || input === "#11e0e6"){
-        if(!usr.roles.has(PUB.tipoui.turquoiseColor)) {
-          usr.addRole(PUB.tipoui.turquoiseColor)
+        if(!usr.roles.has(PUB.roles.turquoiseColor.id)) {
+          usr.addRole(PUB.roles.turquoiseColor.id)
           if(oldRole) {
             usr.removeRole(oldRole)
             checkRoleUsage(oldRole, usr, msg)

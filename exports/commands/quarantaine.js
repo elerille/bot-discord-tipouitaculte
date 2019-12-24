@@ -32,7 +32,7 @@ module.exports = {
       case "+":
       case "ajouter":
       case "add":
-        if(!(target.roles.get(PUB.tipoui.quarantaineRole))) {
+        if(!(target.roles.get(PUB.roles.quarantaineRole.id))) {
           msg.reply("voulez-vous mettre <@" + target.id + "> en quarantaine ?")
             .then(newMsg => {
               newMsg
@@ -53,7 +53,7 @@ module.exports = {
                       json.content[target.id].date = TiCu.Date("fr")
                       if(TiCu.json(json)) {
                         try {
-                          target.addRole(PUB.tipoui.quarantaineRole)
+                          target.addRole(PUB.roles.quarantaineRole.id)
                           target.removeRoles(roles)
                             .then(TiCu.Log.Commands.Quarantaine(true, target, reason, msg))
                         } catch {TiCu.Log.Error("quarantaine", "erreur de modification des rôles", msg)}
@@ -74,7 +74,7 @@ module.exports = {
       case "retirer":
       case "supprimer":
       case "remove":
-        if((target.roles.get(PUB.tipoui.quarantaineRole))) {
+        if((target.roles.get(PUB.roles.quarantaineRole.id))) {
           msg.reply("voulez-vous sortir <@" + target.id + "> de quarantaine ?")
             .then(newMsg => {
               newMsg
@@ -96,7 +96,7 @@ module.exports = {
                         if(read) {
                           if(TiCu.json(jsonRemove)) {
                             try {
-                              target.removeRole(PUB.tipoui.quarantaineRole)
+                              target.removeRole(PUB.roles.quarantaineRole.id)
                               target.addRoles(read[target.id].roles)
                                 .then(TiCu.Log.Prefixed.Quarantaine(false, target, reason, msg))
                             } catch {TiCu.Log.Error("quarantaine", "erreur de modification des rôles")}
@@ -115,7 +115,7 @@ module.exports = {
         break
       case "status":
       case "statut":
-        let status = !(target.roles.get(PUB.tipoui.quarantaineRole)) ? "est" : "n'est pas"
+        let status = !(target.roles.get(PUB.roles.quarantaineRole.id)) ? "est" : "n'est pas"
         return msg.reply("<@" + target.id + "> " + status + " en quarantaine.")
       default:
         return TiCu.Log.Error("quarantaine", "action non reconnue", msg)

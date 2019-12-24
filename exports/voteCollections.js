@@ -139,7 +139,7 @@ module.exports = {
             .then(() => TiCu.Log.VoteDone(reason, type, msg, target))
           break
         case "turquoise":
-          tipoui.members.get(target).addRoles([PUB.tipoui.turquoise, PUB.tipoui.turquoiseColor])
+          tipoui.members.get(target).addRoles([PUB.roles.turquoise.id, PUB.roles.turquoiseColor.id])
             .then(() => TiCu.Log.VoteDone(reason, type, msg, target))
           break
         case "text":

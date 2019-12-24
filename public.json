@@ -19,22 +19,7 @@
     "genTutu": "462953650772246528",
     "bots": "398825094019022852",
     "quarantaineUser": "588452032839680031",
-    "quarantaineVigi": "469268187335360532",
-    "quarantaineRole": "458559408667099136",
-    "nso": "420333202142396426",
-    "phosphate": "355047698698862592",
-    "turquoise": "396989117164158978",
-    "turquoiseColor": "649433183087099944",
-    "votesRole": "522444644999495680",
-    "pourfendeureuse": "451734752181878786",
-    "luxure": "507916444701556739",
-    "demolisseureuse": "355060952422416386",
-    "hammer": "507916432462577715",
-    "grrrrl": "396988815266545665",
-    "naughty": "507916442826571776",
-    "armu": "355279700492550146",
-    "nitro": "585563517109927977",
-    "utip": "540538037747056652"
+    "quarantaineVigi": "469268187335360532"
   },
   "debug": {
     "server": "519618688010158090",
@@ -88,92 +73,214 @@
     "quarantaineVigi": "469268187335360532"
   },
   "roles": {
-    "quarantaineRole": "458559408667099136",
-    "nso": "420333202142396426",
-    "phosphate": "355047698698862592",
-    "pourfendeureuse": "451734752181878786",
-    "turquoise": "396989117164158978",
-    "turquoiseColor": "649433183087099944",
-    "luxure": "507916444701556739",
-    "demolisseureuse": "355060952422416386",
-    "hammer": "507916432462577715",
-    "grrrrl": "396988815266545665",
-    "naughty": "507916442826571776"
-  },
-  "rolesA": [
-    [
-      "355047698698862592",
-      "pho",
-      "phos",
-      "phosphate",
-      "phosphatealumine",
-      "phosphatedalumine"
-    ], [
-      "396989117164158978",
-      "tutu",
-      "turquoise"
-    ], [
-      "355060952422416386",
-      "démo",
-      "démolisseur",
-      "démolisseuse",
-      "démolisseureuse",
-      "patriarcaca"
-    ], [
-      "396991048993341440",
-      "queer"
-    ], [
-      "396988815266545665",
-      "girl",
-      "grrrl",
-      "grrrrl"
-    ], [
-      "455720096799653902",
-      "cpc",
-      "certainementpascis",
-      "pascis",
-      "cisn't"
-    ], [
-      "439068938123345940",
-      "ace",
-      "acecake"
-    ], [
-      "525280639386386462",
-      "aro",
-      "arrow",
-      "arobow",
-      "aromantique"
-    ], [
-      "507916444701556739",
-      "luxure",
-      "luxureon",
-      "grandbain",
-      "grandsbains",
-      "salonchaud",
-      "salonschauds"
-    ], [
-      "451734752181878786",
-      "pourfendeureuse",
-      "pourfendeur",
-      "pourfendeuse",
-      "pourfendeureusedecismecs",
-      "misandre",
-      "cismisandre",
-      "misandrie",
-      "cismisandrie"
-    ], [
-      "522444644999495680",
-      "vote",
-      "votant",
-      "votante",
-      "votant·e",
-      "votant.e"
-    ], [
-      "458559408667099136",
-      "quarantaine",
-      "oubliettes",
-      "azkaban",
-      "goulag"
-    ]
-  ]
+    "quarantaineRole": {
+      "id": "458559408667099136",
+      "xpMultiplicator": 0,
+      "givable": true,
+      "alias": [
+        "458559408667099136",
+        "quarantaine",
+        "oubliettes",
+        "azkaban",
+        "goulag",
+        "quarantaineRole"
+      ]
+    },
+    "nso": {
+      "id": "420333202142396426",
+      "xpMultiplicator": 0,
+      "givable": false,
+      "alias": [
+        "420333202142396426",
+        "nso"
+      ]
+    },
+    "phosphate": {
+      "id": "355047698698862592",
+      "xpMultiplicator": 0,
+      "givable": true,
+      "alias": [
+        "355047698698862592",
+        "pho",
+        "phos",
+        "phosphate",
+        "phosphatealumine",
+        "phosphatedalumine"
+      ]
+    },
+    "pourfendeureuse": {
+      "id": "451734752181878786",
+      "xpMultiplicator": 0,
+      "givable": true,
+      "alias": [
+        "451734752181878786",
+        "pourfendeureuse",
+        "pourfendeur",
+        "pourfendeuse",
+        "pourfendeureusedecismecs",
+        "misandre",
+        "cismisandre",
+        "misandrie",
+        "cismisandrie"
+      ]
+    },
+    "turquoise": {
+      "id": "396989117164158978",
+      "xpMultiplicator": 0,
+      "givable": true,
+      "alias": [
+        "396989117164158978",
+        "tutu",
+        "turquoise"
+      ]
+    },
+    "turquoiseColor": {
+      "id": "649433183087099944",
+      "xpMultiplicator": 0,
+      "givable": false,
+      "alias": [
+        "649433183087099944",
+        "turquoiseColor"
+      ]
+    },
+    "luxure": {
+      "id": "507916444701556739",
+      "xpMultiplicator": 0,
+      "givable": true,
+      "alias": [
+        "507916444701556739",
+        "luxure",
+        "luxureon",
+        "grandbain",
+        "grandsbains",
+        "salonchaud",
+        "salonschauds"
+      ]
+    },
+    "demolisseureuse": {
+      "id": "355060952422416386",
+      "xpMultiplicator": 0,
+      "givable": true,
+      "alias": [
+        "355060952422416386",
+        "démo",
+        "démolisseur",
+        "démolisseuse",
+        "démolisseureuse",
+        "patriarcaca"
+      ]
+    },
+    "hammer": {
+      "id": "507916432462577715",
+      "xpMultiplicator": 0,
+      "givable": false,
+      "alias": [
+        "507916432462577715",
+        "hammer"
+      ]
+    },
+    "grrrrl": {
+      "id": "396988815266545665",
+      "xpMultiplicator": 0,
+      "givable": true,
+      "alias": [
+        "396988815266545665",
+        "girl",
+        "grrrl",
+        "grrrrl"
+      ]
+    },
+    "naughty": {
+      "id": "507916442826571776",
+      "xpMultiplicator": 0,
+      "givable": false,
+      "alias": [
+        "507916442826571776",
+        "naughty"
+      ]
+    },
+    "queer": {
+      "id": "396991048993341440",
+      "xpMultiplicator": 0,
+      "givable": true,
+      "alias": [
+        "396991048993341440",
+        "queer"
+      ]
+    },
+    "certainementpascis": {
+      "id": "455720096799653902",
+      "xpMultiplicator": 0,
+      "givable": true,
+      "alias":[
+        "455720096799653902",
+        "cpc",
+        "certainementpascis",
+        "pascis",
+        "cisn't"
+      ]
+    },
+    "ace": {
+      "id": "439068938123345940",
+      "xpMultiplicator": 0,
+      "givable": true,
+      "alias": [
+        "439068938123345940",
+        "ace",
+        "acecake"
+      ]
+    },
+    "aro": {
+      "id": "525280639386386462",
+      "xpMultiplicator": 0,
+      "givable": true,
+      "alias": [
+        "525280639386386462",
+        "aro",
+        "arrow",
+        "arobow",
+        "aromantique"
+      ]
+    },
+    "vote": {
+      "id": "522444644999495680",
+      "xpMultiplicator": 0,
+      "givable": true,
+      "alias": [
+        "522444644999495680",
+        "vote",
+        "votant",
+        "votante",
+        "votant·e",
+        "votant.e"
+      ]
+    },
+    "armu": {
+      "id": "355279700492550146",
+      "xpMultiplicator": 0.4,
+      "givable": false,
+      "alias": [
+        "355279700492550146",
+        "armu"
+      ]
+    },
+    "nitro": {
+      "id": "585563517109927977",
+      "xpMultiplicator": 0.4,
+      "givable": false,
+      "alias": [
+        "585563517109927977",
+        "nitro"
+      ]
+    },
+    "utip": {
+      "id": "540538037747056652",
+      "xpMultiplicator": 0.4,
+      "givable": false,
+      "alias": [
+        "540538037747056652",
+        "utip"
+      ]
+    }
+  }
 }

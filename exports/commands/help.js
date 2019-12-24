@@ -58,12 +58,14 @@ module.exports = {
       embed
         .setColor(38600)
         .setTitle("Liste des rôles et alias pour la commande !roles")
-      for(let i=0;i<PUB.rolesA.length;i++) {
-        let values = ""
-        for(let j=1;j<PUB.rolesA[i].length;j++) {
-          values += PUB.rolesA[i][j] + "\n"
+      for (const role of Object.values(PUB.roles)) {
+        if (role.givable) {
+          let values = ""
+          for (let j = 1; j < role.alias.length; j++) {
+            values += role.alias[j] + "\n"
+          }
+          embed.addField(role.id, values, true)
         }
-        embed.addField(PUB.rolesA[i][0], values, true)
       }
       msg.channel.send({ embed })
     } else if(!target) {

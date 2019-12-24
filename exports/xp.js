@@ -8,16 +8,9 @@ const CHARACTERJUMPPOWER = 1.2
 const XPREACTION = 0.05
 const XPREACTEDTO = 0.01
 
-const ROLEMULTIPLICATOR = 0.4
 const DISCORDTAINMENTMULTIPLIER = 0.01
 
 const LEVELMAX = 100
-
-const multiplierRoles = [
-  PUB.tipoui.armu,
-  PUB.tipoui.nitro,
-  PUB.tipoui.utip
-]
 
 const whitelistCategories = Object.values(PUB.xpWhitelistCategories)
 const blackListChannels = Object.values(PUB.xpBlacklistChannels)
@@ -95,8 +88,8 @@ function xpFromMessage(msg) {
 module.exports = {
   updateXp: function (type, value, target) {
     let booster = 1
-    for (const role of multiplierRoles) {
-      if (tipoui.members.get(target).roles.get(role)) booster = booster + ROLEMULTIPLICATOR
+    for (const role of Object.values(PUB.tipoui.roles)) {
+      if (tipoui.members.get(target).roles.get(role.id)) booster = booster + role.xpMultiplicator
     }
     value = value * booster
     MemberXP.findOrCreate({where: {id: target}, defaults: {level: 0, xp: 0, activated: true}}).then(
