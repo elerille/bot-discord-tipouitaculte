@@ -2,7 +2,7 @@ module.exports = {
   authorizations : {
     chans : {
       type: "whitelist",
-      list: [PUB.salons.debug, PUB.salons.bots, PUB.salons.botsecret]
+      list: [PUB.salons.debug.id, PUB.salons.bots.id, PUB.salons.botsecret.id]
     },
     auths : {
       type: "any"
@@ -37,7 +37,7 @@ module.exports = {
         }
         break;
       case 2:
-        if (msg.channel.id === PUB.salons.botsecret) { // only able to change status for another one in interface-tipoui
+        if (msg.channel.id === PUB.salons.botsecret.id) { // only able to change status for another one in interface-tipoui
           const memberParam = params[1] ? TiCu.Mention(params[1]) : null
           const target = memberParam ? memberParam.id : msg.author.id
           TiCu.Xp.changeMemberStatus(target, params[0] === 'inclure', msg)
