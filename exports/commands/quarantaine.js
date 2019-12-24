@@ -46,7 +46,7 @@ module.exports = {
                     const reaction = collected.firstKey();
                     if (reaction === "👍") {
                       let roles = []
-                      target.roles.array().forEach((role, i) => {if(!(role.name.match(colorRole) || role.name === "@everyone" || role.name === "@here" || role.id === PUB.tipoui.nso)) {roles.push(role.id)}})
+                      target.roles.array().forEach((role, i) => {if(!(role.name.match(colorRole) || role.name === "@everyone" || role.name === "@here" || role.id === PUB.roles.nso.id)) {roles.push(role.id)}})
                       let json = {"action": "write","content": {}}
                       json.target = quarantaineFile
                       json.content[target.id] = {"roles": roles}
