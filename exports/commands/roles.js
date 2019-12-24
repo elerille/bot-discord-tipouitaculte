@@ -43,7 +43,7 @@ module.exports = {
     for(let i=2;i<params.length;i++) {
       for (const role of Object.values(PUB.roles)) {
         if (role.givable) {
-          if (role.alias.find(k => k === params[i])) {
+          if (role.alias.find(j => j === params[i])) {
             roles.push(role.id)
             break
           }
