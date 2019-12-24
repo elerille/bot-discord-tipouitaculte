@@ -1,10 +1,4 @@
 {
-  "tipouitaculte": "638410922527817748",
-  "tentaculte": "430020470897770516",
-  "electrolune": "442965211054473216",
-  "pluralkit": "466378653216014359",
-  "licorne": "417400498706972692",
-  "xenolune": "222028577405665283",
   "debug": {
     "server": "519618688010158090",
     "minilog": "638754913924415488",
@@ -95,10 +89,6 @@
       "xpFactor":  0
     }
   },
-  "xpBlacklistChannels": {
-    "pluralKit": "518792870002688030",
-    "botHome": "398825094019022852"
-  },
   "users": {
     "tipouitaculte": "638410922527817748",
     "tentaculte": "430020470897770516",
@@ -108,18 +98,58 @@
     "xenolune": "222028577405665283"
   },
   "salons": {
-    "invite": "355042383249014784",
-    "botsecret": "468843915500322826",
-    "miniLog": "425379017055797258",
-    "maxiLog": "655950138568867841",
-    "bots": "398825094019022852",
-    "debug": "641333805445283850",
-    "automoderation": "551780962686468111",
-    "salleDesVotes": "437317393144872970",
-    "quarantaineUser": "588452032839680031",
-    "quarantaineVigi": "469268187335360532",
-    "genTP": "355041349147295744",
-    "genTutu": "462953650772246528"
+    "genTP": {
+      "id": "355041349147295744",
+      "xpFactor": 1
+    },
+    "genTutu": {
+      "id": "462953650772246528",
+      "xpFactor": 1
+    },
+    "invite": {
+      "id": "355042383249014784",
+      "xpFactor": 1
+    },
+    "automoderation": {
+      "id": "551780962686468111",
+      "xpFactor": 1
+    },
+    "salleDesVotes": {
+      "id": "437317393144872970",
+      "xpFactor": 1
+    },
+    "quarantaineUser": {
+      "id": "588452032839680031",
+      "xpFactor": 0
+    },
+    "quarantaineVigi": {
+      "id": "469268187335360532",
+      "xpFactor": 0
+    },
+    "botsecret": {
+      "id": "468843915500322826",
+      "xpFactor": 0
+    },
+    "debug": {
+      "id": "641333805445283850",
+      "xpFactor": 0
+    },
+    "miniLog": {
+      "id": "425379017055797258",
+      "xpFactor": 0
+    },
+    "maxiLog": {
+      "id": "655950138568867841",
+      "xpFactor": 0
+    },
+    "pluralKit": {
+      "id": "518792870002688030",
+      "xpFactor": 0
+    },
+    "bots": {
+      "id": "398825094019022852",
+      "xpFactor": 0
+    }
   },
   "roles": {
     "quarantaineRole": {

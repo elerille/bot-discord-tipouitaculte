@@ -10,8 +10,6 @@ const XPREACTEDTO = 0.01
 
 const LEVELMAX = 100
 
-const blackListChannels = Object.values(PUB.xpBlacklistChannels)
-
 const MemberXP = DB.define('memberxp', {
   id: {
     type: SequelizeDB.STRING,
@@ -51,8 +49,7 @@ function calculateLevelByXp(xp) {
 
 function systemAccessAuthorised(msg) {
   return msg.channel.type === 'text' && // is in a GuildChannel
-    msg.guild.id === PUB.servers.commu && // is in Tipoui Guild
-    !blackListChannels.includes(msg.channel.id) // is not in the excluded channels
+    msg.guild.id === PUB.servers.commu // is in Tipoui Guild
 }
 
 function updateLevel(level, target) {
@@ -81,9 +78,14 @@ function categoryMultiplier(categoryId) {
   return category ? category.xpFactor : 1
 }
 
+function channelMultiplier(channelId) {
+  const channel = TiCu.Channels.findById(channelId)
+  return channel ? channel.xpFactor : 1
+}
+
 function xpFromMessage(msg) {
   const charNb = msg.content.length
-  return charNb * XPPERCHARACTER * Math.pow(Math.ceil(charNb / CHARACTERSJUMPRATE), CHARACTERJUMPPOWER) * categoryMultiplier(msg.channel.parent.id)
+  return charNb * XPPERCHARACTER * Math.pow(Math.ceil(charNb / CHARACTERSJUMPRATE), CHARACTERJUMPPOWER) * categoryMultiplier(msg.channel.parent.id) * channelMultiplier(msg.channel.id)
 }
 
 module.exports = {
@@ -171,8 +173,9 @@ module.exports = {
     if (systemAccessAuthorised(reaction.message)) {
       if (usr.id !== reaction.message.author.id && !usr.bot && !reaction.message.author.bot) {
         const categoryMul = categoryMultiplier(reaction.message.channel.parent.id)
-        this.updateXp(type, XPREACTION * categoryMul, usr.id)
-        this.updateXp(type, XPREACTEDTO * categoryMul, reaction.message.author.id)
+        const channelMul = channelMultiplier(reaction.message.channel.id)
+        this.updateXp(type, XPREACTION * categoryMul * channelMul, usr.id)
+        this.updateXp(type, XPREACTEDTO * categoryMul * channelMul, reaction.message.author.id)
       }
     }
   },

@@ -59,7 +59,7 @@ function updateVotes(reaction, collector) {
   let msg = reaction.message
   let user
   for (const id of reaction.users.keyArray()) {
-    if (id !== PUB.tipouitaculte) {
+    if (id !== PUB.users.tipouitaculte) {
       user = id
       reaction.remove(user)
       break
