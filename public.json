@@ -33,21 +33,83 @@
     "vigi": "554773912374870058",
     "debug": "519618688010158090"
   },
-  "xpWhitelistCategories": {
-    "autogestion": "551795860888092672",
-    "parle": "419613512197996555",
-    "cour": "527497597695295490",
-    "grandePlace": "362627525958172693",
-    "partage": "614975797249310725",
-    "peluches": "362626529861173248",
-    "armes": "362625419322851348",
-    "caat": "615120040110456868,",
-    "labhormones": "451721976772427797",
-    "YuffyEstUneMerveille": "362624989494771713",
-    "grandsBains": "362627405841432598",
-    "events": "420328037184438284",
-    "tipouiLeJeu": "619082555739734045",
-    "discordtainment": "477972349464084520"
+  "categories": {
+    "vigilantes": {
+      "id": "471664550887030784",
+      "xpFactor":  0
+    },
+    "saintesRegles": {
+      "id": "453701464364154882",
+      "xpFactor":  0
+    },
+    "autogestion": {
+      "id": "551795860888092672",
+      "xpFactor":  1
+    },
+    "parle": {
+      "id": "419613512197996555",
+      "xpFactor":  1
+    },
+    "cour": {
+      "id": "527497597695295490",
+      "xpFactor":  1
+    },
+    "grandePlace": {
+      "id": "362627525958172693",
+      "xpFactor":  1
+    },
+    "partage": {
+      "id": "614975797249310725",
+      "xpFactor":  1
+    },
+    "peluches": {
+      "id": "362626529861173248",
+      "xpFactor":  1
+    },
+    "armes": {
+      "id": "362625419322851348",
+      "xpFactor":  1
+    },
+    "caat": {
+      "id": "615120040110456868,",
+      "xpFactor":  1
+    },
+    "labhormones": {
+      "id": "451721976772427797",
+      "xpFactor":  1
+    },
+    "YuffyEstUneMerveille": {
+      "id": "362624989494771713",
+      "xpFactor":  1
+    },
+    "grandsBains": {
+      "id": "362627405841432598",
+      "xpFactor":  1
+    },
+    "events": {
+      "id": "420328037184438284",
+      "xpFactor":  1
+    },
+    "tipouiLeJeu": {
+      "id": "619082555739734045",
+      "xpFactor":  1
+    },
+    "discordtainment": {
+      "id": "477972349464084520",
+      "xpFactor":  0.01
+    },
+    "archivesGen": {
+      "id": "523263927954702336",
+      "xpFactor":  0
+    },
+    "archivesEvent": {
+      "id": "619099850813997056",
+      "xpFactor":  0
+    },
+    "archivesCaat": {
+      "id": "641935050639671296",
+      "xpFactor":  0
+    }
   },
   "xpBlacklistChannels": {
     "pluralKit": "518792870002688030",

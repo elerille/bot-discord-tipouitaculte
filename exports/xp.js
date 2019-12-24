@@ -8,11 +8,8 @@ const CHARACTERJUMPPOWER = 1.2
 const XPREACTION = 0.05
 const XPREACTEDTO = 0.01
 
-const DISCORDTAINMENTMULTIPLIER = 0.01
-
 const LEVELMAX = 100
 
-const whitelistCategories = Object.values(PUB.xpWhitelistCategories)
 const blackListChannels = Object.values(PUB.xpBlacklistChannels)
 
 const MemberXP = DB.define('memberxp', {
@@ -80,9 +77,14 @@ function levelChange(entry, newLevel, previousLevel) {
   }
 }
 
+function categoryMultiplier(categoryId) {
+  const category = Object.values(PUB.categories).find(v => v.id === categoryId)
+  return category ? category.xpFactor : 1
+}
+
 function xpFromMessage(msg) {
   const charNb = msg.content.length
-  return charNb * XPPERCHARACTER * Math.pow(Math.ceil(charNb / CHARACTERSJUMPRATE), CHARACTERJUMPPOWER) * (msg.channel.parent.id === PUB.xpWhitelistCategories.discordtainment ? DISCORDTAINMENTMULTIPLIER : 1)
+  return charNb * XPPERCHARACTER * Math.pow(Math.ceil(charNb / CHARACTERSJUMPRATE), CHARACTERJUMPPOWER) * categoryMultiplier(msg.channel.parent.id)
 }
 
 module.exports = {
@@ -169,8 +171,9 @@ module.exports = {
   reactionXp: function (type, reaction, usr) {
     if (systemAccessAuthorised(reaction.message)) {
       if (usr.id !== reaction.message.author.id && !usr.bot && !reaction.message.author.bot) {
-        this.updateXp(type, XPREACTION, usr.id)
-        this.updateXp(type, XPREACTEDTO, reaction.message.author.id)
+        const categoryMul = categoryMultiplier(reaction.message.channel.parent.id)
+        this.updateXp(type, XPREACTION * categoryMul, usr.id)
+        this.updateXp(type, XPREACTEDTO * categoryMul, reaction.message.author.id)
       }
     }
   },
