@@ -47,9 +47,9 @@ global.TiCu = {
 // Discord
 Discord.login( CFG.discordToken )
 Discord.once("ready", () => {
-    global.tipoui = Discord.guilds.get(PUB.tipoui.commu)
-    global.maxilog = Discord.channels.get(PUB.tipoui.maxilog)
-    global.minilog = Discord.channels.get(PUB.tipoui.minilog)
+    global.tipoui = Discord.guilds.get(PUB.servers.commu)
+    global.maxilog = Discord.channels.get(PUB.salons.maxiLog)
+    global.minilog = Discord.channels.get(PUB.salons.miniLog)
     console.log(TiCu.Date("log") + " : Connexion à Discord.")
     maxilog.send(TiCu.Date("log") + " : Reconnexion.")
     minilog.send("Coucou, je suis de retour ♥")
@@ -57,7 +57,7 @@ Discord.once("ready", () => {
     Server.get(
       "/discord/invite",
       function(req, res) {
-        Discord.channels.get(PUB.tipoui.invite)
+        Discord.channels.get(PUB.salons.invite)
           .createInvite({maxUses : 1, maxAge : 300})
           .then(invite => {
             res.send(invite.url)
@@ -109,17 +109,17 @@ Discord.on("message", (msg) => {
       if(user) {
         if(!user.roles.find(e => e === PUB.roles.quarantaineRole.id)) {
           let embed = createEmbedCopy(msg, user)
-          tipoui.channels.get(PUB.tipoui.botsecret).send(embed)
+          tipoui.channels.get(PUB.salons.botsecret).send(embed)
             .then(() => TiCu.Log.DM(embed, msg))
-        } else msg.reply("utilise plutôt <#" + PUB.tipoui.quarantaineUser + "> s'il te plaît. Ce message n'a pas été transmis.")
+        } else msg.reply("utilise plutôt <#" + PUB.salons.quarantaineUser + "> s'il te plaît. Ce message n'a pas été transmis.")
       } else msg.reply("je ne parle qu'aux gens de Tipoui ♥")
-    } else if(msg.channel.id === PUB.tipoui.quarantaineUser || msg.channel.id === PUB.tipoui.quarantaineVigi) {
-      if(msg.channel.id === PUB.tipoui.quarantaineUser) {
+    } else if(msg.channel.id === PUB.salons.quarantaineUser || msg.channel.id === PUB.salons.quarantaineVigi) {
+      if(msg.channel.id === PUB.salons.quarantaineUser) {
         let user = msg.member
-        tipoui.channels.get(PUB.tipoui.quarantaineVigi).send(createEmbedCopy(msg, user))
+        tipoui.channels.get(PUB.salons.quarantaineVigi).send(createEmbedCopy(msg, user))
           .then(newMsg => TiCu.Log.Quarantaine("reçu", newMsg, msg))
-      } else if(msg.channel.id === PUB.tipoui.quarantaineVigi) {
-        tipoui.channels.get(PUB.tipoui.quarantaineUser).send(msg.content)
+      } else if(msg.channel.id === PUB.salons.quarantaineVigi) {
+        tipoui.channels.get(PUB.salons.quarantaineUser).send(msg.content)
           .then(newMsg => TiCu.Log.Quarantaine("envoyé", newMsg, msg))
       }
     } else if(msg.content.match(/^![a-zA-Z]/)) {
@@ -148,22 +148,22 @@ Discord.on("messageUpdate", (oldMsg, newMsg) => {
       let user = tipoui.members.get(newMsg.author.id) ? tipoui.members.get(newMsg.author.id) : undefined
       if(user) {
         if(!user.roles.find(e => e === PUB.roles.quarantaineRole.id)) {
-          const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.tipoui.botsecret)
+          const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.salons.botsecret)
           if (previousBotEmbed) {
             let embed = createEmbedCopy(newMsg, user, true, previousBotEmbed.embeds[0].description)
             previousBotEmbed.edit(embed).then(() => TiCu.Log.UpdatedDM(embed, newMsg))
           } else TiCu.Log.UpdatedDM(undefined, newMsg, 'Could not find previous bot message to update')
         }
       }
-    } else if(newMsg.channel.id === PUB.tipoui.quarantaineUser || newMsg.channel.id === PUB.tipoui.quarantaineVigi) {
-      if (newMsg.channel.id === PUB.tipoui.quarantaineUser) {
-        const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.tipoui.quarantaineVigi)
+    } else if(newMsg.channel.id === PUB.salons.quarantaineUser || newMsg.channel.id === PUB.salons.quarantaineVigi) {
+      if (newMsg.channel.id === PUB.salons.quarantaineUser) {
+        const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.salons.quarantaineVigi)
         if (previousBotEmbed) {
           let embed = createEmbedCopy(newMsg, newMsg.member, true, previousBotEmbed.embeds[0].description)
           previousBotEmbed.edit(embed).then(msgEdited => TiCu.Log.UpdatedQuarantaine("reçu", msgEdited, newMsg))
         } else TiCu.Log.UpdatedQuarantaine("reçu", undefined, newMsg, 'Could not find previous bot message to update')
-      } else if(newMsg.channel.id === PUB.tipoui.quarantaineVigi) {
-        const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.tipoui.quarantaineUser)
+      } else if(newMsg.channel.id === PUB.salons.quarantaineVigi) {
+        const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.salons.quarantaineUser)
         if (previousBotEmbed) {
           let embed = createEmbedCopy(newMsg, newMsg.member, true, previousBotEmbed.embeds[0].description)
           previousBotEmbed.edit(embed).then(msgEdited => TiCu.Log.UpdatedQuarantaine("envoyé", msgEdited, newMsg))
@@ -180,7 +180,7 @@ Discord.on("messageUpdate", (oldMsg, newMsg) => {
  * @param type "add" | "remove"
  */
 function parseReaction(reaction, usr, type) {
-  if (!usr.bot && !reaction.message.author.bot && reaction.message.guild.id === PUB.tipoui.commu) {
+  if (!usr.bot && !reaction.message.author.bot && reaction.message.guild.id === PUB.servers.commu) {
     TiCu.Xp.reactionXp(type, reaction, usr)
     let found = false
     for (const reactionFunction of Object.values(TiCu.Reactions)) {
@@ -205,7 +205,7 @@ Discord.on("guildMemberAdd", usr => {
   if(usr.guild.id === tipoui.id) {
     maxilog.send(TiCu.Date("log") + " : Arrivée de membre\n" + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
     minilog.send("Arrivée de " + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
-    tipoui.channels.get(PUB.tipoui.genTP).send("Oh ! Bienvenue <@" + usr.id + "> ! Je te laisse lire les Saintes Règles, rajouter tes pronoms dans ton pseudo et nous faire une ptite présentation dans le salon qui va bien :heart:\nSi tu n'as pas fait vérifier ton numéro de téléphone ou d'abonnement Nitro, il va aussi te falloir aussi attendre 10 petites minutes que Discord s'assure tu n'es pas une sorte d'ordinateur mutant venu de l'espace... Même si en vrai ça serait trop cool quand même !")
+    tipoui.channels.get(PUB.salons.genTP).send("Oh ! Bienvenue <@" + usr.id + "> ! Je te laisse lire les Saintes Règles, rajouter tes pronoms dans ton pseudo et nous faire une ptite présentation dans le salon qui va bien :heart:\nSi tu n'as pas fait vérifier ton numéro de téléphone ou d'abonnement Nitro, il va aussi te falloir aussi attendre 10 petites minutes que Discord s'assure tu n'es pas une sorte d'ordinateur mutant venu de l'espace... Même si en vrai ça serait trop cool quand même !")
   }
 })
 Discord.on("guildMemberRemove", usr => {
@@ -218,7 +218,7 @@ Discord.on("guildMemberUpdate", (oldUsr, newUsr) => {
   if(newUsr.roles.get(PUB.roles.turquoise.id) && !oldUsr.roles.get(PUB.roles.turquoise.id)) {
     newUsr.addRole(PUB.roles.turquoiseColor.id)
     newUsr.addRole(PUB.roles.vote.id)
-    tipoui.channels.get(PUB.tipoui.genTutu).send("Bienvenue parmi les 💠Turquoises <@" + newUsr.id + "> ! <:turquoise_heart:417784485724028938>\nTu as désormais accès à de nouveaux salons, notamment <#453706061031931905> où tu pourras découvrir les spécificités de cette promotion. Par ailleurs, n'hésite pas à consulter <#453702956315836436> pour voir les rôles auxquels tu peux prétendre, et demande-les-moi par message privé.")
+    tipoui.channels.get(PUB.salons.genTutu).send("Bienvenue parmi les 💠Turquoises <@" + newUsr.id + "> ! <:turquoise_heart:417784485724028938>\nTu as désormais accès à de nouveaux salons, notamment <#453706061031931905> où tu pourras découvrir les spécificités de cette promotion. Par ailleurs, n'hésite pas à consulter <#453702956315836436> pour voir les rôles auxquels tu peux prétendre, et demande-les-moi par message privé.")
   }
   if(newUsr.roles.get(PUB.roles.luxure.id)) {
     if(!newUsr.roles.get(PUB.roles.hammer.id) && newUsr.roles.get(PUB.roles.demolisseureuse.id)) {newUsr.addRole(PUB.roles.hammer.id)}

@@ -37,8 +37,8 @@ module.exports = function(param) {
         target = tipoui.members.find(e => e.displayName === param)
       } else if(tipoui.channels.find(e => e.name === param)) {
         target = tipoui.channels.find(e => e.name === param)
-      } else if(Discord.guilds.get(PUB.tipoui.vigi).channels.find(e => e.name === param)) {
-        target = Discord.guilds.get(PUB.tipoui.vigi).channels.find(e => e.name === param)
+      } else if(Discord.guilds.get(PUB.servers.vigi).channels.find(e => e.name === param)) {
+        target = Discord.guilds.get(PUB.servers.vigi).channels.find(e => e.name === param)
       } else if(Discord.guilds.get(PUB.debug.server).channels.find(e => e.name === param)) {
         target = Discord.guilds.get(PUB.debug.server).channels.find(e => e.name === param)
       } else if(tipoui.roles.find(e => e.name === param)) {

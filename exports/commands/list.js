@@ -2,7 +2,7 @@ module.exports = {
   authorizations : {
     chans : {
       type: "whitelist",
-      list: [PUB.tipoui.debug]
+      list: [PUB.salons.debug]
     },
     auths : {
       type: "any"
