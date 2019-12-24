@@ -36,7 +36,7 @@ function checkThreshold(vote, collector) {
         const nbVotesDelay = vote.votes.delai.length
         if (nbVotesDelay >= nbVotes) {
           collector.stop("delai")
-        } else if ((vote.votes.oui.length + vote.votes.blanc.length/2) / (nbVotes - nbVotesDelay) >= 0.75) {
+        } else if ((vote.votes.oui.length + (vote.votes.blanc.length + nbVotesDelay)/2) / nbVotes >= 0.75) {
           collector.stop("oui")
         } else {
           collector.stop("non")
