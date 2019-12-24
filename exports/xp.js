@@ -51,8 +51,7 @@ function calculateLevelByXp(xp) {
 
 function systemAccessAuthorised(msg) {
   return msg.channel.type === 'text' && // is in a GuildChannel
-    msg.guild.id === PUB.tipoui.commu && // is in Tipoui Guild
-    whitelistCategories.includes(msg.channel.parent.id) && // is in the right categories
+    msg.guild.id === PUB.servers.commu && // is in Tipoui Guild
     !blackListChannels.includes(msg.channel.id) // is not in the excluded channels
 }
 
@@ -78,7 +77,7 @@ function levelChange(entry, newLevel, previousLevel) {
 }
 
 function categoryMultiplier(categoryId) {
-  const category = Object.values(PUB.categories).find(v => v.id === categoryId)
+  const category = TiCu.Categories.findById(categoryId)
   return category ? category.xpFactor : 1
 }
 

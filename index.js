@@ -19,6 +19,7 @@ global.TiCu = {
   Mention : require("./exports/mention.js"),
   Authorizations : require("./exports/authorizations.js"),
   VotesCollections : require("./exports/voteCollections.js"),
+  Categories : require("./exports/categories.js"),
   Commands : {
     ban : require("./exports/commands/ban.js"),
     bienvenue : require("./exports/commands/bienvenue.js"),
