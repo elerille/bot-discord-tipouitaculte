@@ -19,6 +19,7 @@ global.TiCu = {
   Mention : require("./exports/mention.js"),
   Authorizations : require("./exports/authorizations.js"),
   VotesCollections : require("./exports/voteCollections.js"),
+  Categories : require("./exports/categories.js"),
   Commands : {
     ban : require("./exports/commands/ban.js"),
     bienvenue : require("./exports/commands/bienvenue.js"),
@@ -106,7 +107,7 @@ Discord.on("message", (msg) => {
     if(msg.channel.type === "dm" ) {
       let user = tipoui.members.get(msg.author.id) ? tipoui.members.get(msg.author.id) : undefined
       if(user) {
-        if(!user.roles.find(e => e === PUB.tipoui.quarantaineRole)) {
+        if(!user.roles.find(e => e === PUB.roles.quarantaineRole.id)) {
           let embed = createEmbedCopy(msg, user)
           tipoui.channels.get(PUB.tipoui.botsecret).send(embed)
             .then(() => TiCu.Log.DM(embed, msg))
@@ -146,7 +147,7 @@ Discord.on("messageUpdate", (oldMsg, newMsg) => {
     if(newMsg.channel.type === "dm" ) {
       let user = tipoui.members.get(newMsg.author.id) ? tipoui.members.get(newMsg.author.id) : undefined
       if(user) {
-        if(!user.roles.find(e => e === PUB.tipoui.quarantaineRole)) {
+        if(!user.roles.find(e => e === PUB.roles.quarantaineRole.id)) {
           const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.tipoui.botsecret)
           if (previousBotEmbed) {
             let embed = createEmbedCopy(newMsg, user, true, previousBotEmbed.embeds[0].description)
@@ -214,19 +215,19 @@ Discord.on("guildMemberRemove", usr => {
   }
 })
 Discord.on("guildMemberUpdate", (oldUsr, newUsr) => {
-  if(newUsr.roles.get(PUB.tipoui.turquoise) && !oldUsr.roles.get(PUB.tipoui.turquoise)) {
-    newUsr.addRole(PUB.tipoui.turquoiseColor)
-    newUsr.addRole(PUB.tipoui.votesRole)
+  if(newUsr.roles.get(PUB.roles.turquoise.id) && !oldUsr.roles.get(PUB.roles.turquoise.id)) {
+    newUsr.addRole(PUB.roles.turquoiseColor.id)
+    newUsr.addRole(PUB.roles.vote.id)
     tipoui.channels.get(PUB.tipoui.genTutu).send("Bienvenue parmi les 💠Turquoises <@" + newUsr.id + "> ! <:turquoise_heart:417784485724028938>\nTu as désormais accès à de nouveaux salons, notamment <#453706061031931905> où tu pourras découvrir les spécificités de cette promotion. Par ailleurs, n'hésite pas à consulter <#453702956315836436> pour voir les rôles auxquels tu peux prétendre, et demande-les-moi par message privé.")
   }
-  if(newUsr.roles.get(PUB.tipoui.luxure)) {
-    if(!newUsr.roles.get(PUB.tipoui.hammer) && newUsr.roles.get(PUB.tipoui.demolisseureuse)) {newUsr.addRole(PUB.tipoui.hammer)}
-    else if(newUsr.roles.get(PUB.tipoui.hammer) && !newUsr.roles.get(PUB.tipoui.demolisseureuse)) {newUsr.removeRole(PUB.tipoui.hammer)}
-    if(!newUsr.roles.get(PUB.tipoui.naughty) && newUsr.roles.get(PUB.tipoui.grrrrl)) {newUsr.addRole(PUB.tipoui.naughty)}
-    else if(newUsr.roles.get(PUB.tipoui.naughty) && !newUsr.roles.get(PUB.tipoui.grrrrl)) {newUsr.removeRole(PUB.tipoui.naughty)}
-  } else if(oldUsr.roles.get(PUB.tipoui.luxure) && !newUsr.roles.get(PUB.tipoui.luxure)) {
-    if(newUsr.roles.get(PUB.tipoui.hammer)) {newUsr.removeRole(PUB.tipoui.hammer)}
-    if(newUsr.roles.get(PUB.tipoui.naughty)) {newUsr.removeRole(PUB.tipoui.naughty)}
+  if(newUsr.roles.get(PUB.roles.luxure.id)) {
+    if(!newUsr.roles.get(PUB.roles.hammer.id) && newUsr.roles.get(PUB.roles.demolisseureuse.id)) {newUsr.addRole(PUB.roles.hammer.id)}
+    else if(newUsr.roles.get(PUB.roles.hammer.id) && !newUsr.roles.get(PUB.roles.demolisseureuse.id)) {newUsr.removeRole(PUB.roles.hammer.id)}
+    if(!newUsr.roles.get(PUB.roles.naughty.id) && newUsr.roles.get(PUB.roles.grrrrl.id)) {newUsr.addRole(PUB.roles.naughty.id)}
+    else if(newUsr.roles.get(PUB.roles.naughty.id) && !newUsr.roles.get(PUB.roles.grrrrl.id)) {newUsr.removeRole(PUB.roles.naughty.id)}
+  } else if(oldUsr.roles.get(PUB.roles.luxure.id) && !newUsr.roles.get(PUB.roles.luxure.id)) {
+    if(newUsr.roles.get(PUB.roles.hammer.id)) {newUsr.removeRole(PUB.roles.hammer.id)}
+    if(newUsr.roles.get(PUB.roles.naughty.id)) {newUsr.removeRole(PUB.roles.naughty.id)}
   }
 })
 

@@ -41,10 +41,12 @@ module.exports = {
         action = false
     }
     for(let i=2;i<params.length;i++) {
-      for(let j=0;j<PUB.rolesA.length;j++) {
-        if(PUB.rolesA[j].find(k => k === params[i])) {
-          roles.push(PUB.rolesA[j][0])
-          break
+      for (const role of Object.values(PUB.roles)) {
+        if (role.givable) {
+          if (role.alias.find(j => j === params[i])) {
+            roles.push(role.id)
+            break
+          }
         }
       }
     }

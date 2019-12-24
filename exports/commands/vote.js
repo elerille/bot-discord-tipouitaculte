@@ -5,7 +5,7 @@ function voteThreshold(type) {
     case "ban":
       return 12
     case "turquoise":
-      return Math.floor(tipoui.roles.get(PUB.tipoui.turquoise).members.size*42/100)
+      return Math.floor(tipoui.roles.get(PUB.roles.turquoise.id).members.size*42/100)
     case "text":
       return -1
   }
@@ -86,7 +86,7 @@ module.exports = {
   },
   autoTurquoise: function(targetId, voteNumber) {
     const targetMember = tipoui.members.get(targetId)
-    if (targetMember && !targetMember.roles.get(PUB.tipoui.turquoise)) {
+    if (targetMember && !targetMember.roles.get(PUB.roles.turquoise.id)) {
       tipoui.channels.get(PUB.tipoui.salleDesVotes).send(`Vote automatique de passage Turquoise #${voteNumber} pour ${targetMember}`)
         .then(newMsg => {
           if (TiCu.json(createJsonForAnonVote(newMsg, targetMember, 'turquoise'))) {

@@ -8,18 +8,8 @@ const CHARACTERJUMPPOWER = 1.2
 const XPREACTION = 0.05
 const XPREACTEDTO = 0.01
 
-const ROLEMULTIPLICATOR = 0.4
-const DISCORDTAINMENTMULTIPLIER = 0.01
-
 const LEVELMAX = 100
 
-const multiplierRoles = [
-  PUB.tipoui.armu,
-  PUB.tipoui.nitro,
-  PUB.tipoui.utip
-]
-
-const whitelistCategories = Object.values(PUB.xpWhitelistCategories)
 const blackListChannels = Object.values(PUB.xpBlacklistChannels)
 
 const MemberXP = DB.define('memberxp', {
@@ -61,8 +51,7 @@ function calculateLevelByXp(xp) {
 
 function systemAccessAuthorised(msg) {
   return msg.channel.type === 'text' && // is in a GuildChannel
-    msg.guild.id === PUB.tipoui.commu && // is in Tipoui Guild
-    whitelistCategories.includes(msg.channel.parent.id) && // is in the right categories
+    msg.guild.id === PUB.servers.commu && // is in Tipoui Guild
     !blackListChannels.includes(msg.channel.id) // is not in the excluded channels
 }
 
@@ -87,16 +76,21 @@ function levelChange(entry, newLevel, previousLevel) {
   }
 }
 
+function categoryMultiplier(categoryId) {
+  const category = TiCu.Categories.findById(categoryId)
+  return category ? category.xpFactor : 1
+}
+
 function xpFromMessage(msg) {
   const charNb = msg.content.length
-  return charNb * XPPERCHARACTER * Math.pow(Math.ceil(charNb / CHARACTERSJUMPRATE), CHARACTERJUMPPOWER) * (msg.channel.parent.id === PUB.xpWhitelistCategories.discordtainment ? DISCORDTAINMENTMULTIPLIER : 1)
+  return charNb * XPPERCHARACTER * Math.pow(Math.ceil(charNb / CHARACTERSJUMPRATE), CHARACTERJUMPPOWER) * categoryMultiplier(msg.channel.parent.id)
 }
 
 module.exports = {
   updateXp: function (type, value, target) {
     let booster = 1
-    for (const role of multiplierRoles) {
-      if (tipoui.members.get(target).roles.get(role)) booster = booster + ROLEMULTIPLICATOR
+    for (const role of Object.values(PUB.roles)) {
+      if (tipoui.members.get(target).roles.get(role.id)) booster = booster + role.xpAddedMultiplicator
     }
     value = value * booster
     MemberXP.findOrCreate({where: {id: target}, defaults: {level: 0, xp: 0, activated: true}}).then(
@@ -176,8 +170,9 @@ module.exports = {
   reactionXp: function (type, reaction, usr) {
     if (systemAccessAuthorised(reaction.message)) {
       if (usr.id !== reaction.message.author.id && !usr.bot && !reaction.message.author.bot) {
-        this.updateXp(type, XPREACTION, usr.id)
-        this.updateXp(type, XPREACTEDTO, reaction.message.author.id)
+        const categoryMul = categoryMultiplier(reaction.message.channel.parent.id)
+        this.updateXp(type, XPREACTION * categoryMul, usr.id)
+        this.updateXp(type, XPREACTEDTO * categoryMul, reaction.message.author.id)
       }
     }
   },

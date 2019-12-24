@@ -9,7 +9,7 @@ module.exports = {
     },
     roles : {
       type: "whitelist",
-      list: [PUB.tipoui.pourfendeureuse]
+      list: [PUB.roles.pourfendeureuse.id]
     },
     name : "Purifier",
     desc : "Accorder l'accès au salon du Bûcher et le rôle de Pourfendeureuse de Cismecs à eun membre.",
@@ -21,8 +21,8 @@ module.exports = {
   run : function(params, msg) {
     let target
     if(TiCu.Mention(params[0])) {target = TiCu.Mention(params[0])} else return TiCu.Log.Error("purifier", "cible invalide", msg)
-    if(!target.roles.find(e => e.id === PUB.tipoui.pourfendeureuse)) {
-      target.addRole(PUB.tipoui.pourfendeureuse)
+    if(!target.roles.find(e => e.id === PUB.roles.pourfendeureuse.id)) {
+      target.addRole(PUB.roles.pourfendeureuse.id)
       TiCu.Log.Commands.Purifier(target, msg)
     } else return TiCu.Log.Error("purifier", "cible déjà Pourfendeureuse de Cismecs", msg)
   }
