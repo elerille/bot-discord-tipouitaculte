@@ -57,15 +57,15 @@ module.exports = {
     let type = params[1]
     if(anon){
       if(type === "kick" || type === "ban") {
-        if(msg.channel.id === PUB.tipoui.salleDesVotes || msg.channel.id === PUB.tipoui.automoderation) {
+        if(msg.channel.id === PUB.salons.salleDesVotes || msg.channel.id === PUB.salons.automoderation) {
           if(params[2]) {target = TiCu.Mention(params[2])}
           else { return TiCu.Log.Error("vote", "les votes de kick et de ban nécessitent une cible")}
-        } else {return TiCu.Log.Error("vote", "les votes de kick et de ban sont restreints aux salons <#" + PUB.tipoui.automoderation + "> et <#" + PUB.tipoui.salleDesVotes +">", msg)}
+        } else {return TiCu.Log.Error("vote", "les votes de kick et de ban sont restreints aux salons <#" + PUB.salons.automoderation + "> et <#" + PUB.salons.salleDesVotes +">", msg)}
       } else if(type === "turquoise") {
-        if(msg.channel.id === PUB.tipoui.debug) {
+        if(msg.channel.id === PUB.salons.salleDesVotes) {
           if(params[2]) {target = TiCu.Mention(params[2])}
           else { return TiCu.Log.Error("vote", "les votes de passage Turquoise nécessitent une cible")}
-        } else {return TiCu.Log.Error("vote", "les votes de passage Turquoise sont restreints au salon <#" + PUB.tipoui.salleDesVotes + ">", msg)}
+        } else {return TiCu.Log.Error("vote", "les votes de passage Turquoise sont restreints au salon <#" + PUB.salons.salleDesVotes + ">", msg)}
       } else if(type !== "text") {return TiCu.Log.Error("vote", "quel type de vote ?", msg)}
       if(typeof target != "object" && type !== "text") {return TiCu.Log.Error("vote", "cible invalide")}
       crop = new RegExp(/^!vote\s+[^\s]+\s+/)
@@ -78,7 +78,7 @@ module.exports = {
             TiCu.Log.Commands.Vote.Anon(type, params, newMsg, msg)
           } else TiCu.Log.Error("vote", "erreur d'enregistrement du vote", msg)
         })
-    } else if(msg.channel.id === PUB.tipoui.salleDesVotes) {return TiCu.Log.Error("vote", "seuls les votes anonymisés sont autorisés dans <#" + PUB.tipoui.salleDesVotes + ">")}
+    } else if(msg.channel.id === PUB.salons.salleDesVotes) {return TiCu.Log.Error("vote", "seuls les votes anonymisés sont autorisés dans <#" + PUB.salons.salleDesVotes + ">")}
     else {
       addReactionsToMessage(msg)
       TiCu.Log.Commands.Vote.Public(msg)
@@ -87,7 +87,7 @@ module.exports = {
   autoTurquoise: function(targetId, voteNumber) {
     const targetMember = tipoui.members.get(targetId)
     if (targetMember && !targetMember.roles.get(PUB.roles.turquoise.id)) {
-      tipoui.channels.get(PUB.tipoui.salleDesVotes).send(`Vote automatique de passage Turquoise #${voteNumber} pour ${targetMember}`)
+      tipoui.channels.get(PUB.salons.salleDesVotes).send(`Vote automatique de passage Turquoise #${voteNumber} pour ${targetMember}`)
         .then(newMsg => {
           if (TiCu.json(createJsonForAnonVote(newMsg, targetMember, 'turquoise'))) {
             addReactionsToMessage(newMsg)
