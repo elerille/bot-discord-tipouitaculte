@@ -1,4 +1,8 @@
 module.exports = {
+  alias: [
+    'bienvenue'
+  ],
+  activated: true,
   authorizations : {
     chans : {
       type: "whitelist",

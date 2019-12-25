@@ -31,6 +31,11 @@ function makeEmbed(user, msg, entry) {
 }
 
 module.exports = {
+  alias: [
+    'level',
+    'niveau'
+  ],
+  activated: true,
   authorizations : {
     chans : {
       type: "whitelist",
