@@ -37,7 +37,8 @@ global.TiCu = {
     level : require("./exports/commands/level.js"),
     xpstatus : require("./exports/commands/xpstatus.js"),
     xp : require("./exports/commands/xp.js"),
-    raid : require("./exports/commands/raid.js")
+    raid : require("./exports/commands/raid.js"),
+    avatar : require("./exports/commands/avatar.js")
   },
   Reactions : {
     // heart : require("./exports/reactions/heart.js")
