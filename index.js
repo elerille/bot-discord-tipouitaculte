@@ -1,4 +1,5 @@
 // Init
+const crypto = require('crypto');
 const CFG = require("./private.json")
 const EXPRESS = require("express")
 const EventsModule = require("events")
@@ -59,16 +60,23 @@ Discord.once("ready", () => {
     minilog.send("Coucou, je suis de retour ♥")
     TiCu.VotesCollections.Startup()
     Server.get(
-      "/discord/invite",
+      "/discord/invite/:key",
       function(req, res) {
+        const hash = crypto.createHmac('sha256', CFG.expressSalt)
+          .update(TiCu.Date("raw").toString().substr(0,8))
+          .digest('hex');
         if (activeInvite) {
-          Discord.channels.get(PUB.salons.invite.id)
-            .createInvite({maxUses: 1, maxAge: 300})
-            .then(invite => {
-                res.send(invite.url)
-                TiCu.Log.ServerPage(req)
-              }
-            )
+          if (req.params.key === hash) {
+            Discord.channels.get(PUB.salons.invite.id)
+              .createInvite({maxUses: 1, maxAge: 300})
+              .then(invite => {
+                  res.send(invite.url)
+                  TiCu.Log.ServerPage(req)
+                }
+              )
+          } else {
+            res.send("You should not try to overthink us")
+          }
         } else {
           res.send("Raid ongoing, no invite creation at the moment")
         }
