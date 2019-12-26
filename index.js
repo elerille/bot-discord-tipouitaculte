@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const CFG = require("./private.json")
 const EXPRESS = require("express")
 const EventsModule = require("events")
+const fs = require('fs');
 global.Server = EXPRESS()
 global.SequelizeDB = require("sequelize")
 global.DB = new SequelizeDB(CFG.sequelizeURL, {logging: false})
@@ -23,29 +24,23 @@ global.TiCu = {
   VotesCollections : require("./exports/voteCollections.js"),
   Categories : require("./exports/categories.js"),
   Channels : require("./exports/channels.js"),
-  Commands : {
-    ban : require("./exports/commands/ban.js"),
-    bienvenue : require("./exports/commands/bienvenue.js"),
-    color: require("./exports/commands/color.js"),
-    help : require("./exports/commands/help.js"),
-    kick : require("./exports/commands/kick.js"),
-    list : require("./exports/commands/list.js"),
-    purifier : require("./exports/commands/purifier.js"),
-    quarantaine : require("./exports/commands/quarantaine.js"),
-    roles : require("./exports/commands/roles.js"),
-    send : require("./exports/commands/send.js"),
-    vote : require("./exports/commands/vote.js"),
-    level : require("./exports/commands/level.js"),
-    xpstatus : require("./exports/commands/xpstatus.js"),
-    xp : require("./exports/commands/xp.js"),
-    raid : require("./exports/commands/raid.js"),
-    avatar : require("./exports/commands/avatar.js")
-  },
+  Commands : {},
   Reactions : {
     // heart : require("./exports/reactions/heart.js")
   },
   Auto : {
     // suchTruc : require("./exports/auto/suchTruc.js")
+  }
+}
+
+const commandFiles = fs.readdirSync('./exports/commands/');
+for (const command of commandFiles) {
+  const aux = require('./exports/commands/' + command)
+  if (aux.alias && aux.activated) {
+    for (const aliasCmd of aux.alias) {
+      console.log(aliasCmd)
+      TiCu.Commands[aliasCmd] = aux
+    }
   }
 }
 

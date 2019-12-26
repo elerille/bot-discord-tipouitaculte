@@ -1,4 +1,8 @@
 module.exports = {
+  alias: [
+    'kick'
+  ],
+  activated: true,
   authorizations : {
     chans : {
       type: "whitelist",

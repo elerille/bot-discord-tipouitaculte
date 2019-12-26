@@ -8,6 +8,10 @@ function checkRoleUsage(role, usr, msg) {
 let colorHexa = new RegExp(/^#[\da-f]{6}$/)
 
 module.exports = {
+  alias: [
+    'color'
+  ],
+  activated: true,
   authorizations : {
     chans : {
       type: "whitelist",
