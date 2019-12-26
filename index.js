@@ -103,7 +103,7 @@ function retrieveMessageForEdit(originMsg, channel) {
 }
 
 Discord.on("message", (msg) => {
-  if(msg.author.id !== PUB.users.tipouitaculte && msg.author.id !== PUB.users.licorne) {
+  if(!msg.author.bot) {
     TiCu.Xp.processXpFromMessage('add', msg)
     if(msg.channel.type === "dm" ) {
       let user = tipoui.members.get(msg.author.id) ? tipoui.members.get(msg.author.id) : undefined
@@ -137,13 +137,13 @@ Discord.on("message", (msg) => {
 })
 
 Discord.on("messageDelete", (msg) => {
-  if(msg.author.id !== PUB.users.tipouitaculte && msg.author.id !== PUB.users.licorne) {
+  if(!msg.author.bot) {
     TiCu.Xp.processXpFromMessage('remove', msg)
   }
 })
 
 Discord.on("messageUpdate", (oldMsg, newMsg) => {
-  if(oldMsg.author.id !== PUB.users.tipouitaculte && oldMsg.author.id !== PUB.users.licorne) {
+  if(!oldMsg.author.bot) {
     TiCu.Xp.processXpMessageUpdate(oldMsg, newMsg)
     if(newMsg.channel.type === "dm" ) {
       let user = tipoui.members.get(newMsg.author.id) ? tipoui.members.get(newMsg.author.id) : undefined
