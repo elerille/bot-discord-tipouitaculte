@@ -138,9 +138,14 @@ Discord.on("message", (msg) => {
     } else if(msg.content.match(/^![a-zA-Z]/)) {
       let params = []
       let rawParams = []
-      msg.content.substring(1).split(/\s+/).forEach(value => {
-        rawParams.push(value)
-        params.push(value.toLowerCase())
+      msg.content.substring(1).match(/([^\\\s]?[\"][^\"]+[^\\][\"]|[^\s]+)/g).forEach(value => {
+        if (value[0] === '"') {
+          rawParams.push(value.substr(1, value.length-2))
+          params.push(value.substr(1, value.length-2).toLowerCase())
+        } else {
+          rawParams.push(value.replace(/\\/g, ''))
+          params.push(value.replace(/\\/g, '').toLowerCase())
+        }
       })
       let cmd = params.shift()
       rawParams.shift()

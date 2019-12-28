@@ -24,7 +24,7 @@ function makeEmbed(user, msg, entry) {
   embed.addField("Niveau", entry.level, true)
   embed.addField("Expérience", Math.floor(entry.xp), true)
   if (user.roles.get(PUB.roles.turquoise.id)) {
-    embed.addField("Prochain niveau dans", relativeXpForNextLevel - xpInLevelForMember)
+    embed.addField("Prochain niveau dans", Math.floor(relativeXpForNextLevel - xpInLevelForMember))
     embed.addField("Complétion du niveau", `${completionPercentage}%\n${generateProgressionBar(completionPercentage)}`, true)
   }
   return embed
