@@ -6,7 +6,7 @@ const EventsModule = require("events")
 const fs = require('fs');
 global.Server = EXPRESS()
 global.SequelizeDB = require("sequelize")
-global.DB = new SequelizeDB(CFG.sequelizeURL, {logging: false})
+global.DB = new SequelizeDB(CFG.sequelizeURL)
 global.DiscordNPM = require("discord.js")
 global.Discord = new DiscordNPM.Client({disabledEvents: ['TYPING_START']})
 global.Event = new EventsModule.EventEmitter()
@@ -14,6 +14,7 @@ global.PUB = require("./public.json");
 global.VotesFile = "private/votes.json";
 global.VotesEmojis = ["✅","⚪","🛑","⏱"];
 global.activeInvite = true
+global.colorHexa = new RegExp(/^#[\da-f]{6}$/)
 global.TiCu = {
   Date : require("./exports/date.js"),
   Log : require("./exports/log.js"),
@@ -25,6 +26,7 @@ global.TiCu = {
   Categories : require("./exports/categories.js"),
   Channels : require("./exports/channels.js"),
   Vote : require("./exports/vote.js"),
+  Profil : require("./exports/profil.js"),
   Commands : {},
   Reactions : {
     // heart : require("./exports/reactions/heart.js")
@@ -37,7 +39,7 @@ global.TiCu = {
 const commandFiles = fs.readdirSync('./exports/commands/');
 for (const command of commandFiles) {
   const aux = require('./exports/commands/' + command)
-  if (aux.alias && aux.activated) {
+  if (aux.alias && aux.activated && command === "profil.js") {
     for (const aliasCmd of aux.alias) {
       TiCu.Commands[aliasCmd] = aux
     }
@@ -135,11 +137,14 @@ Discord.on("message", (msg) => {
       }
     } else if(msg.content.match(/^![a-zA-Z]/)) {
       let params = []
+      let rawParams = []
       msg.content.substring(1).split(/\s+/).forEach(value => {
+        rawParams.push(value)
         params.push(value.toLowerCase())
       })
       let cmd = params.shift()
-      TiCu.Commands[cmd] ? TiCu.Authorizations.Command(cmd, msg) ? TiCu.Commands[cmd].run(params, msg) : TiCu.Log.Error(cmd, "permissions manquantes", msg) : msg.react("❓")
+      rawParams.shift()
+      TiCu.Commands[cmd] ? TiCu.Authorizations.Command(cmd, msg) ? TiCu.Commands[cmd].run(params, msg, rawParams) : TiCu.Log.Error(cmd, "permissions manquantes", msg) : msg.react("❓")
     } else {
       parseForAutoCommands(msg)
     }
