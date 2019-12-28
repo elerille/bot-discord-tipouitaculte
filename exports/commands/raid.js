@@ -1,4 +1,8 @@
 module.exports = {
+  alias: [
+    'raid'
+  ],
+  activated: true,
   authorizations : {
     chans : {
       type: "whitelist",

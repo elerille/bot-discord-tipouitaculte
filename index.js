@@ -24,6 +24,7 @@ global.TiCu = {
   VotesCollections : require("./exports/voteCollections.js"),
   Categories : require("./exports/categories.js"),
   Channels : require("./exports/channels.js"),
+  Vote : require("./exports/vote.js"),
   Commands : {},
   Reactions : {
     // heart : require("./exports/reactions/heart.js")
