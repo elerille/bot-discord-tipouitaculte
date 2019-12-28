@@ -237,5 +237,8 @@ module.exports = {
         }
       }
     )
+  },
+  getBaseMemberProfil: function(targetId) {
+    return MemberProfil.findByPk(targetId)
   }
 }

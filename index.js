@@ -39,7 +39,7 @@ global.TiCu = {
 const commandFiles = fs.readdirSync('./exports/commands/');
 for (const command of commandFiles) {
   const aux = require('./exports/commands/' + command)
-  if (aux.alias && aux.activated && command === "profil.js") {
+  if (aux.alias && aux.activated) {
     for (const aliasCmd of aux.alias) {
       TiCu.Commands[aliasCmd] = aux
     }

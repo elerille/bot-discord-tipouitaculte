@@ -24,13 +24,17 @@ module.exports = {
   run : function(params, msg) {
     const target = params[0] ? TiCu.Mention(params[0]) : TiCu.Mention(msg.author.id)
     if (target.user) {
-      msg.channel.send(
-        new DiscordNPM.RichEmbed()
-          .setColor(target.displayColor)
-          .setAuthor(`Avatar de ${target.displayName}`, target.user.avatarURL)
-          .setImage(target.user.avatarURL)
+      TiCu.Profil.getBaseMemberProfil(target.id).then(
+        entry => {
+          msg.channel.send(
+            new DiscordNPM.RichEmbed()
+              .setColor(target.displayColor)
+              .setAuthor(`Avatar de ${target.displayName}`, target.user.avatarURL)
+              .setImage(entry && entry.avatar ? entry.avatar : target.user.avatarURL)
+          )
+          TiCu.Log.Commands.Avatar(msg, target)
+        }
       )
-      TiCu.Log.Commands.Avatar(msg, target)
     } else {
       TiCu.Log.Error('avatar', "Cible invalide : l'élément recherché n'est pas eun utilisateurice", msg)
     }
