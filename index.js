@@ -1,7 +1,9 @@
 // Init
+const crypto = require('crypto');
 const CFG = require("./private.json")
 const EXPRESS = require("express")
 const EventsModule = require("events")
+const fs = require('fs');
 global.Server = EXPRESS()
 global.SequelizeDB = require("sequelize")
 global.DB = new SequelizeDB(CFG.sequelizeURL, {logging: false})
@@ -11,6 +13,8 @@ global.Event = new EventsModule.EventEmitter()
 global.PUB = require("./public.json");
 global.VotesFile = "private/votes.json";
 global.VotesEmojis = ["✅","⚪","🛑","⏱"];
+global.activeInvite = true
+global.colorHexa = new RegExp(/^#[\da-f]{6}$/)
 global.TiCu = {
   Date : require("./exports/date.js"),
   Log : require("./exports/log.js"),
@@ -21,27 +25,24 @@ global.TiCu = {
   VotesCollections : require("./exports/voteCollections.js"),
   Categories : require("./exports/categories.js"),
   Channels : require("./exports/channels.js"),
-  Commands : {
-    ban : require("./exports/commands/ban.js"),
-    bienvenue : require("./exports/commands/bienvenue.js"),
-    color: require("./exports/commands/color.js"),
-    help : require("./exports/commands/help.js"),
-    kick : require("./exports/commands/kick.js"),
-    list : require("./exports/commands/list.js"),
-    purifier : require("./exports/commands/purifier.js"),
-    quarantaine : require("./exports/commands/quarantaine.js"),
-    roles : require("./exports/commands/roles.js"),
-    send : require("./exports/commands/send.js"),
-    vote : require("./exports/commands/vote.js"),
-    level : require("./exports/commands/level.js"),
-    xpstatus : require("./exports/commands/xpstatus.js"),
-    xp : require("./exports/commands/xp.js")
-  },
+  Vote : require("./exports/vote.js"),
+  Profil : require("./exports/profil.js"),
+  Commands : {},
   Reactions : {
     // heart : require("./exports/reactions/heart.js")
   },
   Auto : {
     // suchTruc : require("./exports/auto/suchTruc.js")
+  }
+}
+
+const commandFiles = fs.readdirSync('./exports/commands/');
+for (const command of commandFiles) {
+  const aux = require('./exports/commands/' + command)
+  if (aux.alias && aux.activated) {
+    for (const aliasCmd of aux.alias) {
+      TiCu.Commands[aliasCmd] = aux
+    }
   }
 }
 
@@ -56,15 +57,26 @@ Discord.once("ready", () => {
     minilog.send("Coucou, je suis de retour ♥")
     TiCu.VotesCollections.Startup()
     Server.get(
-      "/discord/invite",
+      "/discord/invite/:key",
       function(req, res) {
-        Discord.channels.get(PUB.salons.invite.id)
-          .createInvite({maxUses : 1, maxAge : 300})
-          .then(invite => {
-            res.send(invite.url)
-            TiCu.Log.ServerPage(req)
+        const hash = crypto.createHmac('sha256', CFG.expressSalt)
+          .update(TiCu.Date("raw").toString().substr(0,8))
+          .digest('hex');
+        if (activeInvite) {
+          if (req.params.key === hash) {
+            Discord.channels.get(PUB.salons.invite.id)
+              .createInvite({maxUses: 1, maxAge: 300})
+              .then(invite => {
+                  res.send(invite.url)
+                  TiCu.Log.ServerPage(req)
+                }
+              )
+          } else {
+            res.send("You should not try to overthink us")
           }
-        )
+        } else {
+          res.send("Raid ongoing, no invite creation at the moment")
+        }
       }
     )
   })
@@ -103,7 +115,7 @@ function retrieveMessageForEdit(originMsg, channel) {
 }
 
 Discord.on("message", (msg) => {
-  if(msg.author.id !== PUB.users.tipouitaculte && msg.author.id !== PUB.users.licorne) {
+  if(!msg.author.bot) {
     TiCu.Xp.processXpFromMessage('add', msg)
     if(msg.channel.type === "dm" ) {
       let user = tipoui.members.get(msg.author.id) ? tipoui.members.get(msg.author.id) : undefined
@@ -125,11 +137,19 @@ Discord.on("message", (msg) => {
       }
     } else if(msg.content.match(/^![a-zA-Z]/)) {
       let params = []
-      msg.content.substring(1).split(/\s+/).forEach(value => {
-        params.push(value.toLowerCase())
+      let rawParams = []
+      msg.content.substring(1).match(/([^\\\s]?[\"][^\"]+[^\\][\"]|[^\s]+)/g).forEach(value => {
+        if (value[0] === '"') {
+          rawParams.push(value.substr(1, value.length-2))
+          params.push(value.substr(1, value.length-2).toLowerCase())
+        } else {
+          rawParams.push(value.replace(/\\/g, ''))
+          params.push(value.replace(/\\/g, '').toLowerCase())
+        }
       })
       let cmd = params.shift()
-      TiCu.Commands[cmd] ? TiCu.Authorizations.Command(cmd, msg) ? TiCu.Commands[cmd].run(params, msg) : TiCu.Log.Error(cmd, "permissions manquantes", msg) : msg.react("❓")
+      rawParams.shift()
+      TiCu.Commands[cmd] ? TiCu.Authorizations.Command(cmd, msg) ? TiCu.Commands[cmd].run(params, msg, rawParams) : TiCu.Log.Error(cmd, "permissions manquantes", msg) : msg.react("❓")
     } else {
       parseForAutoCommands(msg)
     }
@@ -137,13 +157,13 @@ Discord.on("message", (msg) => {
 })
 
 Discord.on("messageDelete", (msg) => {
-  if(msg.author.id !== PUB.users.tipouitaculte && msg.author.id !== PUB.users.licorne) {
+  if(!msg.author.bot) {
     TiCu.Xp.processXpFromMessage('remove', msg)
   }
 })
 
 Discord.on("messageUpdate", (oldMsg, newMsg) => {
-  if(oldMsg.author.id !== PUB.users.tipouitaculte && oldMsg.author.id !== PUB.users.licorne) {
+  if(!oldMsg.author.bot) {
     TiCu.Xp.processXpMessageUpdate(oldMsg, newMsg)
     if(newMsg.channel.type === "dm" ) {
       let user = tipoui.members.get(newMsg.author.id) ? tipoui.members.get(newMsg.author.id) : undefined

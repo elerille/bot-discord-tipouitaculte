@@ -5,9 +5,12 @@ function checkRoleUsage(role, usr, msg) {
     TiCu.Log.Commands.Color("deleted", roleName, msg)
   }
 }
-let colorHexa = new RegExp(/^#[\da-f]{6}$/)
 
 module.exports = {
+  alias: [
+    'color'
+  ],
+  activated: true,
   authorizations : {
     chans : {
       type: "whitelist",
@@ -29,7 +32,7 @@ module.exports = {
   run : function(params, msg) {
     let input = params[0]
     let usr = msg.member
-    let oldRole = usr.roles.find(e => e.name.match(colorHexa))
+    let oldRole = usr.roles.find(e => !!e.name.match(colorHexa))
     let newRole = tipoui.roles.find(e => e.hexColor === input)
     if(usr.roles.get(PUB.roles.turquoise.id)) {
       if(input === "none" || input === "remove" || input === "reset" || input === "enlever" || input === "réinitialiser" || input === "turquoise" || input === "#11e0e6"){
@@ -44,7 +47,7 @@ module.exports = {
       } else if(oldRole) {
         if(input.match(colorHexa)) {
           if(!newRole) {
-            tipoui.createRole({name: input, color: input, position: "33"})
+            tipoui.createRole({name: input, color: input, position: 33})
               .then(createdRole => {
                 usr.addRole(createdRole)
                 usr.removeRole(oldRole)

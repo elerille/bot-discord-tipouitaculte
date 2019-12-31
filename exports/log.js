@@ -170,6 +170,16 @@ module.exports = {
     },
     Xp: function(msg, target, value, give) {
       maxilog.send(`${TiCu.Date("log")} : XP\n${tipoui.members.get(msg.author.id).displayName} ${give ? 'gave' : 'took'} ${value} XP ${give ? 'to' : 'from'} ${target}`)
+    },
+    Raid: function(msg, arg) {
+      maxilog.send(`${TiCu.Date("log")} : Raid\n<@${msg.author.id}> ${arg === 'on' ? 'activated' : 'desactivated'} the raid mode`)
+      msg.react("✅")
+    },
+    Avatar: function(msg, target) {
+      maxilog.send(`${TiCu.Date("log")} : Avatar\n${TiCu.Mention(msg.author.id).displayName} displayed ${target.displayName}'s avatar`)
+    },
+    Profil: function(msg, target) {
+      maxilog.send(`${TiCu.Date("log")} : Profil\n${TiCu.Mention(msg.author.id).displayName} displayed ${target.displayName}'s profil`)
     }
   },
   ReactionError: function(reaction, usr, type) {
@@ -226,6 +236,14 @@ module.exports = {
         default:
           maxilog.send(`${TiCu.Date("log")} : XP ERROR\nGeneric error, sorry for the lack of information`)
       }
+    }
+  },
+  Profil: {
+    newEntry: function(entry) {
+      maxilog.send(`${TiCu.Date("log")} : newMemberProfil\n${tipoui.members.get(entry.id).displayName} was added to the Profil system`)
+    },
+    newField: function(entry, id) {
+      maxilog.send(`${TiCu.Date("log")} : newMemberProfilField\n${tipoui.members.get(id).displayName} created a new field : ${entry.name} = ${entry.value}`)
     }
   }
 }

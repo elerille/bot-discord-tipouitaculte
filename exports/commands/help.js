@@ -1,5 +1,8 @@
-const DiscordNPM = require("discord.js")
 module.exports = {
+  alias: [
+    'help'
+  ],
+  activated: true,
   authorizations : {
     chans : {
       type: "any"
