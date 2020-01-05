@@ -44,24 +44,28 @@ module.exports = {
           }
           return TiCu.Log.Commands.Color("switched", "turquoise", msg)
         } else TiCu.Log.Error("color", "vous avez déjà la couleur par défaut du rang Turquoise", msg)
-      } else if(oldRole) {
+      } else {
         if(input.match(colorHexa)) {
           if(!newRole) {
             tipoui.createRole({name: input, color: input, position: 33})
               .then(createdRole => {
                 usr.addRole(createdRole)
-                usr.removeRole(oldRole)
-                checkRoleUsage(oldRole, usr, msg)
+                if(oldRole) {
+                  usr.removeRole(oldRole)
+                  checkRoleUsage(oldRole, usr, msg)
+                }
                 return TiCu.Log.Commands.Color("switched", createdRole.name, msg)
                 })
           } else {
             usr.addRole(newRole)
-            usr.removeRole(oldRole)
-            checkRoleUsage(oldRole, usr, msg)
+            if(oldRole) {
+              usr.removeRole(oldRole)
+              checkRoleUsage(oldRole, usr, msg)
+            }
             return TiCu.Log.Commands.Color("switched", newRole.name, msg)
           }
         } else TiCu.Log.Error("color", "paramètre de couleur invalide", msg)
-      } else TiCu.Log.Error("color", "pas de couleur de départ", msg)
+      }
     } else TiCu.Log.Error("color", "seul·es les Turquoises peuvent modifier leur rôle-couleur", msg)
   }
 }
