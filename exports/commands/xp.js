@@ -15,7 +15,7 @@ module.exports = {
       type: "any"
     },
     name : "XP",
-    desc : "Donner ou retirer de l'expérience à un ou plusieurs membres",
+    desc : "Donner ou retirer de l'expérience à eun ou plusieurs membres",
     schema : "!xp <[give|take]> <@|'all'> <value> (reason)",
     channels : "💠interface-tipoui",
     authors : "Toustes",
