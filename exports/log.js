@@ -154,12 +154,12 @@ module.exports = {
           minilog.send(msg.member.displayName + " a lancé un vote anonyme pour " + type + " " + TiCu.Mention(params[2]) )
           maxilog.send(TiCu.Date("log") + " : Vote\n" + msg.member.displayName + " a lancé un vote anonyme : " + type + TiCu.Mention(params[2]) + "\n" + msg.url)
         }
-        maxilog.send(newMsg.content)
+        maxilog.send(new DiscordNPM.RichEmbed(newMsg.embeds[0]))
         msg.delete()
       },
       AutoTurquoise: function(newMsg, target, voteNumber) {
         minilog.send(`Un nouveau vote anonyme automatique de passage Turquoise (#${voteNumber}) a été lancé pour ${TiCu.Mention(target)}`)
-        maxilog.send(newMsg.content)
+        maxilog.send(new DiscordNPM.RichEmbed(newMsg.embeds[0]))
       }
     },
     Level: function(target) {

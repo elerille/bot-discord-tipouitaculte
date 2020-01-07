@@ -87,11 +87,14 @@ function updateVotes(reaction, collector) {
   }
   fs.writeFileSync(VotesFile, JSON.stringify(votesJSON, null, 2))
   reaction.message.edit(
-    TiCu.VotesCollections.CreateEmbedAnon(
-      tipoui.members.get(votesJSON[msg.id].target),
-      votesJSON[msg.id].type,
-      votesJSON[msg.id].threshold,
-      votesJSON[msg.id]
+    updateEmbed(
+      TiCu.VotesCollections.CreateEmbedAnon(
+        tipoui.members.get(votesJSON[msg.id].target),
+        votesJSON[msg.id].type,
+        votesJSON[msg.id].threshold,
+        votesJSON[msg.id]
+      ),
+      msg
     )
   )
   checkThreshold(votesJSON[msg.id], collector)
@@ -105,6 +108,48 @@ function createCollector(type, msg) {
   TiCu.VotesCollections.Collectors[msg.id].on("end", (reactions, reason)  =>
     TiCu.VotesCollections.Done(type, reactions, reason, msg))
   TiCu.Log.VoteCollector(msg)
+}
+
+function first(indexes) {
+  let res = [undefined, 7000]
+  for (const emoji of Object.keys(indexes)) {
+    if (indexes[emoji] < res[1]) {
+      res = [emoji, indexes[emoji]]
+    }
+  }
+  return res
+}
+
+function parseToDesc(voteDesc) {
+  const indexes = {}
+  for (const emoji of VotesEmojis) {
+    const aux = voteDesc.indexOf(emoji)
+    if (aux !== -1) {
+      indexes[emoji] = aux
+    }
+  }
+  let indexTab = []
+  let length = Object.keys(indexes).length
+  while(length > 0) {
+    const aux = first(indexes)
+    indexTab.push(aux)
+    delete indexes[aux[0]]
+    length--
+  }
+  return indexTab
+}
+
+function updateEmbed(embed, msg) {
+  if (msg.embeds[0].description) {
+    embed.setDescription(msg.embeds[0].description)
+  }
+  for (const emoji of VotesEmojis) {
+    const aux = msg.embeds[0].fields.findIndex((v) => {return v.name.indexOf(emoji) !== -1})
+    if (aux !== -1) {
+      embed.fields[embed.fields.findIndex((v) => {return v.name === emoji})].name = msg.embeds[0].fields[aux].name
+    }
+  }
+  return embed
 }
 
 module.exports = {
@@ -151,19 +196,23 @@ module.exports = {
       TiCu.Log.VoteDone(reason, type, msg, target)
     }
     msg.edit(
-      TiCu.VotesCollections.CreateEmbedAnon(
-        tipoui.members.get(votesJSON[msg.id].target),
-        votesJSON[msg.id].type,
-        votesJSON[msg.id].threshold,
-        votesJSON[msg.id],
-        results[reason]
+      updateEmbed(
+        TiCu.VotesCollections.CreateEmbedAnon(
+          tipoui.members.get(votesJSON[msg.id].target),
+          votesJSON[msg.id].type,
+          votesJSON[msg.id].threshold,
+          votesJSON[msg.id],
+          results[reason]
+        ),
+        msg
       )
     )
     delete votesJSON[msg.id]
     fs.writeFileSync(VotesFile, JSON.stringify(votesJSON, null, 2))
   },
-  CreateEmbedAnon: (target, type, threshold, voteJson = undefined, result = undefined, params) => {
+  CreateEmbedAnon: (target, type, threshold, voteJson = undefined, result = undefined, msg = undefined) => {
     let nbVotes = 0
+    let indexTab = []
     if (voteJson !== undefined) {
       for (const votes of Object.values(voteJson.votes)) {
         nbVotes += votes.length
@@ -175,12 +224,32 @@ module.exports = {
       embed.setColor(target.displayColor)
     } else {
       embed.setAuthor(`Vote Anonyme`)
-      embed.setDescription('Il faudrait coder cette partie sans laquelle tout ceci n\'a pas de sens')
+      if (msg && msg.content) {
+        const msgMatch = msg.content.match(/^!vote\s+anon\s+(text|kick|ban|turquoise)\s+(.+)/s)
+        if (msgMatch && msgMatch.length === 3) {
+          indexTab = parseToDesc(msgMatch[2])
+          embed.setDescription(msgMatch[2].substr(0, indexTab[0][1]-1))
+          for (const emoji of VotesEmojis) {
+            const aux = indexTab.findIndex((v) => {return v[0] === emoji})
+            let desc = emoji
+            if (aux !== -1) {
+              if (aux === indexTab.length-1) {
+                desc = msgMatch[2].substr(indexTab[aux][1])
+              } else {
+                desc = msgMatch[2].substr(indexTab[aux][1], indexTab[aux+1][1]-indexTab[aux][1])
+              }
+            }
+            embed.addField(desc, voteJson !== undefined ? voteJson.votes[emojiTable[emoji]].length : 0, emoji !== VotesEmojis[3])
+          }
+        }
+      }
     }
-    for (const emoji of VotesEmojis) {
-      embed.addField(emoji, voteJson !== undefined ? voteJson.votes[emojiTable[emoji]].length : 0, emoji !== VotesEmojis[3])
+    if (embed.fields.length === 0) {
+      for (const emoji of VotesEmojis) {
+        embed.addField(emoji, voteJson !== undefined ? voteJson.votes[emojiTable[emoji]].length : 0, emoji !== VotesEmojis[3])
+      }
     }
-    embed.addField("Votes nécessaires", threshold, true)
+    embed.addField("Votes nécessaires", threshold === -1 ? 'Vote sans limite' : threshold, true)
     embed.addField("Votes actuels", nbVotes, true)
     if (result !== undefined) {
       embed.addField("Résultat du vote", result)
