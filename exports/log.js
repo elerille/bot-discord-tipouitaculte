@@ -180,6 +180,10 @@ module.exports = {
     },
     Profil: function(msg, target) {
       maxilog.send(`${TiCu.Date("log")} : Profil\n${TiCu.Mention(msg.author.id).displayName} displayed ${target.displayName}'s profil`)
+    },
+    HotReload: function(msg, type) {
+      maxilog.send(`${TiCu.Date("log")} : Hot Reload\n${TiCu.Mention(msg.author.id).displayName} recharged TipouiTaCulte configuration (${type})`)
+      msg.react("✅")
     }
   },
   ReactionError: function(reaction, usr, type) {
