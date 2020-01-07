@@ -162,7 +162,7 @@ module.exports = {
     delete votesJSON[msg.id]
     fs.writeFileSync(VotesFile, JSON.stringify(votesJSON, null, 2))
   },
-  CreateEmbedAnon: (target, type, threshold, voteJson = undefined, result = undefined) => {
+  CreateEmbedAnon: (target, type, threshold, voteJson = undefined, result = undefined, params) => {
     let nbVotes = 0
     if (voteJson !== undefined) {
       for (const votes of Object.values(voteJson.votes)) {
@@ -170,8 +170,13 @@ module.exports = {
       }
     }
     const embed = new DiscordNPM.RichEmbed()
-      .setColor(target.displayColor)
-      .setAuthor(`Vote de ${type === "turquoise" ? "passage" : ""} ${type.toUpperCase()} pour ${target.displayName}`, target.user.avatarURL)
+    if (target) {
+      embed.setAuthor(`Vote de ${type === "turquoise" ? "passage" : ""} ${type.toUpperCase()} pour ${target.displayName}`, target.user.avatarURL)
+      embed.setColor(target.displayColor)
+    } else {
+      embed.setAuthor(`Vote Anonyme`)
+      embed.setDescription('Il faudrait coder cette partie sans laquelle tout ceci n\'a pas de sens')
+    }
     for (const emoji of VotesEmojis) {
       embed.addField(emoji, voteJson !== undefined ? voteJson.votes[emojiTable[emoji]].length : 0, emoji !== VotesEmojis[3])
     }
