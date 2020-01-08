@@ -1,8 +1,8 @@
 const fs = require("fs")
 const emojiTable = {};
 emojiTable[VotesEmojis[0]] = "oui";
-emojiTable[VotesEmojis[1]] = "non";
-emojiTable[VotesEmojis[2]] = "blanc";
+emojiTable[VotesEmojis[1]] = "blanc";
+emojiTable[VotesEmojis[2]] = "non";
 emojiTable[VotesEmojis[3]] = "delai";
 
 const results = {
