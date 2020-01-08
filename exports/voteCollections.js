@@ -228,7 +228,7 @@ module.exports = {
         const msgMatch = msg.content.match(/^!vote\s+anon\s+(text|kick|ban|turquoise)\s+(.+)/s)
         if (msgMatch && msgMatch.length === 3) {
           indexTab = parseToDesc(msgMatch[2])
-          embed.setDescription(msgMatch[2].substr(0, indexTab[0][1]-1))
+          embed.setDescription(msgMatch[2].substr(0, indexTab[0] ? indexTab[0][1]-1 : msgMatch[2].length))
           for (const emoji of VotesEmojis) {
             const aux = indexTab.findIndex((v) => {return v[0] === emoji})
             let desc = emoji
