@@ -146,7 +146,7 @@ function updateEmbed(embed, msg) {
   for (const emoji of VotesEmojis) {
     const aux = msg.embeds[0].fields.findIndex((v) => {return v.name.indexOf(emoji) !== -1})
     if (aux !== -1) {
-      embed.fields[embed.fields.findIndex((v) => {return v.name === emoji})].name = msg.embeds[0].fields[aux].name
+      embed.fields[embed.fields.findIndex((v) => {return v.name === `${emoji} : ${emojiTable[emoji]}`})].name = msg.embeds[0].fields[aux].name
     }
   }
   return embed
@@ -231,7 +231,7 @@ module.exports = {
           embed.setDescription(msgMatch[2].substr(0, indexTab[0] ? indexTab[0][1]-1 : msgMatch[2].length))
           for (const emoji of VotesEmojis) {
             const aux = indexTab.findIndex((v) => {return v[0] === emoji})
-            let desc = emoji
+            let desc = `${emoji} : ${emojiTable[emoji]}`
             if (aux !== -1) {
               if (aux === indexTab.length-1) {
                 desc = msgMatch[2].substr(indexTab[aux][1])
@@ -246,7 +246,7 @@ module.exports = {
     }
     if (embed.fields.length === 0) {
       for (const emoji of VotesEmojis) {
-        embed.addField(emoji, voteJson !== undefined ? voteJson.votes[emojiTable[emoji]].length : 0, emoji !== VotesEmojis[3])
+        embed.addField(`${emoji} : ${emojiTable[emoji]}`, voteJson !== undefined ? voteJson.votes[emojiTable[emoji]].length : 0, emoji !== VotesEmojis[3])
       }
     }
     embed.addField("Votes nécessaires", threshold === -1 ? 'Vote sans limite' : threshold, true)
