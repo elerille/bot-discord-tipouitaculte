@@ -120,22 +120,28 @@ module.exports = {
             break
           case 'titre':
           case 'title':
-            updateBaseProfil('titre', value, targetId, msg)
+            if (value.length < 255) {
+              updateBaseProfil('titre', value, targetId, msg)
+            } else TiCu.Log.Error('profil', 'La valeur compte trop de caractères (limite à 255)', msg)
             break
           case 'citation':
-            updateBaseProfil(name, value, targetId, msg)
+            if (value.length < 255) {
+              updateBaseProfil(name, value, targetId, msg)
+            } else TiCu.Log.Error('profil', 'La valeur compte trop de caractères (limite à 255)', msg)
             break
           default:
-            MemberProfilField.findOrCreate({where: {idMember: entry.id, name: name}, defaults: {value: value}}).then(
-              ([entryField, created]) => {
-                if (created) {
-                  TiCu.Log.Profil.newField(entryField, targetId)
-                  msg.react("✅")
-                } else {
-                  updateProfilField(name, value, targetId, msg)
+            if (name.length < 255 && value.length < 255) {
+              MemberProfilField.findOrCreate({where: {idMember: entry.id, name: name}, defaults: {value: value}}).then(
+                ([entryField, created]) => {
+                  if (created) {
+                    TiCu.Log.Profil.newField(entryField, targetId)
+                    msg.react("✅")
+                  } else {
+                    updateProfilField(name, value, targetId, msg)
+                  }
                 }
-              }
-            )
+              )
+            } else TiCu.Log.Error('profil', 'La valeur ou le nom de champ compte trop de caractères (limite à 255)', msg)
             break
         }
       }
