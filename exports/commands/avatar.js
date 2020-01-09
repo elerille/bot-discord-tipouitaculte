@@ -41,12 +41,12 @@ module.exports = {
         TiCu.Profil.getBaseMemberProfil(target.id).then(
           entry => {
             msg.channel.send(createAvatarEmbed(target, entry))
-            TiCu.Log.Commands.Avatar(msg, target)
+            TiCu.Log.Commands.Avatar(target, msg)
           }
         )
       } else {
         msg.channel.send(createAvatarEmbed(target))
-        TiCu.Log.Commands.Avatar(msg, target)
+        TiCu.Log.Commands.Avatar(target, msg)
       }
     } else {
       TiCu.Log.Error("avatar", "cible invalide", msg)

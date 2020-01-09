@@ -165,7 +165,7 @@ module.exports = {
               embed.addField(field, entry.fields[field], true)
             }
             msg.channel.send(embed).then(() => {
-              TiCu.Log.Commands.Profil(msg, target)
+              TiCu.Log.Commands.Profil(target, msg)
             })
           }
         )

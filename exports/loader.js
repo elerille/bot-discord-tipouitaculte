@@ -16,6 +16,7 @@ function createEmbedCopy(msg, user, edited = false, previousContent) {
     .setColor(user.displayColor)
     .setAuthor(user.displayName, user.user.avatarURL, msg.url)
     .setDescription(edited ? previousContent : msg.content)
+    .addField("Utilisateurice", `<@${user.id}>`)
     .setTimestamp()
   if (edited) {
     embed.addField("Message édité", msg.content)
@@ -118,7 +119,7 @@ module.exports = {
         } else if(msg.channel.id === PUB.salons.quarantaineUser.id || msg.channel.id === PUB.salons.quarantaineVigi.id) {
           if(msg.channel.id === PUB.salons.quarantaineUser.id) {
             let user = msg.member
-            tipoui.channels.get(PUB.salons.quarantaineVigi.id).send(createEmbedCopy(msg, user))
+            tipoui.channels.get(PUB.salons.quarantaineVigi.id).send(createEmbedCopy(user, msg))
               .then(newMsg => TiCu.Log.Quarantaine("reçu", newMsg, msg))
           } else if(msg.channel.id === PUB.salons.quarantaineVigi.id) {
             tipoui.channels.get(PUB.salons.quarantaineUser.id).send(msg.content)

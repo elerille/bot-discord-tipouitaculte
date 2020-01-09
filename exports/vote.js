@@ -20,7 +20,7 @@ module.exports = {
         await msg.react(VotesEmojis[3])
       })
   },
-  createJsonForAnonVote: function (msg, target, type) {
+  createJsonForAnonVote: function (target, type, msg) {
     let json = {"action": "write", "content" :{}}
     json.target = VotesFile
     json.content[msg.id] = {}

@@ -63,7 +63,7 @@ module.exports = {
     maxilog.send(TiCu.Date("log") + " : Server\nServed Page : " + req.path)
   },
   Commands : {
-    Avatar: function(msg, target) {
+    Avatar: function(target, msg) {
       if(msg.member.id != target.id) {
         maxilog.send(TiCu.Date("log") + "Avatar\n" + msg.member.displayName + "a affiché l'avatar de " + target.displayName)
       }
@@ -97,8 +97,8 @@ module.exports = {
         msg.react("✔")
       }
     },
-    HotReload: function(msg, type) {
-      maxilog.send(`${TiCu.Date("log")} : Hot Reload\n${TiCu.Mention(msg.author.id).displayName} recharged TipouiTaCulte configuration (${type})`)
+    HotReload: function(type, msg) {
+      maxilog.send(`${TiCu.Date("log")} : Hot Reload\n${TiCu.Mention(msg.author.id).displayName} a redémarré TipouiTaCulte (${type})`)
       msg.react("✅")
     },
     Kick : function(target, reason, msg) {
@@ -111,8 +111,8 @@ module.exports = {
       msg.react("✅")
     },
     Level: function(target, msg) {
-      if(msg.member.id != target.id) {
-        maxilog.send(TiCu.Date("log") + "Level\n" + msg.member.displayName + "a affiché le level de " + tipoui.members.get(target.id).displayName)
+      if(msg.member.id != target) {
+        maxilog.send(TiCu.Date("log") + "Level\n" + msg.member.displayName + "a affiché le level de " + tipoui.members.get(target).displayName)
       }
     },
     Profil: function(target, msg) {
@@ -141,7 +141,7 @@ module.exports = {
         maxilog.send("Raison : " + reason)
       }
     },
-    Raid: function(msg, arg) {
+    Raid: function(arg, msg) {
       if(arg === "on") {
         maxilog.send(TiCu.Date("log") + " : Raid\nL'alerte Raid a été lancée par " + msg.member.displayName + ".")
         minilog.send("L'alerte Raid a été lancée. Les liens d'invitation au serveur ne seront plus distribués jusqu'à `!raid off` ou redémarrage du bot.")
@@ -194,7 +194,7 @@ module.exports = {
         maxilog.send(new DiscordNPM.RichEmbed(newMsg.embeds[0]))
       }
     },
-    Xp: function(msg, target, value, give) {
+    Xp: function(target, value, give, msg) {
       maxilog.send(`${TiCu.Date("log")} : XP\n${tipoui.members.get(msg.author.id).displayName} a  ${give ? 'donné' : 'enlevé'} ${value} XP à ${target}`)
     }
   },
