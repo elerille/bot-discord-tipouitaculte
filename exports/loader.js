@@ -204,16 +204,17 @@ module.exports = {
     }
 
     global.parseGuildMemberAdd = (usr) => {
-      if(usr.guild.id === tipoui.id) {
+      if (usr.guild.id === tipoui.id) {
         tipoui.channels.get(PUB.salons.genTP.id).send("Oh ! Bienvenue <@" + usr.id + "> ! Je te laisse lire les Saintes Règles, rajouter tes pronoms dans ton pseudo et nous faire une ptite présentation dans le salon qui va bien :heart:\nSi tu n'as pas fait vérifier ton numéro de téléphone ou d'abonnement Nitro, il va aussi te falloir aussi attendre 10 petites minutes que Discord s'assure tu n'es pas une sorte d'ordinateur mutant venu de l'espace... Même si en vrai ça serait trop cool quand même !")
-        if(usr.lastMessage) {
+        if (usr.lastMessage) {
           maxilog.send(TiCu.Date("log") + " : Retour de membre\n" + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
-          minilog.send("Retour de " + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)      
+          minilog.send("Retour de " + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
         } else {
           maxilog.send(TiCu.Date("log") + " : Arrivée de membre\n" + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
           minilog.send("Arrivée de " + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
         }
       }
+    }
 
     global.parseGuildMemberRemove = (usr) => {
       if(usr.guild.id === tipoui.id) {

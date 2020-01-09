@@ -24,7 +24,7 @@ module.exports = {
   },
   run : function(params, msg) {
     if (params.length < 3 || (params[0] !== "give" && params[0] !== "take") || isNaN(params[2])) {
-      TiCu.Log.Error("xp", "paramètres invalides"', msg)
+      TiCu.Log.Error("xp", "paramètres invalides", msg)
     } else {
       if (params[1] === "all") {
         TiCu.Xp.updateAllXp(params[0] === "give" ? "add" : "remove", Number(params[2]))
