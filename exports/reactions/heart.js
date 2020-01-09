@@ -1,4 +1,6 @@
 module.exports = {
+  activated: false,
+  methodName: 'heart',
   name : "Heart",
   desc : "Very complex to trigger heart reaction",
   emoji: "❤️",

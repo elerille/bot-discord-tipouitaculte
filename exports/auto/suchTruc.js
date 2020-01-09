@@ -1,4 +1,6 @@
 module.exports = {
+  activated: false,
+  methodName: 'suchTruc',
   name : "SuchTruc",
   desc : "Such auto ! Much function !",
   schema: "such word",
