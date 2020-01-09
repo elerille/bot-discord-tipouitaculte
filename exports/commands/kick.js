@@ -1,6 +1,6 @@
 module.exports = {
   alias: [
-    'kick'
+    "kick"
   ],
   activated: true,
   authorizations : {
@@ -17,7 +17,7 @@ module.exports = {
     name : "Kick",
     desc : "Expulser eun membre du serveur.",
     schema : "!kick <@> (raison)",
-    channels : "Bots Vigilant·es",
+    channels : "🐙interface-tipoui",
     authors : "Toustes",
     roleNames : "Tous"
   },
@@ -27,7 +27,7 @@ module.exports = {
     if(TiCu.Mention(params[0])) {target = TiCu.Mention(params[0])} else return TiCu.Log.Error("kick", "cible invalide", msg)
     let reason = !!params[1]
     if(reason) {reason = msg.content.substring(msg.content.match(crop)[1].length)}
-    msg.reply("voulez-vous expulser <@" + target.id + "> du serveur ?")
+    msg.reply(`voulez-vous expulser <@${target.id}> du serveur ?`)
       .then(newMsg => {
         newMsg
         .react("👍")

@@ -1,7 +1,6 @@
 // Init
 const crypto = require('crypto');
 const loader = require('./exports/loader')
-
 loader.loadFull('./')
 
 // Discord
@@ -17,9 +16,9 @@ Discord.once("ready", () => {
     Server.get(
       "/discord/invite/:key",
       function(req, res) {
-        const hash = crypto.createHmac('sha256', CFG.expressSalt)
+        const hash = crypto.createHmac("sha256", CFG.expressSalt)
           .update(TiCu.Date("raw").toString().substr(0,8))
-          .digest('hex');
+          .digest("hex");
         if (activeInvite) {
           if (req.params.key === hash) {
             Discord.channels.get(PUB.salons.invite.id)
@@ -30,10 +29,10 @@ Discord.once("ready", () => {
                 }
               )
           } else {
-            res.send("You should not try to overthink us")
+            res.send("https://www.youtube.com/watch?v=BAHtStfZZWg")
           }
         } else {
-          res.send("Raid ongoing, no invite creation at the moment")
+          res.send("raid.php")
         }
       }
     )

@@ -4,7 +4,7 @@ let quarantaineFile = "/media/usb/nodejs/tipouitaculte/private/quarantaine.json"
 
 module.exports = {
   alias: [
-    'quarantaine'
+    "quarantaine"
   ],
   activated: true,
   authorizations : {
@@ -21,7 +21,7 @@ module.exports = {
     name : "Quarantaine",
     desc : "Mettre ou retirer eun membre de la quarantaine, afin de régler des problèmes en privé, ou vérifier son statut de quarantaine.",
     schema : "!quarantaine <@> <+|ajouter|add> (raison)\nou\n!quarantaine <@> <-|enlever|retirer|supprimer|remove> (raison)\nou\n!quarantaine <target> <statut|status>",
-    channels : "Bots Vigilant·es",
+    channels : "🐙interface-tipoui",
     authors : "Toustes",
     roleNames : "Tous"
   },
@@ -37,7 +37,7 @@ module.exports = {
       case "ajouter":
       case "add":
         if(!(target.roles.get(PUB.roles.quarantaineRole.id))) {
-          msg.reply("voulez-vous mettre <@" + target.id + "> en quarantaine ?")
+          msg.reply(`voulez-vous mettre <@${target.id}> en quarantaine ?`)
             .then(newMsg => {
               newMsg
               .react("👍")
@@ -79,7 +79,7 @@ module.exports = {
       case "supprimer":
       case "remove":
         if((target.roles.get(PUB.roles.quarantaineRole.id))) {
-          msg.reply("voulez-vous sortir <@" + target.id + "> de quarantaine ?")
+          msg.reply(`voulez-vous sortir <@${target.id}> de quarantaine ?`)
             .then(newMsg => {
               newMsg
                 .react("👍")
@@ -117,10 +117,9 @@ module.exports = {
             })
         } else return TiCu.Log.Error("quarantaine", "cible pas en quarantaine", msg)
         break
-      case "status":
       case "statut":
-        let status = !(target.roles.get(PUB.roles.quarantaineRole.id)) ? "est" : "n'est pas"
-        return msg.reply("<@" + target.id + "> " + status + " en quarantaine.")
+      case "status":
+        return msg.reply(`<@${target.id}> ${!(target.roles.get(PUB.roles.quarantaineRole.id)) ? "est" : "n'est pas"} en quarantaine.`)
       default:
         return TiCu.Log.Error("quarantaine", "action non reconnue", msg)
       }

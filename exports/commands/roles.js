@@ -1,6 +1,6 @@
 module.exports = {
   alias: [
-    'roles'
+    "roles"
   ],
   activated: true,
   authorizations : {
@@ -17,7 +17,7 @@ module.exports = {
     name : "Roles",
     desc : "Ajouter ou retirer des rôles à eun membre du serveur",
     schema : "!roles <@> <+|ajouter|add|addRoles> <[roles]>\nou\n!roles <@> <-|enlever|retirer|supprimer|remove|removeRoles> <[roles]>",
-    channels : "Bots Vigilant·es",
+    channels : "🐙interface-tipoui",
     authors : "Toustes",
     roleNames : "Tous"
   },

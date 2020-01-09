@@ -1,6 +1,6 @@
 module.exports = {
   alias: [
-    'purifier'
+    "purifier"
   ],
   activated: true,
   authorizations : {
@@ -18,7 +18,7 @@ module.exports = {
     name : "Purifier",
     desc : "Accorder l'accès au salon du Bûcher et le rôle de Pourfendeureuse de Cismecs à eun membre.",
     schema : "!purifier <@>",
-    channels : "🦄la-maison-de-la-bot",
+    channels : "🐙la-maison-des-bots",
     authors : "Toustes",
     roleNames : "🔥Pourfendeureuse de cismecs"
   },

@@ -1,6 +1,6 @@
 module.exports = {
   alias: [
-    'bienvenue'
+    "bienvenue"
   ],
   activated: true,
   authorizations : {

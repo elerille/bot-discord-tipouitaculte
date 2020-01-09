@@ -1,6 +1,6 @@
 module.exports = {
   alias: [
-    'help'
+    "help"
   ],
   activated: true,
   authorizations : {
@@ -15,7 +15,7 @@ module.exports = {
     },
     name : "Help",
     desc : "Liste toutes les commandes, ou seulement celles que vous pouvez utiliser dans ce salon (par défaut), détaille l'usage d'une commande, ou explique le format des \"schémas\" de commandes.",
-    schema : "!help (full|commande|schema)",
+    schema : "!help (full|commande|schema|rolesList)",
     channels : "Tous",
     authors : "Toustes",
     roleNames : "Tous"

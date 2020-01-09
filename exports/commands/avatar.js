@@ -7,7 +7,7 @@ function createAvatarEmbed(target, entry = undefined) {
 
 module.exports = {
   alias: [
-    'avatar'
+    "avatar"
   ],
   activated: true,
   authorizations : {
@@ -23,8 +23,8 @@ module.exports = {
     },
     name : "Avatar",
     desc : "Afficher l'avatar d'eun membre",
+    channels : "🐙la-maison-des-bots",
     schema : "!avatar (profil) (@)",
-    channels : "🦄la-maison-de-la-bot",
     authors : "Toustes",
     roleNames : "Tous"
   },
@@ -49,7 +49,7 @@ module.exports = {
         TiCu.Log.Commands.Avatar(msg, target)
       }
     } else {
-      TiCu.Log.Error('avatar', "Cible invalide : l'élément recherché n'est pas eun utilisateurice", msg)
+      TiCu.Log.Error("avatar", "cible invalide", msg)
     }
   }
 }

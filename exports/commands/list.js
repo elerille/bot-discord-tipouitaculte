@@ -1,6 +1,6 @@
 module.exports = {
   alias: [
-    'list'
+    "list"
   ],
   activated: true,
   authorizations : {
@@ -17,7 +17,7 @@ module.exports = {
     name : "List",
     desc : "Lister les rôles et salons du serveur. Fonction de debug sans logs.",
     schema : "!list <roles|channels>",
-    channels : "Bots Vigilant·es",
+    channels : "🐙debug-tipouitaculte",
     authors : "Toustes",
     roleNames : "Tous"
   },
