@@ -24,6 +24,7 @@ module.exports = {
     let target = params[0]
     let embed = new DiscordNPM.RichEmbed()
     embed.setColor(38600)
+    const aliasList = []
     if(TiCu.Commands[target]) {
       let cmd = TiCu.Commands[target].authorizations
       embed
@@ -36,8 +37,13 @@ module.exports = {
       msg.channel.send({ embed })
     } else if(target === "full") {
       Object.keys(TiCu.Commands).forEach((key, i, array) => {
-        let cmd = TiCu.Commands[key].authorizations
-        embed.addField(cmd.name, cmd.desc)
+        if (!aliasList.find(v => v === key)) {
+          let cmd = TiCu.Commands[key].authorizations
+          embed.addField(cmd.name, cmd.desc)
+          TiCu.Commands[key].alias.forEach(aliasName => {
+            aliasList.push(aliasName)
+          })
+        }
       })
       msg.channel.send("Voici la liste exhaustive de mes fonctions :")
       msg.channel.send({ embed })
@@ -72,12 +78,16 @@ module.exports = {
       }
       msg.channel.send({ embed })
     } else if(!target) {
+      aliasList.push("help")
       Object.keys(TiCu.Commands).forEach((key, i, array) => {
-        if(key !== "help") {
+        if (!aliasList.find(v => v === key)) {
           if(TiCu.Authorizations.Command(key, msg)) {
             let cmd = TiCu.Commands[key].authorizations
             embed.addField(cmd.name, cmd.desc)
           }
+          TiCu.Commands[key].alias.forEach(aliasName => {
+            aliasList.push(aliasName)
+          })
         }
       })
       msg.channel.send("Voici la liste de mes fonctions que vous pouvez utiliser :")

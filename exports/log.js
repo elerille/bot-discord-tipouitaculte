@@ -97,6 +97,10 @@ module.exports = {
         msg.react("✔")
       }
     },
+    HotReload: function(msg, type) {
+      maxilog.send(`${TiCu.Date("log")} : Hot Reload\n${TiCu.Mention(msg.author.id).displayName} recharged TipouiTaCulte configuration (${type})`)
+      msg.react("✅")
+    },
     Kick : function(target, reason, msg) {
       maxilog.send(TiCu.Date("log") + " : Kick \n" + msg.member.displayName + " a kické " + target.username + " / " + target.id + ".")
       minilog.send(msg.member.displayName + " a kické " + target.username + ".")
@@ -112,7 +116,9 @@ module.exports = {
       }
     },
     Profil: function(target, msg) {
-      maxilog.send(TiCu.Date("log") + "Profil\n" + msg.member.displayName + "a affiché le profil de " + tipoui.members.get(target.id).displayName)
+      if(msg.member.id != target.id) {
+        maxilog.send(`${TiCu.Date("log")} : Profil\n${msg.member.displayName} a affiché le profil de ${tipoui.members.get(target.id).displayName}`)
+      }
     },
     Purifier : function(target, msg) {
       maxilog.send(TiCu.Date("log") + " : Purifier \n" + msg.member.displayName + " a ajouté " + target.displayName + " parmi les Pourfendeureuses de Cismecs.")
@@ -180,18 +186,16 @@ module.exports = {
           minilog.send(msg.member.displayName + " a lancé un vote anonyme pour " + type + " " + TiCu.Mention(params[2]) )
           maxilog.send(TiCu.Date("log") + " : Vote\n" + msg.member.displayName + " a lancé un vote anonyme : " + type + TiCu.Mention(params[2]) + "\n" + msg.url)
         }
-        maxilog.send(newMsg.content)
+        maxilog.send(new DiscordNPM.RichEmbed(newMsg.embeds[0]))
         msg.delete()
       },
       AutoTurquoise: function(newMsg, target, voteNumber) {
         minilog.send(`Un nouveau vote anonyme automatique de passage Turquoise (#${voteNumber}) a été lancé pour ${TiCu.Mention(target).displayName}`)
-        maxilog.send(newMsg.content)
+        maxilog.send(new DiscordNPM.RichEmbed(newMsg.embeds[0]))
       }
     },
     Xp: function(msg, target, value, give) {
       maxilog.send(`${TiCu.Date("log")} : XP\n${tipoui.members.get(msg.author.id).displayName} a  ${give ? 'donné' : 'enlevé'} ${value} XP à ${target}`)
-    },
-    XPStatus: function(target) {
     }
   },
   ReactionError: function(reaction, usr, type) {
