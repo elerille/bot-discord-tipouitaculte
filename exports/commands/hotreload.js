@@ -6,8 +6,8 @@ function clearRequireCache() {
 
 module.exports = {
   alias: [
-    'hotreload',
-    'hr'
+    "hotreload",
+    "hr"
   ],
   activated: true,
   authorizations : {
@@ -31,18 +31,18 @@ module.exports = {
   },
   run : function(params, msg) {
     clearRequireCache()
-    const loader = require('../loader')
+    const loader = require("../loader")
     switch(params[0]) {
-      case 'parsing':
+      case "parsing":
         loader.loadParsing()
         TiCu.Log.Commands.HotReload(msg, params[0])
         break
-      case 'ticu':
-        loader.loadTicu('./')
+      case "ticu":
+        loader.loadTicu("./")
         TiCu.Log.Commands.HotReload(msg, params[0])
         break
       default:
-        TiCu.Log.Error('hotreload', 'Vous devez préciser quel type de reload vous souhaitez réaliser (parsing ou ticu)', msg)
+        TiCu.Log.Error("hotreload", "Vous devez préciser quel type de reload vous souhaitez réaliser (parsing ou ticu)", msg)
     }
   }
 }

@@ -1,7 +1,7 @@
 // Init
 const EXPRESS = require("express")
 const EventsModule = require("events")
-const fs = require('fs');
+const fs = require("fs");
 
 function parseForAutoCommands(msg) {
   for (const autoCommand of Object.values(TiCu.Auto)) {
@@ -48,7 +48,7 @@ module.exports = {
     global.SequelizeDB = require("sequelize")
     global.DB = new SequelizeDB(CFG.sequelizeURL, {logging: false})
     global.DiscordNPM = require("discord.js")
-    global.Discord = new DiscordNPM.Client({disabledEvents: ['TYPING_START']})
+    global.Discord = new DiscordNPM.Client({disabledEvents: ["TYPING_START"]})
     global.Event = new EventsModule.EventEmitter()
     global.VotesFile = "private/votes.json";
     global.VotesEmojis = ["✅","⚪","🛑","⏱"];
@@ -74,9 +74,9 @@ module.exports = {
       Auto : {}
     }
 
-    const commandFiles = fs.readdirSync(rootPath + 'exports/commands/');
+    const commandFiles = fs.readdirSync(rootPath + "exports/commands/");
     for (const command of commandFiles) {
-      const aux = require('../exports/commands/' + command)
+      const aux = require("../exports/commands/" + command)
       if (aux.alias && aux.activated) {
         for (const aliasCmd of aux.alias) {
           TiCu.Commands[aliasCmd] = aux
@@ -84,17 +84,17 @@ module.exports = {
       }
     }
 
-    const reactionFiles = fs.readdirSync(rootPath + 'exports/reactions/');
+    const reactionFiles = fs.readdirSync(rootPath + "exports/reactions/");
     for (const reaction of reactionFiles) {
-      const aux = require('../exports/reactions/' + reaction)
+      const aux = require("../exports/reactions/" + reaction)
       if (aux.methodName && aux.activated) {
         TiCu.Reactions[aux.methodName] = aux
       }
     }
 
-    const autoFiles = fs.readdirSync(rootPath + 'exports/auto/');
+    const autoFiles = fs.readdirSync(rootPath + "exports/auto/");
     for (const auto of autoFiles) {
-      const aux = require('../exports/auto/' + auto)
+      const aux = require("../exports/auto/" + auto)
       if (aux.methodName && aux.activated) {
         TiCu.Auto[aux.methodName] = aux
       }
@@ -105,7 +105,7 @@ module.exports = {
       if(!msg.author.bot) {
         let params = []
         let rawParams = []
-        TiCu.Xp.processXpFromMessage('add', msg)
+        TiCu.Xp.processXpFromMessage("add", msg)
         if(msg.channel.type === "dm" ) {
           let user = tipoui.members.get(msg.author.id) ? tipoui.members.get(msg.author.id) : undefined
           if(user) {
@@ -130,8 +130,8 @@ module.exports = {
               rawParams.push(value.substr(1, value.length-2))
               params.push(value.substr(1, value.length-2).toLowerCase())
             } else {
-              rawParams.push(value.replace(/\\/g, ''))
-              params.push(value.replace(/\\/g, '').toLowerCase())
+              rawParams.push(value.replace(/\\/g, ""))
+              params.push(value.replace(/\\/g, "").toLowerCase())
             }
           })
           let cmd = params.shift()
@@ -145,7 +145,7 @@ module.exports = {
 
     global.parseMessageDelete = (msg) => {
       if(!msg.author.bot) {
-        TiCu.Xp.processXpFromMessage('remove', msg)
+        TiCu.Xp.processXpFromMessage("remove", msg)
       }
     }
 
@@ -160,7 +160,7 @@ module.exports = {
               if (previousBotEmbed) {
                 let embed = createEmbedCopy(newMsg, user, true, previousBotEmbed.embeds[0].description)
                 previousBotEmbed.edit(embed).then(() => TiCu.Log.UpdatedDM(embed, newMsg))
-              } else TiCu.Log.UpdatedDM(undefined, newMsg, 'Could not find previous bot message to update')
+              } else TiCu.Log.UpdatedDM(undefined, newMsg, "Could not find previous bot message to update")
             }
           }
         } else if(newMsg.channel.id === PUB.salons.quarantaineUser.id || newMsg.channel.id === PUB.salons.quarantaineVigi.id) {
@@ -169,13 +169,13 @@ module.exports = {
             if (previousBotEmbed) {
               let embed = createEmbedCopy(newMsg, newMsg.member, true, previousBotEmbed.embeds[0].description)
               previousBotEmbed.edit(embed).then(msgEdited => TiCu.Log.UpdatedQuarantaine("reçu", msgEdited, newMsg))
-            } else TiCu.Log.UpdatedQuarantaine("reçu", undefined, newMsg, 'Could not find previous bot message to update')
+            } else TiCu.Log.UpdatedQuarantaine("reçu", undefined, newMsg, "Could not find previous bot message to update")
           } else if(newMsg.channel.id === PUB.salons.quarantaineVigi.id) {
             const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.salons.quarantaineUser.id)
             if (previousBotEmbed) {
               let embed = createEmbedCopy(newMsg, newMsg.member, true, previousBotEmbed.embeds[0].description)
               previousBotEmbed.edit(embed).then(msgEdited => TiCu.Log.UpdatedQuarantaine("envoyé", msgEdited, newMsg))
-            } else TiCu.Log.UpdatedQuarantaine("envoyé", undefined, newMsg, 'Could not find previous bot message to update')
+            } else TiCu.Log.UpdatedQuarantaine("envoyé", undefined, newMsg, "Could not find previous bot message to update")
           }
         }
       }
