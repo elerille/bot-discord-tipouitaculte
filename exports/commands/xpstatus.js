@@ -15,7 +15,7 @@ module.exports = {
       type: "any"
     },
     name : "XP Status",
-    desc : "Afficher le statut d'un membre dans le système d'XP ou changer son statut.",
+    desc : "Afficher le statut d'eun membre dans le système d'XP ou changer son statut.",
     schema : "!xpstatus ([inclure|exclure]) (@)",
     channels : "🦄la-maison-de-la-bot, #💠interface-tipoui",
     authors : "Toustes",
@@ -46,7 +46,7 @@ module.exports = {
           const target = memberParam ? memberParam.id : msg.author.id
           TiCu.Xp.changeMemberStatus(target, params[0] === 'inclure', msg)
         } else {
-          TiCu.Log.Error('xpstatus', "permissions manquantes : vous ne pouvez pas modifier le status d'un tiers", msg)
+          TiCu.Log.Error('xpstatus', "permissions manquantes : vous ne pouvez pas modifier le status d'eun tiers", msg)
         }
         break;
       default:

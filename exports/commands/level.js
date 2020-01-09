@@ -48,7 +48,7 @@ module.exports = {
       type: "any"
     },
     name : "Level",
-    desc : "Afficher le niveau d'un membre.",
+    desc : "Afficher le niveau d'eun membre.",
     schema : "!level (@)",
     channels : "🦄la-maison-de-la-bot",
     authors : "Toustes",
