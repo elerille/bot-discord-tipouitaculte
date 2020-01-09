@@ -1,6 +1,7 @@
 module.exports = {
   alias: [
-    'xpstatus'
+    "xpstatut",
+    "xpstatus"
   ],
   activated: true,
   authorizations : {
@@ -12,51 +13,50 @@ module.exports = {
       type: "any"
     },
     roles : {
-      type: "any"
+      type: "whitelist",
+      list: [PUB.roles.turquoise]
     },
-    name : "XP Status",
-    desc : "Afficher le statut d'un membre dans le système d'XP ou changer son statut.",
-    schema : "!xpstatus ([inclure|exclure]) (@)",
-    channels : "🦄la-maison-de-la-bot, #💠interface-tipoui",
+    name : "XPstatut",
+    desc : "Afficher un statut, ou modifier le votre, ou, dans l'Interface Tipoui, modifier celui d'eun autre membre, par rapport au système d'XP.",
+    schema : "Pour toustes : !xpstatus ( ( (inclure|exclure) | @ )\nVigilant·es : !xpstatus <inclure|exclure> <@>",
+    channels : "🐙la-maison-des-bots, #🐙interface-tipoui",
     authors : "Toustes",
-    roleNames : "Tous"
+    roleNames : "Turquoises"
   },
   run : function(params, msg) {
     switch (params.length) {
       case 1:
-        if (params[0] === 'inclure' || params[0] === 'exclure') {
-          TiCu.Xp.changeMemberStatus(msg.author.id, params[0] === 'inclure', msg)
+        if (params[0] === "inclure" || params[0] === "exclure") {
+          TiCu.Xp.changeMemberStatus(msg.author.id, params[0] === "inclure", msg)
         } else {
           const target = params[0] ? TiCu.Mention(params[0]).id : null
           TiCu.Xp.getMember(target).then(
             entry => {
               if (entry) {
-                msg.channel.send(`Le compte de ${TiCu.Mention(params[0]).displayName} est ${entry.activated ? 'activé' : 'désactivé'} dans le système`)
+                msg.channel.send(`Le compte de ${TiCu.Mention(params[0]).displayName} est ${entry.activated ? "activé" : "désactivé"} dans le système`)
               } else {
-                msg.channel.send('Impossible de retrouver votre cible dans le système')
-                TiCu.Log.Commands.XPStatus(target)
+                TiCu.Log.Error("XPStatut", "cible introuvable ou erreur de base de donnée", msg)
               }
             }
           )
         }
         break;
       case 2:
-        if (msg.channel.id === PUB.salons.botsecret.id) { // only able to change status for another one in interface-tipoui
+        if (msg.channel.id === PUB.salons.botsecret.id) {
           const memberParam = params[1] ? TiCu.Mention(params[1]) : null
           const target = memberParam ? memberParam.id : msg.author.id
-          TiCu.Xp.changeMemberStatus(target, params[0] === 'inclure', msg)
+          TiCu.Xp.changeMemberStatus(target, params[0] === "inclure", msg)
         } else {
-          TiCu.Log.Error('xpstatus', "permissions manquantes : vous ne pouvez pas modifier le status d'un tiers", msg)
+          TiCu.Log.Error("XPStatut", "seules les Vigilant·es peuvent modifier le statut d'eun autre membre", msg)
         }
         break;
       default:
         TiCu.Xp.getMember(msg.author.id).then(
           entry => {
             if (entry) {
-              msg.channel.send( `Votre compte est ${entry.activated ? 'activé' : 'désactivé'} dans le système`)
+              msg.channel.send(`Votre compte est ${entry.activated ? "activé" : "désactivé"} dans le système`)
             } else {
-              msg.channel.send('Impossible de retrouver votre cible dans le système')
-              TiCu.Log.Commands.XPStatus(msg.author.id)
+              TiCu.Log.Error("XPStatut", "cible introuvable ou erreur de base de donnée", msg)
             }
           }
         )

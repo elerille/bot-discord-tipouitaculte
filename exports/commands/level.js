@@ -1,6 +1,6 @@
 function generateProgressionBar(percentage) {
-  const complete = '▰'
-  const incomplete = '▱'
+  const complete = "▰"
+  const incomplete = "▱"
   let bar = ""
   for (let i=0;i<10;i++) {
     if (percentage >= (i+1)*10) {
@@ -32,14 +32,14 @@ function makeEmbed(user, msg, entry) {
 
 module.exports = {
   alias: [
-    'level',
-    'niveau'
+    "level",
+    "niveau"
   ],
   activated: true,
   authorizations : {
     chans : {
       type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.bots.id]
+      list: [PUB.salons.debug.id, PUB.salons.botsecret.id, PUB.salons.bots.id]
     },
     auths : {
       type: "any"
@@ -48,9 +48,9 @@ module.exports = {
       type: "any"
     },
     name : "Level",
-    desc : "Afficher le niveau d'un membre.",
+    desc : "Afficher le niveau d'eun membre.",
     schema : "!level (@)",
-    channels : "🦄la-maison-de-la-bot",
+    channels : "🐙la-maison-des-bots",
     authors : "Toustes",
     roleNames : "Tous"
   },
@@ -62,12 +62,12 @@ module.exports = {
          if (entry) {
            if (entry.activated) {
              msg.channel.send(makeEmbed(tipoui.members.get(target), msg, entry))
+             TiCu.Log.Commands.Level(target, msg)
            } else {
-             msg.channel.send(`${memberParam ? 'Le compte de ' + memberParam.displayName : 'Votre compte'} est désactivé dans le système`)
+             TiCu.Log.Error("level", "compte désactivé dans le système d'expérience", msg)
            }
          } else {
-           msg.channel.send('Impossible de retrouver votre cible dans le système')
-           TiCu.Log.Commands.Level(target)
+           TiCu.Log.Error("level", "cible invalide ou erreur de base de données", msg)
          }
        }
      )

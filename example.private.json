@@ -1,4 +1,5 @@
 {
 	"sequelizeURL": "",
-    "discordToken": ""
+  "discordToken": "",
+	"expressSalt": ""
 }

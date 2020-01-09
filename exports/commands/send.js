@@ -1,6 +1,6 @@
 module.exports = {
   alias: [
-    'send'
+    "send"
   ],
   activated: true,
   authorizations : {
@@ -17,7 +17,7 @@ module.exports = {
     name : "Send",
     desc : "Envoyer un message par l'intermédiaire de ce bot.",
     schema : "!send <target> <texte>",
-    channels : "Bots Vigilant·es",
+    channels : "🐙interface-tipoui",
     authors : "Toustes",
     roleNames : "Tous"
   },

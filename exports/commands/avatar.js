@@ -1,6 +1,6 @@
 module.exports = {
   alias: [
-    'avatar'
+    "avatar"
   ],
   activated: true,
   authorizations : {
@@ -17,7 +17,7 @@ module.exports = {
     name : "Avatar",
     desc : "Afficher l'avatar d'eun membre",
     schema : "!avatar (@)",
-    channels : "🦄la-maison-de-la-bot",
+    channels : "🐙la-maison-des-bots",
     authors : "Toustes",
     roleNames : "Tous"
   },
@@ -29,14 +29,14 @@ module.exports = {
           msg.channel.send(
             new DiscordNPM.RichEmbed()
               .setColor(target.displayColor)
-              .setAuthor(`Avatar de ${target.displayName}`, target.user.avatarURL)
+              .setAuthor("Avatar de ${target.displayName}", target.user.avatarURL)
               .setImage(entry && entry.avatar ? entry.avatar : target.user.avatarURL)
           )
           TiCu.Log.Commands.Avatar(msg, target)
         }
       )
     } else {
-      TiCu.Log.Error('avatar', "Cible invalide : l'élément recherché n'est pas eun utilisateurice", msg)
+      TiCu.Log.Error("avatar", "cible invalide", msg)
     }
   }
 }

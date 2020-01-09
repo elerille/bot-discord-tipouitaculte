@@ -36,9 +36,9 @@ global.TiCu = {
   }
 }
 
-const commandFiles = fs.readdirSync('./exports/commands/');
+const commandFiles = fs.readdirSync("./exports/commands/");
 for (const command of commandFiles) {
-  const aux = require('./exports/commands/' + command)
+  const aux = require("./exports/commands/" + command)
   if (aux.alias && aux.activated) {
     for (const aliasCmd of aux.alias) {
       TiCu.Commands[aliasCmd] = aux
@@ -59,9 +59,9 @@ Discord.once("ready", () => {
     Server.get(
       "/discord/invite/:key",
       function(req, res) {
-        const hash = crypto.createHmac('sha256', CFG.expressSalt)
+        const hash = crypto.createHmac("sha256", CFG.expressSalt)
           .update(TiCu.Date("raw").toString().substr(0,8))
-          .digest('hex');
+          .digest("hex");
         if (activeInvite) {
           if (req.params.key === hash) {
             Discord.channels.get(PUB.salons.invite.id)
@@ -72,10 +72,10 @@ Discord.once("ready", () => {
                 }
               )
           } else {
-            res.send("You should not try to overthink us")
+            res.send("https://www.youtube.com/watch?v=BAHtStfZZWg")
           }
         } else {
-          res.send("Raid ongoing, no invite creation at the moment")
+          res.send("raid.php")
         }
       }
     )
@@ -224,9 +224,14 @@ Discord.on("messageReactionRemove", (reaction, usr) => {
 })
 Discord.on("guildMemberAdd", usr => {
   if(usr.guild.id === tipoui.id) {
-    maxilog.send(TiCu.Date("log") + " : Arrivée de membre\n" + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
-    minilog.send("Arrivée de " + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
     tipoui.channels.get(PUB.salons.genTP.id).send("Oh ! Bienvenue <@" + usr.id + "> ! Je te laisse lire les Saintes Règles, rajouter tes pronoms dans ton pseudo et nous faire une ptite présentation dans le salon qui va bien :heart:\nSi tu n'as pas fait vérifier ton numéro de téléphone ou d'abonnement Nitro, il va aussi te falloir aussi attendre 10 petites minutes que Discord s'assure tu n'es pas une sorte d'ordinateur mutant venu de l'espace... Même si en vrai ça serait trop cool quand même !")
+    if(usr.lastMessage) {
+      maxilog.send(TiCu.Date("log") + " : Retour de membre\n" + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
+      minilog.send("Retour de " + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)      
+    } else {
+      maxilog.send(TiCu.Date("log") + " : Arrivée de membre\n" + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
+      minilog.send("Arrivée de " + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
+    }
   }
 })
 Discord.on("guildMemberRemove", usr => {

@@ -1,5 +1,6 @@
 package-lock.json
 private.json
+private/
 private/*
 private/votes.json
 private/quarantaine.json

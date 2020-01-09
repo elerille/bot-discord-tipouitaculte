@@ -47,11 +47,11 @@ module.exports = {
     user.send("Votre vote `" + emoji + "` a bien été pris en compte.\n" + msg.url)
   },
   VoteCollector : function(msg) {
-    maxilog.send(TiCu.Date("log") + " : VoteCollections\nInitialisation du vote pour le message\n" + msg.url)
+    maxilog.send(TiCu.Date("log") + " : VoteCollections\nInitialisation du vote pour le message :\n" + msg.url)
   },
   VoteDone : function (reason, type, msg, target) {
     if (type === "text") {
-      maxilog.send(TiCu.Date("log") + " : VoteDone\nFin du vote pour le message\n" + msg.url)
+      maxilog.send(TiCu.Date("log") + " : VoteDone\nFin du vote pour le message :\n" + msg.url)
     } else {
       maxilog.send(
         TiCu.Date("log") + " : VoteDone\nFin du vote (avec le resultat \"" + reason + "\") pour le message\n" + msg.url +
@@ -63,6 +63,11 @@ module.exports = {
     maxilog.send(TiCu.Date("log") + " : Server\nServed Page : " + req.path)
   },
   Commands : {
+    Avatar: function(msg, target) {
+      if(msg.member.id != target.id) {
+        maxilog.send(TiCu.Date("log") + "Avatar\n" + msg.member.displayName + "a affiché l'avatar de " + target.displayName)
+      }
+    },
     Ban : function(target, reason, msg) {
       maxilog.send(TiCu.Date("log") + " : Ban \n" + msg.member.displayName + " a banni " + target.username + " / " + target.id + ".")
       minilog.send(msg.member.displayName + " a banni " + target.username + ".")
@@ -73,7 +78,7 @@ module.exports = {
       msg.react("✅")
     },
     Bienvenue : function(target, msg) {
-      maxilog.send(TiCu.Date("log") + " : Bienvenue \n" + msg.member.displayName + " a souhaité la bienvenue à " + target.displayName + " / " + target.id + ".")
+      maxilog.send(TiCu.Date("log") + " : Bienvenue\n" + msg.member.displayName + " a souhaité la bienvenue à " + target.displayName + " / " + target.id + ".")
       minilog.send(msg.member.displayName + " a souhaité la bienvenue à " + target.displayName + ".")
       tipoui.channels.get(PUB.salons.invite.id).send("Bienvenue " + target.displayName + " ! <:patatecoeur:585795622846857256>\nTe voici désormais Phosphate d'Alumine. N'hésite pas à m'envoyer un message privé si tu as des questions sur le serveur ou un message à transmettre aux Vigiliant·es.\nNous espérons que tu seras à ton aise et que tout se passera bien.")
     },
@@ -101,6 +106,14 @@ module.exports = {
       }
       msg.react("✅")
     },
+    Level: function(target, msg) {
+      if(msg.member.id != target.id) {
+        maxilog.send(TiCu.Date("log") + "Level\n" + msg.member.displayName + "a affiché le level de " + tipoui.members.get(target.id).displayName)
+      }
+    },
+    Profil: function(target, msg) {
+      maxilog.send(TiCu.Date("log") + "Profil\n" + msg.member.displayName + "a affiché le profil de " + tipoui.members.get(target.id).displayName)
+    },
     Purifier : function(target, msg) {
       maxilog.send(TiCu.Date("log") + " : Purifier \n" + msg.member.displayName + " a ajouté " + target.displayName + " parmi les Pourfendeureuses de Cismecs.")
       minilog.send(msg.member.displayName + " a ajouté " + target.displayName + " parmi les Pourfendeureuses de Cismecs.")
@@ -110,7 +123,7 @@ module.exports = {
       if(action) {
         minilog.send(msg.member.displayName + "a mis " + target.displayName + " en quarantaine.")
         maxilog.send(TiCu.Date("log") + " : Quarantaine\n" + msg.member.displayName + " a mis " + target.displayName + " / " + target.id + " en quarantaine.")
-        tipoui.channels.get(PUB.salons.quarantaineUser.id).send("<@" + target.id + ">, tu as été placé·e en quarantaine. Tous les messages que tu transmetras dans ce salon seront transmis aux Vigilant·es, comme lorsque tu m'envoie un message privé, et je m'occuperais de transmettre leurs réponses.\n⚠Quitter le serveur alors que tu es ici te vaudra un ban immédiat.⚠")
+        tipoui.channels.get(PUB.salons.quarantaineUser.id).send("<@" + target.id + ">, tu as été placé·e en quarantaine. Tous les messages que tu transmetras dans ce salon seront transmis aux Vigilant·es, comme lorsque tu m'envoies un message privé, et je m'occuperais de transmettre leurs réponses.\n⚠Quitter le serveur alors que tu es ici te vaudra un ban immédiat.⚠")
         msg.react("✅")
       } else {
         minilog.send(msg.member.displayName + "a enlevé " + target.displayName + " de quarantaine.")
@@ -121,6 +134,18 @@ module.exports = {
         minilog.send("Raison : " + reason)
         maxilog.send("Raison : " + reason)
       }
+    },
+    Raid: function(msg, arg) {
+      if(arg === "on") {
+        maxilog.send(TiCu.Date("log") + " : Raid\nL'alerte Raid a été lancée par " + msg.member.displayName + ".")
+        minilog.send("L'alerte Raid a été lancée. Les liens d'invitation au serveur ne seront plus distribués jusqu'à `!raid off` ou redémarrage du bot.")
+        msg.channel.send("Désactivation du lien d'invitation, activation du mode raid... :scream: Que la force soit avec nous !")
+      } else {
+        maxilog.send(TiCu.Date("log") + " : Raid\nL'alerte Raid a été désactivée par " + msg.member.displayName + ".")
+        minilog.send("L'alerte Raid a été désactivée.")
+        msg.channel.send("Réactivation du lien d'invitation, désactivation du mode raid... :smiley:")
+      }
+      msg.react("✅")
     },
     Roles : function(target, action, roles, msg) {
       let author = msg.member ? msg.member.displayName : msg.author.username
@@ -150,6 +175,7 @@ module.exports = {
         /* Might receive empty params[2] */
         if(type === "text") {
           minilog.send(msg.member.displayName + " a lancé un vote anonyme")
+          maxilog.send(TiCu.Date("log") + " : Vote\n" + msg.member.displayName + " a lancé un vote anonyme" + msg.url)
         } else {
           minilog.send(msg.member.displayName + " a lancé un vote anonyme pour " + type + " " + TiCu.Mention(params[2]) )
           maxilog.send(TiCu.Date("log") + " : Vote\n" + msg.member.displayName + " a lancé un vote anonyme : " + type + TiCu.Mention(params[2]) + "\n" + msg.url)
@@ -158,28 +184,14 @@ module.exports = {
         msg.delete()
       },
       AutoTurquoise: function(newMsg, target, voteNumber) {
-        minilog.send(`Un nouveau vote anonyme automatique de passage Turquoise (#${voteNumber}) a été lancé pour ${TiCu.Mention(target)}`)
+        minilog.send(`Un nouveau vote anonyme automatique de passage Turquoise (#${voteNumber}) a été lancé pour ${TiCu.Mention(target).displayName}`)
         maxilog.send(newMsg.content)
       }
     },
-    Level: function(target) {
-      maxilog.send(`${TiCu.Date("log")} : Level\nImpossible de retrouver l'entrée correspondant à l'id membre ${target} en base de donnée`)
+    Xp: function(msg, target, value, give) {
+      maxilog.send(`${TiCu.Date("log")} : XP\n${tipoui.members.get(msg.author.id).displayName} a  ${give ? 'donné' : 'enlevé'} ${value} XP à ${target}`)
     },
     XPStatus: function(target) {
-      maxilog.send(`${TiCu.Date("log")} : XPStatus\nImpossible de retrouver l'entrée correspondant à l'id membre ${target} en base de donnée`)
-    },
-    Xp: function(msg, target, value, give) {
-      maxilog.send(`${TiCu.Date("log")} : XP\n${tipoui.members.get(msg.author.id).displayName} ${give ? 'gave' : 'took'} ${value} XP ${give ? 'to' : 'from'} ${target}`)
-    },
-    Raid: function(msg, arg) {
-      maxilog.send(`${TiCu.Date("log")} : Raid\n<@${msg.author.id}> ${arg === 'on' ? 'activated' : 'desactivated'} the raid mode`)
-      msg.react("✅")
-    },
-    Avatar: function(msg, target) {
-      maxilog.send(`${TiCu.Date("log")} : Avatar\n${TiCu.Mention(msg.author.id).displayName} displayed ${target.displayName}'s avatar`)
-    },
-    Profil: function(msg, target) {
-      maxilog.send(`${TiCu.Date("log")} : Profil\n${TiCu.Mention(msg.author.id).displayName} displayed ${target.displayName}'s profil`)
     }
   },
   ReactionError: function(reaction, usr, type) {

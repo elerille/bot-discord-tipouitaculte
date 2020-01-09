@@ -1,6 +1,6 @@
 module.exports = {
   alias: [
-    'profil'
+    "profil"
   ],
   activated: true,
   authorizations : {
@@ -15,42 +15,42 @@ module.exports = {
       type: "any"
     },
     name : "Profil",
-    desc : "Afficher le profil d'eun membre ou modifier son propre profil",
-    schema : "!profil (@|set|get|delete) (champs) (value)",
-    channels : "🦄la-maison-de-la-bot",
+    desc : "Afficher le profil d'eun membre ou modifier son propre profil.",
+    schema : "!profil (@)\nou\n!profil <set> <champ> <valeur>\nou\n!profil <delete|get> <champ>",
+    channels : "🐙la-maison-des-bots",
     authors : "Toustes",
     roleNames : "Tous"
   },
   run : function(params, msg, rawParams) {
     if (params[0]) {
       switch (params[0]) {
-        case 'set':
+        case "set":
           if (params.length >= 3) {
             rawParams.shift()
             let fieldName = rawParams.shift()
-            let fieldValue = ''
+            let fieldValue = ""
             for (const rawParam of rawParams) {
-              fieldValue += (rawParam + ' ')
+              fieldValue += (rawParam + " ")
             }
             TiCu.Profil.setValue(fieldName, fieldValue.substr(0, fieldValue.length-1), msg.author.id, msg)
-          } else TiCu.Log.Error('profil', "Vous devez précsier quel champs vous souhaitez modifier et sa nouvelle valeur", msg)
+          } else TiCu.Log.Error("profil", "paramètres invalides", msg)
           break
-        case 'get':
+        case "get":
           if (params.length >= 2) {
             TiCu.Profil.sendFieldValue(rawParams[1], msg.author.id, msg)
-          } else TiCu.Log.Error('profil', "Vous devez préciser quel champs vous souhaitez afficher", msg)
+          } else TiCu.Log.Error("profil", "paramètres invalides", msg)
           break
-        case 'delete':
+        case "delete":
           if (params.length >= 2) {
             TiCu.Profil.deleteValue(rawParams[1], msg.author.id, msg)
-          } else TiCu.Log.Error('profil', "Vous devez préciser quel champs vous souhaitez supprimer", msg)
+          } else TiCu.Log.Error("profil", "paramètres invalides", msg)
           break
         default:
           const target = TiCu.Mention(params[0])
           if (target.user) {
             TiCu.Profil.sendProfilEmbed(target, msg)
           } else {
-            TiCu.Log.Error('profil', "Cible invalide : l'élément recherché n'est pas eun utilisateurice", msg)
+            TiCu.Log.Error("profil", "cible invalide", msg)
           }
       }
     } else {

@@ -8,7 +8,7 @@ function checkRoleUsage(role, usr, msg) {
 
 module.exports = {
   alias: [
-    'color'
+    "color"
   ],
   activated: true,
   authorizations : {
@@ -23,7 +23,7 @@ module.exports = {
       type: "any"
   },
     name : "Color",
-    desc : "Changer votre rôle-couleur.",
+    desc : "Changer votre rôle-couleur. La réaction \"✔\" indique que votre précédent rôle-couleur a été supprimé car vous étiez la dernière personne à l'utiliser.",
     schema : "!color <#RRGGBB>\nou\n!color none|remove|reset|enlever|réinitialiser|turquoise",
     channels : "Maison des Bots",
     authors : "Toustes",
@@ -64,7 +64,7 @@ module.exports = {
             }
             return TiCu.Log.Commands.Color("switched", newRole.name, msg)
           }
-        } else TiCu.Log.Error("color", "paramètre de couleur invalide", msg)
+        } else TiCu.Log.Error("color", "paramètre de couleur invalide (format `#RRGGBB`)", msg)
       }
     } else TiCu.Log.Error("color", "seul·es les Turquoises peuvent modifier leur rôle-couleur", msg)
   }
