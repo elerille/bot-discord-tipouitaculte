@@ -194,8 +194,8 @@ module.exports = {
         maxilog.send(new DiscordNPM.RichEmbed(newMsg.embeds[0]))
       }
     },
-    Xp: function(target, value, give, msg) {
-      maxilog.send(`${TiCu.Date("log")} : XP\n${tipoui.members.get(msg.author.id).displayName} a  ${give ? 'donné' : 'enlevé'} ${value} XP à ${target}`)
+    Xp: function(target, value, give, reason, msg) {
+      maxilog.send(`${TiCu.Date("log")} : XP\n${tipoui.members.get(msg.author.id).displayName} a  ${give ? 'donné' : 'enlevé'} ${value} XP à ${target}${reason ? " pour la raison : " + reason : ""}`)
     }
   },
   ReactionError: function(reaction, usr, type) {
