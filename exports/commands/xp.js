@@ -1,3 +1,12 @@
+function giveXpMembers(targetCollection, params, reason, msg) {
+  targetCollection.members.forEach((member, id) => {
+    if (!member.user.bot) {
+      TiCu.Xp.updateXp(params[0] === "give" ? "add" : "remove", Number(params[2]), id)
+    }
+  })
+  TiCu.Log.Commands.Xp(targetCollection.name, params[2], params[0] === "give", reason, msg)
+}
+
 module.exports = {
   alias: [
     "xp"
@@ -17,25 +26,48 @@ module.exports = {
     name : "XP",
     desc : "Donner ou retirer de l'expérience à eun ou tous les membres",
     // TODO : donner ou retirer de l'expérience aux personnes possédant un rôle spécifique
-    schema : "!xp <give|take> <@|all> <value> (reason)",
+    schema : "!xp <give|take> <@|all|role|channel> <value> (reason)",
     channels : "🐙interface-tipoui",
     authors : "Toustes",
     roleNames : "Tous"
   },
-  run : function(params, msg) {
+  run : function(params, msg, rawParams) {
     if (params.length < 3 || (params[0] !== "give" && params[0] !== "take") || isNaN(params[2])) {
       TiCu.Log.Error("xp", "paramètres invalides", msg)
     } else {
+      let reason = ""
+      for (let i=3;i<rawParams.length;i++) {
+        reason = reason + " " + rawParams[i]
+      }
       if (params[1] === "all") {
         TiCu.Xp.updateAllXp(params[0] === "give" ? "add" : "remove", Number(params[2]))
         TiCu.Log.Commands.Xp( "all", params[2], params[0] === "give", msg)
       } else {
-        const memberParam = params[1] ? TiCu.Mention(params[1]) : null
-        if (memberParam && tipoui.members.get(memberParam.id)) {
-          TiCu.Xp.updateXp(params[0] === "give" ? "add" : "remove", Number(params[2]), memberParam.id)
-          TiCu.Log.Commands.Xp(memberParam.displayName, params[2], params[0] === "give", msg)
+        const mentionParam = params[1] ? TiCu.Mention(params[1]) : null
+        if (mentionParam) {
+          if (tipoui.members.get(mentionParam.id)) {
+            TiCu.Xp.updateXp(params[0] === "give" ? "add" : "remove", Number(params[2]), mentionParam.id)
+            TiCu.Log.Commands.Xp(mentionParam.displayName, params[2], params[0] === "give", reason, msg)
+          } else if (tipoui.roles.get(mentionParam.id) || tipoui.channels.get(mentionParam.id)) {
+            giveXpMembers(mentionParam, params, reason, msg)
+          } else {
+            TiCu.Log.Error("xp", "paramètres invalides", msg)
+          }
         } else {
-          TiCu.Log.Error("xp", "paramètres invalides", msg)
+          let roleId = ""
+          for (const role of Object.values(PUB.roles)) {
+            for (const roleAlias of role.alias) {
+              if (roleAlias === params[1]) {
+                roleId = role.id
+                break
+              }
+            }
+            if (roleId) {
+              giveXpMembers(tipoui.roles.get(roleId), params, reason, msg)
+              break
+            }
+          }
+          if (!roleId) TiCu.Log.Error("xp", "paramètres invalides", msg)
         }
       }
     }
