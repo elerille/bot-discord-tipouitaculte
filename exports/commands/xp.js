@@ -41,7 +41,7 @@ module.exports = {
       }
       if (params[1] === "all") {
         TiCu.Xp.updateAllXp(params[0] === "give" ? "add" : "remove", Number(params[2]))
-        TiCu.Log.Commands.Xp( "all", params[2], params[0] === "give", msg)
+        TiCu.Log.Commands.Xp("all", params[2], params[0] === "give", reason, msg)
       } else {
         const mentionParam = params[1] ? TiCu.Mention(params[1]) : null
         if (mentionParam) {
