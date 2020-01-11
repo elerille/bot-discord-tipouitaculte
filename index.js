@@ -10,6 +10,7 @@ Discord.once("ready", () => {
   global.maxilog = Discord.channels.get(PUB.salons.maxiLog.id)
   global.minilog = Discord.channels.get(PUB.salons.miniLog.id)
   console.log(TiCu.Date("log") + " : Connexion à Discord.")
+  loader.updateSalonsName()
   if (!dev || (dev && devConfig)) {
     if (!dev) {
       maxilog.send(TiCu.Date("log") + " : Reconnexion.")

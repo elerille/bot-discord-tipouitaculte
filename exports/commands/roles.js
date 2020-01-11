@@ -16,10 +16,7 @@ module.exports = {
   },
     name : "Roles",
     desc : "Ajouter ou retirer des rôles à eun membre du serveur",
-    schema : "!roles <@> <+|ajouter|add|addRoles> <[roles]>\nou\n!roles <@> <-|enlever|retirer|supprimer|remove|removeRoles> <[roles]>",
-    channels : "🐙interface-tipoui",
-    authors : "Toustes",
-    roleNames : "Tous"
+    schema : "!roles <@> <+|ajouter|add|addRoles> <[roles]>\nou\n!roles <@> <-|enlever|retirer|supprimer|remove|removeRoles> <[roles]>"
   },
   run : function(params, msg) {
     let action

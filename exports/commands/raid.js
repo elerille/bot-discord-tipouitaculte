@@ -16,10 +16,7 @@ module.exports = {
     },
     name : "Raid",
     desc : "Activer/Désactiver le lien d'invitation en cas de raid ou vérifier son état",
-    schema : "!raid <[on|off|status]>",
-    channels : "🐙interface-tipoui",
-    authors : "Toustes",
-    roleNames : "Tous"
+    schema : "!raid <[on|off|status]>"
   },
   run : function(params, msg) {
     switch(params[0]) {

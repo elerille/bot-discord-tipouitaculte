@@ -16,10 +16,7 @@ module.exports = {
   },
     name : "Ban",
     desc : "Bannir eun membre du serveur.",
-    schema : "!ban <@> (raison)",
-    channels : "🐙interface-tipoui",
-    authors : "Toustes",
-    roleNames : "Tous"
+    schema : "!ban <@> (raison)"
   },
   run : function(params, msg) {
     let crop = new RegExp(/^(!ban\s+[^\s]+\s+)/)

@@ -324,5 +324,14 @@ module.exports = {
         if(newUsr.roles.get(PUB.roles.naughty.id)) {newUsr.removeRole(PUB.roles.naughty.id)}
       }
     }
+  },
+  updateSalonsName : function() {
+    global.salonsById = {}
+    for (const value of Object.values(PUB.salons)) {
+      const tipouiSalon = tipoui.channels.get(value.id)
+      if (tipouiSalon) {
+        salonsById[value.id] = tipouiSalon.name
+      }
+    }
   }
 }

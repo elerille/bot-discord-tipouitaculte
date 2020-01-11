@@ -17,13 +17,13 @@ module.exports = {
     let chan = authorized(target.chans, msg.channel.id)
     let auth = authorized(target.auths, msg.author.id)
     let role
-    if(target.roles.type != "any") {
+    if(target.roles.type !== "any") {
       let array = Array.from(msg.member.roles.values())
       let filtered = array.filter(e => target.roles.list.includes(e.id))
       if(target.roles.type === "whitelist") {
-        role = filtered.length ? true : false
+        role = !!filtered.length
       } else {
-        role = filtered.length ? false : true
+        role = !filtered.length
       }
     } else role = true
     return chan && role && auth

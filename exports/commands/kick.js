@@ -16,10 +16,7 @@ module.exports = {
   },
     name : "Kick",
     desc : "Expulser eun membre du serveur.",
-    schema : "!kick <@> (raison)",
-    channels : "🐙interface-tipoui",
-    authors : "Toustes",
-    roleNames : "Tous"
+    schema : "!kick <@> (raison)"
   },
   run : function(params, msg) {
     let crop = new RegExp(/^(!kick\s+[^\s]+\s+)/)

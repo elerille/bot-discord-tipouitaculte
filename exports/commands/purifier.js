@@ -17,10 +17,7 @@ module.exports = {
     },
     name : "Purifier",
     desc : "Accorder l'accès au salon du Bûcher et le rôle de Pourfendeureuse de Cismecs à eun membre.",
-    schema : "!purifier <@>",
-    channels : "🐙la-maison-des-bots",
-    authors : "Toustes",
-    roleNames : "🔥Pourfendeureuse de cismecs"
+    schema : "!purifier <@>"
   },
   run : function(params, msg) {
     let target

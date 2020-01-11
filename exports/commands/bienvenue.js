@@ -17,10 +17,7 @@ module.exports = {
     },
     name : "Bienvenue",
     desc : "Accorder le rôle Phosphate à eun membre.",
-    schema : "!bienvenue <@>",
-    channels : "🌍présentations📜",
-    authors : "Toustes",
-    roleNames : "💠Turquoise"
+    schema : "!bienvenue <@>"
   },
   run : function(params, msg) {
     let target
