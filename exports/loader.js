@@ -24,7 +24,7 @@ function hookConsoleLog(first) {
     unhook_stdout()
     unhook_stderr()
   }
-  const fileName = `./logs/${require("dateformat")(Date(), "yyyy-mm-dd-HH-MM-ss")}.log`
+  const fileName = `./logs/${require("dateformat")(Date(), "yyyy-mm-dd")}.log`
   const log_file = require('fs').createWriteStream(fileName, {flags : 'a'})
   global.unhook_stdout = hook_stream(process.stdout, function(string, encoding, fd) {
     log_file.write(string, encoding)
