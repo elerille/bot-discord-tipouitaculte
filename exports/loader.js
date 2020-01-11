@@ -5,7 +5,7 @@ const fs = require("fs");
 
 function parseForAutoCommands(msg) {
   for (const autoCommand of Object.values(TiCu.Auto)) {
-    if (msg.content.indexOf(autoCommand.trigger) !== -1 && TiCu.Authorizations.Auto(autoCommand, msg)) {
+    if (!!msg.content.match(autoCommand.trigger) && TiCu.Authorizations.Auto(autoCommand, msg)) {
       autoCommand.run(msg)
     }
   }

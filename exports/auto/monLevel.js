@@ -4,7 +4,7 @@ module.exports = {
   name : "Mon level ?",
   desc : "wesh læ bot, c'est quoi mon level ?\n",
   schema: "mon level ?",
-  trigger: "mon level ?",
+  trigger: /mon (level|niveau)\s*\?/,
   authorizations : {
     salons : {
       type: "whitelist",
