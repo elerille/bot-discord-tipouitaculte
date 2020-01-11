@@ -37,7 +37,7 @@ module.exports = {
     if (targetMember && !targetMember.roles.get(PUB.roles.turquoise.id)) {
       tipoui.channels.get(PUB.salons.salleDesVotes.id).send(`Vote automatique de passage Turquoise #${voteNumber} pour ${targetMember}`)
         .then(newMsg => {
-          if (TiCu.json(this.createJsonForAnonVote(newMsg, targetMember, 'turquoise'))) {
+          if (TiCu.json(this.createJsonForAnonVote(targetMember, 'turquoise', newMsg))) {
             TiCu.Vote.addReactionsToMessage(newMsg)
             TiCu.VotesCollections.Init('turquoise', newMsg)
             TiCu.Log.Commands.Vote.AutoTurquoise(newMsg, targetId, voteNumber)

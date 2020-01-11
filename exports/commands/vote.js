@@ -38,7 +38,7 @@ module.exports = {
       if(!msg.content.match(crop)) {return TiCu.Log.Error("vote", "paramètres manquants", msg)}
       msg.channel.send(TiCu.VotesCollections.CreateEmbedAnon(target, type, TiCu.Vote.voteThreshold(type), undefined, undefined, msg))
         .then(newMsg => {
-          if(TiCu.json(TiCu.Vote.createJsonForAnonVote(newMsg, target, type))) {
+          if(TiCu.json(TiCu.Vote.createJsonForAnonVote(target, type, newMsg))) {
             TiCu.Vote.addReactionsToMessage(newMsg)
             TiCu.VotesCollections.Init(type, newMsg)
             TiCu.Log.Commands.Vote.Anon(type, params, newMsg, msg)

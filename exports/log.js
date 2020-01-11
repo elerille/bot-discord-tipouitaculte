@@ -41,10 +41,10 @@ module.exports = {
       msg.react("✅")
     }
   },
-  VoteUpdate : function(usr, emoji, msg) {
-    const user = tipoui.members.get(usr)
-    maxilog.send(TiCu.Date("log") + " : VoteCollections\n" + user.displayName + " a voté " + emoji + " sur le vote :\n" + msg.url)
-    user.send("Votre vote `" + emoji + "` a bien été pris en compte.\n" + msg.url)
+  VoteUpdate : function(userId, emoji, previousVote, msg) {
+    const user = tipoui.members.get(userId)
+    maxilog.send(`${TiCu.Date("log")} : VoteCollections\n${hash(userId)} a ${previousVote ? "changé son vote \"" + previousVote + "\" en vote" : "voté"} "${emoji}" sur le vote :\n${msg.url}`)
+    user.send(`Votre ${previousVote ? "changement de vote \"" + previousVote + "\" en " : ""}vote "${emoji}" a bien été pris en compte.\n${msg.url}`)
   },
   VoteCollector : function(msg) {
     maxilog.send(TiCu.Date("log") + " : VoteCollections\nInitialisation du vote pour le message :\n" + msg.url)
@@ -180,11 +180,11 @@ module.exports = {
       Anon : function(type, params, newMsg, msg) {
         /* Might receive empty params[2] */
         if(type === "text") {
-          minilog.send(msg.member.displayName + " a lancé un vote anonyme")
-          maxilog.send(TiCu.Date("log") + " : Vote\n" + msg.member.displayName + " a lancé un vote anonyme" + msg.url)
+          minilog.send(`${hash(msg.author.id)} a lancé un vote anonyme`)
+          maxilog.send(`${TiCu.Date("log")} : Vote\n${hash(msg.author.id)} a lancé un vote anonyme ${msg.url}`)
         } else {
-          minilog.send(msg.member.displayName + " a lancé un vote anonyme pour " + type + " " + TiCu.Mention(params[2]) )
-          maxilog.send(TiCu.Date("log") + " : Vote\n" + msg.member.displayName + " a lancé un vote anonyme : " + type + TiCu.Mention(params[2]) + "\n" + msg.url)
+          minilog.send(`${hash(msg.author.id)} a lancé un vote anonyme pour ${type} ${TiCu.Mention(params[2])}`)
+          maxilog.send(`${TiCu.Date("log")} : Vote\n${hash(msg.author.id)} a lancé un vote anonyme : ${type} ${TiCu.Mention(params[2])}\n${msg.url}`)
         }
         maxilog.send(new DiscordNPM.RichEmbed(newMsg.embeds[0]))
         msg.delete()

@@ -1,8 +1,10 @@
 // Init
 const EXPRESS = require("express")
 const EventsModule = require("events")
-const fs = require("fs");
+const fs = require("fs")
 const cron = require('node-cron')
+const crypto = require('crypto');
+
 const helpText = `
 Paramètres de index.js :
    --help, -h : Affiche cette aide
@@ -133,6 +135,7 @@ module.exports = {
     global.VotesEmojis = ["✅","⚪","🛑","⏱"];
     global.activeInvite = true
     global.colorHexa = new RegExp(/^#[\da-f]{6}$/)
+    global.hash = (txt) => { return crypto.createHmac("sha256", CFG.expressSalt).update(txt).digest("hex") }
   },
   loadTicu: function(rootPath) {
     global.PUB = require("../public.json");

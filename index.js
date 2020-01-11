@@ -1,5 +1,4 @@
 // Init
-const crypto = require('crypto');
 const loader = require('./exports/loader')
 loader.loadFull('./')
 
@@ -24,11 +23,9 @@ Discord.once("ready", () => {
       Server.get(
         "/discord/invite/:key",
         function (req, res) {
-          const hash = crypto.createHmac("sha256", CFG.expressSalt)
-            .update(TiCu.Date("raw").toString().substr(0, 8))
-            .digest("hex");
+          const hashedDate = hash(TiCu.Date("raw").toString().substr(0, 8))
           if (activeInvite) {
-            if (req.params.key === hash) {
+            if (req.params.key === hashedDate) {
               Discord.channels.get(PUB.salons.invite.id)
                 .createInvite({maxUses: 1, maxAge: 300})
                 .then(invite => {
