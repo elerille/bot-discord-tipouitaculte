@@ -43,8 +43,8 @@ module.exports = {
   },
   VoteUpdate : function(userId, emoji, previousVote, msg) {
     const user = tipoui.members.get(userId)
-    maxilog.send(`${TiCu.Date("log")} : VoteCollections\n${hash(userId)} a ${previousVote ? "changé son vote \"" + previousVote + "\" en vote" : "voté"} "${emoji}" sur le vote :\n${msg.url}`)
-    user.send(`Votre ${previousVote ? "changement de vote \"" + previousVote + "\" en " : ""}vote "${emoji}" a bien été pris en compte.\n${msg.url}`)
+    maxilog.send(`${TiCu.Date("log")} : VoteCollections\n${hash(userId)} a ${previousVote ? "changé son vote \`" + previousVote + "\` en vote" : "voté"} \`"${emoji}"\` sur le vote :\n${msg.url}`)
+    user.send(`Votre ${previousVote ? "changement de vote \`" + previousVote + "\` en " : ""}vote \`"${emoji}"\` a bien été pris en compte.\n${msg.url}`)
   },
   VoteCollector : function(msg) {
     maxilog.send(TiCu.Date("log") + " : VoteCollections\nInitialisation du vote pour le message :\n" + msg.url)
