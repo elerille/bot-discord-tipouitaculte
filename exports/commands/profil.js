@@ -22,7 +22,7 @@ module.exports = {
     if (params[0]) {
       switch (params[0]) {
         case "set":
-          if (params.length >= 3) {
+          if (params.length >= 3 || (params.length >= 2 && (params[1] === "avatar" || params[1] === "vava") && !!msg.attachments.first())) {
             rawParams.shift()
             let fieldName = rawParams.shift()
             let fieldValue = ""
