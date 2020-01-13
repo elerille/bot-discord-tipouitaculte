@@ -1,3 +1,41 @@
+function getNameList(idList, type) {
+  let nameList = ""
+  for (const id of idList) {
+    const tipouiMember = tipoui.members.get(id)
+    const tipouiRole = tipoui.roles.get(id)
+    if (id !== PUB.salons.debug.id) {
+      nameList += (
+        type === "chans" ?
+          salonsById[id] + ", " :
+          type === "users" ?
+            (tipouiMember ? tipouiMember.displayName + ", " : "") :
+            (tipouiRole ? tipouiRole.name + ", " : "")
+      )
+    }
+  }
+  return nameList
+}
+
+function getDesc(auth, type) {
+  let desc = ""
+  switch(auth.type) {
+    case "any":
+      desc = type === "users" ? "Toustes" : "Tous"
+      break
+    case "whitelist":
+      desc = getNameList(auth.list, type)
+      desc = desc ? desc.substr(0, desc.length-2) : ""
+      break
+    case "blacklist":
+      desc = (type === "users" ? "Toustes" : "Tous") + " sauf "
+      desc += getNameList(auth.list, type)
+      desc = desc.substr(0, desc.length-2)
+      break
+  }
+  return desc
+}
+
+
 module.exports = {
   alias: [
     "help"
@@ -15,26 +53,26 @@ module.exports = {
     },
     name : "Help",
     desc : "Liste toutes les commandes, ou seulement celles que vous pouvez utiliser dans ce salon (par défaut), détaille l'usage d'une commande, ou explique le format des \"schémas\" de commandes.",
-    schema : "!help (full|commande|schema|rolesList)",
-    channels : "Tous",
-    authors : "Toustes",
-    roleNames : "Tous"
+    schema : "!help (full|commande|schema|rolesList)"
   },
   run : function(params, msg) {
-    let target = params[0]
-    let embed = new DiscordNPM.RichEmbed()
+    const target = params[0]
+    const embed = new DiscordNPM.RichEmbed()
     embed.setColor(38600)
     const aliasList = []
     if(TiCu.Commands[target]) {
-      let cmd = TiCu.Commands[target].authorizations
+      const cmd = TiCu.Commands[target].authorizations
+      const chansDesc = getDesc(cmd.chans, "chans")
+      const usersDesc = getDesc(cmd.auths, "users")
+      const rolesDesc = getDesc(cmd.roles, "roles")
       embed
         .setTitle(cmd.name)
         .addField("Description", cmd.desc)
         .addField("Schéma", cmd.schema)
-        .addField("Salons :", cmd.channels, true)
-        .addField("Utilisateurices :", cmd.authors, true)
-        .addField("Rôles :", cmd.roleNames, true)
-      msg.channel.send({ embed })
+        .addField("Salons :", chansDesc ? chansDesc : "Fonction réservée au développement", true)
+        .addField("Utilisateurices :", usersDesc, true)
+        .addField("Rôles :", rolesDesc, true)
+      msg.channel.send(embed)
     } else if(target === "full") {
       Object.keys(TiCu.Commands).forEach((key, i, array) => {
         if (!aliasList.find(v => v === key)) {
@@ -46,7 +84,7 @@ module.exports = {
         }
       })
       msg.channel.send("Voici la liste exhaustive de mes fonctions :")
-      msg.channel.send({ embed })
+      msg.channel.send(embed)
     } else if(target === "schema") {
       embed
         .setTitle("La description individuelle des commandes propose un champ \"Schéma\" pour expliciter son fonctionnement.")
@@ -76,7 +114,7 @@ module.exports = {
           embed.addField(role.id, values, true)
         }
       }
-      msg.channel.send({ embed })
+      msg.channel.send(embed)
     } else if(!target) {
       aliasList.push("help")
       Object.keys(TiCu.Commands).forEach((key, i, array) => {
@@ -91,7 +129,7 @@ module.exports = {
         }
       })
       msg.channel.send("Voici la liste de mes fonctions que vous pouvez utiliser :")
-      msg.channel.send({ embed })
+      msg.channel.send(embed)
     } else {
       TiCu.Log.Error("help", "commande inconnue", msg)
     }

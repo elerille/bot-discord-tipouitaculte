@@ -16,20 +16,26 @@ module.exports = {
     },
     name : "Raid",
     desc : "Activer/Désactiver le lien d'invitation en cas de raid ou vérifier son état",
-    schema : "!raid <[on|off|status]>",
-    channels : "🐙interface-tipoui",
-    authors : "Toustes",
-    roleNames : "Tous"
+    schema : "!raid <[on|off|status]>"
   },
   run : function(params, msg) {
     switch(params[0]) {
       case "on":
-        activeInvite = false
-        TiCu.Log.Commands.Raid(params[0], msg)
+        if (!activeInvite) {
+          activeInvite = false
+          tipoui.fetchInvites().then(invites => invites.forEach(value => value.delete()))
+          TiCu.Log.Commands.Raid(params[0], msg)
+        } else {
+          msg.reply(`pas de panique, le mode raid est déjà activé !`)
+        }
         break
       case "off":
-        activeInvite = true
-        TiCu.Log.Commands.Raid(params[0], msg)
+        if (activeInvite) {
+          activeInvite = true
+          TiCu.Log.Commands.Raid(params[0], msg)
+        } else {
+          msg.reply(`tout va bien ! Le mode raid est déjà désactivé`)
+        }
         break
       case "status":
       case "statut":

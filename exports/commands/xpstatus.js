@@ -14,14 +14,11 @@ module.exports = {
     },
     roles : {
       type: "whitelist",
-      list: [PUB.roles.turquoise]
+      list: [PUB.roles.turquoise.id]
     },
     name : "XPstatut",
     desc : "Afficher un statut, ou modifier le votre, ou, dans l'Interface Tipoui, modifier celui d'eun autre membre, par rapport au système d'XP.",
-    schema : "Pour toustes : !xpstatus ( ( (inclure|exclure) | @ )\nVigilant·es : !xpstatus <inclure|exclure> <@>",
-    channels : "🐙la-maison-des-bots, #🐙interface-tipoui",
-    authors : "Toustes",
-    roleNames : "Turquoises"
+    schema : "Pour toustes : !xpstatus ( ( (inclure|exclure) | @ )\nVigilant·es : !xpstatus <inclure|exclure> <@>"
   },
   run : function(params, msg) {
     switch (params.length) {

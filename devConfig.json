@@ -1,0 +1,44 @@
+{
+  "ticuCommands": {
+    "avatar" : false,
+    "ban" : false,
+    "bienvenue" : false,
+    "color" : false,
+    "help" : true,
+    "hotreload" : false,
+    "hr" : false,
+    "kick" : false,
+    "level" : false,
+    "niveau" : false,
+    "list" : false,
+    "profil" : false,
+    "purifier" : false,
+    "quarantaine" : false,
+    "raid" : false,
+    "roles" : false,
+    "send" : false,
+    "vote" : false,
+    "xp" : false,
+    "xpstatus" : false
+  },
+  "ticuAuto" : {
+    "monLevel" : false
+  },
+  "ticuReactions" : {
+    "heart" : false
+  },
+  "parsing" : {
+    "message" : true,
+    "messageDelete" : false,
+    "messageUpdate" : false,
+    "messageReactionAdd" : false,
+    "messageReactionRemove" : false,
+    "guildMemberAdd" : false,
+    "guildMemberRemove" : false,
+    "guildMemberUpdate" : false
+  },
+  "server" : false,
+  "generic" : {
+    "voteStartup" : false
+  }
+}

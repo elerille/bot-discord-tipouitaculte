@@ -1,8 +1,16 @@
 // Init
 const EXPRESS = require("express")
 const EventsModule = require("events")
-const fs = require("fs");
+const fs = require("fs")
 const cron = require('node-cron')
+const crypto = require('crypto');
+
+const helpText = `
+Paramètres de index.js :
+   --help, -h : Affiche cette aide
+   --dev, -d : Enclenche le mode développement (désactivation de la majorité des fonctionnalités)
+   --config, -c : Lit le fichier passé en valeur de paramètre et l'utilise pour l'activation/désactivation des fonctionnalités pour le mode dev
+`
 
 function hook_stream(stream, callback) {
   const old_write = stream.write
@@ -69,8 +77,44 @@ function retrieveMessageForEdit(originMsg, channel) {
   )
 }
 
+function parseCommandLineArgs() {
+  const configRegEx = /^(-c|--config)=(([A-Z]:\\|\/)?([^\/\s\\]+[\/\\])*[^\/\s\\]+\.json)$/
+  const absolutePathRegEx = /^([A-Z]:\\|\/)/
+  global.devConfig = undefined
+  global.dev = false
+  process.argv.slice(2) // Remove first two arguments from command line (which should be node and index.js)
+  process.argv.forEach((value, index) => {
+    let configFileName = ""
+    switch(true) { //Switching on value but... hey, needed regExp ^^
+      case value === "--dev":
+      case value === "-d":
+        dev = true
+        break
+      case value === "--help":
+      case value === "-h":
+        console.log(helpText)
+        process.exit(0) //exit the node process if help was called
+        break
+      case value === "-c":
+      case value === "--config":
+        configFileName = process.argv[index+1]
+        if (configFileName && fs.existsSync(configFileName)) {
+          devConfig = require(`${!!configFileName.match(absolutePathRegEx) ? "" : "../"}${configFileName}`)
+        }
+        break
+      case !!value.match(configRegEx):
+        configFileName = value.match(configRegEx)[2]
+        if (configFileName && fs.existsSync(configFileName)) {
+          devConfig = require(`${!!configFileName.match(absolutePathRegEx) ? "" : "../"}${configFileName}`)
+        }
+        break
+    }
+  })
+}
+
 module.exports = {
   loadFull: function(rootPath) {
+    parseCommandLineArgs()
     this.loadInit()
     this.loadTicu(rootPath)
     this.loadParsing()
@@ -91,6 +135,7 @@ module.exports = {
     global.VotesEmojis = ["✅","⚪","🛑","⏱"];
     global.activeInvite = true
     global.colorHexa = new RegExp(/^#[\da-f]{6}$/)
+    global.hash = (txt) => { return crypto.createHmac("sha256", CFG.expressSalt).update(txt).digest("hex") }
   },
   loadTicu: function(rootPath) {
     global.PUB = require("../public.json");
@@ -116,7 +161,9 @@ module.exports = {
       const aux = require("../exports/commands/" + command)
       if (aux.alias && aux.activated) {
         for (const aliasCmd of aux.alias) {
-          TiCu.Commands[aliasCmd] = aux
+          if (!dev || (dev && devConfig && devConfig.ticuCommands && devConfig.ticuCommands[aliasCmd])) {
+            TiCu.Commands[aliasCmd] = aux
+          }
         }
       }
     }
@@ -125,7 +172,9 @@ module.exports = {
     for (const reaction of reactionFiles) {
       const aux = require("../exports/reactions/" + reaction)
       if (aux.methodName && aux.activated) {
-        TiCu.Reactions[aux.methodName] = aux
+        if (!dev || (dev && devConfig && devConfig.ticuReactions && devConfig.ticuReactions[aux.methodName])) {
+          TiCu.Reactions[aux.methodName] = aux
+        }
       }
     }
 
@@ -133,7 +182,9 @@ module.exports = {
     for (const auto of autoFiles) {
       const aux = require("../exports/auto/" + auto)
       if (aux.methodName && aux.activated) {
-        TiCu.Auto[aux.methodName] = aux
+        if (!dev || (dev && devConfig && devConfig.ticuAuto && devConfig.ticuAuto[aux.methodName])) {
+          TiCu.Auto[aux.methodName] = aux
+        }
       }
     }
   },
@@ -274,6 +325,15 @@ module.exports = {
       } else if(oldUsr.roles.get(PUB.roles.luxure.id) && !newUsr.roles.get(PUB.roles.luxure.id)) {
         if(newUsr.roles.get(PUB.roles.hammer.id)) {newUsr.removeRole(PUB.roles.hammer.id)}
         if(newUsr.roles.get(PUB.roles.naughty.id)) {newUsr.removeRole(PUB.roles.naughty.id)}
+      }
+    }
+  },
+  updateSalonsName : function() {
+    global.salonsById = {}
+    for (const value of Object.values(PUB.salons)) {
+      const tipouiSalon = tipoui.channels.get(value.id)
+      if (tipouiSalon) {
+        salonsById[value.id] = tipouiSalon.name
       }
     }
   }

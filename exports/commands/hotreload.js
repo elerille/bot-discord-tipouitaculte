@@ -24,10 +24,7 @@ module.exports = {
     },
     name : "Hot Reload",
     desc : "Recharge la configuration de TipouiTaCulte",
-    schema : "!(hotreload|hr) (parsing|ticu)",
-    channels : "debug-tipouitaculte",
-    authors : "Xenolune & Syrinx",
-    roleNames : "Tous"
+    schema : "!(hotreload|hr) (parsing|ticu|salons)"
   },
   run : function(params, msg) {
     clearRequireCache()
@@ -35,14 +32,18 @@ module.exports = {
     switch(params[0]) {
       case "parsing":
         loader.loadParsing()
-        TiCu.Log.Commands.HotReload( params[0], msg)
+        TiCu.Log.Commands.HotReload(params[0], msg)
         break
       case "ticu":
         loader.loadTicu("./")
         TiCu.Log.Commands.HotReload(params[0], msg)
         break
+      case "salons":
+        loader.updateSalonsName()
+        TiCu.Log.Commands.HotReload(params[0], msg)
+        break
       default:
-        TiCu.Log.Error("hotreload", "Vous devez préciser quel type de reload vous souhaitez réaliser (parsing ou ticu)", msg)
+        TiCu.Log.Error("hotreload", "Vous devez préciser quel type de reload vous souhaitez réaliser (parsing, ticu ou pub)", msg)
     }
   }
 }

@@ -15,10 +15,7 @@ module.exports = {
   },
     name : "Vote",
     desc : "Lancer un vote public ou anonymisé, éventuellement pour kick/ban/turquoise.",
-    schema : "!vote <anon|anonyme> <turquoise|kick|ban> <@>\nou\n!vote <anon|anonyme> <text> (texte)\nou\n!vote (texte)",
-    channels : "Tous (public ou anon+text) ou Automodération/Salle des Votes (anon+kick/ban) ou Salle des Votes (anon+turquoise)",
-    authors : "Toustes",
-    roleNames : "Tous"
+    schema : "!vote <anon|anonyme> <turquoise|kick|ban> <@>\nou\n!vote <anon|anonyme> <text> (texte)\nou\n!vote (texte)"
   },
   run : function(params, msg) {
     let crop, target
@@ -41,7 +38,7 @@ module.exports = {
       if(!msg.content.match(crop)) {return TiCu.Log.Error("vote", "paramètres manquants", msg)}
       msg.channel.send(TiCu.VotesCollections.CreateEmbedAnon(target, type, TiCu.Vote.voteThreshold(type), undefined, undefined, msg))
         .then(newMsg => {
-          if(TiCu.json(TiCu.Vote.createJsonForAnonVote(newMsg, target, type))) {
+          if(TiCu.json(TiCu.Vote.createJsonForAnonVote(target, type, newMsg))) {
             TiCu.Vote.addReactionsToMessage(newMsg)
             TiCu.VotesCollections.Init(type, newMsg)
             TiCu.Log.Commands.Vote.Anon(type, params, newMsg, msg)

@@ -25,11 +25,7 @@ module.exports = {
     },
     name : "XP",
     desc : "Donner ou retirer de l'expérience à eun ou tous les membres",
-    // TODO : donner ou retirer de l'expérience aux personnes possédant un rôle spécifique
-    schema : "!xp <give|take> <@|all|role|channel> <value> (reason)",
-    channels : "🐙interface-tipoui",
-    authors : "Toustes",
-    roleNames : "Tous"
+    schema : "!xp <give|take> <@|all|role|channel> <value> (reason)"
   },
   run : function(params, msg, rawParams) {
     if (params.length < 3 || (params[0] !== "give" && params[0] !== "take") || isNaN(params[2])) {

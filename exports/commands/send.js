@@ -16,10 +16,7 @@ module.exports = {
   },
     name : "Send",
     desc : "Envoyer un message par l'intermédiaire de ce bot.",
-    schema : "!send <target> <texte>",
-    channels : "🐙interface-tipoui",
-    authors : "Toustes",
-    roleNames : "Tous"
+    schema : "!send <target> <texte>"
   },
   run : function(params, msg) {
     let crop = new RegExp(/^(!send\s+[^\s]+\s+)/)

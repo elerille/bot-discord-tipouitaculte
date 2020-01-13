@@ -114,9 +114,11 @@ module.exports = {
             break
           case 'avatar':
           case 'vava':
-            if (value.match(urlRegex)) {
+            if (!value.match(urlRegex) && !!msg.attachments.first()) {
+              updateBaseProfil('avatar', msg.attachments.first().proxyURL, targetId, msg)
+            } else if (value.match(urlRegex)) {
               updateBaseProfil('avatar', value, targetId, msg)
-            } else TiCu.Log.Error('profil', 'La valeur d\'avatar est invalide (Veuillez entrer une URL commençant par http ou https)', msg)
+            } else TiCu.Log.Error('profil', 'La valeur d\'avatar est invalide (Veuillez entrer une URL commençant par http ou https ou fournir une image)', msg)
             break
           case 'titre':
           case 'title':

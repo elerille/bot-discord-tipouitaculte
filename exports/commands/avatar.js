@@ -23,10 +23,7 @@ module.exports = {
     },
     name : "Avatar",
     desc : "Afficher l'avatar d'eun membre",
-    channels : "🐙la-maison-des-bots",
     schema : "!avatar (profil) (@)",
-    authors : "Toustes",
-    roleNames : "Tous"
   },
   run : function(params, msg) {
     const target = params[0] ?

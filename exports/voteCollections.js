@@ -57,27 +57,28 @@ function checkThreshold(vote, collector) {
 function updateVotes(reaction, collector) {
   let votesJSON = JSON.parse(fs.readFileSync(VotesFile))
   let msg = reaction.message
-  let user
+  let userId
   for (const id of reaction.users.keyArray()) {
     if (id !== PUB.users.tipouitaculte) {
-      user = id
-      reaction.remove(user)
+      userId = id
+      reaction.remove(userId)
       break
     }
   }
+  const hashedId = hash(userId)
   let alreadyVoted
   for (const emojiType of Object.values(emojiTable)) {
-    if (votesJSON[msg.id].votes[emojiType].includes(user)) {
+    if (votesJSON[msg.id].votes[emojiType].includes(hashedId)) {
       alreadyVoted = emojiType
     }
   }
   if (alreadyVoted) {
     votesJSON[msg.id].votes[alreadyVoted].splice(
-      votesJSON[msg.id].votes[alreadyVoted].indexOf(user),
+      votesJSON[msg.id].votes[alreadyVoted].indexOf(hashedId),
       1
     )
   }
-  votesJSON[msg.id].votes[emojiTable[reaction.emoji.name]].push(user)
+  votesJSON[msg.id].votes[emojiTable[reaction.emoji.name]].push(hashedId)
   if (votesJSON[msg.id].type === "turquoise" && emojiTable[reaction.emoji.name] !== alreadyVoted) {
     if (emojiTable[reaction.emoji.name] === "delai") {
       votesJSON[msg.id].threshold++
@@ -98,7 +99,7 @@ function updateVotes(reaction, collector) {
     )
   )
   checkThreshold(votesJSON[msg.id], collector)
-  TiCu.Log.VoteUpdate(user, emojiTable[reaction.emoji.name], msg)
+  TiCu.Log.VoteUpdate(userId, emojiTable[reaction.emoji.name], alreadyVoted, msg)
 }
 
 function createCollector(type, msg) {

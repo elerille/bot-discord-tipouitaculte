@@ -49,10 +49,7 @@ module.exports = {
     },
     name : "Level",
     desc : "Afficher le niveau d'eun membre.",
-    schema : "!level (@)",
-    channels : "🐙la-maison-des-bots",
-    authors : "Toustes",
-    roleNames : "Tous"
+    schema : "!level (@)"
   },
   run : function(params, msg) {
     const memberParam = params[0] ? TiCu.Mention(params[0]) : null
