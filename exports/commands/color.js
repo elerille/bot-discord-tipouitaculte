@@ -23,7 +23,7 @@ module.exports = {
       type: "any"
   },
     name : "Color",
-    desc : "Changer votre rôle-couleur. La réaction \"✔\" indique que votre précédent rôle-couleur a été supprimé car vous étiez la dernière personne à l'utiliser.",
+    desc : "Changer votre rôle-couleur. La réaction \"♻\" indique que votre précédent rôle-couleur a été supprimé car vous étiez la dernière personne à l'utiliser.",
     schema : "!color <#RRGGBB>\nou\n!color none|remove|reset|enlever|réinitialiser|turquoise"
   },
   run : function(params, msg) {

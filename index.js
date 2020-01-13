@@ -37,7 +37,7 @@ Discord.once("ready", () => {
               res.send("https://www.youtube.com/watch?v=BAHtStfZZWg")
             }
           } else {
-            res.send("raid.php")
+            res.send("https://tipoui.me/discord/raid.php")
           }
         }
       )

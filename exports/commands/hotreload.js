@@ -22,9 +22,9 @@ module.exports = {
     roles : {
       type: "any"
     },
-    name : "Hot Reload",
+    name : "HotReload",
     desc : "Recharge la configuration de TipouiTaCulte",
-    schema : "!(hotreload|hr) (parsing|ticu|salons)"
+    schema : "!<hotReload|hr> <parsing|ticu|salons>"
   },
   run : function(params, msg) {
     clearRequireCache()

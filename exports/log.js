@@ -94,7 +94,7 @@ module.exports = {
       }
       if(action === "deleted") {
         maxilog.send(TiCu.Date("log") + " : Color\n" + "La couleur " + color + " a été supprimée.")
-        msg.react("✔")
+        msg.react("♻")
       }
     },
     HotReload: function(type, msg) {
@@ -153,6 +153,10 @@ module.exports = {
       }
       msg.react("✅")
     },
+    React: function(emoji, target, msg) {
+      maxilog.send(TiCu.Date("log") + " : React \n" + msg.member.displayName + " a réagi " + emoji + "à ce message : `" + target.url)
+      minilog.send(msg.member.displayName + " a réagi " + emoji + " à un message dans <#" + target.channel.id + ">.")
+    },
     Roles : function(target, action, roles, msg) {
       let author = msg.member ? msg.member.displayName : msg.author.username
       let roleNames = ""
@@ -180,10 +184,10 @@ module.exports = {
       Anon : function(type, params, newMsg, msg) {
         /* Might receive empty params[2] */
         if(type === "text") {
-          minilog.send(`${hash(msg.author.id)} a lancé un vote anonyme`)
+          minilog.send(`Un vote anonyme a été lancé dans ${newMsg.channel.name}`)
           maxilog.send(`${TiCu.Date("log")} : Vote\n${hash(msg.author.id)} a lancé un vote anonyme ${msg.url}`)
         } else {
-          minilog.send(`${hash(msg.author.id)} a lancé un vote anonyme pour ${type} ${TiCu.Mention(params[2])}`)
+          minilog.send(`Un vote anonyme pour ${type} ${TiCu.Mention(params[2])} a été lancé dans ${newMsg.channel.name}`)
           maxilog.send(`${TiCu.Date("log")} : Vote\n${hash(msg.author.id)} a lancé un vote anonyme : ${type} ${TiCu.Mention(params[2])}\n${msg.url}`)
         }
         maxilog.send(new DiscordNPM.RichEmbed(newMsg.embeds[0]))
