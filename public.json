@@ -124,6 +124,11 @@
       "id" : "205399579884126217",
       "bot" : false,
       "dev" : true
+    },
+    "yuffy" : {
+      "id" : "260008409267568640",
+      "bot" : false,
+      "dev" : true
     }
   },
   "salons": {
