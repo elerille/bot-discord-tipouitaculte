@@ -23,7 +23,8 @@
     "propose" : false,
     "prop" : false,
     "proposer" : false,
-    "proposition" : false
+    "proposition" : false,
+    "new" : false
   },
   "ticuAuto" : {
     "monLevel" : false
