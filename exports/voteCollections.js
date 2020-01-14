@@ -211,7 +211,7 @@ module.exports = {
     delete votesJSON[msg.id]
     fs.writeFileSync(VotesFile, JSON.stringify(votesJSON, null, 2))
   },
-  CreateEmbedAnon: (target, type, threshold, voteJson = undefined, result = undefined, msg = undefined) => {
+  CreateEmbedAnon: (target, type, threshold, voteJson = undefined, result = undefined, description = undefined) => {
     let nbVotes = 0
     let indexTab = []
     if (voteJson !== undefined) {
@@ -225,23 +225,20 @@ module.exports = {
       embed.setColor(target.displayColor)
     } else {
       embed.setAuthor(`Vote Anonyme`)
-      if (msg && msg.content) {
-        const msgMatch = msg.content.match(/^!vote\s+anon\s+(text|kick|ban|turquoise)\s+(.+)/s)
-        if (msgMatch && msgMatch.length === 3) {
-          indexTab = parseToDesc(msgMatch[2])
-          embed.setDescription(msgMatch[2].substr(0, indexTab[0] ? indexTab[0][1]-1 : msgMatch[2].length))
-          for (const emoji of VotesEmojis) {
-            const aux = indexTab.findIndex((v) => {return v[0] === emoji})
-            let desc = `${emoji} : ${emojiTable[emoji]}`
-            if (aux !== -1) {
-              if (aux === indexTab.length-1) {
-                desc = msgMatch[2].substr(indexTab[aux][1])
-              } else {
-                desc = msgMatch[2].substr(indexTab[aux][1], indexTab[aux+1][1]-indexTab[aux][1])
-              }
+      if (description) {
+        indexTab = parseToDesc(description)
+        embed.setDescription(description.substr(0, indexTab[0] ? indexTab[0][1]-1 : description.length))
+        for (const emoji of VotesEmojis) {
+          const aux = indexTab.findIndex((v) => {return v[0] === emoji})
+          let desc = `${emoji} : ${emojiTable[emoji]}`
+          if (aux !== -1) {
+            if (aux === indexTab.length-1) {
+              desc = description.substr(indexTab[aux][1])
+            } else {
+              desc = description.substr(indexTab[aux][1], indexTab[aux+1][1]-indexTab[aux][1])
             }
-            embed.addField(desc, voteJson !== undefined ? voteJson.votes[emojiTable[emoji]].length : 0, emoji !== VotesEmojis[3])
           }
+          embed.addField(desc, voteJson !== undefined ? voteJson.votes[emojiTable[emoji]].length : 0, emoji !== VotesEmojis[3])
         }
       }
     }
