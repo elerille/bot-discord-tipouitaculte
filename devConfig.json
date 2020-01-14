@@ -19,7 +19,11 @@
     "send" : false,
     "vote" : false,
     "xp" : false,
-    "xpstatus" : false
+    "xpstatus" : false,
+    "propose" : false,
+    "prop" : false,
+    "proposer" : false,
+    "proposition" : false
   },
   "ticuAuto" : {
     "monLevel" : false

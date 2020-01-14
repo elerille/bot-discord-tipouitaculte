@@ -90,13 +90,46 @@
     }
   },
   "users": {
-    "tipouitaculte": "638410922527817748",
-    "tentaculte": "430020470897770516",
-    "electrolune": "442965211054473216",
-    "pluralkit": "466378653216014359",
-    "licorne": "417400498706972692",
-    "xenolune": "222028577405665283",
-    "syrinx": "205399579884126217"
+    "tipouitaculte": {
+      "id" : "638410922527817748",
+      "bot" : true,
+      "dev" : false
+    },
+    "tentaculte": {
+      "id" : "430020470897770516",
+      "bot" : true,
+      "dev" : false
+    },
+    "electrolune": {
+      "id" : "442965211054473216",
+      "bot" : true,
+      "dev" : false
+    },
+    "pluralkit": {
+      "id" : "466378653216014359",
+      "bot" : true,
+      "dev" : false
+    },
+    "licorne": {
+      "id" : "417400498706972692",
+      "bot" : true,
+      "dev" : false
+    },
+    "xenolune": {
+      "id" : "222028577405665283",
+      "bot" : false,
+      "dev" : true
+    },
+    "syrinx": {
+      "id" : "205399579884126217",
+      "bot" : false,
+      "dev" : true
+    },
+    "yuffy" : {
+      "id" : "260008409267568640",
+      "bot" : false,
+      "dev" : true
+    }
   },
   "salons": {
     "genTP": {
@@ -150,6 +183,14 @@
     "bots": {
       "id": "398825094019022852",
       "xpFactor": 0
+    },
+    "whiteboard" : {
+      "id" : "666391433527164945",
+      "xpFactor" : 0
+    },
+    "logsDev" : {
+      "id" : "620649266557222912",
+      "xpFactor" : 0
     }
   },
   "roles": {

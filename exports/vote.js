@@ -8,6 +8,7 @@ module.exports = {
       case "turquoise":
         return Math.floor(tipoui.roles.get(PUB.roles.turquoise.id).members.size*42/100)
       case "text":
+      case "prop":
       default:
         return -1
     }
