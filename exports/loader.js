@@ -131,8 +131,9 @@ module.exports = {
     global.DiscordNPM = require("discord.js")
     global.Discord = new DiscordNPM.Client({disabledEvents: ["TYPING_START"]})
     global.Event = new EventsModule.EventEmitter()
-    global.VotesFile = "private/votes.json";
-    global.VotesEmojis = ["✅","⚪","🛑","⏱"];
+    global.VotesFile = "private/votes.json"
+    global.VotesEmojis = ["✅","⚪","🛑","⏱"]
+    global.VotesProps = ["👍", "👎"]
     global.activeInvite = true
     global.colorHexa = new RegExp(/^#[\da-f]{6}$/)
     global.hash = (txt) => { return crypto.createHmac("sha256", CFG.expressSalt).update(txt).digest("hex") }

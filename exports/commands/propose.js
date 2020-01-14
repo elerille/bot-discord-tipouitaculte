@@ -5,7 +5,7 @@ module.exports = {
     "proposer",
     "proposition"
   ],
-  activated: false,
+  activated: true,
   authorizations : {
     chans : {
       type: "whitelist",
@@ -19,11 +19,11 @@ module.exports = {
     },
     name : "Proposer",
     desc : "Proposer une nouvelle fonctionnalité à mettre au vote",
-    schema : "!<propose|prop|proposer> <(bot|tipouitaculte|ttc)> <description>",
+    schema : "!<propose|prop|proposer|proposition> <(bot|tipouitaculte|ttc)> <description>",
   },
   run : function(params, msg, rawParams) {
     if (params.length < 2) TiCu.Log.Error("propose", "mauvais paramètres", msg)
-    const type = "text"
+    const type = "prop"
     let description = ""
     for (let i=1;i<rawParams.length;i++) {
       description += " " + rawParams[i]
@@ -50,6 +50,8 @@ module.exports = {
             } else TiCu.Log.Error("propose", "erreur d'enregistrement de la proposition", msg)
           })
         break
+      default:
+        TiCu.Log.Error("propose", "type de proposition non reconnu", msg)
     }
   }
 }

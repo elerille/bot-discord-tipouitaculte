@@ -182,6 +182,10 @@
     "whiteboard" : {
       "id" : "666391433527164945",
       "xpFactor" : 0
+    },
+    "logsDev" : {
+      "id" : "620649266557222912",
+      "xpFactor" : 0
     }
   },
   "roles": {
