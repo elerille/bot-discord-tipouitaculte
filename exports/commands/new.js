@@ -23,7 +23,7 @@ module.exports = {
     if (params.length < 1) {
       TiCu.Log.Error("new", "mauvais paramètres", msg)
     } else {
-      const botChannel = tipoui.channels.get(PUB.salons.debug.id)
+      const botChannel = tipoui.channels.get(PUB.salons.bots.id)
       if (TiCu.Commands[params[0]] || TiCu.Auto[params[0]] || TiCu.Reactions[params[0]]) {
         botChannel.send(`Une nouvelle fonctionnalité est disponible pour TipouiTaCulte !`)
         if (params[1]) {
