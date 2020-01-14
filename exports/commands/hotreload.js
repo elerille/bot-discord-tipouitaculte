@@ -17,7 +17,7 @@ module.exports = {
     },
     auths : {
       type: "whitelist",
-      list: [PUB.users.xenolune, PUB.users.syrinx]
+      list: devTeam
     },
     roles : {
       type: "any"

@@ -138,7 +138,13 @@ module.exports = {
     global.hash = (txt) => { return crypto.createHmac("sha256", CFG.expressSalt).update(txt).digest("hex") }
   },
   loadTicu: function(rootPath) {
-    global.PUB = require("../public.json");
+    global.PUB = require("../public.json")
+    global.devTeam = []
+    Object.values(PUB.users).forEach(value => {
+      if (value.dev) {
+        devTeam.push(value.id)
+      }
+    })
     global.TiCu = {
       Date : require("../exports/date.js"),
       Log : require("../exports/log.js"),
