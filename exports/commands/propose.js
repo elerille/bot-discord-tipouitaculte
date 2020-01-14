@@ -2,7 +2,8 @@ module.exports = {
   alias: [
     "propose",
     "prop",
-    "proposer"
+    "proposer",
+    "proposition"
   ],
   activated: false,
   authorizations : {
