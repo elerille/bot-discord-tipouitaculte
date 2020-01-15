@@ -41,7 +41,7 @@ module.exports = {
   authorizations : {
     salons : {
       type: "whitelist",
-      list: [PUB.salons.debug.id]
+      list: [PUB.salons.debug.id, PUB.salons.magic.id]
     },
     users : {
       type: "any",
