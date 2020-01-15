@@ -27,7 +27,8 @@
     "new" : false
   },
   "ticuAuto" : {
-    "monLevel" : false
+    "monLevel" : false,
+    "carddisplay" : false
   },
   "ticuReactions" : {
     "heart" : false
