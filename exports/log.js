@@ -50,7 +50,7 @@ module.exports = {
     maxilog.send(TiCu.Date("log") + " : VoteCollections\nInitialisation du vote pour le message :\n" + msg.url)
   },
   VoteDone : function (reason, type, msg, target) {
-    if (type === "text") {
+    if (type === "text" || type === "prop") {
       maxilog.send(TiCu.Date("log") + " : VoteDone\nFin du vote pour le message :\n" + msg.url)
     } else {
       maxilog.send(
@@ -188,7 +188,7 @@ module.exports = {
       },
       Anon : function(type, params, newMsg, msg) {
         /* Might receive empty params[2] */
-        if(type === "text") {
+        if(type === "text" || type === "prop") {
           minilog.send(`Un vote anonyme a été lancé dans ${newMsg.channel.name}`)
           maxilog.send(`${TiCu.Date("log")} : Vote\n${hash(msg.author.id)} a lancé un vote anonyme ${msg.url}`)
         } else {

@@ -55,55 +55,64 @@ function checkThreshold(vote, collector) {
 }
 
 function updateVotes(reaction, collector) {
-  let votesJSON = JSON.parse(fs.readFileSync(VotesFile))
-  let msg = reaction.message
-  let userId
-  for (const id of reaction.users.keyArray()) {
-    if (id !== PUB.users.tipouitaculte) {
-      userId = id
-      reaction.remove(userId)
-      break
+  if (VotesProps.indexOf(reaction.emoji.name) !== -1) {
+    for (const devId of devTeam) {
+      if (reaction.users.keyArray().indexOf(devId) !== -1) {
+        collector.stop(reaction.emoji.name === VotesProps[0] ? "oui" : "non")
+      }
     }
-  }
-  const hashedId = hash(userId)
-  let alreadyVoted
-  for (const emojiType of Object.values(emojiTable)) {
-    if (votesJSON[msg.id].votes[emojiType].includes(hashedId)) {
-      alreadyVoted = emojiType
+    reaction.remove(reaction.users.keyArray()[0])
+  } else {
+    let votesJSON = JSON.parse(fs.readFileSync(VotesFile))
+    let msg = reaction.message
+    let userId
+    for (const id of reaction.users.keyArray()) {
+      if (id !== PUB.users.tipouitaculte.id) {
+        userId = id
+        reaction.remove(userId)
+        break
+      }
     }
-  }
-  if (alreadyVoted) {
-    votesJSON[msg.id].votes[alreadyVoted].splice(
-      votesJSON[msg.id].votes[alreadyVoted].indexOf(hashedId),
-      1
+    const hashedId = hash(userId)
+    let alreadyVoted
+    for (const emojiType of Object.values(emojiTable)) {
+      if (votesJSON[msg.id].votes[emojiType].includes(hashedId)) {
+        alreadyVoted = emojiType
+      }
+    }
+    if (alreadyVoted) {
+      votesJSON[msg.id].votes[alreadyVoted].splice(
+        votesJSON[msg.id].votes[alreadyVoted].indexOf(hashedId),
+        1
+      )
+    }
+    votesJSON[msg.id].votes[emojiTable[reaction.emoji.name]].push(hashedId)
+    if (votesJSON[msg.id].type === "turquoise" && emojiTable[reaction.emoji.name] !== alreadyVoted) {
+      if (emojiTable[reaction.emoji.name] === "delai") {
+        votesJSON[msg.id].threshold++
+      } else if (alreadyVoted === "delai") {
+        votesJSON[msg.id].threshold--
+      }
+    }
+    fs.writeFileSync(VotesFile, JSON.stringify(votesJSON, null, 2))
+    reaction.message.edit(
+      updateEmbed(
+        TiCu.VotesCollections.CreateEmbedAnon(
+          tipoui.members.get(votesJSON[msg.id].target),
+          votesJSON[msg.id].type,
+          votesJSON[msg.id].threshold,
+          votesJSON[msg.id]
+        ),
+        msg
+      )
     )
+    checkThreshold(votesJSON[msg.id], collector)
+    TiCu.Log.VoteUpdate(userId, emojiTable[reaction.emoji.name], alreadyVoted, msg)
   }
-  votesJSON[msg.id].votes[emojiTable[reaction.emoji.name]].push(hashedId)
-  if (votesJSON[msg.id].type === "turquoise" && emojiTable[reaction.emoji.name] !== alreadyVoted) {
-    if (emojiTable[reaction.emoji.name] === "delai") {
-      votesJSON[msg.id].threshold++
-    } else if (alreadyVoted === "delai") {
-      votesJSON[msg.id].threshold--
-    }
-  }
-  fs.writeFileSync(VotesFile, JSON.stringify(votesJSON, null, 2))
-  reaction.message.edit(
-    updateEmbed(
-      TiCu.VotesCollections.CreateEmbedAnon(
-        tipoui.members.get(votesJSON[msg.id].target),
-        votesJSON[msg.id].type,
-        votesJSON[msg.id].threshold,
-        votesJSON[msg.id]
-      ),
-      msg
-    )
-  )
-  checkThreshold(votesJSON[msg.id], collector)
-  TiCu.Log.VoteUpdate(userId, emojiTable[reaction.emoji.name], alreadyVoted, msg)
 }
 
 function createCollector(type, msg) {
-  TiCu.VotesCollections.Collectors[msg.id] = msg.createReactionCollector(filterReactions(VotesEmojis));
+  TiCu.VotesCollections.Collectors[msg.id] = msg.createReactionCollector(filterReactions(type === "prop" ? VotesEmojis.concat(VotesProps) : VotesEmojis));
   TiCu.VotesCollections.Collectors[msg.id].on("collect", (reaction, collector) =>
     TiCu.VotesCollections.Collected(type, reaction, collector))
   TiCu.VotesCollections.Collectors[msg.id].on("end", (reactions, reason)  =>
@@ -189,6 +198,7 @@ module.exports = {
             .then(() => TiCu.Log.VoteDone(reason, type, msg, target))
           break
         case "text":
+        case "prop":
         default:
           TiCu.Log.VoteDone(reason, type, msg)
           break
@@ -211,7 +221,7 @@ module.exports = {
     delete votesJSON[msg.id]
     fs.writeFileSync(VotesFile, JSON.stringify(votesJSON, null, 2))
   },
-  CreateEmbedAnon: (target, type, threshold, voteJson = undefined, result = undefined, msg = undefined) => {
+  CreateEmbedAnon: (target, type, threshold, voteJson = undefined, result = undefined, description = undefined) => {
     let nbVotes = 0
     let indexTab = []
     if (voteJson !== undefined) {
@@ -224,24 +234,21 @@ module.exports = {
       embed.setAuthor(`Vote de ${type === "turquoise" ? "passage" : ""} ${type.toUpperCase()} pour ${target.displayName}`, target.user.avatarURL)
       embed.setColor(target.displayColor)
     } else {
-      embed.setAuthor(`Vote Anonyme`)
-      if (msg && msg.content) {
-        const msgMatch = msg.content.match(/^!vote\s+anon\s+(text|kick|ban|turquoise)\s+(.+)/s)
-        if (msgMatch && msgMatch.length === 3) {
-          indexTab = parseToDesc(msgMatch[2])
-          embed.setDescription(msgMatch[2].substr(0, indexTab[0] ? indexTab[0][1]-1 : msgMatch[2].length))
-          for (const emoji of VotesEmojis) {
-            const aux = indexTab.findIndex((v) => {return v[0] === emoji})
-            let desc = `${emoji} : ${emojiTable[emoji]}`
-            if (aux !== -1) {
-              if (aux === indexTab.length-1) {
-                desc = msgMatch[2].substr(indexTab[aux][1])
-              } else {
-                desc = msgMatch[2].substr(indexTab[aux][1], indexTab[aux+1][1]-indexTab[aux][1])
-              }
+      embed.setAuthor(type === "text" ? `Vote Anonyme` : "Proposition anonyme")
+      if (description) {
+        indexTab = parseToDesc(description)
+        embed.setDescription(description.substr(0, indexTab[0] ? indexTab[0][1]-1 : description.length))
+        for (const emoji of VotesEmojis) {
+          const aux = indexTab.findIndex((v) => {return v[0] === emoji})
+          let desc = `${emoji} : ${emojiTable[emoji]}`
+          if (aux !== -1) {
+            if (aux === indexTab.length-1) {
+              desc = description.substr(indexTab[aux][1])
+            } else {
+              desc = description.substr(indexTab[aux][1], indexTab[aux+1][1]-indexTab[aux][1])
             }
-            embed.addField(desc, voteJson !== undefined ? voteJson.votes[emojiTable[emoji]].length : 0, emoji !== VotesEmojis[3])
           }
+          embed.addField(desc, voteJson !== undefined ? voteJson.votes[emojiTable[emoji]].length : 0, emoji !== VotesEmojis[3])
         }
       }
     }
