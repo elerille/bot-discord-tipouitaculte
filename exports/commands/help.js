@@ -53,7 +53,7 @@ module.exports = {
     },
     name : "Help",
     desc : "Liste toutes les commandes, ou seulement celles que vous pouvez utiliser dans ce salon (par défaut), détaille l'usage d'une commande, ou explique le format des \"schémas\" de commandes.",
-    schema : "!help (full|commande|schema|rolesList)"
+    schema : "!help (full|commande|schema|rolesList|nmList)"
   },
   run : function(params, msg) {
     const target = params[0]
@@ -113,6 +113,18 @@ module.exports = {
           }
           embed.addField(role.id, values, true)
         }
+      }
+      msg.channel.send(embed)
+    } else if(target === "nmlist") {
+      embed
+        .setColor(38600)
+        .setTitle("Liste des accès et alias pour la commande !NonMixtes")
+      for (const access of Object.values(PUB.nonmixtes)) {
+        let values = ""
+        for (let i = 1; i < access.alias.length - 1; i++) {
+          values += access.alias[i] + "\n"
+        }
+        embed.addField(access.alias[0], values, true)
       }
       msg.channel.send(embed)
     } else if(!target) {

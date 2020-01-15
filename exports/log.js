@@ -115,6 +115,11 @@ module.exports = {
         maxilog.send(TiCu.Date("log") + "Level\n" + msg.member.displayName + "a affiché le level de " + tipoui.members.get(target).displayName)
       }
     },
+    NM: function(target, action, res, msg) {
+      maxilog.send(`${TiCu.Date("log")} : Non-Mixte\n${msg.member.displayName} a ${action ? "donné" : "retiré"} accès à ${res} salons non-mixtes pour ${target.displayName} (${target.id}).`)
+      maxilog.send(`${TiCu.Date("log")} : Non-Mixte\n${msg.member.displayName} a ${action ? "donné" : "retiré"} accès à ${res} salons non-mixtes pour ${target.displayName}.`)
+      msg.react("✅")
+    },
     Profil: function(target, msg) {
       if(msg.member.id != target.id) {
         maxilog.send(`${TiCu.Date("log")} : Profil\n${msg.member.displayName} a affiché le profil de ${tipoui.members.get(target.id).displayName}`)

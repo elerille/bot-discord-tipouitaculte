@@ -95,6 +95,7 @@
     "electrolune": "442965211054473216",
     "pluralkit": "466378653216014359",
     "licorne": "417400498706972692",
+    "yuffy": "260008409267568640",
     "xenolune": "222028577405665283",
     "syrinx": "205399579884126217"
   },
@@ -360,6 +361,63 @@
       "alias": [
         "540538037747056652",
         "utip"
+      ]
+    }
+  },
+  "nonmixtes": {
+    "vigi": {
+      "salons": [
+        "425379017055797258",
+        "468843915500322826",
+        "469268187335360532",
+        "623922558483431458"
+      ],
+      "alias": [
+        "vigi",
+        "vigilante",
+        "vigilantes",
+        "vigilant",
+        "vigilants",
+        ":princess:",
+        "👸"
+      ]
+    },
+    "neuroa": {
+      "salons": [
+        "358933892331208704"
+      ],
+      "alias": [
+        "na",
+        "nd",
+        "neuroa",
+        "neuroatypiques",
+        "nm-na",
+        ":performing_arts:",
+        "🎭"
+      ]
+    },
+    "trans": {
+      "salons": [
+        "525993730629435392",
+        "405082107338162179"
+      ],
+      "alias": [
+        "trans",
+        "nm-trans",
+        ":blue_heart:",
+        "💙"
+      ]
+    },
+    "poc": {
+      "salons": [
+        "378139775581814786"
+      ],
+      "alias": [
+        "poc",
+        "poc-nm",
+        "racisé-nm",
+        ":black_heart:",
+        "🖤"
       ]
     }
   }
