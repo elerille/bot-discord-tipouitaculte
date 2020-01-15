@@ -56,7 +56,7 @@ module.exports = {
       if(Object.keys(action).length === 1) {
         if(access && access.length > 0) {
           if(vigi) {
-            if(msg.member.roles.has(PUB.tipoui.roles.nso) || msg.user.id === PUB.tipoui.users.yuffy || msg.user.id === PUB.tipoui.users.xenolune) {
+            if(msg.member.roles.has(PUB.tipoui.roles.nso.id) || msg.user.id === PUB.tipoui.users.yuffy.id || msg.user.id === PUB.tipoui.users.xenolune.id) {
               Discord.guilds.get(PUB.servers.vigi).channels.get(554775874293989407).createInvite()
                 .then(invite => target.send(`Bienvenue pami les Vigilant·es, félicitations pour la confiance que nous t'accordons, et merci pour celle que tu nous accordes.\nDe nouveaux salons te sont accessibles sur Tipoui Community +, ainsi que le serveur Vigi au complet, qui nous aide à séparer nos activités et à nous reposer un peu si besoin.\n${invite.url}`))
             } else return TiCu.Log.Error("non-mixtes", "seules les admins peuvent ajouter de nouveaulles Vigilant·es", msg)
