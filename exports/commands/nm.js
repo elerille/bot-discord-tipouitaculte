@@ -62,7 +62,6 @@ module.exports = {
             } else return TiCu.Log.Error("non-mixtes", "seules les admins peuvent ajouter de nouveaulles Vigilant·es", msg)
           }
           for(const chan of access) {
-            console.log(action)
             tipoui.channels.get(chan).overwritePermissions(target, action)
               .then(res + 1)
           }

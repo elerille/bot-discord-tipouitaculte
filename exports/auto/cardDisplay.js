@@ -31,13 +31,15 @@ function fetchCardImage(name, set, msg) {
   callApi(cardRequest, true, msg)
 }
 
+const globalRegEx = /mtg"([^"|]+)\|?([a-z0-9]{3})?"/g
+const simpleRegex = /mtg"([^"|]+)\|?([a-z0-9]{3})?"/
 module.exports = {
   activated: true,
-  methodName: 'carddisplay',
+  methodName: "carddisplay",
   name : "Carte Magic",
   desc : "Cherche l'image correspondant à la carte Magic mentionnée",
-  schema: "[carte|card]nom de la carte(|set)[/carte|card]",
-  trigger: /\[(carte|card)]([^\[|]+)\|?([a-z0-9]{3})?\[\/(carte|card)]/g,
+  schema: "mtg\"nom de la carte(|set)\"",
+  trigger: globalRegEx,
   authorizations : {
     salons : {
       type: "whitelist",
@@ -48,9 +50,10 @@ module.exports = {
     }
   },
   run : function(msg) {
-    const matches = [...msg.content.matchAll(this.trigger)]
+    const matches = [...msg.content.match(this.trigger)]
     for (const match of matches) {
-      fetchCardImage(encodeURIComponent(match[2]), match[3], msg)
+      const aux = match.match(simpleRegex)
+      fetchCardImage(encodeURIComponent(aux[1]), aux[2], msg)
     }
   }
 }

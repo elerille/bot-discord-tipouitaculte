@@ -1,3 +1,5 @@
+const randomMessageId = "660614530111635476"
+
 module.exports = {
   alias: [
     "new"
@@ -31,7 +33,9 @@ module.exports = {
             message => botChannel.send(`Cette fonctionnalité a été proposée à la communauté sous les termes suivants :\n"${message.embeds[0].description}"`)
           )
         }
-        TiCu.Commands.help.run([params[0]], botChannel.lastMessage)
+        botChannel.fetchMessage(randomMessageId).then(randomMsg => {
+          TiCu.Commands.help.run([params[0]], randomMsg)
+        })
       } else {
         TiCu.Log.Error("new", "commande introuvable", msg)
       }

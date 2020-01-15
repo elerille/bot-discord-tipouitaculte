@@ -1,7 +1,6 @@
 module.exports = {
   alias: [
     "propose",
-    "prop",
     "proposer",
     "proposition"
   ],
@@ -9,7 +8,7 @@ module.exports = {
   authorizations : {
     chans : {
       type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.botsecret.id, PUB.salons.bots.id]
+      list: [PUB.salons.debug.id, PUB.salons.botsecret.id, PUB.salons.bots.id, PUB.salons.blueprint.id]
     },
     auths : {
       type: "any"
@@ -19,7 +18,7 @@ module.exports = {
     },
     name : "Proposer",
     desc : "Proposer une nouvelle fonctionnalité à mettre au vote",
-    schema : "!<propose|prop|proposer|proposition> <(bot|tipouitaculte|ttc)> <description>",
+    schema : "!<propose|proposer|proposition> <(bot|tipouitaculte|ttc)> <description>",
   },
   run : function(params, msg, rawParams) {
     if (params.length < 2) TiCu.Log.Error("propose", "mauvais paramètres", msg)
