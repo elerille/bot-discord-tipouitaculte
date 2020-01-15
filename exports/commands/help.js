@@ -73,6 +73,27 @@ module.exports = {
         .addField("Utilisateurices :", usersDesc, true)
         .addField("Rôles :", rolesDesc, true)
       msg.channel.send(embed)
+    } else if(TiCu.Auto[target]) {
+      const autoCmd = TiCu.Auto[target]
+      const chansDesc = getDesc(autoCmd.authorizations.salons, "chans")
+      const usersDesc = getDesc(autoCmd.authorizations.users, "users")
+      embed
+        .setTitle(autoCmd.name)
+        .addField("Description", autoCmd.desc)
+        .addField("Schéma", autoCmd.schema)
+        .addField("Expression régulière", autoCmd.trigger)
+        .addField("Salons :", chansDesc ? chansDesc : "Fonction réservée au développement", true)
+        .addField("Utilisateurices :", usersDesc, true)
+      msg.channel.send(embed)
+    } else if(target === "auto") {
+      Object.keys(TiCu.Auto).forEach((key, i, array) => {
+        if(TiCu.Authorizations.Auto(TiCu.Auto[key], msg)) {
+          let cmd = TiCu.Auto[key]
+          embed.addField(cmd.name, `${cmd.desc}\nhelp command : \`!help ${cmd.methodName}\``)
+        }
+      })
+      msg.channel.send("Voici la liste de mes réactions automatiques :")
+      msg.channel.send(embed)
     } else if(target === "full") {
       Object.keys(TiCu.Commands).forEach((key, i, array) => {
         if (!aliasList.find(v => v === key)) {
