@@ -270,5 +270,8 @@ module.exports = {
     newField: function(entry, id) {
       maxilog.send(`${TiCu.Date("log")} : newMemberProfilField\n${tipoui.members.get(id).displayName} created a new field : ${entry.name} = ${entry.value}`)
     }
+  },
+  AutoRole: function(member, roleName, type) {
+    maxilog.send(`${TiCu.Date("log")} : autoRole\n${member.displayName} a ${type === "add" ? "adopté" : "renié"} le rôle de ${roleName}`)
   }
 }
