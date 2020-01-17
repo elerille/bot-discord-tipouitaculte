@@ -19,6 +19,36 @@ Discord.once("ready", () => {
     if (!dev || (devConfig && devConfig.generic && devConfig.generic.voteStartup)) {
       TiCu.VotesCollections.Startup()
     }
+    if (!dev || (devConfig && devConfig.generic && devConfig.generic.autoRoles)) {
+      const messageForRolesId = "578295166742560768"
+      const emojisRoles = {
+        "📹" : "notifyoutube",
+        "🎥" : "notiftwitch",
+        "🐝" : "espritruche",
+        "📜" : "notifactu",
+        "🎉" : "notifevent"
+      }
+      tipoui.channels.get(PUB.salons.rolessalons.id).fetchMessage(messageForRolesId).then(msg => {
+        msg.createReactionCollector((reaction, user) => {return (!user.bot) && (Object.keys(emojisRoles).includes(reaction.emoji.name))})
+          .on(
+            "collect",
+            reaction => {
+              for (const user of reaction.users.array()) {
+                if (!user.bot) {
+                  const member = tipoui.members.get(user.id)
+                  const askedRoleId = PUB.roles[emojisRoles[reaction.emoji.name]].id
+                  if (member.roles.keyArray().includes(askedRoleId)) {
+                    member.removeRole(askedRoleId)
+                  } else {
+                    member.addRole(askedRoleId)
+                  }
+                  reaction.remove(user.id)
+                }
+              }
+            }
+          )
+      })
+    }
     if (!dev || (devConfig && devConfig.server)) {
       Server.get(
         "/discord/invite/:key",

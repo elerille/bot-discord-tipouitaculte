@@ -45,6 +45,7 @@
   },
   "server" : false,
   "generic" : {
-    "voteStartup" : false
+    "voteStartup" : false,
+    "autoRoles" : false
   }
 }
