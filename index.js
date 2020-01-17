@@ -39,10 +39,10 @@ Discord.once("ready", () => {
                   const askedRoleId = PUB.roles[emojisRoles[reaction.emoji.name]].id
                   if (member.roles.keyArray().includes(askedRoleId)) {
                     member.removeRole(askedRoleId)
-                    TiCu.Log.AutoRole(member, emojisRoles[reaction.emoji.name], "add")
+                    TiCu.Log.AutoRole(member, emojisRoles[reaction.emoji.name], "remove")
                   } else {
                     member.addRole(askedRoleId)
-                    TiCu.Log.AutoRole(member, emojisRoles[reaction.emoji.name], "remove")
+                    TiCu.Log.AutoRole(member, emojisRoles[reaction.emoji.name], "add")
                   }
                   reaction.remove(user.id)
                 }
