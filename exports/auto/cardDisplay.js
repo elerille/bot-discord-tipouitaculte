@@ -1,7 +1,7 @@
 const https = require('https')
 
 function displayCard(cardData, msg) {
-  if (cardData.layout === "transform") {
+  if (cardData.layout === "transform" || cardData.layout === "double_faced_token") {
     for (const cardFace of cardData.card_faces) {
       msg.channel.send(cardFace.image_uris.large)
     }
@@ -73,8 +73,8 @@ module.exports = {
   activated: true,
   methodName: "carddisplay",
   name : "Carte Magic",
-  desc : "Cherche l'image correspondant à la carte Magic mentionnée",
-  schema: "mtg\"nom de la carte(|set)\"",
+  desc : "Cherche l'image correspondant à la carte Magic mentionnée\nLe set doit (si présent) être précisé avec son code de référence entre 3 et 5 lettres et/ou chiffres\nLa langue doit (si présente) être précisée par son code à deux lettres",
+  schema: "mtg\"nom de la carte(|set)(:langueCode)\"",
   trigger: globalRegEx,
   authorizations : {
     salons : {
