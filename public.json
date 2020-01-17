@@ -199,6 +199,10 @@
     "blueprint" : {
       "id" : "533605292471222292",
       "xpFactor" : 1
+    },
+    "rolessalons" : {
+      "id" : "453702956315836436",
+      "xpFactor" : 0
     }
   },
   "roles": {
@@ -409,6 +413,58 @@
       "alias": [
         "540538037747056652",
         "utip"
+      ]
+    },
+    "notifyoutube": {
+      "id": "578282816127631370",
+      "xpAddedMultiplicator": 0,
+      "givable": false,
+      "alias": [
+        "578282816127631370",
+        "notifvideo",
+        "notifyoutube",
+        "youtube",
+        "video"
+      ]
+    },
+    "notiftwitch" : {
+      "id" : "578282808859164672",
+      "xpAddedMultiplicator": 0,
+      "givable": false,
+      "alias": [
+        "578282808859164672",
+        "notiftwitch",
+        "twitch"
+      ]
+    },
+    "notifactu" : {
+      "id" : "620630188757221386",
+      "xpAddedMultiplicator": 0,
+      "givable": false,
+      "alias": [
+        "620630188757221386",
+        "notifactu",
+        "actu"
+      ]
+    },
+    "notifevent" : {
+      "id" : "578282812545957899",
+      "xpAddedMultiplicator": 0,
+      "givable": false,
+      "alias": [
+        "578282812545957899",
+        "notifevent",
+        "event"
+      ]
+    },
+    "espritruche" : {
+      "id" : "588446918670286858",
+      "xpAddedMultiplicator": 0,
+      "givable": false,
+      "alias": [
+        "588446918670286858",
+        "espritruche",
+        "ruche"
       ]
     }
   },
