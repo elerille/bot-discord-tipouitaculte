@@ -24,7 +24,10 @@
     "prop" : false,
     "proposer" : false,
     "proposition" : false,
-    "new" : false
+    "new" : false,
+    "return" : false,
+    "retour" : false,
+    "nm" : false
   },
   "ticuAuto" : {
     "monLevel" : false,

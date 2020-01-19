@@ -2,6 +2,8 @@ package-lock.json
 private.json
 private/votes.json
 private/quarantaine.json
+private/kicked.json
+private/return.json
 
 # Logs
 logs

@@ -132,10 +132,13 @@ module.exports = {
     global.Discord = new DiscordNPM.Client({disabledEvents: ["TYPING_START"]})
     global.Event = new EventsModule.EventEmitter()
     global.VotesFile = "private/votes.json"
+    global.KickedFile = "private/kicked.json"
+    global.ReturnFile = "private/return.json"
     global.VotesEmojis = ["✅","⚪","🛑","⏱"]
     global.VotesProps = ["👍", "👎"]
     global.activeInvite = true
     global.colorHexa = new RegExp(/^#[\da-f]{6}$/)
+    global.maxReturnTime = 14 * 24 * 60 * 60 * 1000 // 2 semaines
     global.hash = (txt) => { return crypto.createHmac("sha256", CFG.expressSalt).update(txt).digest("hex") }
   },
   loadTicu: function(rootPath) {
@@ -196,6 +199,7 @@ module.exports = {
     }
   },
   loadParsing: function() {
+    global.cmdRegex = dev ? /^%[a-zA-Z]/ : /^![a-zA-Z]/  //change the call character for TTC
     global.parseMessage = (msg) => {
       if(!msg.author.bot) {
         let params = []
@@ -219,8 +223,8 @@ module.exports = {
             tipoui.channels.get(PUB.salons.quarantaineUser.id).send(msg.content)
               .then(newMsg => TiCu.Log.Quarantaine("envoyé", newMsg, msg))
           }
-        } else if(msg.content.match(/^![a-zA-Z]/)) {
-          msg.content.substring(1).match(/([^\\\s]?[\"][^\"]+[^\\][\"]|[^\s]+)/g).forEach(value => {
+        } else if(msg.content.match(cmdRegex)) {
+          msg.content.substring(1).match(/([^\\\s]?["][^"]+[^\\]["]|[^\s]+)/g).forEach(value => {
             if (value[0] === '"') {
               rawParams.push(value.substr(1, value.length-2))
               params.push(value.substr(1, value.length-2).toLowerCase())
@@ -298,23 +302,61 @@ module.exports = {
       }
     }
 
-    global.parseGuildMemberAdd = (usr) => {
-      if (usr.guild.id === tipoui.id) {
-        tipoui.channels.get(PUB.salons.genTP.id).send("Oh ! Bienvenue <@" + usr.id + "> ! Je te laisse lire les Saintes Règles, rajouter tes pronoms dans ton pseudo et nous faire une ptite présentation dans le salon qui va bien :heart:\nSi tu n'as pas fait vérifier ton numéro de téléphone ou d'abonnement Nitro, il va aussi te falloir aussi attendre 10 petites minutes que Discord s'assure tu n'es pas une sorte d'ordinateur mutant venu de l'espace... Même si en vrai ça serait trop cool quand même !")
-        if (usr.lastMessage) {
-          maxilog.send(TiCu.Date("log") + " : Retour de membre\n" + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
-          minilog.send("Retour de " + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
+    global.parseGuildMemberAdd = (member) => {
+      if (member.guild.id === tipoui.id) {
+        const jsonActionData = {action : "read", target : KickedFile}
+        const kicked = TiCu.json(jsonActionData).list.includes(member.id)
+        jsonActionData.target = ReturnFile
+        const returnData = TiCu.json(jsonActionData)
+        if (returnData.members[member.id] && TiCu.Date("raw") - returnData.members[member.id].date < maxReturnTime) {
+          tipoui.channels.get(PUB.salons.genTP.id).send(`Oh ! Rebienvenue <@${member.id}> ! Tu peux utiliser la fonction de retour (\`!retour\`) dans <#${PUB.salons.invite.id}> pour récupérer tes rôles et accès. N'oublie cependant pas de rajouter tes pronoms dans ton pseudo tout de même`)
         } else {
-          maxilog.send(TiCu.Date("log") + " : Arrivée de membre\n" + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
-          minilog.send("Arrivée de " + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
+          tipoui.channels.get(PUB.salons.genTP.id).send(`Oh ! Bienvenue <@${member.id}> ! Je te laisse lire les Saintes Règles, rajouter tes pronoms dans ton pseudo et nous faire une ptite présentation dans le salon qui va bien :heart:\nSi tu n'as pas fait vérifier ton numéro de téléphone ou d'abonnement Nitro, il va aussi te falloir aussi attendre 10 petites minutes que Discord s'assure tu n'es pas une sorte d'ordinateur mutant venu de l'espace... Même si en vrai ça serait trop cool quand même !`)
+        }
+        if (kicked || returnData.members[member.id]) {
+          maxilog.send(`${TiCu.Date("log")} : Retour de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id} (${kicked ? "kické-e" : "départ volontaire"})`)
+          minilog.send(`Retour de ${member.user.toString()} - ${member.user.tag} - ${member.id} (${kicked ? "kické-e" : "départ volontaire"})`)
+        } else {
+          maxilog.send(`${TiCu.Date("log")} : Arrivée de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id}`)
+          minilog.send(`Arrivée de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
         }
       }
     }
 
-    global.parseGuildMemberRemove = (usr) => {
-      if(usr.guild.id === tipoui.id) {
-        maxilog.send(TiCu.Date("log") + " : Départ de membre\n" + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
-        minilog.send("Départ de " + usr.user.toString() + " - " + usr.user.tag + " - " + usr.id)
+    global.parseGuildMemberRemove = (member) => {
+      if(member.guild.id === tipoui.id) {
+        const jsonActionData = {action : "read", target : KickedFile}
+        const kickedData = TiCu.json(jsonActionData)
+        jsonActionData.target = ReturnFile
+        const returnData = TiCu.json(jsonActionData)
+        if (kickedData && returnData) {
+          if (!kickedData.list.includes(member.id)) {
+            returnData.members[member.id] = {
+              date : TiCu.Date("raw"),
+              roles : [],
+              nm : []
+            }
+            for (const role of member.roles.array()) {
+              if (!role.name.startsWith('#')) {
+                returnData.members[member.id].roles.push(role.id)
+              }
+            }
+            for (const nm of Object.values(PUB.nonmixtes)) {
+              if (nm.alias[0] !== "vigi") {
+                if (tipoui.channels.get(nm.salons[0]).memberPermissions(member).has("VIEW_CHANNEL")) {
+                  returnData.members[member.id].nm.push(nm.alias[0])
+                }
+              }
+            }
+            jsonActionData.action = "write"
+            jsonActionData.content = returnData
+            TiCu.json(jsonActionData)
+          }
+        } else {
+          maxilog.send(`${TiCu.Date("log")} : Départ de membre\nImpossible d'écrire le fichier de retour pour ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
+        }
+        maxilog.send(`${TiCu.Date("log")} : Départ de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id}`)
+        minilog.send(`Départ de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
       }
     }
 

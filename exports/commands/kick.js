@@ -37,6 +37,14 @@ module.exports = {
               const reaction = collected.firstKey();
               if (reaction === "👍") {
                 reason ? target.kick(reason) : target.kick()
+                const jsonActionData = {action : "read", target : KickedFile}
+                const kickedData = TiCu.json(jsonActionData)
+                if (kickedData) {
+                  kickedData.list.push(target.id)
+                  jsonActionData.action = "write"
+                  jsonActionData.content = kickedData
+                  TiCu.json(jsonActionData)
+                }
                 TiCu.Log.Commands.Kick(target, reason, msg)
               } else {
                 return TiCu.Log.Error("kick", "annulation", msg)
