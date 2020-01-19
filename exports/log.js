@@ -205,6 +205,9 @@ module.exports = {
     },
     Xp: function(target, value, give, reason, msg) {
       maxilog.send(`${TiCu.Date("log")} : XP\n${tipoui.members.get(msg.author.id).displayName} a  ${give ? 'donné' : 'enlevé'} ${value} XP à ${target}${reason ? " pour la raison : " + reason : ""}`)
+    },
+    Retour : function(msg) {
+      maxilog.send(`${TiCu.Date("log")} : Retour\n${msg.member.displayName} a récupéré ses rôles et accès avec la fonction de retour`)
     }
   },
   ReactionError: function(reaction, usr, type) {
