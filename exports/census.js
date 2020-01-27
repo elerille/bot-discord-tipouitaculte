@@ -60,14 +60,14 @@ module.exports = {
     }
     const censusData = TiCu.json(jsonData)
     if (censusData.id) {
-      tipoui.channels.get(PUB.salons.debug.id).fetchMessage(censusData.id).then(
+      tipoui.channels.get(PUB.salons.salleDesVotes.id).fetchMessage(censusData.id).then(
         msg => {
           msg.edit(createUpdateEmbed(msg.embeds[0]))
           createCollector(msg)
         }
       )
     } else {
-      tipoui.channels.get(PUB.salons.debug.id).send(createUpdateEmbed()).then(
+      tipoui.channels.get(PUB.salons.salleDesVotes.id).send(createUpdateEmbed()).then(
         msg => {
           msg.react("✅")
           msg.react("❌")
