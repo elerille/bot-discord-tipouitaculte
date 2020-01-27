@@ -2,7 +2,7 @@ function createUpdateEmbed(previousEmbed, newVote = false) {
   const previousFields = previousEmbed ? previousEmbed.fields : undefined
   const embed = new DiscordNPM.RichEmbed()
   embed.setAuthor("Recensement des votant-e-s")
-  embed.setDescription("Vote de recensement des votant-e-s présent-e sur le serveur")
+  embed.setDescription("Vote de recensement des votant-e-s présent-e sur le serveur. Celui-ci sera relancé chaque 28 du mois à 13h12 et retirera le rôle de votant-e aux personnes n'ayant pas répondu.")
 
   const checkFieldName = "✅ : garder ou récupérer le rôle"
   const crossFieldName = "❌ : abandonner le rôle"
@@ -67,7 +67,7 @@ module.exports = {
         }
       )
     } else {
-      tipoui.channels.get(PUB.salons.salleDesVotes.id).send(createUpdateEmbed()).then(
+      tipoui.channels.get(PUB.salons.salleDesVotes.id).send(`<@&${PUB.roles.vote.id}>`, createUpdateEmbed()).then(
         msg => {
           msg.react("✅")
           msg.react("❌")
