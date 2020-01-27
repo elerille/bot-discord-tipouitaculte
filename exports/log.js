@@ -276,5 +276,8 @@ module.exports = {
   },
   AutoRole: function(member, roleName, type) {
     maxilog.send(`${TiCu.Date("log")} : autoRole\n${member.displayName} a ${type === "add" ? "adopté" : "renié"} le rôle de ${roleName}`)
+  },
+  Census: function(member) {
+    maxilog.send(`${TiCu.Date("log")} : census\n${member.displayName} a été retiré-e du système de vote pour inactivité`)
   }
 }

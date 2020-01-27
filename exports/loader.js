@@ -124,6 +124,14 @@ module.exports = {
     cron.schedule("0 0 0 * * *", () => {
       hookConsoleLog(false)
     })
+    cron.schedule("0 10 13 28 * *", () => {
+      if (TiCu.Census.collector) {
+        TiCu.Census.collector.stop()
+      }
+    })
+    cron.schedule("0 12 13 28 * *", () => {
+      TiCu.Census.initCensus()
+    })
     global.CFG = require("../private.json")
     global.Server = EXPRESS()
     global.SequelizeDB = require("sequelize")
@@ -134,6 +142,7 @@ module.exports = {
     global.VotesFile = "private/votes.json"
     global.KickedFile = "private/kicked.json"
     global.ReturnFile = "private/return.json"
+    global.CensusFile = "private/census.json"
     global.VotesEmojis = ["✅","⚪","🛑","⏱"]
     global.VotesProps = ["👍", "👎"]
     global.activeInvite = true
@@ -161,6 +170,7 @@ module.exports = {
       Channels : require("../exports/channels.js"),
       Vote : require("../exports/vote.js"),
       Profil : require("../exports/profil.js"),
+      Census : require("../exports/census.js"),
       Commands : {},
       Reactions : {},
       Auto : {}

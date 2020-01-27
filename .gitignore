@@ -4,6 +4,7 @@ private/votes.json
 private/quarantaine.json
 private/kicked.json
 private/return.json
+private/census.json
 
 # Logs
 logs

@@ -19,6 +19,9 @@ Discord.once("ready", () => {
     if (!dev || (devConfig && devConfig.generic && devConfig.generic.voteStartup)) {
       TiCu.VotesCollections.Startup()
     }
+    if (!dev || (devConfig && devConfig.generic && devConfig.generic.census)) {
+      TiCu.Census.initCensus()
+    }
     if (!dev || (devConfig && devConfig.generic && devConfig.generic.autoRoles)) {
       const messageForRolesId = "578295166742560768"
       const emojisRoles = {

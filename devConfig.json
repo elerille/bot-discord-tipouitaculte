@@ -49,6 +49,7 @@
   "server" : false,
   "generic" : {
     "voteStartup" : false,
+    "census" : false,
     "autoRoles" : false
   }
 }
