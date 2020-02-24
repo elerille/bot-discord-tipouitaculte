@@ -64,7 +64,7 @@ module.exports = {
   },
   Commands : {
     Avatar: function(target, msg) {
-      if(msg.member.id != target.id) {
+      if(msg.member.id !== target.id) {
         maxilog.send(TiCu.Date("log") + "Avatar\n" + msg.member.displayName + "a affiché l'avatar de " + target.displayName)
       }
     },
@@ -111,7 +111,7 @@ module.exports = {
       msg.react("✅")
     },
     Level: function(target, msg) {
-      if(msg.member.id != target) {
+      if(msg.member.id !== target) {
         maxilog.send(TiCu.Date("log") + "Level\n" + msg.member.displayName + "a affiché le level de " + tipoui.members.get(target).displayName)
       }
     },
@@ -121,7 +121,7 @@ module.exports = {
       msg.react("✅")
     },
     Profil: function(target, msg) {
-      if(msg.member.id != target.id) {
+      if(msg.member.id !== target.id) {
         maxilog.send(`${TiCu.Date("log")} : Profil\n${msg.member.displayName} a affiché le profil de ${tipoui.members.get(target.id).displayName}`)
       }
     },
@@ -208,6 +208,7 @@ module.exports = {
     },
     Retour : function(msg) {
       maxilog.send(`${TiCu.Date("log")} : Retour\n${msg.member.displayName} a récupéré ses rôles et accès avec la fonction de retour`)
+      msg.react("✅")
     }
   },
   ReactionError: function(reaction, usr, type) {
