@@ -1,10 +1,3 @@
-const XPLINEAR = 179
-const XPJUMPPOWER = 1.5
-const XPLEVELJUMPRATE = 5
-
-const XPPERCHARACTER = 0.0027
-const CHARACTERSJUMPRATE = 400
-const CHARACTERJUMPPOWER = 1.2
 const XPREACTION = 0.05
 const XPREACTEDTO = 0.01
 
@@ -30,7 +23,7 @@ const MemberXP = DB.define('memberxp', {
 });
 
 function xpByLevel(level) {
-  return Math.floor(XPLINEAR * Math.pow(Math.ceil(level/XPLEVELJUMPRATE), XPJUMPPOWER) * level);
+  return 87 * level + 13 * level * level;
 }
 
 const levelToXP = []
@@ -40,7 +33,7 @@ for (let i=0;i<LEVELMAX;i++) {
 
 function calculateLevelByXp(xp) {
   let level;
-  for (level = 0; level < 50; level++) {
+  for (level = 0; level < LEVELMAX; level++) {
     if (xp < levelToXP[level]) break;
   }
   level--
@@ -85,7 +78,7 @@ function channelMultiplier(channelId) {
 
 function xpFromMessage(msg) {
   const charNb = msg.content.length
-  return charNb * XPPERCHARACTER * Math.pow(Math.ceil(charNb / CHARACTERSJUMPRATE), CHARACTERJUMPPOWER) * categoryMultiplier(msg.channel.parent.id) * channelMultiplier(msg.channel.id)
+  return (Math.atan((charNb-800.0)/200.0)*2 + 2.65 + charNb * 0.0027) * categoryMultiplier(msg.channel.parent.id) * channelMultiplier(msg.channel.id)
 }
 
 module.exports = {
