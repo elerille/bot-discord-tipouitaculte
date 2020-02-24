@@ -70,3 +70,5 @@ typings/
 
 # intelliJ IDE files
 .idea
+
+.vs/

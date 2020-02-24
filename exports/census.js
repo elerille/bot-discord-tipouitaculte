@@ -2,14 +2,14 @@ function createUpdateEmbed(previousEmbed, newVote = false) {
   const previousFields = previousEmbed ? previousEmbed.fields : undefined
   const embed = new DiscordNPM.RichEmbed()
   embed.setAuthor("Recensement des votant-e-s")
-  embed.setDescription("Vote de recensement des votant-e-s présent-e sur le serveur. Celui-ci sera relancé chaque 28 du mois à 13h12 et retirera le rôle de votant-e aux personnes n'ayant pas répondu.")
+  embed.setDescription("Vote de recensement des votant·e·s présent·es sur le serveur. Celui-ci sera relancé chaque 28 du mois à 13h12 et retirera le rôle de votant·e aux personnes n'ayant pas répondu ou répondant négativement.")
 
   const checkFieldName = "✅ : garder ou récupérer le rôle"
   const crossFieldName = "❌ : abandonner le rôle"
   embed.addField(checkFieldName, previousFields ? previousFields[previousFields.findIndex((v) => {return v.name === checkFieldName})].value : 0)
   embed.addField(crossFieldName, previousFields ? previousFields[previousFields.findIndex((v) => {return v.name === crossFieldName})].value : 0)
 
-  const nbVotesName = "Nombre de votant-e-s"
+  const nbVotesName = "Nombre de votant·e·s"
   let nbVotes = previousFields ? previousFields[previousFields.findIndex((v) => {return v.name === nbVotesName})].value : 0
   if (newVote) {
     nbVotes++
@@ -43,7 +43,7 @@ module.exports = {
       if (!censusData.members.includes(member.id)) {
         member.removeRole(PUB.roles.vote.id).then(() => {
           TiCu.Log.Census(member)
-          member.send("Suite à l'absence de réaction sur le vote de recensement, vous avez perdu le rôle de votant-e. Vous pouvez le récupérer simplement en votant sur le prochain vote de recensement.")
+          member.send("Suite à l'absence de réaction sur le vote de recensement, je t'ai enlevé le rôle de votant-e. Tu peux le récupérer simplement en votant sur le prochain vote de recensement.")
         })
       }
     }
@@ -106,13 +106,13 @@ module.exports = {
     if (reaction.emoji.name === "✅") {
       tipoui.fetchMember(userId).then(member => {
         if (!member.roles.get(PUB.roles.vote.id)) {
-          member.addRole(PUB.roles.vote.id).then(() => member.send("Vous avez récupéré le rôle de votant-e"))
+          member.addRole(PUB.roles.vote.id).then(() => member.send("Tu as récupéré le rôle de votant·e"))
         }
       })
     } else {
       tipoui.fetchMember(userId).then(member => {
         if (member.roles.get(PUB.roles.vote.id)) {
-          member.removeRole(PUB.roles.vote.id).then(() => member.send("Vous avez abandonné le rôle de votant-e"))
+          member.removeRole(PUB.roles.vote.id).then(() => member.send("Tu as abandonné le rôle de votant·e"))
         }
       })
     }

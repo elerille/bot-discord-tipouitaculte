@@ -16,7 +16,7 @@ module.exports = {
     },
     name : "Profil",
     desc : "Afficher le profil d'eun membre ou modifier son propre profil.",
-    schema : "!profil (@)\nou\n!profil <set> <champ> <valeur>\nou\n!profil <delete|get> <champ>"
+    schema : "!profil (@)\nou\n!profil <set> <avatar|titre|citation|champ> <valeur>\nou\n!profil <delete|get> <champ>"
   },
   run : function(params, msg, rawParams) {
     if (params[0]) {

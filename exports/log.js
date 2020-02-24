@@ -168,7 +168,7 @@ module.exports = {
       for(i=0;i<roles.length;i++) {
         roleNames += "`" + tipoui.roles.get(roles[i]).name + "` "
       }
-      action = (action === "addRoles") ? "ajoué" : "enlevé"
+      action = (action === "addRoles") ? "ajouté" : "enlevé"
       minilog.send(author + " a " + action + " des rôles à " + target.displayName)
       maxilog.send(TiCu.Date("log") + " : Roles\n" + author + " a " + action + " des rôles à " + target.displayName + "\n" + roleNames)
       msg.react("✅")
@@ -279,6 +279,6 @@ module.exports = {
     maxilog.send(`${TiCu.Date("log")} : autoRole\n${member.displayName} a ${type === "add" ? "adopté" : "renié"} le rôle de ${roleName}`)
   },
   Census: function(member) {
-    maxilog.send(`${TiCu.Date("log")} : census\n${member.displayName} a été retiré-e du système de vote pour inactivité`)
+    maxilog.send(`${TiCu.Date("log")} : census\n${member.displayName} a été retiré·e du système de vote pour inactivité`)
   }
 }

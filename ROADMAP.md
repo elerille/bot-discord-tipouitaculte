@@ -2,7 +2,7 @@
   * reactions
   * auto
 
-* commands in serveur Vigi
+* commands in serveur Vigi, BLOCK VOTES ANON
 
 * delay message d'accueil bot nouveaulles arrivant·es
 * réaction nouveaulles arrivant·es différente si déjà dans système XP
@@ -10,6 +10,7 @@
 * block xp in no parent chans
 
 * commande !leave
+* commande !vote (on/off)
 
 * ajouter catégories manquantes dans public.json (need admin)
 

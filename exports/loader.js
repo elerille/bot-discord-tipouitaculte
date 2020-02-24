@@ -227,7 +227,7 @@ module.exports = {
         } else if(msg.channel.id === PUB.salons.quarantaineUser.id || msg.channel.id === PUB.salons.quarantaineVigi.id) {
           if(msg.channel.id === PUB.salons.quarantaineUser.id) {
             let user = msg.member
-            tipoui.channels.get(PUB.salons.quarantaineVigi.id).send(createEmbedCopy(user, msg))
+            tipoui.channels.get(PUB.salons.quarantaineVigi.id).send(createEmbedCopy(msg, user))
               .then(newMsg => TiCu.Log.Quarantaine("reçu", newMsg, msg))
           } else if(msg.channel.id === PUB.salons.quarantaineVigi.id) {
             tipoui.channels.get(PUB.salons.quarantaineUser.id).send(msg.content)

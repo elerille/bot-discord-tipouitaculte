@@ -17,7 +17,7 @@ module.exports = {
       type: "any"
     },
     name : "Proposer",
-    desc : "Proposer une nouvelle fonctionnalité à mettre au vote",
+    desc : `Proposer une nouvelle fonctionnalité pour TipouiTaCulte, et la soumettre au vote dans <#${PUB.salons.whiteboard.id}>`,
     schema : "!<propose|proposer|proposition> <(bot|tipouitaculte|ttc)> <description>",
   },
   run : function(params, msg, rawParams) {
