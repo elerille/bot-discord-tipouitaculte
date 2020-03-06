@@ -231,7 +231,7 @@ module.exports = {
     }
     const embed = new DiscordNPM.RichEmbed()
     if (target) {
-      embed.setAuthor(`Vote de ${type === "turquoise" ? "passage" : ""} ${type.toUpperCase()} pour ${target.displayName}`, target.user.avatarURL)
+      embed.setAuthor(`Vote ${type === "auto" ? "automatique " : "" }de ${type === "turquoise" || type === "auto" ? "passage" : ""} ${type === "auto" ? "TURQUOISE" : type.toUpperCase()} pour ${target.displayName}`, target.user.avatarURL)
       embed.setColor(target.displayColor)
     } else {
       embed.setAuthor(type === "text" ? `Vote Anonyme` : "Proposition anonyme")
