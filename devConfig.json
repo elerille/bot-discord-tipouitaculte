@@ -14,6 +14,7 @@
     "profil" : false,
     "purifier" : false,
     "quarantaine" : false,
+    "react" : false,
     "raid" : false,
     "roles" : false,
     "send" : false,

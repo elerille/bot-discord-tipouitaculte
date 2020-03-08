@@ -3,21 +3,10 @@ module.exports = {
     "raid"
   ],
   activated: true,
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.botsecret.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    },
-    name : "Raid",
-    desc : "Activer/Désactiver le lien d'invitation en cas de raid ou vérifier son état",
-    schema : "!raid <[on|off|status]>"
-  },
+  name : "Raid",
+  desc : "Activer/Désactiver le lien d'invitation en cas de raid ou vérifier son état",
+  schema : "!raid <[on|off|status]>",
+  authorizations : TiCu.Authorizations.getAuth("command", "raid"),
   run : function(params, msg) {
     switch(params[0]) {
       case "on":

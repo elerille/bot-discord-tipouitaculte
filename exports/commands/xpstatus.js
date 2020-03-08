@@ -1,25 +1,13 @@
 module.exports = {
   alias: [
-    "xpstatut",
-    "xpstatus"
+    "xpstatus",
+    "xpstatut"
   ],
   activated: true,
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.bots.id, PUB.salons.botsecret.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "whitelist",
-      list: [PUB.roles.turquoise.id]
-    },
-    name : "XPstatut",
-    desc : "Afficher un statut, ou modifier le votre, ou, dans l'Interface Tipoui, modifier celui d'eun autre membre, par rapport au système d'XP.",
-    schema : "Pour toustes : !xpstatus ( ( (inclure|exclure) | @ )\nVigilant·es : !xpstatus <inclure|exclure> <@>"
-  },
+  name : "XPstatut",
+  desc : "Afficher un statut, ou modifier le votre, ou, dans l'Interface Tipoui, modifier celui d'eun autre membre, par rapport au système d'XP.",
+  schema : "Pour toustes : !xpstatus ( ( (inclure|exclure) | @ )\nVigilant·es : !xpstatus <inclure|exclure> <@>",
+  authorizations : TiCu.Authorizations.getAuth("command", "xpstatus"),
   run : function(params, msg) {
     switch (params.length) {
       case 1:

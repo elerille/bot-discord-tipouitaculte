@@ -3,21 +3,10 @@ module.exports = {
     "profil"
   ],
   activated: true,
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.bots.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    },
-    name : "Profil",
-    desc : "Afficher le profil d'eun membre ou modifier son propre profil.",
-    schema : "!profil (@)\nou\n!profil <set> <avatar|titre|citation|champ> <valeur>\nou\n!profil <delete|get> <champ>"
-  },
+  name : "Profil",
+  desc : "Afficher le profil d'eun membre ou modifier son propre profil.",
+  schema : "!profil (@)\nou\n!profil <set> <avatar|titre|citation|champ> <valeur>\nou\n!profil <delete|get> <champ>",
+  authorizations : TiCu.Authorizations.getAuth("command", "profil"),
   run : function(params, msg, rawParams) {
     if (params[0]) {
       switch (params[0]) {

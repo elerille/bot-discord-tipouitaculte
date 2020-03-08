@@ -5,22 +5,10 @@ module.exports = {
     "new"
   ],
   activated: true,
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id]
-    },
-    auths : {
-      type: "whitelist",
-      list: devTeam
-    },
-    roles : {
-      type: "any"
-    },
-    name : "Nouveauté",
-    desc : "Annoncer une nouvelle fonctionnalité",
-    schema : "!new <command> (idMessageWhiteboard)"
-  },
+  name : "Nouveauté",
+  desc : "Annoncer une nouvelle fonctionnalité",
+  schema : "!new <command> (idMessageWhiteboard)",
+  authorizations : TiCu.Authorizations.getAuth("command", "new"),
   run : function(params, msg) {
     if (params.length < 1) {
       TiCu.Log.Error("new", "mauvais paramètres", msg)

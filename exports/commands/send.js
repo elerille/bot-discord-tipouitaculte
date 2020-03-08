@@ -3,21 +3,10 @@ module.exports = {
     "send"
   ],
   activated: true,
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.botsecret.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-  },
-    name : "Send",
-    desc : "Envoyer un message par l'intermédiaire de ce bot.",
-    schema : "!send <target> <texte>"
-  },
+  name : "Send",
+  desc : "Envoyer un message par l'intermédiaire de ce bot.",
+  schema : "!send <target> <texte>",
+  authorizations : TiCu.Authorizations.getAuth("command", "send"),
   run : function(params, msg) {
     let crop = new RegExp(/^(!send\s+[^\s]+\s+)/)
     let target = TiCu.Mention(params[0]).id

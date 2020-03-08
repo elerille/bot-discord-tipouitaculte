@@ -76,15 +76,7 @@ module.exports = {
   desc : "Cherche l'image correspondant à la carte Magic mentionnée\nLe set doit (si présent) être précisé avec son code de référence entre 3 et 5 lettres et/ou chiffres\nLa langue doit (si présente) être précisée par son code à deux lettres",
   schema: "mtg\"nom de la carte(|set)(:langueCode)\"",
   trigger: globalRegEx,
-  authorizations : {
-    salons : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.magic.id]
-    },
-    users : {
-      type: "any",
-    }
-  },
+  authorizations : TiCu.Authorizations.getAuth("auto", "cardDisplay"),
   run : function(msg) {
     const matches = [...msg.content.match(this.trigger)]
     for (const match of matches) {

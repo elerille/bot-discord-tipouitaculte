@@ -3,22 +3,10 @@ module.exports = {
     "purifier"
   ],
   activated: true,
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.bots.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "whitelist",
-      list: [PUB.roles.pourfendeureuse.id]
-    },
-    name : "Purifier",
-    desc : "Accorder l'accès au salon du Bûcher et le rôle de Pourfendeureuse de Cismecs à eun membre.",
-    schema : "!purifier <@>"
-  },
+  name : "Purifier",
+  desc : "Accorder l'accès au salon du Bûcher et le rôle de Pourfendeureuse de Cismecs à eun membre.",
+  schema : "!purifier <@>",
+  authorizations : TiCu.Authorizations.getAuth("command", "purifier"),
   run : function(params, msg) {
     let target
     if(TiCu.Mention(params[0])) {target = TiCu.Mention(params[0])} else return TiCu.Log.Error("purifier", "cible invalide", msg)

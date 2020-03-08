@@ -11,21 +11,10 @@ module.exports = {
     "color"
   ],
   activated: true,
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.bots.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-  },
-    name : "Color",
-    desc : "Changer votre rôle-couleur. La réaction \"♻\" indique que votre précédent rôle-couleur a été supprimé car vous étiez la dernière personne à l'utiliser.",
-    schema : "!color <#RRGGBB>\nou\n!color none|remove|reset|enlever|réinitialiser|turquoise"
-  },
+  name : "Color",
+  desc : "Changer votre rôle-couleur. La réaction \"♻\" indique que votre précédent rôle-couleur a été supprimé car vous étiez la dernière personne à l'utiliser.",
+  schema : "!color <#RRGGBB>\nou\n!color none|remove|reset|enlever|réinitialiser|turquoise",
+  authorizations : TiCu.Authorizations.getAuth("command", "color"),
   run : function(params, msg) {
     let input = params[0]
     let usr = msg.member

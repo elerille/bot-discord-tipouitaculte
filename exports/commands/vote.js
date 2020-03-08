@@ -3,20 +3,10 @@ module.exports = {
     "vote"
   ],
   activated: true,
-  authorizations : {
-    chans : {
-      type: "any"
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-  },
-    name : "Vote",
-    desc : "Lancer un vote public ou anonymisé, éventuellement pour kick/ban/turquoise.",
-    schema : "!vote <anon|anonyme> <turquoise|kick|ban> <@>\nou\n!vote <anon|anonyme> <text> (texte)\nou\n!vote (texte)"
-  },
+  name : "Vote",
+  desc : "Lancer un vote public ou anonymisé, éventuellement pour kick/ban/turquoise.",
+  schema : "!vote <anon|anonyme> <turquoise|kick|ban> <@>\nou\n!vote <anon|anonyme> <text> (texte)\nou\n!vote (texte)",
+  authorizations : TiCu.Authorizations.getAuth("command", "vote"),
   run : function(params, msg) {
     let crop, target
     let anon = params[0] === "anon" || params[0] === "anonyme"
@@ -34,7 +24,7 @@ module.exports = {
         } else {return TiCu.Log.Error("vote", `les votes de passage Turquoise sont restreints au salon <#${PUB.salons.salleDesVotes.id}>`, msg)}
       } else if(type !== "text") {return TiCu.Log.Error("vote", "type de vote anonyme invalide", msg)}
       if(typeof target != "object" && type !== "text") {return TiCu.Log.Error("vote", "cible invalide")}
-      crop = new RegExp(/^!vote\s+[^\s]+\s+/)
+      crop = new RegExp(dev ? /^%vote\s+[^\s]+\s+/ : /^!vote\s+[^\s]+\s+/)
       if(!msg.content.match(crop)) {return TiCu.Log.Error("vote", "paramètres manquants", msg)}
       const msgMatch = msg.content.match(/^!vote\s+anon\s+(text|kick|ban|turquoise)\s+(.+)/s)
       msg.channel.send(TiCu.VotesCollections.CreateEmbedAnon(target, type, TiCu.Vote.voteThreshold(type), undefined, undefined, msgMatch ? msgMatch[2] : undefined))

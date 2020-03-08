@@ -3,22 +3,10 @@ module.exports = {
     "bienvenue"
   ],
   activated: true,
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.invite.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "whitelist",
-      list: [PUB.roles.turquoise.id]
-    },
-    name : "Bienvenue",
-    desc : "Accorder le rôle Phosphate à eun membre.",
-    schema : "!bienvenue <@>"
-  },
+  name : "Bienvenue",
+  desc : "Accorder le rôle Phosphate à eun membre.",
+  schema : "!bienvenue <@>",
+  authorizations : TiCu.Authorizations.getAuth("command", "bienvenue"),
   run : function(params, msg) {
     let target
     if(TiCu.Mention(params[0])) {target = TiCu.Mention(params[0])} else return TiCu.Log.Error("bienvenue", "cible invalide", msg)

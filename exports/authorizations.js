@@ -13,9 +13,12 @@ function authorized(authorization, value) {
 
 module.exports = {
   Command : function(cmd, msg) {
-    let target = TiCu.Commands[cmd].authorizations
-    let chan = authorized(target.chans, msg.channel.id)
-    let auth = authorized(target.auths, msg.author.id)
+    const target = TiCu.Commands[cmd].authorizations[msg.guild.id]
+    if (!target) {
+      return false
+    }
+    const chan = authorized(target.chans, msg.channel.id)
+    const auth = authorized(target.auths, msg.author.id)
     let role
     if(target.roles.type !== "any") {
       let array = Array.from(msg.member.roles.values())
@@ -29,14 +32,35 @@ module.exports = {
     return chan && role && auth
   },
   Reaction : function(reactionFunction, reaction, usr) {
-    let messages = authorized(reactionFunction.authorizations.messages, reaction.message.id)
-    let salons = authorized(reactionFunction.authorizations.salons, reaction.message.channel.id)
-    let users = authorized(reactionFunction.authorizations.users, usr.id)
+    const target = reactionFunction.authorizations[reaction.message.guild.id]
+    if (!target) {
+      return false
+    }
+    const messages = authorized(target.messages, reaction.message.id)
+    const salons = authorized(target.salons, reaction.message.channel.id)
+    const users = authorized(target.users, usr.id)
     return messages && salons && users
   },
   Auto : function(autoCommand, msg) {
-    let salons = authorized(autoCommand.authorizations.salons, msg.channel.id)
-    let users = authorized(autoCommand.authorizations.users, msg.author.id)
+    const target = autoCommand.authorizations[msg.guild.id]
+    if (!target) {
+      return false
+    }
+    const salons = authorized(target.salons, msg.channel.id)
+    const users = authorized(target.users, msg.author.id)
     return salons && users
+  },
+  getAuth : function(type, name) {
+    const auth = {}
+    if (authorizations[type].commu[name]) {
+      auth[PUB.servers.commu] = authorizations[type].commu[name]
+    }
+    if (authorizations[type].vigi[name]) {
+      auth[PUB.servers.vigi] = authorizations[type].vigi[name]
+    }
+    if (authorizations[type].debug[name]) {
+      auth[PUB.servers.debug] = authorizations[type].debug[name]
+    }
+    return auth
   }
 }

@@ -132,7 +132,7 @@ module.exports = {
     cron.schedule("0 12 13 28 * *", () => {
       TiCu.Census.initCensus()
     })
-    global.CFG = require("../private.json")
+    global.CFG = require("../cfg/private.json")
     global.Server = EXPRESS()
     global.SequelizeDB = require("sequelize")
     global.DB = new SequelizeDB(CFG.sequelizeURL, {logging: false})
@@ -151,13 +151,18 @@ module.exports = {
     global.hash = (txt) => { return crypto.createHmac("sha256", CFG.expressSalt).update(txt).digest("hex") }
   },
   loadTicu: function(rootPath) {
-    global.PUB = require("../public.json")
+    global.PUB = require("../cfg/public.json")
     global.devTeam = []
     Object.values(PUB.users).forEach(value => {
       if (value.dev) {
         devTeam.push(value.id)
       }
     })
+    global.authorizations = {
+      auto: require("../cfg/authorizations/auto"),
+      command: require("../cfg/authorizations/commands"),
+      reaction: require("../cfg/authorizations/reactions"),
+    }
     global.TiCu = {
       Date : require("../exports/date.js"),
       Log : require("../exports/log.js"),
@@ -297,8 +302,10 @@ module.exports = {
      * @param type "add" | "remove"
      */
     global.parseReaction = (reaction, usr, type) => {
-      if (!usr.bot && !reaction.message.author.bot && reaction.message.guild.id === PUB.servers.commu) {
-        TiCu.Xp.reactionXp(type, reaction, usr)
+      if (!usr.bot && !reaction.message.author.bot) {
+        if (reaction.message.guild.id === PUB.servers.commu) {
+          TiCu.Xp.reactionXp(type, reaction, usr)
+        }
         let found = false
         for (const reactionFunction of Object.values(TiCu.Reactions)) {
           if (reaction.emoji.name === reactionFunction.emoji) {

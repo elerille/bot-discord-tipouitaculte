@@ -5,21 +5,10 @@ module.exports = {
     "proposition"
   ],
   activated: true,
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.botsecret.id, PUB.salons.bots.id, PUB.salons.blueprint.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    },
-    name : "Proposer",
-    desc : `Proposer une nouvelle fonctionnalité pour TipouiTaCulte, et la soumettre au vote dans <#${PUB.salons.whiteboard.id}>`,
-    schema : "!<propose|proposer|proposition> <(bot|tipouitaculte|ttc)> <description>",
-  },
+  name : "Proposer",
+  desc : `Proposer une nouvelle fonctionnalité pour TipouiTaCulte, et la soumettre au vote dans <#${PUB.salons.whiteboard.id}>`,
+  schema : "!<propose|proposer|proposition> <(bot|tipouitaculte|ttc)> <description>",
+  authorizations : TiCu.Authorizations.getAuth("command", "propose"),
   run : function(params, msg, rawParams) {
     if (params.length < 2) TiCu.Log.Error("propose", "mauvais paramètres", msg)
     const type = "prop"
