@@ -471,6 +471,16 @@
         "espritruche",
         "ruche"
       ]
+    },
+    "caat" : {
+      "id" : "641935800464048128",
+      "xpAddedMultiplicator": 0,
+      "givable": true,
+      "alias": [
+        "641935800464048128",
+        "membrecaat",
+        "caat"
+      ]
     }
   },
   "nonmixtes": {
