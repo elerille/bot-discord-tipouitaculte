@@ -1,0 +1,29 @@
+{
+  "commu" : {
+    "help" : {
+      "chans" : {
+        "type" : "any"
+      },
+      "auths" : {
+        "type" : "any"
+      },
+      "roles" : {
+        "type" : "any"
+      }
+    }
+  },
+  "vigi" : {
+    "help" : {
+      "chans" : {
+        "type" : "any"
+      },
+      "auths" : {
+        "type" : "any"
+      },
+      "roles" : {
+        "type" : "any"
+      }
+    }
+  },
+  "debug": {}
+}
