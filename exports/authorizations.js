@@ -32,9 +32,13 @@ module.exports = {
     return chan && role && auth
   },
   Reaction : function(reactionFunction, reaction, usr) {
-    const messages = authorized(reactionFunction.authorizations.messages, reaction.message.id)
-    const salons = authorized(reactionFunction.authorizations.salons, reaction.message.channel.id)
-    const users = authorized(reactionFunction.authorizations.users, usr.id)
+    const target = reactionFunction.authorizations[reaction.message.guild.id]
+    if (!target) {
+      return false
+    }
+    const messages = authorized(target.messages, reaction.message.id)
+    const salons = authorized(target.salons, reaction.message.channel.id)
+    const users = authorized(target.users, usr.id)
     return messages && salons && users
   },
   Auto : function(autoCommand, msg) {

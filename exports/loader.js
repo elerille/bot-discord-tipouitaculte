@@ -302,8 +302,10 @@ module.exports = {
      * @param type "add" | "remove"
      */
     global.parseReaction = (reaction, usr, type) => {
-      if (!usr.bot && !reaction.message.author.bot && reaction.message.guild.id === PUB.servers.commu) {
-        TiCu.Xp.reactionXp(type, reaction, usr)
+      if (!usr.bot && !reaction.message.author.bot) {
+        if (reaction.message.guild.id === PUB.servers.commu) {
+          TiCu.Xp.reactionXp(type, reaction, usr)
+        }
         let found = false
         for (const reactionFunction of Object.values(TiCu.Reactions)) {
           if (reaction.emoji.name === reactionFunction.emoji) {
