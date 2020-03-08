@@ -5,6 +5,9 @@ module.exports = {
     "proposition"
   ],
   activated: true,
+  name : "Proposer",
+  desc : `Proposer une nouvelle fonctionnalité pour TipouiTaCulte, et la soumettre au vote dans <#${PUB.salons.whiteboard.id}>`,
+  schema : "!<propose|proposer|proposition> <(bot|tipouitaculte|ttc)> <description>",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -15,10 +18,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-    },
-    name : "Proposer",
-    desc : `Proposer une nouvelle fonctionnalité pour TipouiTaCulte, et la soumettre au vote dans <#${PUB.salons.whiteboard.id}>`,
-    schema : "!<propose|proposer|proposition> <(bot|tipouitaculte|ttc)> <description>",
+    }
   },
   run : function(params, msg, rawParams) {
     if (params.length < 2) TiCu.Log.Error("propose", "mauvais paramètres", msg)

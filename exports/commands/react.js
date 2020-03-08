@@ -4,6 +4,9 @@ module.exports = {
     "reaction"
   ],
   activated: true,
+  name : "Reaction",
+  desc : "Réagir à un message avec une émote.",
+  schema : "!<react|reaction> <emoji> <#channel> <messageID>\nou\n!<react|reaction <emoji> <messageURL>",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -14,13 +17,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-    },
-    name : "Reaction",
-    desc : "Réagir à un message avec une émote.",
-    schema : "!<react|reaction> <emoji> <#channel> <messageID>\nou\n!<react|reaction <emoji> <messageURL>",
-    channels : "🐙interface-tipoui",
-    authors : "Toustes",
-    roleNames : "Tous"
+    }
   },
   run : function(params, msg) {
     // https://discordapp.com/channels/server/channel/message

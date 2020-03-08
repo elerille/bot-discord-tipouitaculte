@@ -3,6 +3,9 @@ module.exports = {
     "list"
   ],
   activated: true,
+  name : "List",
+  desc : "Lister les rôles et salons du serveur. Fonction de debug sans logs.",
+  schema : "!list <roles|channels>",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -13,10 +16,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-  },
-    name : "List",
-    desc : "Lister les rôles et salons du serveur. Fonction de debug sans logs.",
-    schema : "!list <roles|channels>"
+    }
   },
   run : function(params, msg) {
     if (params[0] == "roles" || params[0] == "channels") {

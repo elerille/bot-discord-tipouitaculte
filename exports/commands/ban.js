@@ -3,6 +3,9 @@ module.exports = {
     "ban"
   ],
   activated: true,
+  name : "Ban",
+  desc : "Bannir eun membre du serveur.",
+  schema : "!ban <@> (raison)",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -13,10 +16,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-  },
-    name : "Ban",
-    desc : "Bannir eun membre du serveur.",
-    schema : "!ban <@> (raison)"
+    }
   },
   run : function(params, msg) {
     let crop = new RegExp(/^(!ban\s+[^\s]+\s+)/)

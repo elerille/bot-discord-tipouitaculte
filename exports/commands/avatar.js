@@ -10,6 +10,9 @@ module.exports = {
     "avatar"
   ],
   activated: true,
+  name : "Avatar",
+  desc : "Afficher l'avatar d'eun membre",
+  schema : "!avatar (profil) (@)",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -20,10 +23,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-    },
-    name : "Avatar",
-    desc : "Afficher l'avatar d'eun membre",
-    schema : "!avatar (profil) (@)",
+    }
   },
   run : function(params, msg) {
     const target = params[0] ?

@@ -3,6 +3,9 @@ module.exports = {
     "raid"
   ],
   activated: true,
+  name : "Raid",
+  desc : "Activer/Désactiver le lien d'invitation en cas de raid ou vérifier son état",
+  schema : "!raid <[on|off|status]>",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -13,10 +16,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-    },
-    name : "Raid",
-    desc : "Activer/Désactiver le lien d'invitation en cas de raid ou vérifier son état",
-    schema : "!raid <[on|off|status]>"
+    }
   },
   run : function(params, msg) {
     switch(params[0]) {

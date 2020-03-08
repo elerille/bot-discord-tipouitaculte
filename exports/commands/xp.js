@@ -12,6 +12,9 @@ module.exports = {
     "xp"
   ],
   activated: true,
+  name : "XP",
+  desc : "Donner ou retirer de l'expérience à eun ou tous les membres",
+  schema : "!xp <give|take> <@|all|role|channel> <value> (reason)",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -22,10 +25,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-    },
-    name : "XP",
-    desc : "Donner ou retirer de l'expérience à eun ou tous les membres",
-    schema : "!xp <give|take> <@|all|role|channel> <value> (reason)"
+    }
   },
   run : function(params, msg, rawParams) {
     if (params.length < 3 || (params[0] !== "give" && params[0] !== "take") || isNaN(params[2])) {

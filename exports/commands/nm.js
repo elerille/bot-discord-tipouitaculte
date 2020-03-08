@@ -5,6 +5,9 @@ module.exports = {
     "nm"
   ],
   activated: true,
+  name : "Non-Mixtes",
+  desc : "Ajouter ou retirer l'accès à des salons non-mixte sans rôle",
+  schema : "!<nm|non-mixte|non-mixtes> <@> <+|autoriser|ajouter|add> <[nmList]>\nou\n!<nm|non-mixte|non-mixtes> <@> <-|révoquer|retirer|remove> <[nmList]>",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -15,10 +18,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-  },
-    name : "Non-Mixtes",
-    desc : "Ajouter ou retirer l'accès à des salons non-mixte sans rôle",
-    schema : "!<nm|non-mixte|non-mixtes> <@> <+|autoriser|ajouter|add> <[nmList]>\nou\n!<nm|non-mixte|non-mixtes> <@> <-|révoquer|retirer|remove> <[nmList]>"
+    }
   },
   run : function(params, msg) {
     let action = {}

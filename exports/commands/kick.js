@@ -3,6 +3,9 @@ module.exports = {
     "kick"
   ],
   activated: true,
+  name : "Kick",
+  desc : "Expulser eun membre du serveur.",
+  schema : "!kick <@> (raison)",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -13,10 +16,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-  },
-    name : "Kick",
-    desc : "Expulser eun membre du serveur.",
-    schema : "!kick <@> (raison)"
+    }
   },
   run : function(params, msg) {
     let crop = new RegExp(/^(!kick\s+[^\s]+\s+)/)

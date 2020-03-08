@@ -10,6 +10,9 @@ module.exports = {
     "hr"
   ],
   activated: true,
+  name : "HotReload",
+  desc : "Recharge la configuration de TipouiTaCulte",
+  schema : "!<hotReload|hr> <parsing|ticu|salons>",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -21,10 +24,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-    },
-    name : "HotReload",
-    desc : "Recharge la configuration de TipouiTaCulte",
-    schema : "!<hotReload|hr> <parsing|ticu|salons>"
+    }
   },
   run : function(params, msg) {
     clearRequireCache()

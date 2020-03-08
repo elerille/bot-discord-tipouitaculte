@@ -3,6 +3,9 @@ module.exports = {
     "bienvenue"
   ],
   activated: true,
+  name : "Bienvenue",
+  desc : "Accorder le rôle Phosphate à eun membre.",
+  schema : "!bienvenue <@>",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -14,10 +17,7 @@ module.exports = {
     roles : {
       type: "whitelist",
       list: [PUB.roles.turquoise.id]
-    },
-    name : "Bienvenue",
-    desc : "Accorder le rôle Phosphate à eun membre.",
-    schema : "!bienvenue <@>"
+    }
   },
   run : function(params, msg) {
     let target

@@ -3,6 +3,9 @@ module.exports = {
     "roles"
   ],
   activated: true,
+  name : "Roles",
+  desc : "Ajouter ou retirer des rôles à eun membre du serveur",
+  schema : "!roles <@> <+|ajouter|add|addRoles> <[rolesList]>\nou\n!roles <@> <-|enlever|retirer|supprimer|remove|removeRoles> <[rolesList]>",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -13,10 +16,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-  },
-    name : "Roles",
-    desc : "Ajouter ou retirer des rôles à eun membre du serveur",
-    schema : "!roles <@> <+|ajouter|add|addRoles> <[rolesList]>\nou\n!roles <@> <-|enlever|retirer|supprimer|remove|removeRoles> <[rolesList]>"
+    }
   },
   run : function(params, msg) {
     let action

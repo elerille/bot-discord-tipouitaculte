@@ -4,6 +4,9 @@ module.exports = {
     "xpstatus"
   ],
   activated: true,
+  name : "XPstatut",
+  desc : "Afficher un statut, ou modifier le votre, ou, dans l'Interface Tipoui, modifier celui d'eun autre membre, par rapport au système d'XP.",
+  schema : "Pour toustes : !xpstatus ( ( (inclure|exclure) | @ )\nVigilant·es : !xpstatus <inclure|exclure> <@>",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -15,10 +18,7 @@ module.exports = {
     roles : {
       type: "whitelist",
       list: [PUB.roles.turquoise.id]
-    },
-    name : "XPstatut",
-    desc : "Afficher un statut, ou modifier le votre, ou, dans l'Interface Tipoui, modifier celui d'eun autre membre, par rapport au système d'XP.",
-    schema : "Pour toustes : !xpstatus ( ( (inclure|exclure) | @ )\nVigilant·es : !xpstatus <inclure|exclure> <@>"
+    }
   },
   run : function(params, msg) {
     switch (params.length) {

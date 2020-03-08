@@ -41,30 +41,20 @@ module.exports = {
     "help"
   ],
   activated: true,
-  authorizations : {
-    chans : {
-      type: "any"
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    },
-    name : "Help",
-    desc : "Liste toutes les commandes, ou seulement celles que vous pouvez utiliser dans ce salon (par défaut), détaille l'usage d'une commande, ou explique le format des \"schémas\" de commandes.",
-    schema : "!help (full|commande|schema|rolesList|nmList)"
-  },
+  name : "Help",
+  desc : "Liste toutes les commandes, ou seulement celles que vous pouvez utiliser dans ce salon (par défaut), détaille l'usage d'une commande, ou explique le format des \"schémas\" de commandes.",
+  schema : "!help (full|commande|schema|rolesList|nmList)",
+  authorizations : TiCu.Authorizations.getAuth("command", "help"),
   run : function(params, msg) {
     const target = params[0]
     const embed = new DiscordNPM.RichEmbed()
     embed.setColor(38600)
     const aliasList = []
     if(TiCu.Commands[target]) {
-      const cmd = TiCu.Commands[target].authorizations
-      const chansDesc = getDesc(cmd.chans, "chans")
-      const usersDesc = getDesc(cmd.auths, "users")
-      const rolesDesc = getDesc(cmd.roles, "roles")
+      const cmd = TiCu.Commands[target]
+      const chansDesc = getDesc(cmd.authorizations[msg.guild.id].chans, "chans")
+      const usersDesc = getDesc(cmd.authorizations[msg.guild.id].auths, "users")
+      const rolesDesc = getDesc(cmd.authorizations[msg.guild.id].roles, "roles")
       embed
         .setTitle(cmd.name)
         .addField("Description", cmd.desc)
@@ -97,9 +87,9 @@ module.exports = {
     } else if(target === "full") {
       Object.keys(TiCu.Commands).forEach((key, i, array) => {
         if (!aliasList.find(v => v === key)) {
-          let cmd = TiCu.Commands[key].authorizations
+          const cmd = TiCu.Commands[key]
           embed.addField(cmd.name, cmd.desc)
-          TiCu.Commands[key].alias.forEach(aliasName => {
+          cmd.alias.forEach(aliasName => {
             aliasList.push(aliasName)
           })
         }
@@ -152,11 +142,11 @@ module.exports = {
       aliasList.push("help")
       Object.keys(TiCu.Commands).forEach((key, i, array) => {
         if (!aliasList.find(v => v === key)) {
+          const cmd = TiCu.Commands[key]
           if(TiCu.Authorizations.Command(key, msg)) {
-            let cmd = TiCu.Commands[key].authorizations
             embed.addField(cmd.name, cmd.desc)
           }
-          TiCu.Commands[key].alias.forEach(aliasName => {
+          cmd.alias.forEach(aliasName => {
             aliasList.push(aliasName)
           })
         }

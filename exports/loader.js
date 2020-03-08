@@ -132,7 +132,7 @@ module.exports = {
     cron.schedule("0 12 13 28 * *", () => {
       TiCu.Census.initCensus()
     })
-    global.CFG = require("../private.json")
+    global.CFG = require("../cfg/private.json")
     global.Server = EXPRESS()
     global.SequelizeDB = require("sequelize")
     global.DB = new SequelizeDB(CFG.sequelizeURL, {logging: false})
@@ -151,7 +151,12 @@ module.exports = {
     global.hash = (txt) => { return crypto.createHmac("sha256", CFG.expressSalt).update(txt).digest("hex") }
   },
   loadTicu: function(rootPath) {
-    global.PUB = require("../public.json")
+    global.PUB = require("../cfg/public.json")
+    global.authorizations = {
+      auto: require("../cfg/authorizations/auto"),
+      command: require("../cfg/authorizations/commands"),
+      reaction: require("../cfg/authorizations/reactions"),
+    }
     global.devTeam = []
     Object.values(PUB.users).forEach(value => {
       if (value.dev) {

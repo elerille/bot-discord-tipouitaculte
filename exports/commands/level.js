@@ -36,6 +36,9 @@ module.exports = {
     "niveau"
   ],
   activated: true,
+  name : "Level",
+  desc : "Afficher le niveau d'eun membre.",
+  schema : "!level (@)",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -46,10 +49,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-    },
-    name : "Level",
-    desc : "Afficher le niveau d'eun membre.",
-    schema : "!level (@)"
+    }
   },
   run : function(params, msg) {
     const memberParam = params[0] ? TiCu.Mention(params[0]) : null

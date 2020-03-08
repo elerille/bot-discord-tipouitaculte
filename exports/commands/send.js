@@ -3,6 +3,9 @@ module.exports = {
     "send"
   ],
   activated: true,
+  name : "Send",
+  desc : "Envoyer un message par l'intermédiaire de ce bot.",
+  schema : "!send <target> <texte>",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -13,10 +16,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-  },
-    name : "Send",
-    desc : "Envoyer un message par l'intermédiaire de ce bot.",
-    schema : "!send <target> <texte>"
+    }
   },
   run : function(params, msg) {
     let crop = new RegExp(/^(!send\s+[^\s]+\s+)/)

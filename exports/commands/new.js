@@ -5,6 +5,9 @@ module.exports = {
     "new"
   ],
   activated: true,
+  name : "Nouveauté",
+  desc : "Annoncer une nouvelle fonctionnalité",
+  schema : "!new <command> (idMessageWhiteboard)",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -16,10 +19,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-    },
-    name : "Nouveauté",
-    desc : "Annoncer une nouvelle fonctionnalité",
-    schema : "!new <command> (idMessageWhiteboard)"
+    }
   },
   run : function(params, msg) {
     if (params.length < 1) {

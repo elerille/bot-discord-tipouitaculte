@@ -3,6 +3,9 @@ module.exports = {
     "purifier"
   ],
   activated: true,
+  name : "Purifier",
+  desc : "Accorder l'accès au salon du Bûcher et le rôle de Pourfendeureuse de Cismecs à eun membre.",
+  schema : "!purifier <@>",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -14,10 +17,7 @@ module.exports = {
     roles : {
       type: "whitelist",
       list: [PUB.roles.pourfendeureuse.id]
-    },
-    name : "Purifier",
-    desc : "Accorder l'accès au salon du Bûcher et le rôle de Pourfendeureuse de Cismecs à eun membre.",
-    schema : "!purifier <@>"
+    }
   },
   run : function(params, msg) {
     let target

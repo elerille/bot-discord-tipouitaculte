@@ -4,6 +4,9 @@ module.exports = {
     "retour"
   ],
   activated: true,
+  name : "Retour",
+  desc : "Récupérer ses rôles après un départ volontaire relativement bref",
+  schema : "!retour\nou\n!return",
   authorizations : {
     chans : {
       type: "whitelist",
@@ -14,10 +17,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-    },
-    name : "Retour",
-    desc : "Récupérer ses rôles après un départ volontaire relativement bref",
-    schema : "!retour\nou\n!return"
+    }
   },
   run : function(params, msg) {
     const jsonActionData = {action : "read", target : ReturnFile}

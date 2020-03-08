@@ -3,6 +3,9 @@ module.exports = {
     "vote"
   ],
   activated: true,
+  name : "Vote",
+  desc : "Lancer un vote public ou anonymisé, éventuellement pour kick/ban/turquoise.",
+  schema : "!vote <anon|anonyme> <turquoise|kick|ban> <@>\nou\n!vote <anon|anonyme> <text> (texte)\nou\n!vote (texte)",
   authorizations : {
     chans : {
       type: "any"
@@ -12,10 +15,7 @@ module.exports = {
     },
     roles : {
       type: "any"
-  },
-    name : "Vote",
-    desc : "Lancer un vote public ou anonymisé, éventuellement pour kick/ban/turquoise.",
-    schema : "!vote <anon|anonyme> <turquoise|kick|ban> <@>\nou\n!vote <anon|anonyme> <text> (texte)\nou\n!vote (texte)"
+    }
   },
   run : function(params, msg) {
     let crop, target
