@@ -9,7 +9,7 @@ module.exports = {
         type: "any",
       }
     },
-    monLevel: {
+    monlevel: {
       salons : {
         type: "whitelist",
         list: [PUB.salons.debug.id, PUB.salons.bots.id]
@@ -19,16 +19,7 @@ module.exports = {
       }
     },
   },
-  vigi : {
-    monLevel: {
-      salons : {
-        type: "any"
-      },
-      users : {
-        type: "any",
-      }
-    }
-  },
+  vigi : {},
   debug: {
     cardDisplay: {
       salons : {

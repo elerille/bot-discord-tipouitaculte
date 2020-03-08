@@ -1,11 +1,11 @@
 module.exports = {
   activated: true,
-  methodName: 'monLevel',
+  methodName: 'monlevel',
   name : "Mon level ?",
   desc : "wesh læ bot, c'est quoi mon level ?\n",
   schema: "mon level ?",
   trigger: /mon (level|niveau)\s*\?/,
-  authorizations : TiCu.Authorizations.getAuth("auto", "monLevel"),
+  authorizations : TiCu.Authorizations.getAuth("auto", "monlevel"),
   run : function(msg) {
     TiCu.Commands.level.run([], msg)
   }

@@ -65,8 +65,8 @@ module.exports = {
       msg.channel.send(embed)
     } else if(TiCu.Auto[target]) {
       const autoCmd = TiCu.Auto[target]
-      const chansDesc = getDesc(autoCmd.authorizations.salons, "chans")
-      const usersDesc = getDesc(autoCmd.authorizations.users, "users")
+      const chansDesc = getDesc(autoCmd.authorizations[msg.guild.id].salons, "chans")
+      const usersDesc = getDesc(autoCmd.authorizations[msg.guild.id].users, "users")
       embed
         .setTitle(autoCmd.name)
         .addField("Description", autoCmd.desc)
