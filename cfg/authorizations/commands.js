@@ -304,5 +304,39 @@ module.exports = {
       }
     },
   },
-  debug: {}
+  debug: {
+    avatar: {
+      chans: {
+        type: "any"
+      },
+      auths: {
+        type: "any"
+      },
+      roles: {
+        type: "any"
+      }
+    },
+    help: {
+      chans: {
+        type: "any"
+      },
+      auths: {
+        type: "any"
+      },
+      roles: {
+        type: "any"
+      }
+    },
+    vote: {
+          chans: {
+              type: "any"
+          },
+          auths: {
+              type: "any"
+          },
+          roles: {
+              type: "any"
+          }
+      },
+  }
 }
