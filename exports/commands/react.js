@@ -7,18 +7,7 @@ module.exports = {
   name : "Reaction",
   desc : "Réagir à un message avec une émote.",
   schema : "!<react|reaction> <emoji> <#channel> <messageID>\nou\n!<react|reaction <emoji> <messageURL>",
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.botsecret.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    }
-  },
+  authorizations : TiCu.Authorizations.getAuth("command", "react"),
   run : function(params, msg) {
     // https://discordapp.com/channels/server/channel/message
     let emoji, url, server, chan, target, message

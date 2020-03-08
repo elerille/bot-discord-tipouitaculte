@@ -44,10 +44,10 @@ module.exports = {
   },
   getAuth : function(type, name) {
     const auth = {}
-    if (authorizations[type].commu) {
+    if (authorizations[type].commu[name]) {
       auth[PUB.servers.commu] = authorizations[type].commu[name]
     }
-    if (authorizations[type].vigi) {
+    if (authorizations[type].vigi[name]) {
       auth[PUB.servers.vigi] = authorizations[type].vigi[name]
     }
     if (authorizations[type].debug[name]) {

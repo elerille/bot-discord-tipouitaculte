@@ -152,17 +152,17 @@ module.exports = {
   },
   loadTicu: function(rootPath) {
     global.PUB = require("../cfg/public.json")
-    global.authorizations = {
-      auto: require("../cfg/authorizations/auto"),
-      command: require("../cfg/authorizations/commands"),
-      reaction: require("../cfg/authorizations/reactions"),
-    }
     global.devTeam = []
     Object.values(PUB.users).forEach(value => {
       if (value.dev) {
         devTeam.push(value.id)
       }
     })
+    global.authorizations = {
+      auto: require("../cfg/authorizations/auto"),
+      command: require("../cfg/authorizations/commands"),
+      reaction: require("../cfg/authorizations/reactions"),
+    }
     global.TiCu = {
       Date : require("../exports/date.js"),
       Log : require("../exports/log.js"),

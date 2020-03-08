@@ -13,19 +13,7 @@ module.exports = {
   name : "HotReload",
   desc : "Recharge la configuration de TipouiTaCulte",
   schema : "!<hotReload|hr> <parsing|ticu|salons>",
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id]
-    },
-    auths : {
-      type: "whitelist",
-      list: devTeam
-    },
-    roles : {
-      type: "any"
-    }
-  },
+  authorizations : TiCu.Authorizations.getAuth("command", "hotreload"),
   run : function(params, msg) {
     clearRequireCache()
     const loader = require("../loader")

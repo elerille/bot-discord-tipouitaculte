@@ -6,17 +6,7 @@ module.exports = {
   name : "Vote",
   desc : "Lancer un vote public ou anonymisé, éventuellement pour kick/ban/turquoise.",
   schema : "!vote <anon|anonyme> <turquoise|kick|ban> <@>\nou\n!vote <anon|anonyme> <text> (texte)\nou\n!vote (texte)",
-  authorizations : {
-    chans : {
-      type: "any"
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    }
-  },
+  authorizations : TiCu.Authorizations.getAuth("command", "vote"),
   run : function(params, msg) {
     let crop, target
     let anon = params[0] === "anon" || params[0] === "anonyme"

@@ -6,18 +6,7 @@ module.exports = {
   name : "Kick",
   desc : "Expulser eun membre du serveur.",
   schema : "!kick <@> (raison)",
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.botsecret.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    }
-  },
+  authorizations : TiCu.Authorizations.getAuth("command", "kick"),
   run : function(params, msg) {
     let crop = new RegExp(/^(!kick\s+[^\s]+\s+)/)
     let target

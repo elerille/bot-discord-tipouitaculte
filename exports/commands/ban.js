@@ -6,18 +6,7 @@ module.exports = {
   name : "Ban",
   desc : "Bannir eun membre du serveur.",
   schema : "!ban <@> (raison)",
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.botsecret.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    }
-  },
+  authorizations : TiCu.Authorizations.getAuth("command", "ban"),
   run : function(params, msg) {
     let crop = new RegExp(/^(!ban\s+[^\s]+\s+)/)
     let target

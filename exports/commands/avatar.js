@@ -13,18 +13,7 @@ module.exports = {
   name : "Avatar",
   desc : "Afficher l'avatar d'eun membre",
   schema : "!avatar (profil) (@)",
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.botsecret.id, PUB.salons.bots.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    }
-  },
+  authorizations : TiCu.Authorizations.getAuth("command", "avatar"),
   run : function(params, msg) {
     const target = params[0] ?
       params[0] === 'profil' ?

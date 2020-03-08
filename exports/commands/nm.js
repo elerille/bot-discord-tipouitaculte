@@ -1,25 +1,14 @@
 module.exports = {
   alias: [
+    "nm",
     "non-mixte",
-    "non-mixtes",
-    "nm"
+    "non-mixtes"
   ],
   activated: true,
   name : "Non-Mixtes",
   desc : "Ajouter ou retirer l'accès à des salons non-mixte sans rôle",
   schema : "!<nm|non-mixte|non-mixtes> <@> <+|autoriser|ajouter|add> <[nmList]>\nou\n!<nm|non-mixte|non-mixtes> <@> <-|révoquer|retirer|remove> <[nmList]>",
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.botsecret.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    }
-  },
+  authorizations : TiCu.Authorizations.getAuth("command", "nm"),
   run : function(params, msg) {
     let action = {}
     let access = []

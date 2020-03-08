@@ -6,18 +6,7 @@ module.exports = {
   name : "List",
   desc : "Lister les rôles et salons du serveur. Fonction de debug sans logs.",
   schema : "!list <roles|channels>",
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    }
-  },
+  authorizations : TiCu.Authorizations.getAuth("command", "list"),
   run : function(params, msg) {
     if (params[0] == "roles" || params[0] == "channels") {
         let array = msg.guild[params[0]].array()

@@ -39,18 +39,7 @@ module.exports = {
   name : "Level",
   desc : "Afficher le niveau d'eun membre.",
   schema : "!level (@)",
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.botsecret.id, PUB.salons.bots.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    }
-  },
+  authorizations : TiCu.Authorizations.getAuth("command", "level"),
   run : function(params, msg) {
     const memberParam = params[0] ? TiCu.Mention(params[0]) : null
     const target = memberParam ? memberParam.id : msg.author.id

@@ -7,18 +7,7 @@ module.exports = {
   name : "Retour",
   desc : "Récupérer ses rôles après un départ volontaire relativement bref",
   schema : "!retour\nou\n!return",
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.invite.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    }
-  },
+  authorizations : TiCu.Authorizations.getAuth("command", "return"),
   run : function(params, msg) {
     const jsonActionData = {action : "read", target : ReturnFile}
     const returnData = TiCu.json(jsonActionData)

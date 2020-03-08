@@ -15,18 +15,7 @@ module.exports = {
   name : "XP",
   desc : "Donner ou retirer de l'expérience à eun ou tous les membres",
   schema : "!xp <give|take> <@|all|role|channel> <value> (reason)",
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.botsecret.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    }
-  },
+  authorizations : TiCu.Authorizations.getAuth("command", "xp"),
   run : function(params, msg, rawParams) {
     if (params.length < 3 || (params[0] !== "give" && params[0] !== "take") || isNaN(params[2])) {
       TiCu.Log.Error("xp", "paramètres invalides", msg)

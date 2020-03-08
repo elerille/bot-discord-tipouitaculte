@@ -6,18 +6,7 @@ module.exports = {
   name : "Roles",
   desc : "Ajouter ou retirer des rôles à eun membre du serveur",
   schema : "!roles <@> <+|ajouter|add|addRoles> <[rolesList]>\nou\n!roles <@> <-|enlever|retirer|supprimer|remove|removeRoles> <[rolesList]>",
-  authorizations : {
-    chans : {
-      type: "whitelist",
-      list: [PUB.salons.debug.id, PUB.salons.botsecret.id]
-    },
-    auths : {
-      type: "any"
-    },
-    roles : {
-      type: "any"
-    }
-  },
+  authorizations : TiCu.Authorizations.getAuth("command", "roles"),
   run : function(params, msg) {
     let action
     let roles = []
