@@ -291,7 +291,18 @@ module.exports = {
       roles : {
         type : "any"
       }
-    }
+    },
+    vote: {
+      chans : {
+        type: "any"
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
   },
   debug: {}
 }

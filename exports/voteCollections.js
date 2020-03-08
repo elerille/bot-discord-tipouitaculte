@@ -170,7 +170,7 @@ module.exports = {
     let votesJSON = JSON.parse(fs.readFileSync(VotesFile).toString());
     for (const [id, entry] of Object.entries(votesJSON)) {
       if (typeof entry === "object") {
-        tipoui.channels.get(entry.chan).fetchMessage(id).then(msg => {
+        (entry.guild ? Discord.guilds.get(entry.guild) : tipoui).channels.get(entry.chan).fetchMessage(id).then(msg => {
           createCollector(entry.type, msg);
         })
       }

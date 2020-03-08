@@ -24,7 +24,7 @@ module.exports = {
         } else {return TiCu.Log.Error("vote", `les votes de passage Turquoise sont restreints au salon <#${PUB.salons.salleDesVotes.id}>`, msg)}
       } else if(type !== "text") {return TiCu.Log.Error("vote", "type de vote anonyme invalide", msg)}
       if(typeof target != "object" && type !== "text") {return TiCu.Log.Error("vote", "cible invalide")}
-      crop = new RegExp(/^!vote\s+[^\s]+\s+/)
+      crop = new RegExp(dev ? /^%vote\s+[^\s]+\s+/ : /^!vote\s+[^\s]+\s+/)
       if(!msg.content.match(crop)) {return TiCu.Log.Error("vote", "paramètres manquants", msg)}
       const msgMatch = msg.content.match(/^!vote\s+anon\s+(text|kick|ban|turquoise)\s+(.+)/s)
       msg.channel.send(TiCu.VotesCollections.CreateEmbedAnon(target, type, TiCu.Vote.voteThreshold(type), undefined, undefined, msgMatch ? msgMatch[2] : undefined))

@@ -26,6 +26,7 @@ module.exports = {
     json.target = VotesFile
     json.content[msg.id] = {}
     json.content[msg.id].date = TiCu.Date("fr")
+    json.content[msg.id].guild = msg.guild.id
     json.content[msg.id].chan = msg.channel.id
     json.content[msg.id].type = type
     if(target) {json.content[msg.id].target = target.id}
