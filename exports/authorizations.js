@@ -38,8 +38,12 @@ module.exports = {
     return messages && salons && users
   },
   Auto : function(autoCommand, msg) {
-    const salons = authorized(autoCommand.authorizations.salons, msg.channel.id)
-    const users = authorized(autoCommand.authorizations.users, msg.author.id)
+    const target = autoCommand.authorizations[msg.guild.id]
+    if (!target) {
+      return false
+    }
+    const salons = authorized(target.salons, msg.channel.id)
+    const users = authorized(target.users, msg.author.id)
     return salons && users
   },
   getAuth : function(type, name) {
