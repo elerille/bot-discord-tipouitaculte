@@ -303,7 +303,7 @@ module.exports = {
      */
     global.parseReaction = (reaction, usr, type) => {
       if (!usr.bot && !reaction.message.author.bot) {
-        if (reaction.message.guild.id === PUB.servers.commu) {
+        if (reaction.message.guild.id === PUB.servers.commu.id) {
           TiCu.Xp.reactionXp(type, reaction, usr)
         }
         let found = false

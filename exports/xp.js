@@ -42,7 +42,7 @@ function calculateLevelByXp(xp) {
 
 function systemAccessAuthorised(msg) {
   return msg.channel.type === 'text' && // is in a GuildChannel
-    msg.guild.id === PUB.servers.commu // is in Tipoui Guild
+    msg.guild.id === PUB.servers.commu.id // is in Tipoui Guild
 }
 
 function updateLevel(level, target) {

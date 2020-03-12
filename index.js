@@ -5,7 +5,7 @@ loader.loadFull('./')
 // Discord
 Discord.login( CFG.discordToken )
 Discord.once("ready", () => {
-  global.tipoui = Discord.guilds.get(PUB.servers.commu)
+  global.tipoui = Discord.guilds.get(PUB.servers.commu.id)
   global.maxilog = Discord.channels.get(dev ? PUB.salons.logsDev.id : PUB.salons.maxiLog.id)
   global.minilog = Discord.channels.get(dev ? PUB.salons.logsDev.id : PUB.salons.miniLog.id)
   console.log(TiCu.Date("log") + " : Connexion à Discord.")
