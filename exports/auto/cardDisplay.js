@@ -51,7 +51,7 @@ function fetchCardImage(name, set, lang, msg) {
             });
           })
           reqLang.on('error', error => {
-            maxilog.send(TiCu.Date("log") + " : Erreur : (`mtg\"\"`, erreur sur l'appel de traduction)")
+            maxilog[msg.guild.id].send(TiCu.Date("log") + " : Erreur : (`mtg\"\"`, erreur sur l'appel de traduction)")
             displayCard(cardData, msg)
           })
           reqLang.end()

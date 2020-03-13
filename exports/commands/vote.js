@@ -12,7 +12,7 @@ module.exports = {
     let anon = params[0] === "anon" || params[0] === "anonyme"
     let type = params[1]
       if (anon) {
-          if (msg.guild.id === PUB.servers.debug) {
+          if (msg.guild.id === PUB.servers.debug.id) {
               msg.reply("Seuls des votes publics peuvent être lancés sur ce serveur.")
           } else {
               if(type === "kick" || type === "ban") {

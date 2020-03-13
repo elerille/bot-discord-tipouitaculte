@@ -53,13 +53,13 @@ module.exports = {
   getAuth : function(type, name) {
     const auth = {}
     if (authorizations[type].commu[name]) {
-      auth[PUB.servers.commu] = authorizations[type].commu[name]
+      auth[PUB.servers.commu.id] = authorizations[type].commu[name]
     }
     if (authorizations[type].vigi[name]) {
-      auth[PUB.servers.vigi] = authorizations[type].vigi[name]
+      auth[PUB.servers.vigi.id] = authorizations[type].vigi[name]
     }
     if (authorizations[type].debug[name]) {
-      auth[PUB.servers.debug] = authorizations[type].debug[name]
+      auth[PUB.servers.debug.id] = authorizations[type].debug[name]
     }
     return auth
   }
