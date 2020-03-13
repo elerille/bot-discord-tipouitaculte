@@ -2,18 +2,36 @@
 const loader = require('./exports/loader')
 loader.loadFull('./')
 
+const fakeLog = {
+  send: function (message) {
+    console.log(message)
+  }
+}
+
+function createLogger(type, server) {
+  if (server[type] && server[type] !== "") {
+    global[type][server.id] = Discord.channels.get(dev ? PUB.salons.logsDev.id : server[type])
+  } else {
+    global[type][server.id] = fakeLog
+  }
+}
+
 // Discord
 Discord.login( CFG.discordToken )
 Discord.once("ready", () => {
   global.tipoui = Discord.guilds.get(PUB.servers.commu.id)
-  global.maxilog = Discord.channels.get(dev ? PUB.salons.logsDev.id : PUB.salons.maxiLog.id)
-  global.minilog = Discord.channels.get(dev ? PUB.salons.logsDev.id : PUB.salons.miniLog.id)
+  global.maxilog = []
+  global.minilog = []
+  for (const server of Object.values(PUB.servers)) {
+    createLogger("maxilog", server)
+    createLogger("minilog", server)
+  }
   console.log(TiCu.Date("log") + " : Connexion à Discord.")
   loader.updateSalonsName()
   if (!dev || (dev && devConfig)) {
     if (!dev) {
-      maxilog.send(TiCu.Date("log") + " : Reconnexion.")
-      minilog.send("Coucou, je suis de retour ♥")
+      maxilog[PUB.servers.commu.id].send(TiCu.Date("log") + " : Reconnexion.")
+      minilog[PUB.servers.commu.id].send("Coucou, je suis de retour ♥")
     }
 
     if (!dev || (devConfig && devConfig.generic && devConfig.generic.voteStartup)) {

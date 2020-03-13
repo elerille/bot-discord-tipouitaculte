@@ -320,7 +320,7 @@ module.exports = {
     }
 
     global.parseGuildMemberAdd = (member) => {
-      if (member.guild.id === tipoui.id) {
+      if (member.guild.id === PUB.servers.commu.id) {
         const jsonActionData = {action : "read", target : KickedFile}
         const kicked = TiCu.json(jsonActionData).list.includes(member.id)
         jsonActionData.target = ReturnFile
@@ -331,17 +331,17 @@ module.exports = {
           tipoui.channels.get(PUB.salons.genTP.id).send(`Oh ! Bienvenue <@${member.id}> ! Je te laisse lire les Saintes Règles, rajouter tes pronoms dans ton pseudo et nous faire une ptite présentation dans le salon qui va bien :heart:\nSi tu n'as pas fait vérifier ton numéro de téléphone ou d'abonnement Nitro, il va aussi te falloir aussi attendre 10 petites minutes que Discord s'assure tu n'es pas une sorte d'ordinateur mutant venu de l'espace... Même si en vrai ça serait trop cool quand même !`)
         }
         if (kicked || returnData.members[member.id]) {
-          maxilog.send(`${TiCu.Date("log")} : Retour de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id} (${kicked ? "kické-e" : "départ volontaire"})`)
-          minilog.send(`Retour de ${member.user.toString()} - ${member.user.tag} - ${member.id} (${kicked ? "kické-e" : "départ volontaire"})`)
+          maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : Retour de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id} (${kicked ? "kické-e" : "départ volontaire"})`)
+          minilog[PUB.servers.commu.id].send(`Retour de ${member.user.toString()} - ${member.user.tag} - ${member.id} (${kicked ? "kické-e" : "départ volontaire"})`)
         } else {
-          maxilog.send(`${TiCu.Date("log")} : Arrivée de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id}`)
-          minilog.send(`Arrivée de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
+          maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : Arrivée de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id}`)
+          minilog[PUB.servers.commu.id].send(`Arrivée de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
         }
       }
     }
 
     global.parseGuildMemberRemove = (member) => {
-      if(member.guild.id === tipoui.id) {
+      if(member.guild.id === PUB.servers.commu.id) {
         const jsonActionData = {action : "read", target : KickedFile}
         const kickedData = TiCu.json(jsonActionData)
         jsonActionData.target = ReturnFile
@@ -370,10 +370,10 @@ module.exports = {
             TiCu.json(jsonActionData)
           }
         } else {
-          maxilog.send(`${TiCu.Date("log")} : Départ de membre\nImpossible d'écrire le fichier de retour pour ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
+          maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : Départ de membre\nImpossible d'écrire le fichier de retour pour ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
         }
-        maxilog.send(`${TiCu.Date("log")} : Départ de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id}`)
-        minilog.send(`Départ de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
+        maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : Départ de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id}`)
+        minilog[PUB.servers.commu.id].send(`Départ de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
       }
     }
 
