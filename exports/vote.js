@@ -37,7 +37,7 @@ module.exports = {
   autoTurquoise: function(targetId, voteNumber) {
     const targetMember = tipoui.members.get(targetId)
     if (targetMember && !targetMember.roles.get(PUB.roles.turquoise.id)) {
-      tipoui.channels.get(PUB.salons.salleDesVotes.id).send(TiCu.VotesCollections.CreateEmbedAnon(targetMember, "auto", TiCu.Vote.voteThreshold("turquoise")))
+      tipoui.channels.get(PUB.salons.salleDesVotes.id).send(`<@&${PUB.roles.vote.id}>`, TiCu.VotesCollections.CreateEmbedAnon(targetMember, "auto", TiCu.Vote.voteThreshold("turquoise")))
         .then(newMsg => {
           if (TiCu.json(this.createJsonForAnonVote(targetMember, 'turquoise', newMsg))) {
             TiCu.Vote.addReactionsToMessage(newMsg)
