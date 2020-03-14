@@ -17,6 +17,9 @@ const MemberXP = DB.define('memberxp', {
   },
   activated: {
     type: SequelizeDB.BOOLEAN
+  },
+  notification: {
+    type: SequelizeDB.STRING
   }
 }, {
   timestamps: false
@@ -61,8 +64,22 @@ function updateLevel(level, target) {
 
 function levelChange(entry, newLevel, previousLevel) {
   TiCu.Log.XP.levelChange(entry, previousLevel)
-  if (newLevel > previousLevel && newLevel%4 === 0 && newLevel !== 0) {
-    TiCu.Vote.autoTurquoise(entry.id, newLevel/4)
+  if (newLevel > previousLevel && newLevel !== 0) {
+    switch (entry.notification) {
+      case "dm":
+      case "mp":
+        tipoui.members.get(entry.id).send(`Tu viens de passer niveau ${newLevel} ! Félicitations !\nSi tu ne souhaites plus recevoir ces notifications, n'hésites pas à désactiver cette fonctionnalité en allant dans le channel <#${PUB.salons.bots.id}> et en lançant la commande \`!level notif off\`\nEt si au contraire tu souhaites exposer au monde ces notifications, n'hésites pas à aller dans le channel <#${PUB.salons.bots.id}> et à lancer la commande \`!level notif public\``)
+        break
+      case "":
+      case "public":
+        tipoui.channels.get(PUB.salons.bots.id).send(`<@${entry.id}> vient de passer niveau ${newLevel} ! Félicitations !\nSi tu ne souhaites plus recevoir ces notifications, n'hésites pas à désactiver cette fonctionnalité en lançant ici-même la commande \`!level notif off\`\nEt si tu préfères avoir ces notifications en privé, tu peux lancer ici-même la commande \`!level notif dm\``)
+        break
+      case "off":
+        break
+    }
+    if (newLevel%4 === 0 && newLevel !== 0) {
+      TiCu.Vote.autoTurquoise(entry.id, newLevel/4)
+    }
   }
 }
 
@@ -196,6 +213,26 @@ module.exports = {
         } else {
           if (msg) msg.channel.send(`Le compte de ${TiCu.Mention(target).displayName} est maintenant ${entries[0].activated ? 'activé' : 'désactivé'} dans le système`)
           TiCu.Log.XP.statusChange(entries[0])
+        }
+      }
+    )
+  },
+  changeMemberNotification: function(target, notif, msg) {
+    MemberXP.update({
+      notification: notif
+    }, {
+      where: {
+        id: target
+      },
+      returning: true
+    }).then(
+      ([numberUpdated, entries]) => {
+        if (numberUpdated === 0) {
+          TiCu.Log.XP.error(this.errorTypes.NOUPDATE, target)
+        } else if (numberUpdated !== 1) {
+          TiCu.Log.XP.error(this.errorTypes.MULTIPLEUPDATE, target)
+        } else {
+          TiCu.Log.XP.notifChange(entries[0], msg)
         }
       }
     )

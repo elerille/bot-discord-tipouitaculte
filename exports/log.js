@@ -256,6 +256,10 @@ module.exports = {
     statusChange: function(entry) {
       maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : XPMemberStatusChange\n${tipoui.members.get(entry.id).displayName} is now ${entry.activated ? 'in' : 'out of'} the XP system`)
     },
+    notifChange: function(entry, msg) {
+      maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : XPMemberNotifChange\n${tipoui.members.get(entry.id).displayName} a maintenant ses notifications de changement de niveau sur le système ${entry.notification}`)
+      msg.react("✅")
+    },
     error: function(type, target) {
       switch(type) {
         case TiCu.Xp.errorTypes.AUTOVOTE:
