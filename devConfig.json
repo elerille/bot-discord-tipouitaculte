@@ -37,7 +37,7 @@
     "carddisplay" : false
   },
   "ticuReactions" : {
-    "heart" : false
+    "pin" : false
   },
   "parsing" : {
     "message" : true,

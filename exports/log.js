@@ -236,12 +236,9 @@ module.exports = {
         maxilog[reaction.message.guild.id].send(TiCu.Date("log") + " : ReactionRemove\n" +tipoui.members.get(usr.id).displayName + " a supprimé sa réaction " + reaction.emoji.name + " à " + reaction.message.url)
       }
     },
-    Heart: function(reaction, usr, type) {
-      if (type === "add") {
-        maxilog[reaction.message.guild.id].send(TiCu.Date("log") + " : ReactionHeartAdd\n" + tipoui.members.get(usr.id).displayName + " a ajouté un coeur à " + reaction.message.url)
-      } else {
-        maxilog[reaction.message.guild.id].send(TiCu.Date("log") + " : ReactionHeartRemove\n" +tipoui.members.get(usr.id).displayName + " a retiré un coeur à " + reaction.message.url)
-      }
+    Pin: function(target) {
+      maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : Pin \nLa communauté a pin ce message : ${target.url}`)
+      minilog[PUB.servers.commu.id].send(`La communauté a pin un message dans <#${target.channel.id}>.`)
     }
   },
   Auto: {
