@@ -176,6 +176,7 @@ module.exports = {
       Vote : require("../exports/vote.js"),
       Profil : require("../exports/profil.js"),
       Census : require("../exports/census.js"),
+      Messages : require("../exports/messages.js"),
       Commands : {},
       Reactions : {},
       Auto : {}

@@ -28,14 +28,16 @@
     "new" : false,
     "return" : false,
     "retour" : false,
-    "nm" : false
+    "nm" : false,
+    "pin" : false,
+    "unpin" : false
   },
   "ticuAuto" : {
     "monLevel" : false,
     "carddisplay" : false
   },
   "ticuReactions" : {
-    "heart" : false
+    "pin" : false
   },
   "parsing" : {
     "message" : true,

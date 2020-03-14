@@ -279,6 +279,30 @@ module.exports = {
         list: [PUB.roles.turquoise.id]
       }
     },
+    pin: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.debug.id, PUB.salons.botsecret.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    unpin: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.debug.id, PUB.salons.botsecret.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
   },
   vigi : {
     help : {
@@ -293,6 +317,28 @@ module.exports = {
       }
     },
     vote: {
+      chans : {
+        type: "any"
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    pin: {
+      chans : {
+        type: "any"
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    unpin: {
       chans : {
         type: "any"
       },

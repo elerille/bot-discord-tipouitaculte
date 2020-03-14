@@ -1,17 +1,15 @@
 module.exports = {
   commu : {
-    heart: {
+    pin: {
       messages : {
         type: "any",
         list: []
       },
       salons : {
-        type: "whitelist",
-        list: [PUB.salons.debug.id]
+        type: "any"
       },
       users : {
-        type: "whitelist",
-        list: ["205399579884126217", "222028577405665283"]
+        type: "any"
       }
     }
   },
