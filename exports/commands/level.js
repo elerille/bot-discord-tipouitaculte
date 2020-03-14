@@ -38,24 +38,32 @@ module.exports = {
   activated: true,
   name : "Level",
   desc : "Afficher le niveau d'eun membre.",
-  schema : "!level (@)",
+  schema : "!level (@)\nou\n!level <notif|notifs|notification|notifications> <off|dm|mp|public>",
   authorizations : TiCu.Authorizations.getAuth("command", "level"),
   run : function(params, msg) {
-    const memberParam = params[0] ? TiCu.Mention(params[0]) : null
-    const target = memberParam ? memberParam.id : msg.author.id
-     TiCu.Xp.getMember(target).then(
-       entry => {
-         if (entry) {
-           if (entry.activated) {
-             msg.channel.send(makeEmbed(tipoui.members.get(target), msg, entry))
-             TiCu.Log.Commands.Level(target, msg)
-           } else {
-             TiCu.Log.Error("level", "compte désactivé dans le système d'expérience", msg)
-           }
-         } else {
-           TiCu.Log.Error("level", "cible invalide ou erreur de base de données", msg)
-         }
-       }
-     )
+    if (params[0] && ["notif", "notifs", "notification", "notifications"].includes(params[0]) && params.length === 2) {
+      if (["off", "dm", "public", "mp"].includes(params[1])) {
+        TiCu.Xp.changeMemberNotification(msg.author.id, params[1], msg)
+      } else {
+        TiCu.Log.Error("level", "mauvais paramètre pour le changement de nature des notifications de changement de niveau", msg)
+      }
+    } else {
+      const memberParam = params[0] ? TiCu.Mention(params[0]) : null
+      const target = memberParam ? memberParam.id : msg.author.id
+      TiCu.Xp.getMember(target).then(
+        entry => {
+          if (entry) {
+            if (entry.activated) {
+              msg.channel.send(makeEmbed(tipoui.members.get(target), msg, entry))
+              TiCu.Log.Commands.Level(target, msg)
+            } else {
+              TiCu.Log.Error("level", "compte désactivé dans le système d'expérience", msg)
+            }
+          } else {
+            TiCu.Log.Error("level", "cible invalide ou erreur de base de données", msg)
+          }
+        }
+      )
+    }
   }
 }
