@@ -72,7 +72,7 @@ function levelChange(entry, newLevel, previousLevel) {
         break
       case "":
       case "public":
-        tipoui.channels.get(PUB.salons.debug.id).send(`<@${entry.id}> vient de passer niveau ${newLevel} ! Félicitations !\nSi tu ne souhaites plus recevoir ces notifications, n'hésites pas à désactiver cette fonctionnalité en lançant ici-même la commande \`!level notif off\`\nEt si tu préfères avoir ces notifications en privé, tu peux lancer ici-même la commande \`!level notif dm\``)
+        tipoui.channels.get(PUB.salons.bots.id).send(`<@${entry.id}> vient de passer niveau ${newLevel} ! Félicitations !\nSi tu ne souhaites plus recevoir ces notifications, n'hésites pas à désactiver cette fonctionnalité en lançant ici-même la commande \`!level notif off\`\nEt si tu préfères avoir ces notifications en privé, tu peux lancer ici-même la commande \`!level notif dm\``)
         break
       case "off":
         break
