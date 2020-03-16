@@ -45,8 +45,8 @@ module.exports = {
                         try {
                           target.addRole(PUB.roles.quarantaineRole.id)
                           target.removeRoles(roles)
-                            .then(TiCu.Log.Commands.Quarantaine(true, target, reason, msg))
-                        } catch {TiCu.Log.Error("quarantaine", "erreur de modification des rôles", msg)}
+                            .then(() => TiCu.Log.Commands.Quarantaine(true, target, reason, msg))
+                        } catch (error) {TiCu.Log.Error("quarantaine", "erreur de modification des rôles", msg)}
                       } else TiCu.Log.Error("quarantaine", "impossible d'enregistrer les rôles actuels", msg)
                     } else {
                       return TiCu.Log.Error("quarantaine", "annulation", msg)
@@ -88,8 +88,8 @@ module.exports = {
                             try {
                               target.removeRole(PUB.roles.quarantaineRole.id)
                               target.addRoles(read[target.id].roles)
-                                .then(TiCu.Log.Prefixed.Quarantaine(false, target, reason, msg))
-                            } catch {TiCu.Log.Error("quarantaine", "erreur de modification des rôles")}
+                                .then(() => TiCu.Log.Commands.Quarantaine(false, target, reason, msg))
+                            } catch (error) {TiCu.Log.Error("quarantaine", "erreur de modification des rôles")}
                           } else TiCu.Log.Error("quarantaine", "erreur de suppression des données de quarantaine", msg)
                         } else TiCu.Log.Error("quarantaine", "impossible de récupérer les rôles passés", msg)
                       } else {
