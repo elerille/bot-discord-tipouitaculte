@@ -5,7 +5,7 @@ module.exports = {
   activated: true,
   name : "Unpin",
   desc : "Unpin un message",
-  schema : "!<pin> <#channel> <messageID>\nou\n!<pin> <messageURL>",
+  schema : "!<unpin> <#channel> <messageID>\nou\n!<unpin> <messageURL>",
   authorizations : TiCu.Authorizations.getAuth("command", "react"),
   run : function(params, msg) {
     let target
@@ -13,7 +13,7 @@ module.exports = {
       target = TiCu.Messages.fetchMessageFromId(params[0], params[1], msg)
     } else if(params.length === 1) {
       target = TiCu.Messages.fetchMessageFromUrl(params[0], msg)
-    } else return TiCu.Log.Error("pin", "paramètres invalides", msg)
+    } else return TiCu.Log.Error("unpin", "paramètres invalides", msg)
     if (target) {
       target.then(fetchedMsg => {
         fetchedMsg.unpin()
