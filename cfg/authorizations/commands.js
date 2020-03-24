@@ -303,6 +303,17 @@ module.exports = {
         type: "any"
       }
     },
+    roll: {
+      chans : {
+        type: "any"
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    }
   },
   vigi : {
     help : {
@@ -374,15 +385,26 @@ module.exports = {
       }
     },
     vote: {
-          chans: {
-              type: "any"
-          },
-          auths: {
-              type: "any"
-          },
-          roles: {
-              type: "any"
-          }
+      chans: {
+        type: "any"
       },
+      auths: {
+        type: "any"
+      },
+      roles: {
+        type: "any"
+      }
+    },
+    roll: {
+      chans : {
+        type: "any"
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    }
   }
 }
