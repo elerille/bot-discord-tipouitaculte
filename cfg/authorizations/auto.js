@@ -18,6 +18,14 @@ module.exports = {
         type: "any",
       }
     },
+    xdy: {
+      salons : {
+        type: "any",
+      },
+      users : {
+        type: "any",
+      }
+    }
   },
   vigi : {},
   debug: {
@@ -29,5 +37,13 @@ module.exports = {
         type: "any"
       }
     },
+    xdy: {
+      salons : {
+        type: "any",
+      },
+      users : {
+        type: "any",
+      }
+    }
   }
 }

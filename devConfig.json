@@ -30,11 +30,16 @@
     "retour" : false,
     "nm" : false,
     "pin" : false,
-    "unpin" : false
+    "unpin" : false,
+    "roll": false,
+    "lancer": false,
+    "dice": false,
+    "de": false
   },
   "ticuAuto" : {
     "monLevel" : false,
-    "carddisplay" : false
+    "carddisplay" : false,
+    "xdy": false
   },
   "ticuReactions" : {
     "pin" : false
