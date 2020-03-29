@@ -8,7 +8,7 @@ module.exports = {
   schema : "!send <target> <texte>",
   authorizations : TiCu.Authorizations.getAuth("command", "send"),
   run : function(params, msg) {
-    let crop = new RegExp(/^(!send\s+[^\s]+\s+)/)
+    let crop = dev ? new RegExp(/^(%send\s+[^\s]+\s+)/) : new RegExp(/^(!send\s+[^\s]+\s+)/)
     let target = TiCu.Mention(params[0]).id
     let content = msg.content.match(crop) ? msg.content.substring(msg.content.match(crop)[0].length) : false
     if(target) {

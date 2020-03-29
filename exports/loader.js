@@ -71,10 +71,20 @@ function createEmbedCopy(msg, user, edited = false, previousContent) {
   return embed
 }
 
+function getMessageFromServ(serv, originMsg, channel) {
+  const chan = serv.channels.get(channel)
+  if (chan) {
+    return chan.messages.find(
+      msg => msg.author.bot && msg.embeds && msg.embeds[0].author.url === originMsg.url
+    )
+  } else {
+    return undefined
+  }
+}
+
 function retrieveMessageForEdit(originMsg, channel) {
-  return tipoui.channels.get(channel).messages.find(
-    msg => msg.author.bot && msg.embeds && msg.embeds[0].author.url === originMsg.url
-  )
+  const tipouiMsg = getMessageFromServ(tipoui, originMsg, channel)
+  return tipouiMsg ? tipouiMsg : getMessageFromServ(vigi, originMsg, channel)
 }
 
 function parseCommandLineArgs() {
@@ -226,16 +236,16 @@ module.exports = {
           if(user) {
             if(!user.roles.find(e => e === PUB.roles.quarantaineRole.id)) {
               let embed = createEmbedCopy(msg, user)
-              tipoui.channels.get(PUB.salons.botsecret.id).send(embed)
+              vigi.channels.get(PUB.salons.dmVigiServ.id).send(embed)
                 .then(() => TiCu.Log.DM(embed, msg))
             } else msg.reply("utilise plutôt <#" + PUB.salons.quarantaineUser.id + "> s'il te plaît. Ce message n'a pas été transmis.")
           } else msg.reply("je ne parle qu'aux gens de Tipoui ♥")
-        } else if(msg.channel.id === PUB.salons.quarantaineUser.id || msg.channel.id === PUB.salons.quarantaineVigi.id) {
+        } else if(msg.channel.id === PUB.salons.quarantaineUser.id || msg.channel.id === PUB.salons.quarantaineVigiServ.id) {
           if(msg.channel.id === PUB.salons.quarantaineUser.id) {
             let user = msg.member
-            tipoui.channels.get(PUB.salons.quarantaineVigi.id).send(createEmbedCopy(msg, user))
+            vigi.channels.get(PUB.salons.quarantaineVigiServ.id).send(createEmbedCopy(msg, user))
               .then(newMsg => TiCu.Log.Quarantaine("reçu", newMsg, msg))
-          } else if(msg.channel.id === PUB.salons.quarantaineVigi.id) {
+          } else if(msg.channel.id === PUB.salons.quarantaineVigiServ.id) {
             tipoui.channels.get(PUB.salons.quarantaineUser.id).send(msg.content)
               .then(newMsg => TiCu.Log.Quarantaine("envoyé", newMsg, msg))
           }
@@ -271,21 +281,21 @@ module.exports = {
           let user = tipoui.members.get(newMsg.author.id) ? tipoui.members.get(newMsg.author.id) : undefined
           if(user) {
             if(!user.roles.find(e => e === PUB.roles.quarantaineRole.id)) {
-              const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.salons.botsecret.id)
+              const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.salons.dmVigiServ.id)
               if (previousBotEmbed) {
                 let embed = createEmbedCopy(newMsg, user, true, previousBotEmbed.embeds[0].description)
                 previousBotEmbed.edit(embed).then(() => TiCu.Log.UpdatedDM(embed, newMsg))
               } else TiCu.Log.UpdatedDM(undefined, newMsg, "Could not find previous bot message to update")
             }
           }
-        } else if(newMsg.channel.id === PUB.salons.quarantaineUser.id || newMsg.channel.id === PUB.salons.quarantaineVigi.id) {
+        } else if(newMsg.channel.id === PUB.salons.quarantaineUser.id || newMsg.channel.id === PUB.salons.quarantaineVigiServ.id) {
           if (newMsg.channel.id === PUB.salons.quarantaineUser.id) {
-            const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.salons.quarantaineVigi.id)
+            const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.salons.quarantaineVigiServ.id)
             if (previousBotEmbed) {
               let embed = createEmbedCopy(newMsg, newMsg.member, true, previousBotEmbed.embeds[0].description)
               previousBotEmbed.edit(embed).then(msgEdited => TiCu.Log.UpdatedQuarantaine("reçu", msgEdited, newMsg))
             } else TiCu.Log.UpdatedQuarantaine("reçu", undefined, newMsg, "Could not find previous bot message to update")
-          } else if(newMsg.channel.id === PUB.salons.quarantaineVigi.id) {
+          } else if(newMsg.channel.id === PUB.salons.quarantaineVigiServ.id) {
             const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.salons.quarantaineUser.id)
             if (previousBotEmbed) {
               let embed = createEmbedCopy(newMsg, newMsg.member, true, previousBotEmbed.embeds[0].description)
