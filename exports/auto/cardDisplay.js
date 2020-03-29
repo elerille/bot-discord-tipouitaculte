@@ -1,5 +1,3 @@
-const https = require('https')
-
 function displayCard(cardData, msg) {
   if (cardData.layout === "transform" || cardData.layout === "double_faced_token") {
     for (const cardFace of cardData.card_faces) {
