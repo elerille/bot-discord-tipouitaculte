@@ -7,7 +7,7 @@
     },
     "vigi": {
       "id": "554773912374870058",
-      "maxilog": "",
+      "maxilog": "693763659796578335",
       "minilog": "686310409430761503"
     },
     "debug": {
@@ -17,8 +17,8 @@
     }
   },
   "reverseServers": {
-    "355041348476338182":  "commu",
-    "554773912374870058":  "vigi",
+    "355041348476338182": "commu",
+    "554773912374870058": "vigi",
     "519618688010158090": "debug"
   },
   "categories": {
@@ -212,6 +212,22 @@
     },
     "rolessalons" : {
       "id" : "453702956315836436",
+      "xpFactor" : 0
+    },
+    "interfaceVigiServ" : {
+      "id" : "693760448209747989",
+      "xpFactor" : 0
+    },
+    "dmVigiServ" : {
+      "id" : "693760567390896158",
+      "xpFactor" : 0
+    },
+    "quarantaineVigiServ" : {
+      "id" : "693760494883962950",
+      "xpFactor" : 0
+    },
+    "testsVigiServ" : {
+      "id" : "693783118032928848",
       "xpFactor" : 0
     }
   },

@@ -9,8 +9,7 @@ module.exports = {
   schema : "!<react|reaction> <emoji> <#channel> <messageID>\nou\n!<react|reaction> <emoji> <messageURL>",
   authorizations : TiCu.Authorizations.getAuth("command", "react"),
   run : function(params, msg) {
-    // https://discordapp.com/channels/server/channel/message
-    let emoji, url, server, chan, target, message
+    let emoji, target
     if(params.length === 3) {
       target = TiCu.Messages.fetchMessageFromId(params[1], params[2], msg)
     } else if(params.length === 2) {
@@ -19,12 +18,11 @@ module.exports = {
     emoji = params[0]
     if (target) {
       target.then(fetchedMsg => {
-        fetchedMsg.react(params[0])
-          .then(_ => TiCu.Log.Commands.React(params[0], fetchedMsg, msg))
+        fetchedMsg.react(emoji)
+          .then(_ => TiCu.Log.Commands.React(emoji, fetchedMsg, msg))
           .catch(anything => console.log(anything))
       })
         .catch(console.log)
     }
-      // TiCu.Log.Error("react", "impossible d'ajouter cette réaction", msg)
   }
 }

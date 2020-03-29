@@ -17,27 +17,27 @@ module.exports = {
     else maxilog[PUB.servers.commu.id].send(TiCu.Date("log") + " : JSON\n" + type + " - " + target)
   },
   Quarantaine : function(type, newMsg, msg) {
-    maxilog[PUB.servers.commu.id].send(TiCu.Date("log") + " : Quarantaine - " + type + "\n" + newMsg.url)
+    maxilog[PUB.servers.vigi.id].send(TiCu.Date("log") + " : Quarantaine - " + type + "\n" + newMsg.url)
     msg.react("💬")
   },
   UpdatedQuarantaine : function(type, newMsg, msg, error = undefined) {
     if (error !== undefined) {
-      maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : UpdatedQuarantaine Error\n${error}`)
+      maxilog[PUB.servers.vigi.id].send(`${TiCu.Date("log")} : UpdatedQuarantaine Error\n${error}`)
     } else {
-      maxilog[PUB.servers.commu.id].send(TiCu.Date("log") + " : UpdatedQuarantaine - " + type + "\n" + newMsg.url)
+      maxilog[PUB.servers.vigi.id].send(TiCu.Date("log") + " : UpdatedQuarantaine - " + type + "\n" + newMsg.url)
       msg.react("✅")
     }
   },
   DM : function(embed, msg) {
-    maxilog[PUB.servers.commu.id].send(TiCu.Date("log") + " : DM")
-    maxilog[PUB.servers.commu.id].send(embed)
+    maxilog[PUB.servers.vigi.id].send(TiCu.Date("log") + " : DM")
+    maxilog[PUB.servers.vigi.id].send(embed)
     msg.react("💬")
   },
   UpdatedDM : function(embed, msg, error = undefined) {
     if (error !== undefined) {
-      maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : UpdatedDM Error\n${error}`)
+      maxilog[PUB.servers.vigi.id].send(`${TiCu.Date("log")} : UpdatedDM Error\n${error}`)
     } else {
-      maxilog[PUB.servers.commu.id].send(TiCu.Date("log") + " : UpdatedDM", embed)
+      maxilog[PUB.servers.vigi.id].send(TiCu.Date("log") + " : UpdatedDM", embed)
       msg.react("✅")
     }
   },

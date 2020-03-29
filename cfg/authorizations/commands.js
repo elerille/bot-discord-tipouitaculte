@@ -316,6 +316,30 @@ module.exports = {
     }
   },
   vigi : {
+    avatar : {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    ban: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
     help : {
       chans : {
         type : "any"
@@ -327,9 +351,142 @@ module.exports = {
         type : "any"
       }
     },
+    hotreload: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+      },
+      auths : {
+        type: "whitelist",
+        list: devTeam
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    kick: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    nm: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    profil: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    quarantaine: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    raid: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    react: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    roles: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    send: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
     vote: {
       chans : {
         type: "any"
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    xp: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    xpstatus: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
       },
       auths : {
         type: "any"
@@ -359,7 +516,7 @@ module.exports = {
       roles : {
         type: "any"
       }
-    },
+    }
   },
   debug: {
     avatar: {

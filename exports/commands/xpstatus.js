@@ -27,7 +27,7 @@ module.exports = {
         }
         break;
       case 2:
-        if (msg.channel.id === PUB.salons.botsecret.id) {
+        if (msg.channel.id === PUB.salons.botsecret.id || msg.channel.guild.id === PUB.servers.vigi.id) {
           const memberParam = params[1] ? TiCu.Mention(params[1]) : null
           const target = memberParam ? memberParam.id : msg.author.id
           TiCu.Xp.changeMemberStatus(target, params[0] === "inclure", msg)
