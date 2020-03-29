@@ -171,23 +171,23 @@ module.exports = {
   },
   processXpFromMessage: function (type, msg) {
     if (systemAccessAuthorised(msg)) {
-      this.updateXp(type, xpFromMessage(msg), msg.author.id)
+      this.updateXPforSystemsToo(type, xpFromMessage(msg), msg.author.id, msg)
     }
   },
   processXpMessageUpdate: function (oldMsg, newMsg) {
     if (systemAccessAuthorised(oldMsg)) {
       const oldXp = xpFromMessage(oldMsg)
       const newXp = xpFromMessage(newMsg)
-      this.updateXp('add', newXp - oldXp, oldMsg.author.id)
+      this.updateXPforSystemsToo('add', newXp - oldXp, oldMsg.author.id, newMsg)
     }
   },
   reactionXp: function (type, reaction, usr) {
     if (systemAccessAuthorised(reaction.message)) {
-      if (usr.id !== reaction.message.author.id && !usr.bot && !reaction.message.author.bot) {
+      if (usr.id !== reaction.message.author.id && !usr.bot && (!reaction.message.author.bot || reaction.message.webhookID === pluralKitWebHookId)) {
         const categoryMul = categoryMultiplier(reaction.message.channel.parent.id)
         const channelMul = channelMultiplier(reaction.message.channel.id)
-        this.updateXp(type, XPREACTION * categoryMul * channelMul, usr.id)
-        this.updateXp(type, XPREACTEDTO * categoryMul * channelMul, reaction.message.author.id)
+        this.updateXPforSystemsToo(type, XPREACTION * categoryMul * channelMul, usr.id, reaction.message)
+        this.updateXPforSystemsToo(type, XPREACTEDTO * categoryMul * channelMul, reaction.message.author.id, reaction.message)
       }
     }
   },
@@ -245,6 +245,38 @@ module.exports = {
     }, {
       where: {}
     })
+  },
+  updateXPforSystemsToo: function(type, value, target, msg) {
+    if (msg.author.bot && msg.webhookID === pluralKitWebHookId) {
+      setTimeout(() => {
+        const options = {
+          hostname: "api.pluralkit.me",
+          port: 443,
+          path: `/v1/msg/${msg.id}`,
+          method: 'GET'
+        }
+
+        const req = https.request(options, res => {
+          let data = '';
+          res.on('data', (chunk) => {
+            data += chunk;
+          });
+          res.on('end', () => {
+            if (res.statusCode === 200) {
+              this.updateXp(type, value, JSON.parse(data).sender)
+            } else if (res.statusCode === 404) {
+              TiCu.Log.XP.system("Impossible de trouver le message", msg)
+            }
+          });
+        })
+        req.on('error', error => {
+          TiCu.Log.XP.system("Problème avec l'API PluralKit", msg)
+        })
+        req.end()
+      }, 1000)
+    } else {
+      this.updateXp(type, value, target)
+    }
   },
   errorTypes: {
     AUTOVOTE: 'autovote',

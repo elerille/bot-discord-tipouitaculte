@@ -6,7 +6,7 @@ module.exports = {
   name : "Pin",
   desc : "Pin un message",
   schema : "!<pin> <#channel> <messageID>\nou\n!<pin> <messageURL>",
-  authorizations : TiCu.Authorizations.getAuth("command", "react"),
+  authorizations : TiCu.Authorizations.getAuth("command", "pin"),
   run : function(params, msg) {
     let target
     if(params.length === 2) {

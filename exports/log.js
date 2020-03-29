@@ -274,6 +274,9 @@ module.exports = {
         default:
           maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : XP ERROR\nGeneric error, sorry for the lack of information`)
       }
+    },
+    system: function(text, msg) {
+      maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : XP ERROR\n${text} ${msg.url}`)
     }
   },
   Profil: {

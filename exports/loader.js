@@ -144,6 +144,7 @@ module.exports = {
     })
     global.CFG = require("../cfg/private.json")
     global.Server = EXPRESS()
+    global.https = require('https')
     global.SequelizeDB = require("sequelize")
     global.DB = new SequelizeDB(CFG.sequelizeURL, {logging: false})
     global.DiscordNPM = require("discord.js")
@@ -159,6 +160,7 @@ module.exports = {
     global.colorHexa = new RegExp(/^#[\da-f]{6}$/)
     global.maxReturnTime = 14 * 24 * 60 * 60 * 1000 // 2 semaines
     global.hash = (txt) => { return crypto.createHmac("sha256", CFG.expressSalt).update(txt).digest("hex") }
+    global.pluralKitWebHookId = "641374991115485184"
   },
   loadTicu: function(rootPath) {
     global.PUB = require("../cfg/public.json")
@@ -227,10 +229,12 @@ module.exports = {
   loadParsing: function() {
     global.cmdRegex = dev ? /^%[a-zA-Z]/ : /^![a-zA-Z]/  //change the call character for TTC
     global.parseMessage = (msg) => {
+      if (!msg.author.bot || msg.webhookID === pluralKitWebHookId) {
+        TiCu.Xp.processXpFromMessage("add", msg)
+      }
       if(!msg.author.bot) {
         let params = []
         let rawParams = []
-        TiCu.Xp.processXpFromMessage("add", msg)
         if(msg.channel.type === "dm" ) {
           let user = tipoui.members.get(msg.author.id) ? tipoui.members.get(msg.author.id) : undefined
           if(user) {
@@ -269,14 +273,16 @@ module.exports = {
     }
 
     global.parseMessageDelete = (msg) => {
-      if(!msg.author.bot) {
+      if (!msg.author.bot || msg.webhookID === pluralKitWebHookId) {
         TiCu.Xp.processXpFromMessage("remove", msg)
       }
     }
 
     global.parseMessageUpdate = (oldMsg, newMsg) => {
-      if(!oldMsg.author.bot) {
+      if (!oldMsg.author.bot || oldMsg.webhookID === pluralKitWebHookId) {
         TiCu.Xp.processXpMessageUpdate(oldMsg, newMsg)
+      }
+      if(!oldMsg.author.bot) {
         if(newMsg.channel.type === "dm" ) {
           let user = tipoui.members.get(newMsg.author.id) ? tipoui.members.get(newMsg.author.id) : undefined
           if(user) {
@@ -313,7 +319,7 @@ module.exports = {
      * @param type "add" | "remove"
      */
     global.parseReaction = (reaction, usr, type) => {
-      if (!usr.bot && !reaction.message.author.bot) {
+      if (!usr.bot && (!reaction.message.author.bot || reaction.message.webhookID === pluralKitWebHookId)) {
         if (reaction.message.guild.id === PUB.servers.commu.id) {
           TiCu.Xp.reactionXp(type, reaction, usr)
         }
