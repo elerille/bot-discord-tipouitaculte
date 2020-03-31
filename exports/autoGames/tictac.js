@@ -20,7 +20,7 @@ module.exports = {
   desc : "Fait exploser la bombe de façon aléatoire",
   trigger: /[tT][a-zA-Z]+[cCkK]/,
   server: "tipoui",
-  channel: PUB.salons.debug.id,
+  channel: PUB.salons.tictacboom.id,
   init : function() {
     if (games[this.name]) {
       games[this.name].stop()
