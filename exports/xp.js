@@ -64,7 +64,7 @@ function updateLevel(level, target) {
 
 function levelChange(entry, newLevel, previousLevel) {
   TiCu.Log.XP.levelChange(entry, previousLevel)
-  if (newLevel > previousLevel && newLevel !== 0) {
+  if (!dev && newLevel > previousLevel && newLevel !== 0) {
     switch (entry.notification) {
       case "dm":
       case "mp":
@@ -78,7 +78,7 @@ function levelChange(entry, newLevel, previousLevel) {
         tipoui.channels.get(PUB.salons.bots.id).send(`<@${entry.id}> vient de passer niveau ${newLevel} ! Félicitations !\nSi tu ne souhaites plus recevoir ces notifications, n'hésites pas à désactiver cette fonctionnalité en lançant ici-même la commande \`!level notif off\`\nEt si tu préfères avoir ces notifications en privé, tu peux lancer ici-même la commande \`!level notif dm\``)
         break
     }
-    if (newLevel%4 === 0 && newLevel !== 0) {
+    if (!dev && newLevel%4 === 0 && newLevel !== 0) {
       TiCu.Vote.autoTurquoise(entry.id, newLevel/4)
     }
   }

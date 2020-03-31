@@ -30,7 +30,7 @@
     "retour" : false,
     "nm" : false,
     "pin" : false,
-    "unpin" : false
+    "unpin" : false,
     "roll": false,
     "lancer": false,
     "dice": false,
@@ -43,6 +43,9 @@
   },
   "ticuReactions" : {
     "pin" : false
+  },
+  "ticuAutoGames" : {
+    "tictac" : false
   },
   "parsing" : {
     "message" : true,
