@@ -370,8 +370,15 @@ module.exports = {
               roles : [],
               nm : []
             }
+            const noSaveRoles = [
+              PUB.servers.commu.id, //@everyone role
+              // special roles, not sure how it works...
+              PUB.roles.utip.id,
+              PUB.roles.nitro.id,
+              PUB.roles.armu.id
+            ]
             for (const role of member.roles.array()) {
-              if (!role.name.startsWith('#')) {
+              if (!role.name.startsWith('#') && !noSaveRoles.includes(role.id)) {
                 returnData.members[member.id].roles.push(role.id)
               }
             }
