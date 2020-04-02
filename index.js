@@ -29,6 +29,8 @@ Discord.once("ready", () => {
   }
   console.log(TiCu.Date("log") + " : Connexion à Discord.")
   loader.updateSalonsName()
+  global.games = {}
+  loader.launchGames()
   if (!dev || (dev && devConfig)) {
     if (!dev) {
       maxilog[PUB.servers.commu.id].send(TiCu.Date("log") + " : Reconnexion.")

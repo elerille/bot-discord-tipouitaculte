@@ -4,7 +4,7 @@ module.exports = {
   name: "XdY",
   desc: "Lancer X dés Y",
   schema: "xdy",
-  trigger: /([\d]+)[dD]([\d]+)/,
+  trigger: /\b([\d]+)[dD]([\d]+)\b/,
   authorizations: TiCu.Authorizations.getAuth("auto", "xdy"),
   run: function (msg) {
     msg

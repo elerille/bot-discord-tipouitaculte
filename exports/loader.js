@@ -191,7 +191,8 @@ module.exports = {
       Messages : require("../exports/messages.js"),
       Commands : {},
       Reactions : {},
-      Auto : {}
+      Auto : {},
+      AutoGames: {}
     }
 
     const commandFiles = fs.readdirSync(rootPath + "exports/commands/");
@@ -224,6 +225,21 @@ module.exports = {
           TiCu.Auto[aux.methodName] = aux
         }
       }
+    }
+
+    const autoGamesFiles = fs.readdirSync(rootPath + "exports/autoGames/");
+    for (const autoGame of autoGamesFiles) {
+      if (autoGame !== "images") {
+        const aux = require("../exports/autoGames/" + autoGame)
+        if (aux.methodName && aux.activated) {
+          if (!dev || (dev && devConfig && devConfig.ticuAutoGames && devConfig.ticuAutoGames[aux.methodName])) {
+            TiCu.AutoGames[aux.methodName] = aux
+          }
+        }
+      }
+    }
+    if (global.tipoui) {
+      this.launchGames()
     }
   },
   loadParsing: function() {
@@ -415,6 +431,13 @@ module.exports = {
       } else if(oldUsr.roles.get(PUB.roles.luxure.id) && !newUsr.roles.get(PUB.roles.luxure.id)) {
         if(newUsr.roles.get(PUB.roles.hammer.id)) {newUsr.removeRole(PUB.roles.hammer.id)}
         if(newUsr.roles.get(PUB.roles.naughty.id)) {newUsr.removeRole(PUB.roles.naughty.id)}
+      }
+    }
+  },
+  launchGames : function () {
+    if (TiCu.AutoGames) {
+      for (const autoGame of Object.values(TiCu.AutoGames)) {
+        autoGame.init()
       }
     }
   },
