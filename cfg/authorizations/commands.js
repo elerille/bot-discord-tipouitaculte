@@ -563,5 +563,6 @@ module.exports = {
         type: "any"
       }
     }
-  }
+  },
+  cdc : {}
 }
