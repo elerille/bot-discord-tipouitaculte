@@ -21,6 +21,7 @@ Discord.login( CFG.discordToken )
 Discord.once("ready", () => {
   global.tipoui = Discord.guilds.get(PUB.servers.commu.id)
   global.vigi = Discord.guilds.get(PUB.servers.vigi.id)
+  global.cdc = Discord.guilds.get(PUB.servers.cdc.id)
   global.maxilog = []
   global.minilog = []
   for (const server of Object.values(PUB.servers)) {

@@ -370,6 +370,18 @@ module.exports = {
           maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : Arrivée de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id}`)
           minilog[PUB.servers.commu.id].send(`Arrivée de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
         }
+      } else if (member.guild.id === PUB.servers.cdc.id) {
+        let tipouiMember = tipoui.members.get(member.id)
+        if (tipouiMember) {
+          // Didn't want to store that in conf... Might be useful to though
+          const turquoiseCdc = "695907116644302879"
+          const phosphateCdc = "695907457515520061"
+          if (tipouiMember.roles.get(PUB.roles.turquoise.id)) {
+            member.addRole(turquoiseCdc)
+          } else if (tipouiMember.roles.get(PUB.roles.phosphate.id)) {
+            member.addRole(phosphateCdc)
+          }
+        }
       }
     }
 
@@ -419,6 +431,10 @@ module.exports = {
 
     global.parseGuildMemberUpdate = (oldUsr, newUsr) => {
       if(newUsr.roles.get(PUB.roles.turquoise.id) && !oldUsr.roles.get(PUB.roles.turquoise.id)) {
+        let cdcMember = tipoui.members.get(newUsr.id)
+        if (cdcMember) {
+          cdcMember.addRole("695907116644302879")
+        }
         newUsr.addRole(PUB.roles.turquoiseColor.id)
         newUsr.addRole(PUB.roles.vote.id)
         tipoui.channels.get(PUB.salons.genTutu.id).send("Bienvenue parmi les 💠Turquoises <@" + newUsr.id + "> ! <:turquoise_heart:417784485724028938>\nTu as désormais accès à de nouveaux salons, notamment <#453706061031931905> où tu pourras découvrir les spécificités de cette promotion. Par ailleurs, n'hésite pas à consulter <#453702956315836436> pour voir les rôles auxquels tu peux prétendre, et demande-les-moi par message privé.")

@@ -14,5 +14,6 @@ module.exports = {
     }
   },
   vigi : {},
-  debug: {}
+  debug: {},
+  cdc : {}
 }
