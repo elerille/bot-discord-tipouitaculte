@@ -10,6 +10,9 @@ const boomTable = [
   "https://media.giphy.com/media/z9iE1SPAptyLK/giphy.gif",
   "https://media.giphy.com/media/xTiTnK1UBZjC4sW6mA/giphy.gif",
   "https://media.giphy.com/media/d4aVHC1HKnButuXC/giphy.gif",
+  "https://media.giphy.com/media/l4lQW9KfRQscU0ds4/giphy.gif",
+  "https://media.giphy.com/media/C9rGEm6SUnOE/giphy-downsized.gif",
+  "https://media.giphy.com/media/AAWBs9MMvLfnW/giphy.gif",
   "https://static.vecteezy.com/system/resources/previews/000/416/818/non_2x/boom-flash-on-white-vector.jpg"
 ]
 
