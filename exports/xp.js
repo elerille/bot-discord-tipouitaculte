@@ -183,7 +183,7 @@ module.exports = {
   },
   reactionXp: function (type, reaction, usr) {
     if (systemAccessAuthorised(reaction.message)) {
-      if (usr.id !== reaction.message.author.id && !usr.bot && (!reaction.message.author.bot || reaction.message.webhookID === pluralKitWebHookId)) {
+      if (usr.id !== reaction.message.author.id && !usr.bot) {
         const categoryMul = categoryMultiplier(reaction.message.channel.parent.id)
         const channelMul = channelMultiplier(reaction.message.channel.id)
         this.updateXPforSystemsToo(type, XPREACTION * categoryMul * channelMul, usr.id, reaction.message)
@@ -247,7 +247,7 @@ module.exports = {
     })
   },
   updateXPforSystemsToo: function(type, value, target, msg) {
-    if (msg.author.bot && msg.webhookID === pluralKitWebHookId) {
+    if (msg.author.bot) {
       setTimeout(() => {
         const options = {
           hostname: "api.pluralkit.me",
@@ -264,8 +264,6 @@ module.exports = {
           res.on('end', () => {
             if (res.statusCode === 200) {
               this.updateXp(type, value, JSON.parse(data).sender)
-            } else if (res.statusCode === 404) {
-              TiCu.Log.XP.system("Impossible de trouver le message", msg)
             }
           });
         })
