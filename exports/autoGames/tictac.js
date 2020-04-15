@@ -1,9 +1,8 @@
-const MAX = 30
+const MAX = 50
 const MIN = 3
 
 const boomTable = [
   "https://media.tenor.com/images/abd1a7caf83fd0fe0c8136ec25d1bb88/tenor.gif",
-  "https://cdn.discordapp.com/attachments/479315447452532746/693234131240222800/image0.jpg",
   "https://cdn.discordapp.com/attachments/479315447452532746/693481167994880020/giphy.gif",
   "https://i.gifer.com/22ks.gif",
   "https://media.giphy.com/media/2sddCIZRYfiPlNeLZn/giphy.gif",
@@ -13,7 +12,10 @@ const boomTable = [
   "https://media.giphy.com/media/l4lQW9KfRQscU0ds4/giphy.gif",
   "https://media.giphy.com/media/C9rGEm6SUnOE/giphy-downsized.gif",
   "https://media.giphy.com/media/AAWBs9MMvLfnW/giphy.gif",
-  "https://static.vecteezy.com/system/resources/previews/000/416/818/non_2x/boom-flash-on-white-vector.jpg"
+  "https://media.giphy.com/media/laUY2MuoktHPy/giphy.gif",
+  "https://media.giphy.com/media/XKCdA6ERnXp6M/giphy.gif",
+  "exports/autoGames/images/kaboomBongoCat.gif",
+  "exports/autoGames/images/ok_boomer.gif"
 ]
 
 module.exports = {
