@@ -18,6 +18,15 @@ module.exports = {
         type: "any",
       }
     },
+    tesParents: {
+        salons: {
+            type: "whitelist",
+            list: [PUB.salons.debug.id, PUB.salons.bots.id]
+        },
+        users: {
+            type: "any",
+        }
+    },
     xdy: {
       salons : {
         type: "any",
