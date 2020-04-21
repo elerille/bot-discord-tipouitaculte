@@ -15,7 +15,10 @@ const boomTable = [
   "https://media.giphy.com/media/laUY2MuoktHPy/giphy.gif",
   "https://media.giphy.com/media/XKCdA6ERnXp6M/giphy.gif",
   "exports/autoGames/images/kaboomBongoCat.gif",
-  "exports/autoGames/images/ok_boomer.gif"
+  "exports/autoGames/images/ok_boomer.gif",
+  "exports/autoGames/images/BOOM02.gif",
+  "exports/autoGames/images/boomPump.gif",
+  "exports/autoGames/images/dalekBoom.gif"
 ]
 
 module.exports = {

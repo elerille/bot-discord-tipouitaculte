@@ -318,8 +318,7 @@ module.exports = {
   vigi : {
     avatar : {
       chans : {
-        type: "whitelist",
-        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+        type : "any"
       },
       auths : {
         type: "any"
@@ -330,8 +329,7 @@ module.exports = {
     },
     ban: {
       chans : {
-        type: "whitelist",
-        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+        type : "any"
       },
       auths : {
         type: "any"
@@ -353,8 +351,7 @@ module.exports = {
     },
     hotreload: {
       chans : {
-        type: "whitelist",
-        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+        type : "any"
       },
       auths : {
         type: "whitelist",
@@ -366,8 +363,7 @@ module.exports = {
     },
     kick: {
       chans : {
-        type: "whitelist",
-        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+        type : "any"
       },
       auths : {
         type: "any"
@@ -378,8 +374,7 @@ module.exports = {
     },
     nm: {
       chans : {
-        type: "whitelist",
-        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+        type : "any"
       },
       auths : {
         type: "any"
@@ -390,8 +385,7 @@ module.exports = {
     },
     profil: {
       chans : {
-        type: "whitelist",
-        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+        type : "any"
       },
       auths : {
         type: "any"
@@ -402,8 +396,7 @@ module.exports = {
     },
     quarantaine: {
       chans : {
-        type: "whitelist",
-        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+        type : "any"
       },
       auths : {
         type: "any"
@@ -414,8 +407,7 @@ module.exports = {
     },
     raid: {
       chans : {
-        type: "whitelist",
-        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+        type : "any"
       },
       auths : {
         type: "any"
@@ -426,8 +418,7 @@ module.exports = {
     },
     react: {
       chans : {
-        type: "whitelist",
-        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+        type : "any"
       },
       auths : {
         type: "any"
@@ -438,8 +429,7 @@ module.exports = {
     },
     roles: {
       chans : {
-        type: "whitelist",
-        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+        type : "any"
       },
       auths : {
         type: "any"
@@ -450,8 +440,7 @@ module.exports = {
     },
     send: {
       chans : {
-        type: "whitelist",
-        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+        type : "any"
       },
       auths : {
         type: "any"
@@ -473,8 +462,7 @@ module.exports = {
     },
     xp: {
       chans : {
-        type: "whitelist",
-        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+        type : "any"
       },
       auths : {
         type: "any"
@@ -485,8 +473,7 @@ module.exports = {
     },
     xpstatus: {
       chans : {
-        type: "whitelist",
-        list: [PUB.salons.interfaceVigiServ.id, PUB.salons.testsVigiServ.id]
+        type : "any"
       },
       auths : {
         type: "any"
