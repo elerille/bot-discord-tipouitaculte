@@ -134,6 +134,9 @@ module.exports = {
     cron.schedule("0 0 0 * * *", () => {
       hookConsoleLog(false)
     })
+    cron.schedule("0 0 0 * * *", () => {
+      TiCu.Purger.purgeSalon(PUB.salons.testPurge.id)
+    })
     cron.schedule("0 10 13 28 * *", () => {
       if (TiCu.Census.collector) {
         TiCu.Census.collector.stop()
@@ -189,6 +192,8 @@ module.exports = {
       Profil : require("../exports/profil.js"),
       Census : require("../exports/census.js"),
       Messages : require("../exports/messages.js"),
+      DiscordApi : require("../exports/discordApi.js"),
+      Purger : require("../exports/purger.js"),
       Commands : {},
       Reactions : {},
       Auto : {},

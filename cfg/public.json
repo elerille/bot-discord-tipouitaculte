@@ -210,7 +210,7 @@
     },
     "magic" : {
       "id" : "664244570963312640",
-      "xpFactor" : 0
+      "xpFactor" : 1
     },
     "blueprint" : {
       "id" : "533605292471222292",
@@ -239,6 +239,10 @@
     "tictacboom" : {
       "id" : "479315447452532746",
       "xpFactor" : 1
+    },
+    "testPurge" : {
+      "id" : "701871504635330643",
+      "xpFactor" : 0
     }
   },
   "roles": {
