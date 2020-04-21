@@ -19,12 +19,10 @@ module.exports = {
   },
   deleteMessages: function (salonId, messages) {
     if (messages.length > 0) {
-      console.log("before delete")
       TiCu.DiscordApi.deleteMessage(
         salonId,
         messages.shift().id,
         () => {
-          console.log("after delete")
           this.deleteMessages(salonId, messages)
         }
       )
