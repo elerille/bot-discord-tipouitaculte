@@ -153,6 +153,7 @@ module.exports = {
     global.SequelizeDB = require("sequelize")
     global.DB = new SequelizeDB(CFG.sequelizeURL, {logging: false})
     global.DiscordNPM = require("discord.js")
+    global.bignum = require('bignum')
     global.Discord = new DiscordNPM.Client({disabledEvents: ["TYPING_START"]})
     global.Event = new EventsModule.EventEmitter()
     global.VotesFile = "private/votes.json"

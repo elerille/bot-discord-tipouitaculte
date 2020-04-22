@@ -1,4 +1,3 @@
-const bignum = require('bignum')
 const DISCORD_EPOCH = 1420070400000
 
 module.exports = {
