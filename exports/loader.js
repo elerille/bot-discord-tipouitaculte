@@ -134,8 +134,10 @@ module.exports = {
     cron.schedule("0 0 0 * * *", () => {
       hookConsoleLog(false)
     })
-    cron.schedule("0 0 0 * * *", () => {
-      TiCu.Purger.purgeSalon(PUB.salons.testPurge.id)
+    cron.schedule("0 30 4 * * *", () => {
+      for (let salonId of PUB.salonsEphemeres) {
+        TiCu.Purger.purgeSalon(salonId)
+      }
     })
     cron.schedule("0 10 13 28 * *", () => {
       if (TiCu.Census.collector) {
@@ -250,9 +252,7 @@ module.exports = {
   loadParsing: function() {
     global.cmdRegex = dev ? /^%[a-zA-Z]/ : /^![a-zA-Z]/  //change the call character for TTC
     global.parseMessage = (msg) => {
-      if (!msg.author.bot || msg.webhookID === pluralKitWebHookId) {
-        TiCu.Xp.processXpFromMessage("add", msg)
-      }
+      TiCu.Xp.processXpFromMessage("add", msg)
       if(!msg.author.bot) {
         let params = []
         let rawParams = []
@@ -294,15 +294,13 @@ module.exports = {
     }
 
     global.parseMessageDelete = (msg) => {
-      if (!msg.author.bot || msg.webhookID === pluralKitWebHookId) {
+      if (!PUB.salonsEphemeres.include(msg.channel.id) && !PUB.salonsAnciens.include(msg.channel.id)) {
         TiCu.Xp.processXpFromMessage("remove", msg)
       }
     }
 
     global.parseMessageUpdate = (oldMsg, newMsg) => {
-      if (!oldMsg.author.bot || oldMsg.webhookID === pluralKitWebHookId) {
-        TiCu.Xp.processXpMessageUpdate(oldMsg, newMsg)
-      }
+      TiCu.Xp.processXpMessageUpdate(oldMsg, newMsg)
       if(!oldMsg.author.bot) {
         if(newMsg.channel.type === "dm" ) {
           let user = tipoui.members.get(newMsg.author.id) ? tipoui.members.get(newMsg.author.id) : undefined
