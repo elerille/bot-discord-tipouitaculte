@@ -10,7 +10,7 @@ module.exports = {
   run : function(params, msg) {
     switch(params[0]) {
       case "on":
-        if (!activeInvite) {
+        if (activeInvite) {
           activeInvite = false
           tipoui.fetchInvites().then(invites => invites.forEach(value => value.delete()))
           TiCu.Log.Commands.Raid(params[0], msg)
@@ -19,7 +19,7 @@ module.exports = {
         }
         break
       case "off":
-        if (activeInvite) {
+        if (!activeInvite) {
           activeInvite = true
           TiCu.Log.Commands.Raid(params[0], msg)
         } else {
