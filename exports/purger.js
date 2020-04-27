@@ -11,7 +11,7 @@ module.exports = {
         if (dataArray.length > 0) {
           this.deleteMessages(salonId, dataArray)
         } else {
-          console.log(`Purge ended for <#${salonId}>`)
+          TiCu.Log.Purger(salonId)
         }
       }
     )
