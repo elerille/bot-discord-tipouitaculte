@@ -388,10 +388,23 @@ module.exports = {
           } else if (tipouiMember.roles.get(PUB.roles.phosphate.id)) {
             member.addRole(phosphateCdc)
           } else {
-            member.kick("N'a aucun rôle sur Tipoui")
+            member.guild.channels.get("610381774660436018").send(`<@${member.id}> n'est ni phosphate ni turquoise sur Tipoui`)
           }
         } else {
-          member.kick("N'est pas sur Tipoui")
+          tipoui.fetchBans()
+            .then(
+              bans => {
+                if (bans.find(user => user.id === member.id)) {
+                  member.kick("A été ban de Tipoui")
+                } else {
+                  member.guild.channels.get("610381774660436018").send(`<@${member.id}> n'est pas sur Tipoui`)
+                }
+              }
+            ).catch(
+              () => {
+                member.guild.channels.get("610381774660436018").send(`<@${member.id}> n'est pas sur Tipoui et il est impossible de savoir si iel a été ban`)
+              }
+            )
         }
       }
     }
