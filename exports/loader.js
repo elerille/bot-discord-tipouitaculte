@@ -138,6 +138,9 @@ module.exports = {
       for (let salonId of PUB.salonsEphemeres) {
         TiCu.Purger.purgeSalon(salonId)
       }
+      for (let salonId of PUB.salonsEphemeresCdC) {
+        TiCu.Purger.purgeSalon(salonId, 7*24*60*60*1000)
+      }
     })
     cron.schedule("0 10 13 28 * *", () => {
       if (TiCu.Census.collector) {
@@ -384,7 +387,11 @@ module.exports = {
             member.addRole(turquoiseCdc)
           } else if (tipouiMember.roles.get(PUB.roles.phosphate.id)) {
             member.addRole(phosphateCdc)
+          } else {
+            member.kick("N'a aucun rôle sur Tipoui")
           }
+        } else {
+          member.kick("N'est pas sur Tipoui")
         }
       }
     }
