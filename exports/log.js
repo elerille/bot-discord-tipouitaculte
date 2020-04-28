@@ -6,13 +6,12 @@ module.exports = {
           msg.delete()
           newMsg.delete(10000)
         })
-      maxilog[msg.guild.id].send(TiCu.Date("log") + " : Erreur : (`" + cmd + "`, " + err +")")
     } else {
         if (err === "permissions manquantes") {
             msg.reply("erreur de permissions, plus de détails avec `!help " + cmd + "`.")
         } else msg.reply("erreur avec la commande `" + cmd + "` : " + err +".")
-      maxilog[msg.guild.id].send(TiCu.Date("log") + " : Erreur : (`" + cmd + "`, " + err +")")
     }
+    maxilog[msg.guild ? msg.guild.id : PUB.servers.vigi.id].send(TiCu.Date("log") + " : Erreur : (`" + cmd + "`, " + err +")")
   },
   Json : function(type, target) {
     if(type === "err") maxilog[PUB.servers.commu.id].send(TiCu.Date("log") + " : JSON\nErreur JSON (" + target + ")")
@@ -113,8 +112,8 @@ module.exports = {
       msg.react("✅")
     },
     Level: function(target, msg) {
-      if(msg.member.id !== target) {
-        maxilog[msg.guild.id].send(TiCu.Date("log") + "Level\n" + msg.member.displayName + "a affiché le level de " + tipoui.members.get(target).displayName)
+      if(msg.author.id !== target) {
+        maxilog[msg.guild ? msg.guild.id : PUB.servers.vigi.id].send(TiCu.Date("log") + "Level\n" + tipoui.members.get(msg.author.id).displayName + "a affiché le level de " + tipoui.members.get(target).displayName)
       }
     },
     NM: function(target, action, res, msg) {

@@ -55,5 +55,6 @@ module.exports = {
       }
     }
   },
-  cdc : {}
+  cdc : {},
+  dm: {}
 }

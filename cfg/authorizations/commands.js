@@ -551,5 +551,18 @@ module.exports = {
       }
     }
   },
-  cdc : {}
+  cdc : {},
+  dm: {
+    level: {
+      chans: {
+        type: "any"
+      },
+      auths: {
+        type: "any"
+      },
+      roles: {
+        type: "any"
+      }
+    }
+  }
 }
