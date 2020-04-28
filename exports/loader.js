@@ -298,7 +298,7 @@ module.exports = {
     }
 
     global.parseMessageDelete = (msg) => {
-      if (!PUB.salonsEphemeres.includes(msg.channel.id) && !PUB.salonsAnciens.includes(msg.channel.id)) {
+        if (!PUB.salonsEphemeres.includes(msg.channel.id) && !PUB.salonsAnciens.includes(msg.channel.id) && !msg.channel.type === "dm") {
         TiCu.Xp.processXpFromMessage("remove", msg)
       }
     }
