@@ -33,8 +33,8 @@ module.exports = {
           TiCu.Log.Commands.Retour(msg)
         })
       } else {
-        TiCu.Log.Error("retour", "impossible de rendre les anciens rôles et accès car le départ est trop ancien. Il est toujours possible de me contacter pour de plus amples informations")
+        TiCu.Log.Error("retour", "impossible de rendre les anciens rôles et accès car le départ est trop ancien. Il est toujours possible de me contacter pour de plus amples informations", msg)
       }
-    } else TiCu.Log.Error("retour", "impossible de retrouver les anciens rôles et accès.")
+    } else TiCu.Log.Error("retour", "impossible de retrouver les anciens rôles et accès.", msg)
   }
 }

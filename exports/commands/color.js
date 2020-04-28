@@ -17,6 +17,9 @@ module.exports = {
   authorizations : TiCu.Authorizations.getAuth("command", "color"),
   run : function(params, msg) {
     let input = params[0]
+    if (!input) {
+      TiCu.Log.Error("color", "paramètre de couleur invalide (format `#RRGGBB`)", msg)
+    }
     let usr = msg.member
     let oldRole = usr.roles.find(e => !!e.name.match(colorHexa))
     let newRole = tipoui.roles.find(e => e.hexColor === input)
