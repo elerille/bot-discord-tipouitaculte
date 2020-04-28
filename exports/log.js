@@ -8,7 +8,7 @@ module.exports = {
         })
       maxilog[msg.guild.id].send(TiCu.Date("log") + " : Erreur : (`" + cmd + "`, " + err +")")
     } else {
-        if (err = "permissions manquantes") {
+        if (err === "permissions manquantes") {
             msg.reply("erreur de permissions, plus de détails avec `!help " + cmd + "`.")
         } else msg.reply("erreur avec la commande `" + cmd + "` : " + err +".")
       maxilog[msg.guild.id].send(TiCu.Date("log") + " : Erreur : (`" + cmd + "`, " + err +")")

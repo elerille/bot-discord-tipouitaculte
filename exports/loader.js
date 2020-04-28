@@ -298,8 +298,16 @@ module.exports = {
     }
 
     global.parseMessageDelete = (msg) => {
-        if (!PUB.salonsEphemeres.includes(msg.channel.id) && !PUB.salonsAnciens.includes(msg.channel.id) && !msg.channel.type === "dm") {
-        TiCu.Xp.processXpFromMessage("remove", msg)
+      if (msg.type !== "dm" && msg.guild.id === PUB.servers.commu.id) {
+        if (!PUB.salonsEphemeres.includes(msg.channel.id)) {
+          if (!PUB.salonsAnciens.includes(msg.channel.id)) {
+            TiCu.Xp.processXpFromMessage("remove", msg)
+          }
+        } else {
+          if (msg.timestamp > Date().getTime() - 89*24*60*60*1000) {
+            TiCu.Xp.processXpFromMessage("remove", msg)
+          }
+        }
       }
     }
 
