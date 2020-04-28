@@ -122,6 +122,23 @@ function parseCommandLineArgs() {
   })
 }
 
+function parseAndRunCommand(msg) {
+  let params = []
+  let rawParams = []
+  msg.content.substring(1).match(/([^\\\s]?["][^"]+[^\\]["]|[^\s]+)/g).forEach(value => {
+    if (value[0] === '"') {
+      rawParams.push(value.substr(1, value.length-2))
+      params.push(value.substr(1, value.length-2).toLowerCase())
+    } else {
+      rawParams.push(value.replace(/\\/g, ""))
+      params.push(value.replace(/\\/g, "").toLowerCase())
+    }
+  })
+  let cmd = params.shift()
+  rawParams.shift()
+  TiCu.Commands[cmd] ? TiCu.Authorizations.Command(cmd, msg) ? TiCu.Commands[cmd].run(params, msg, rawParams) : TiCu.Log.Error(cmd, "permissions manquantes", msg) : msg.react("❓")
+}
+
 module.exports = {
   loadFull: function(rootPath) {
     parseCommandLineArgs()
@@ -258,15 +275,17 @@ module.exports = {
     global.parseMessage = (msg) => {
       TiCu.Xp.processXpFromMessage("add", msg)
       if(!msg.author.bot) {
-        let params = []
-        let rawParams = []
         if(msg.channel.type === "dm" ) {
           let user = tipoui.members.get(msg.author.id) ? tipoui.members.get(msg.author.id) : undefined
           if(user) {
-            if(!user.roles.find(e => e === PUB.roles.quarantaineRole.id)) {
-              let embed = createEmbedCopy(msg, user)
-              vigi.channels.get(PUB.salons.dmVigiServ.id).send(embed)
-                .then(() => TiCu.Log.DM(embed, msg))
+            if(!user.roles.find(e => e.id === PUB.roles.quarantaineRole.id)) {
+              if(msg.content.match(cmdRegex)) {
+                parseAndRunCommand(msg)
+              } else {
+                let embed = createEmbedCopy(msg, user)
+                vigi.channels.get(PUB.salons.dmVigiServ.id).send(embed)
+                  .then(() => TiCu.Log.DM(embed, msg))
+              }
             } else msg.reply("utilise plutôt <#" + PUB.salons.quarantaineUser.id + "> s'il te plaît. Ce message n'a pas été transmis.")
           } else msg.reply("je ne parle qu'aux gens de Tipoui ♥")
         } else if(msg.channel.id === PUB.salons.quarantaineUser.id || msg.channel.id === PUB.salons.quarantaineVigiServ.id) {
@@ -279,18 +298,7 @@ module.exports = {
               .then(newMsg => TiCu.Log.Quarantaine("envoyé", newMsg, msg))
           }
         } else if(msg.content.match(cmdRegex)) {
-          msg.content.substring(1).match(/([^\\\s]?["][^"]+[^\\]["]|[^\s]+)/g).forEach(value => {
-            if (value[0] === '"') {
-              rawParams.push(value.substr(1, value.length-2))
-              params.push(value.substr(1, value.length-2).toLowerCase())
-            } else {
-              rawParams.push(value.replace(/\\/g, ""))
-              params.push(value.replace(/\\/g, "").toLowerCase())
-            }
-          })
-          let cmd = params.shift()
-          rawParams.shift()
-          TiCu.Commands[cmd] ? TiCu.Authorizations.Command(cmd, msg) ? TiCu.Commands[cmd].run(params, msg, rawParams) : TiCu.Log.Error(cmd, "permissions manquantes", msg) : msg.react("❓")
+          parseAndRunCommand(msg)
         } else {
           parseForAutoCommands(msg)
         }
@@ -298,13 +306,13 @@ module.exports = {
     }
 
     global.parseMessageDelete = (msg) => {
-      if (msg.type !== "dm" && msg.guild.id === PUB.servers.commu.id) {
+      if (msg.channel.type !== "dm" && msg.guild.id === PUB.servers.commu.id) {
         if (!PUB.salonsEphemeres.includes(msg.channel.id)) {
           if (!PUB.salonsAnciens.includes(msg.channel.id)) {
             TiCu.Xp.processXpFromMessage("remove", msg)
           }
         } else {
-          if (msg.timestamp > Date().getTime() - 89*24*60*60*1000) {
+          if (msg.timestamp > Date.now() - 89*24*60*60*1000) {
             TiCu.Xp.processXpFromMessage("remove", msg)
           }
         }
@@ -315,14 +323,16 @@ module.exports = {
       TiCu.Xp.processXpMessageUpdate(oldMsg, newMsg)
       if(!oldMsg.author.bot) {
         if(newMsg.channel.type === "dm" ) {
-          let user = tipoui.members.get(newMsg.author.id) ? tipoui.members.get(newMsg.author.id) : undefined
-          if(user) {
-            if(!user.roles.find(e => e === PUB.roles.quarantaineRole.id)) {
-              const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.salons.dmVigiServ.id)
-              if (previousBotEmbed) {
-                let embed = createEmbedCopy(newMsg, user, true, previousBotEmbed.embeds[0].description)
-                previousBotEmbed.edit(embed).then(() => TiCu.Log.UpdatedDM(embed, newMsg))
-              } else TiCu.Log.UpdatedDM(undefined, newMsg, "Could not find previous bot message to update")
+          if(!oldMsg.content.match(cmdRegex)) {
+            let user = tipoui.members.get(newMsg.author.id) ? tipoui.members.get(newMsg.author.id) : undefined
+            if (user) {
+              if (!user.roles.find(e => e.id === PUB.roles.quarantaineRole.id)) {
+                const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.salons.dmVigiServ.id)
+                if (previousBotEmbed) {
+                  let embed = createEmbedCopy(newMsg, user, true, previousBotEmbed.embeds[0].description)
+                  previousBotEmbed.edit(embed).then(() => TiCu.Log.UpdatedDM(embed, newMsg))
+                } else TiCu.Log.UpdatedDM(undefined, newMsg, "Could not find previous bot message to update")
+              }
             }
           }
         } else if(newMsg.channel.id === PUB.salons.quarantaineUser.id || newMsg.channel.id === PUB.salons.quarantaineVigiServ.id) {
@@ -363,7 +373,6 @@ module.exports = {
             found = true
           }
         }
-        /* if (!found) TiCu.Log.Reactions.genericReaction(reaction, usr, type) */
       }
     }
 
