@@ -17,7 +17,7 @@ module.exports = {
   authorizations : TiCu.Authorizations.getAuth("command", "color"),
   run : function(params, msg) {
     if (params.length < 1) {
-      TiCu.Log.Error("color", "paramètre de couleur invalide (format `#RRGGBB`)", msg)
+      return TiCu.Commands.help.run([this.alias[0]], msg)
     }
     let input = params[0]
     let usr = msg.member

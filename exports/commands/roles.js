@@ -8,6 +8,9 @@ module.exports = {
   schema : "!roles <@> <+|ajouter|add|addRoles> <[rolesList]>\nou\n!roles <@> <-|enlever|retirer|supprimer|remove|removeRoles> <[rolesList]>",
   authorizations : TiCu.Authorizations.getAuth("command", "roles"),
   run : function(params, msg) {
+    if (params.length < 1) {
+      return TiCu.Commands.help.run([this.alias[0]], msg)
+    }
     let action
     let roles = []
     let target = TiCu.Mention(params[0])

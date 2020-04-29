@@ -10,6 +10,9 @@ module.exports = {
   schema : "!<nm|non-mixte|non-mixtes> <@> <+|autoriser|ajouter|add> <[nmList]>\nou\n!<nm|non-mixte|non-mixtes> <@> <-|révoquer|retirer|remove> <[nmList]>",
   authorizations : TiCu.Authorizations.getAuth("command", "nm"),
   run : function(params, msg) {
+    if (params.length < 1) {
+      return TiCu.Commands.help.run([this.alias[0]], msg)
+    }
     let action = {}
     let access = []
     let vigi = false

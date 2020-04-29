@@ -8,6 +8,9 @@ module.exports = {
   schema : "!raid <[on|off|status]>",
   authorizations : TiCu.Authorizations.getAuth("command", "raid"),
   run : function(params, msg) {
+    if (params.length < 1) {
+      return TiCu.Commands.help.run([this.alias[0]], msg)
+    }
     switch(params[0]) {
       case "on":
         if (activeInvite) {
