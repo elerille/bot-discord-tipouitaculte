@@ -14,7 +14,7 @@ module.exports = {
       target = TiCu.Messages.fetchMessageFromId(params[1], params[2], msg)
     } else if(params.length === 2) {
       target = TiCu.Messages.fetchMessageFromUrl(params[1], msg)
-    } else return TiCu.Log.Error("react", "paramètres invalides", msg)
+    } else return TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
     emoji = params[0]
     if (target) {
       target.then(fetchedMsg => {

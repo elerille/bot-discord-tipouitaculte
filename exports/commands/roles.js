@@ -9,7 +9,7 @@ module.exports = {
   authorizations : TiCu.Authorizations.getAuth("command", "roles"),
   run : function(params, msg) {
     if (params.length < 1) {
-      return TiCu.Commands.help.run([this.alias[0]], msg)
+      return TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
     }
     let action
     let roles = []

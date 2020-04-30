@@ -11,7 +11,7 @@ module.exports = {
   authorizations : TiCu.Authorizations.getAuth("command", "nm"),
   run : function(params, msg) {
     if (params.length < 1) {
-      return TiCu.Commands.help.run([this.alias[0]], msg)
+      return TiCu.Commands.help.run([this.alias[0], "aucun paramètre"], msg)
     }
     let action = {}
     let access = []

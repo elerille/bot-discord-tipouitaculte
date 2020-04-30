@@ -10,7 +10,7 @@ module.exports = {
   schema : "!<propose|proposer|proposition> <(bot|tipouitaculte|ttc)> <description>",
   authorizations : TiCu.Authorizations.getAuth("command", "propose"),
   run : function(params, msg, rawParams) {
-    if (params.length < 2) TiCu.Log.Error("propose", "mauvais paramètres", msg)
+    if (params.length < 2) TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
     const type = "prop"
     let description = ""
     for (let i=1;i<rawParams.length;i++) {
@@ -39,7 +39,7 @@ module.exports = {
           })
         break
       default:
-        TiCu.Log.Error("propose", "type de proposition non reconnu", msg)
+        TiCu.Commands.help.run([this.alias[0], "type de proposition non reconnue"], msg)
     }
   }
 }

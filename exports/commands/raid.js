@@ -34,7 +34,7 @@ module.exports = {
         msg.channel.send(`Le lien d'invitation est actuellement ${activeInvite ? 'activé (pas de raid en cours).' : 'désactivé (raid en cours).'}`)
         break
       default:
-        TiCu.Log.Error("raid", "paramètre invalide", msg)
+        TiCu.Commands.help.run([this.alias[0], "paramètre invalide"], msg)
     }
   }
 }

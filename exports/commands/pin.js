@@ -13,7 +13,7 @@ module.exports = {
       target = TiCu.Messages.fetchMessageFromId(params[0], params[1], msg)
     } else if(params.length === 1) {
       target = TiCu.Messages.fetchMessageFromUrl(params[0], msg)
-    } else return TiCu.Log.Error("pin", "paramètres invalides", msg)
+    } else return TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
     if (target) {
       target.then(fetchedMsg => {
         fetchedMsg.pin()
