@@ -46,13 +46,19 @@ function defineOptions(path, method) {
 module.exports = {
   getMessagesBefore: function(salonId, snowflakeBefore, callbackSuccess) {
     createBaseRequest(
-      defineOptions(`/channels/${salonId}/messages?limit=2&before=${snowflakeBefore}`, 'GET'),
+      defineOptions(`/channels/${salonId}/messages?before=${snowflakeBefore}`, 'GET'),
       callbackSuccess
     ).end()
   },
   deleteMessage: function(salonId, messageId, callbackSuccess) {
     createBaseRequest(
       defineOptions(`/channels/${salonId}/messages/${messageId}`, 'DELETE'),
+      callbackSuccess
+    ).end()
+  },
+  getGuildChannels: function(guildId, callbackSuccess) {
+    createBaseRequest(
+      defineOptions(`/guilds/${guildId}/channels`, 'GET'),
       callbackSuccess
     ).end()
   }

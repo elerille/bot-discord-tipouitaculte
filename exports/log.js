@@ -294,7 +294,7 @@ module.exports = {
   Census: function(member) {
     maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : census\n${member.displayName} a été retiré·e du système de vote pour inactivité`)
   },
-  Purger: function(salonId) {
-    maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : purger\nPurge ended for <#${salonId}>`)
+  Purger: function(salonId, memberId = false) {
+    maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : purger\nPurge terminée pour le salon <#${salonId}>${memberId ? ' pour l\'ex-membre <@' + memberId + '>': ''}`)
   }
 }
