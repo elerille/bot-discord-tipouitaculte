@@ -62,7 +62,11 @@ module.exports = {
         .addField("Salons :", chansDesc ? chansDesc : "Fonction réservée au développement", true)
         .addField("Utilisateurices :", usersDesc, true)
         .addField("Rôles :", rolesDesc, true)
-      msg.channel.send(embed)
+      if (params[1]) {
+        msg.channel.send(`Erreur avec la commande \`${target}\` : ${params[1]}.`, embed)
+      } else {
+        msg.channel.send(embed)
+      }
     } else if(TiCu.Auto[target]) {
       const autoCmd = TiCu.Auto[target]
       const chansDesc = getDesc(autoCmd.authorizations[msg.guild.id].salons, "chans")

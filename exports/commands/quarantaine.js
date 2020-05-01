@@ -107,7 +107,7 @@ module.exports = {
       case "status":
         return msg.reply(`<@${target.id}> ${!(target.roles.get(PUB.roles.quarantaineRole.id)) ? "est" : "n'est pas"} en quarantaine.`)
       default:
-        return TiCu.Log.Error("quarantaine", "action non reconnue", msg)
+        return TiCu.Commands.help.run([this.alias[0], "action non reconnue"], msg)
       }
   }
 }

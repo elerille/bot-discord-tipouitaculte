@@ -8,12 +8,12 @@ module.exports = {
   schema : "!list <roles|channels>",
   authorizations : TiCu.Authorizations.getAuth("command", "list"),
   run : function(params, msg) {
-    if (params[0] == "roles" || params[0] == "channels") {
+    if (params[0] === "roles" || params[0] === "channels") {
         let array = msg.guild[params[0]].array()
         array.sort(function(a,b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)})
         let answer = ""
         array.forEach(element => {
-            answer += (element.name == "@everyone") ? "" : element.name +" : "+ element.id +"\n"
+            answer += (element.name === "@everyone") ? "" : element.name +" : "+ element.id +"\n"
         })
         if (answer.length > 2000) {
             while (answer.length > 2000) {

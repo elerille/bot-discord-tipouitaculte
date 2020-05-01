@@ -17,7 +17,7 @@ module.exports = {
   authorizations : TiCu.Authorizations.getAuth("command", "color"),
   run : function(params, msg) {
     if (params.length < 1) {
-      TiCu.Log.Error("color", "paramètre de couleur invalide (format `#RRGGBB`)", msg)
+      return TiCu.Commands.help.run([this.alias[0], "pas de paramètre de couleur"], msg)
     }
     let input = params[0]
     let usr = msg.member
@@ -53,7 +53,7 @@ module.exports = {
             }
             return TiCu.Log.Commands.Color("switched", newRole.name, msg)
           }
-        } else TiCu.Log.Error("color", "paramètre de couleur invalide (format `#RRGGBB`)", msg)
+        } else return TiCu.Commands.help.run([this.alias[0], "paramètre de couleur invalide (format `#RRGGBB`)"], msg)
       }
     } else TiCu.Log.Error("color", "seul·es les Turquoises peuvent modifier leur rôle-couleur", msg)
   }

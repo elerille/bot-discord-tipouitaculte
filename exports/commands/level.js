@@ -45,7 +45,7 @@ module.exports = {
       if (["off", "dm", "public", "mp"].includes(params[1])) {
         TiCu.Xp.changeMemberNotification(msg.author.id, params[1], msg)
       } else {
-        TiCu.Log.Error("level", "mauvais paramètre pour le changement de nature des notifications de changement de niveau", msg)
+        TiCu.Commands.help.run([this.alias[0], "paramètre invalide pour le changement de nature des notifications de niveau"], msg)
       }
     } else {
       const memberParam = params[0] ? TiCu.Mention(params[0]) : null

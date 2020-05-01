@@ -19,17 +19,17 @@ module.exports = {
               fieldValue += (rawParam + " ")
             }
             TiCu.Profil.setValue(fieldName, fieldValue.substr(0, fieldValue.length-1), msg.author.id, msg)
-          } else TiCu.Log.Error("profil", "paramètres invalides", msg)
+          } else TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
           break
         case "get":
           if (params.length >= 2) {
             TiCu.Profil.sendFieldValue(rawParams[1], msg.author.id, msg)
-          } else TiCu.Log.Error("profil", "paramètres invalides", msg)
+          } else TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
           break
         case "delete":
           if (params.length >= 2) {
             TiCu.Profil.deleteValue(rawParams[1], msg.author.id, msg)
-          } else TiCu.Log.Error("profil", "paramètres invalides", msg)
+          } else TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
           break
         default:
           const target = TiCu.Mention(params[0])

@@ -18,7 +18,7 @@ module.exports = {
   authorizations : TiCu.Authorizations.getAuth("command", "xp"),
   run : function(params, msg, rawParams) {
     if (params.length < 3 || (params[0] !== "give" && params[0] !== "take") || isNaN(params[2])) {
-      TiCu.Log.Error("xp", "paramètres invalides", msg)
+      TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
     } else {
       let reason = ""
       for (let i=3;i<rawParams.length;i++) {
@@ -36,7 +36,7 @@ module.exports = {
           } else if (tipoui.roles.get(mentionParam.id) || tipoui.channels.get(mentionParam.id)) {
             giveXpMembers(mentionParam, params, reason, msg)
           } else {
-            TiCu.Log.Error("xp", "paramètres invalides", msg)
+            TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
           }
         } else {
           let roleId = ""
@@ -52,7 +52,7 @@ module.exports = {
               break
             }
           }
-          if (!roleId) TiCu.Log.Error("xp", "paramètres invalides", msg)
+          if (!roleId) TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
         }
       }
     }

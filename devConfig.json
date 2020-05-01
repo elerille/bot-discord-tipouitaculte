@@ -8,7 +8,7 @@
     "hotreload" : false,
     "hr" : false,
     "kick" : false,
-    "level" : true,
+    "level" : false,
     "niveau" : false,
     "list" : false,
     "profil" : false,

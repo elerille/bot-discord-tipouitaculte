@@ -103,6 +103,14 @@
     "archivesCaat": {
       "id": "641935050639671296",
       "xpFactor":  0
+    },
+    "peluchesEphemeres" : {
+      "id" : "705750704651763746",
+      "xpFactor": 1
+    },
+    "grandsBainsEphemeres" : {
+      "id": "705750996202029106",
+      "xpFactor" : 1
     }
   },
   "users": {
