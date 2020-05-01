@@ -54,9 +54,10 @@ function parseForAutoCommands(msg) {
 function createEmbedCopy(msg, user, edited = false, previousContent) {
   let embed = new DiscordNPM.RichEmbed()
     .setColor(user.displayColor)
-    .setAuthor(user.displayName, user.user.avatarURL, msg.url)
+    .setAuthor(user.displayName, user.user.avatarURL)
     .setDescription(edited ? previousContent : msg.content)
     .addField("Utilisateurice", `<@${user.id}>`)
+    .addField("Identifiant", user.id)
     .setTimestamp()
   if (edited) {
     embed.addField("Message édité", msg.content)
