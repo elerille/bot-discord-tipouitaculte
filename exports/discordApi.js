@@ -19,7 +19,7 @@ function createBaseRequest(options, callbackSuccess, postData = null) {
             retryReq.write(postData)
           }
           retryReq.end()
-        }, retryTime);
+        }, retryTime + 1000);
       }
     })
   })
@@ -45,16 +45,20 @@ function defineOptions(path, method) {
 
 module.exports = {
   getMessagesBefore: function(salonId, snowflakeBefore, callbackSuccess) {
-    createBaseRequest(
-      defineOptions(`/channels/${salonId}/messages?before=${snowflakeBefore}`, 'GET'),
-      callbackSuccess
-    ).end()
+    setTimeout(function() {
+      createBaseRequest(
+        defineOptions(`/channels/${salonId}/messages?limit=100&before=${snowflakeBefore}`, 'GET'),
+        callbackSuccess
+      ).end()
+    }, 500)
   },
   deleteMessage: function(salonId, messageId, callbackSuccess) {
-    createBaseRequest(
-      defineOptions(`/channels/${salonId}/messages/${messageId}`, 'DELETE'),
-      callbackSuccess
-    ).end()
+    setTimeout(function() {
+      createBaseRequest(
+        defineOptions(`/channels/${salonId}/messages/${messageId}`, 'DELETE'),
+        callbackSuccess
+      ).end()
+    }, 500)
   },
   getGuildChannels: function(guildId, callbackSuccess) {
     createBaseRequest(
