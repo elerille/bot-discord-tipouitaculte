@@ -390,10 +390,10 @@ module.exports = {
         }
         if (kicked || returnData.members[member.id]) {
           maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : Retour de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id} (${kicked ? "kické-e" : "départ volontaire"})`)
-          minilog[PUB.servers.commu.id].send(`Retour de ${member.user.toString()} - ${member.user.tag} - ${member.id} (${kicked ? "kické-e" : "départ volontaire"})`)
+          vigi.channels.get(PUB.servers.vigi.entreesSorties).send(`Retour de ${member.user.toString()} - ${member.user.tag} - ${member.id} (${kicked ? "kické-e" : "départ volontaire"})`)
         } else {
           maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : Arrivée de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id}`)
-          minilog[PUB.servers.commu.id].send(`Arrivée de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
+          vigi.channels.get(PUB.servers.vigi.entreesSorties).send(`Arrivée de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
         }
       } else if (member.guild.id === PUB.servers.cdc.id) {
         let tipouiMember = tipoui.members.get(member.id)
@@ -467,7 +467,7 @@ module.exports = {
           maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : Départ de membre\nImpossible d'écrire le fichier de retour pour ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
         }
         maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : Départ de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id}`)
-        minilog[PUB.servers.commu.id].send(`Départ de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
+        vigi.channels.get(PUB.servers.vigi.entreesSorties).send(`Départ de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
       }
     }
 
