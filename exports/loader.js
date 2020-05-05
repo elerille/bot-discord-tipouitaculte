@@ -197,6 +197,7 @@ module.exports = {
         devTeam.push(value.id)
       }
     })
+    global.devTeam = devTeam.concat(CFG.vigiIds)
     global.authorizations = {
       auto: require("../cfg/authorizations/auto"),
       command: require("../cfg/authorizations/commands"),

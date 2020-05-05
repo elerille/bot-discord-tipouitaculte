@@ -6,40 +6,31 @@ module.exports = {
   ],
   activated: true,
   name : "Proposer",
-  desc : `Proposer une nouvelle fonctionnalité pour TipouiTaCulte, et la soumettre au vote dans <#${PUB.salons.whiteboard.id}>`,
-  schema : "!<propose|proposer|proposition> <(bot|tipouitaculte|ttc)> <description>",
+  desc : `Proposer une nouvelle fonctionnalité pour TipouiTaCulte ou la communauté, et la soumettre au vote dans <#${PUB.salons.whiteboard.id}>`,
+  schema : "!<propose|proposer|proposition> <description>",
   authorizations : TiCu.Authorizations.getAuth("command", "propose"),
   run : function(params, msg, rawParams) {
-    if (params.length < 2) TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
     const type = "prop"
     let description = ""
-    for (let i=1;i<rawParams.length;i++) {
+    for (let i=0;i<rawParams.length;i++) {
       description += " " + rawParams[i]
     }
-    switch (params[0]) {
-      case "bot":
-      case "tipouitaculte":
-      case "ttc":
-        tipoui.channels.get(PUB.salons.whiteboard.id).send(
-          TiCu.VotesCollections.CreateEmbedAnon(
-            undefined,
-            type,
-            TiCu.Vote.voteThreshold(type),
-            undefined,
-            undefined,
-            description
-          )
-        )
-          .then(newMsg => {
-            if(TiCu.json(TiCu.Vote.createJsonForAnonVote(undefined, type, newMsg))) {
-              TiCu.Vote.addReactionsToMessage(newMsg)
-              TiCu.VotesCollections.Init(type, newMsg)
-              TiCu.Log.Commands.Vote.Anon(type, params, newMsg, msg)
-            } else TiCu.Log.Error("propose", "erreur d'enregistrement de la proposition", msg)
-          })
-        break
-      default:
-        TiCu.Commands.help.run([this.alias[0], "type de proposition non reconnue"], msg)
-    }
+    tipoui.channels.get(PUB.salons.whiteboard.id).send(
+      TiCu.VotesCollections.CreateEmbedAnon(
+        undefined,
+        type,
+        TiCu.Vote.voteThreshold(type),
+        undefined,
+        undefined,
+        description
+      )
+    )
+      .then(newMsg => {
+        if(TiCu.json(TiCu.Vote.createJsonForAnonVote(undefined, type, newMsg))) {
+          TiCu.Vote.addReactionsToMessage(newMsg)
+          TiCu.VotesCollections.Init(type, newMsg)
+          TiCu.Log.Commands.Vote.Anon(type, params, newMsg, msg)
+        } else TiCu.Log.Error("propose", "erreur d'enregistrement de la proposition", msg)
+      })
   }
 }
