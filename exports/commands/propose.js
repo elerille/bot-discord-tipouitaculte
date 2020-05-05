@@ -6,7 +6,7 @@ module.exports = {
   ],
   activated: true,
   name : "Proposer",
-  desc : `Proposer une nouvelle fonctionnalité pour TipouiTaCulte, et la soumettre au vote dans <#${PUB.salons.whiteboard.id}>`,
+  desc : `Proposer une nouvelle fonctionnalité pour TipouiTaCulte ou la communauté, et la soumettre au vote dans <#${PUB.salons.whiteboard.id}>`,
   schema : "!<propose|proposer|proposition> <description>",
   authorizations : TiCu.Authorizations.getAuth("command", "propose"),
   run : function(params, msg, rawParams) {
