@@ -96,7 +96,9 @@ function channelMultiplier(channelId) {
 
 function xpFromMessage(msg) {
   const charNb = msg.content.length
-  return (Math.atan((charNb-800.0)/200.0)*2 + 2.65 + charNb * 0.0027) * categoryMultiplier(msg.channel.parent.id) * channelMultiplier(msg.channel.id)
+  return (Math.atan((charNb-800.0)/200.0)*2 + 2.65 + charNb * 0.0027)
+    * (msg.channel.parent ? categoryMultiplier(msg.channel.parent.id) : 1)
+    * channelMultiplier(msg.channel.id)
 }
 
 module.exports = {
@@ -184,7 +186,7 @@ module.exports = {
   reactionXp: function (type, reaction, usr) {
     if (systemAccessAuthorised(reaction.message)) {
       if (usr.id !== reaction.message.author.id && !usr.bot) {
-        const categoryMul = categoryMultiplier(reaction.message.channel.parent.id)
+        const categoryMul = reaction.message.channel.parent ? categoryMultiplier(reaction.message.channel.parent.id) : 1
         const channelMul = channelMultiplier(reaction.message.channel.id)
         this.updateXPforSystemsToo(type, XPREACTION * categoryMul * channelMul, usr.id, reaction.message)
         this.updateXPforSystemsToo(type, XPREACTEDTO * categoryMul * channelMul, reaction.message.author.id, reaction.message)
