@@ -2,7 +2,13 @@ const DISCORD_EPOCH = 1420070400000
 let nbMessages = 0
 
 module.exports = {
-  purgeSalon: function(salonId, preservedTime = 90*24*60*60*1000) {
+  purgeChannels: function(salonIds, preservedTime = 90*24*60*60*1000) {
+    if (salonIds.length > 0) {
+      const salonId = salonIds.shift()
+      this.purgeSalon(salonIds, salonId, preservedTime)
+    }
+  },
+  purgeSalon: function(salonIds, salonId, preservedTime) {
     const purgeLimitSnowflake = bignum(Date.now() - DISCORD_EPOCH - preservedTime).shiftLeft(22).toString()
     TiCu.DiscordApi.getMessagesBefore(
       salonId,
@@ -10,24 +16,25 @@ module.exports = {
       (data) => {
         const dataArray = JSON.parse(data);
         if (dataArray.length > 0) {
-          this.deleteMessages(salonId, dataArray)
+          this.deleteMessages(salonIds, salonId, dataArray, preservedTime)
         } else {
           TiCu.Log.Purger(salonId)
+          this.purgeChannels(salonIds, preservedTime)
         }
       }
     )
   },
-  deleteMessages: function (salonId, messages) {
+  deleteMessages: function (salonIds, salonId, messages, preservedTime) {
     if (messages.length > 0) {
       TiCu.DiscordApi.deleteMessage(
         salonId,
         messages.shift().id,
         () => {
-          this.deleteMessages(salonId, messages)
+          this.deleteMessages(salonIds, salonId, messages, preservedTime)
         }
       )
     } else {
-      this.purgeSalon(salonId)
+      this.purgeSalon(salonIds, salonId, preservedTime)
     }
   },
   purgeMember: function(guildId, memberId, skipNbFirstChannels = 0) {

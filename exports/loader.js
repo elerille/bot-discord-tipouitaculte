@@ -152,13 +152,11 @@ module.exports = {
     cron.schedule("0 0 0 * * *", () => {
       hookConsoleLog(false)
     })
-    cron.schedule("0 30 4 * * *", () => {
-      for (let salonId of PUB.salonsEphemeres) {
-        TiCu.Purger.purgeSalon(salonId)
-      }
-      for (let salonId of PUB.salonsEphemeresCdC) {
-        TiCu.Purger.purgeSalon(salonId, 7*24*60*60*1000)
-      }
+    cron.schedule("0 30 3 * * *", () => {
+      TiCu.Purger.purgeChannels(PUB.salonsEphemeres)
+    })
+    cron.schedule("0 30 6 * * *", () => {
+      TiCu.Purger.purgeChannels(PUB.salonsEphemeresCdC, 7*24*60*60*1000)
     })
     cron.schedule("0 10 13 28 * *", () => {
       if (TiCu.Census.collector) {
