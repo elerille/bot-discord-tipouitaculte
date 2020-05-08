@@ -39,7 +39,9 @@
   "ticuAuto" : {
     "monLevel" : false,
     "carddisplay" : false,
-    "xdy": false
+    "xdy": false,
+    "tesparents" : false,
+    "merci" : false
   },
   "ticuReactions" : {
     "pin" : false
