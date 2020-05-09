@@ -34,7 +34,8 @@
     "roll": false,
     "lancer": false,
     "dice": false,
-    "de": false
+    "de": false,
+    "timer": false
   },
   "ticuAuto" : {
     "monLevel" : false,
