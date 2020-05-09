@@ -327,7 +327,7 @@ module.exports = {
     slowmode: {
       chans : {
         type: "whitelist",
-        list: [PUB.salons.debug.id]
+        list: [PUB.salons.debug.id, PUB.salons.botsecret.id]
       },
       auths : {
         type: "any"
