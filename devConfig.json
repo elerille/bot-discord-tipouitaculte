@@ -35,7 +35,9 @@
     "lancer": false,
     "dice": false,
     "de": false,
-    "timer": false
+    "timer": false,
+    "slow": false,
+    "slowmode": false
   },
   "ticuAuto" : {
     "monLevel" : false,
