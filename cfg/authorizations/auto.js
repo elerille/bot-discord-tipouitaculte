@@ -34,6 +34,14 @@ module.exports = {
       users : {
         type: "any",
       }
+    },
+    merci: {
+      salons : {
+        type: "any",
+      },
+      users : {
+        type: "any",
+      }
     }
   },
   vigi : {},
