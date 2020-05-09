@@ -324,6 +324,18 @@ module.exports = {
         type: "any"
       }
     },
+    slowmode: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.debug.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    }
   },
   vigi : {
     avatar : {
@@ -503,6 +515,17 @@ module.exports = {
       }
     },
     unpin: {
+      chans : {
+        type: "any"
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    slowmode: {
       chans : {
         type: "any"
       },
