@@ -66,8 +66,7 @@ module.exports = {
         list: [PUB.salons.debug.id]
       },
       auths : {
-        type: "whitelist",
-        list: devTeam
+        type: "any"
       },
       roles : {
         type: "any"
@@ -115,8 +114,7 @@ module.exports = {
         list: [PUB.salons.debug.id]
       },
       auths : {
-        type: "whitelist",
-        list: devTeam
+        type: "any"
       },
       roles : {
         type: "any"
@@ -313,7 +311,19 @@ module.exports = {
       roles : {
         type: "any"
       }
-    }
+    },
+    timer: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.debug.id, PUB.salons.quizz.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
   },
   vigi : {
     avatar : {
@@ -354,8 +364,7 @@ module.exports = {
         type : "any"
       },
       auths : {
-        type: "whitelist",
-        list: devTeam
+        type: "any"
       },
       roles : {
         type: "any"
