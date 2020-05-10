@@ -1,14 +1,3 @@
-function getReason(rawParams, nbToAvoid) {
-  for (let i=0; i < nbToAvoid; i++) {
-    rawParams.shift()
-  }
-  let reason = ""
-  for (const rawParam of rawParams) {
-    reason += (rawParam + " ")
-  }
-  return reason
-}
-
 module.exports = {
   alias: [
     "slowmode",
@@ -38,10 +27,10 @@ module.exports = {
         if (!isNaN(params[2])) {
           rateLimit = Math.floor(Number(params[2]))
           if (params.length > 3) {
-            reason = getReason(rawParams, 3)
+            reason = TiCu.Messages.getTextFromRawParams(rawParams, 3)
           }
         } else {
-          reason = getReason(rawParams, 2)
+          reason = TiCu.Messages.getTextFromRawParams(rawParams, 2)
         }
       }
       channel.setRateLimitPerUser(rateLimit * 60).then(() => {

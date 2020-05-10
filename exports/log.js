@@ -214,11 +214,17 @@ module.exports = {
     Pin: function(target, msg) {
       maxilog[msg.guild.id].send(`${TiCu.Date("log")} : Pin \n${msg.member.displayName} a pin ce message : ${target.url}`)
       minilog[msg.guild.id].send(`${msg.member.displayName} a pin un message dans <#${target.channel.id}>.`)
+      msg.react("✅")
     },
     Unpin: function(target, msg) {
       maxilog[msg.guild.id].send(`${TiCu.Date("log")} : Unpin \n${msg.member.displayName} a unpin ce message : ${target.url}`)
       minilog[msg.guild.id].send(`${msg.member.displayName} a unpin un message dans <#${target.channel.id}>.`)
+      msg.react("✅")
     },
+    Edit: function(newMsg, msg) {
+      maxilog[msg.guild.id].send(`${TiCu.Date("log")} : Edit \n${msg.member.displayName} a édité ce message : ${newMsg.url}`)
+      msg.react("✅")
+    }
   },
   ReactionError: function(reaction, usr, type) {
     let errorText;
