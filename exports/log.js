@@ -224,6 +224,10 @@ module.exports = {
     Edit: function(newMsg, msg) {
       maxilog[msg.guild.id].send(`${TiCu.Date("log")} : Edit \n${msg.member.displayName} a édité ce message : ${newMsg.url}`)
       msg.react("✅")
+    },
+    Delete: function(oldMsg, msg) {
+      maxilog[msg.guild.id].send(`${TiCu.Date("log")} : Delete \n${msg.member.displayName} a supprimé un message dans <#${oldMsg.channel.id}>`)
+      msg.react("✅")
     }
   },
   ReactionError: function(reaction, usr, type) {

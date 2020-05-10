@@ -38,7 +38,8 @@
     "timer": false,
     "slow": false,
     "slowmode": false,
-    "edit": false
+    "edit": false,
+    "delete": false
   },
   "ticuAuto" : {
     "monLevel" : false,

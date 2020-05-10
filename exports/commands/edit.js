@@ -5,7 +5,7 @@ module.exports = {
   activated: true,
   name : "Edit",
   desc : "Édite un message envoyé par l'intermédiaire de ce bot.",
-  schema : "!edit <#channel> <idMessage> <texte>\nou\n!send <urlMessage> <texte>",
+  schema : "!edit <#channel> <idMessage> <texte>\nou\n!edit <urlMessage> <texte>",
   authorizations : TiCu.Authorizations.getAuth("command", "edit"),
   run : function(params, msg, rawParams) {
     if (params.length < 2) {
