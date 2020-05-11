@@ -154,6 +154,9 @@ module.exports = {
     cron.schedule("0 0 0 * * *", () => {
       hookConsoleLog(false)
     })
+    cron.schedule("0 30 2 * * *", () => {
+      TiCu.Purger.purgeChannels([PUB.salons.invite.id], 7*24*60*60*1000)
+    })
     cron.schedule("0 30 3 * * *", () => {
       TiCu.Purger.purgeChannels(PUB.salonsEphemeres)
     })
