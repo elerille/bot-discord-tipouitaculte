@@ -106,8 +106,12 @@
       "xpFactor": 1
     },
     "invite": {
-      "id": "355042383249014784",
+      "id": "709477463742218381",
       "xpFactor": 1
+    },
+    "inviteArchive" :  {
+      "id": "355042383249014784",
+      "xpFactor": 0
     },
     "automoderation": {
       "id": "551780962686468111",

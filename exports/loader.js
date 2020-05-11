@@ -54,13 +54,15 @@ function parseForAutoCommands(msg) {
 function createEmbedCopy(msg, user, edited = false, previousContent) {
   let embed = new DiscordNPM.RichEmbed()
     .setColor(user.displayColor)
-    .setAuthor(user.displayName, user.user.avatarURL)
+    .setAuthor(user.displayName, user.user.avatarURL, msg.url)
     .setDescription(edited ? previousContent : msg.content)
-    .addField("Utilisateurice", `<@${user.id}>`)
-    .addField("Identifiant", user.id)
     .setTimestamp()
+  if (msg.channel.id !== PUB.salons.invite.id) {
+    embed.addField("Utilisateurice", `<@${user.id}>`)
+      .addField("Identifiant", user.id)
+  }
   if (edited) {
-    embed.addField("Message édité", msg.content)
+    embed.addField("Nouveau contenu du message", previousContent)
   }
   if(msg.attachments) {
     let attachments = Array.from(msg.attachments.values())
@@ -297,6 +299,8 @@ module.exports = {
             tipoui.channels.get(PUB.salons.quarantaineUser.id).send(msg.content)
               .then(newMsg => TiCu.Log.Quarantaine("envoyé", newMsg, msg))
           }
+        } else if(msg.channel.id === PUB.salons.invite.id) {
+          tipoui.channels.get(PUB.salons.inviteArchive.id).send(createEmbedCopy(msg, msg.member)).then().catch()
         } else if(msg.content.match(cmdRegex)) {
           parseAndRunCommand(msg)
         } else {
@@ -348,6 +352,12 @@ module.exports = {
               let embed = createEmbedCopy(newMsg, newMsg.member, true, previousBotEmbed.embeds[0].description)
               previousBotEmbed.edit(embed).then(msgEdited => TiCu.Log.UpdatedQuarantaine("envoyé", msgEdited, newMsg))
             } else TiCu.Log.UpdatedQuarantaine("envoyé", undefined, newMsg, "Could not find previous bot message to update")
+          }
+        } else if(newMsg.channel.id === PUB.salons.invite.id) {
+          const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.salons.inviteArchive.id)
+          if (previousBotEmbed) {
+            let embed = createEmbedCopy(newMsg, newMsg.member, true, previousBotEmbed.embeds[0].description)
+            previousBotEmbed.edit(embed).then().catch()
           }
         }
       }
