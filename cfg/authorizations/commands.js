@@ -359,6 +359,18 @@ module.exports = {
       roles : {
         type: "any"
       }
+    },
+    id: {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.debug.id, PUB.salons.botsecret.id, PUB.salons.bots.id]
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
     }
   },
   vigi : {
@@ -572,6 +584,17 @@ module.exports = {
       }
     },
     delete: {
+      chans : {
+        type: "any"
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
+    },
+    id: {
       chans : {
         type: "any"
       },
