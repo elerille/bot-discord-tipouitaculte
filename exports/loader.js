@@ -62,7 +62,7 @@ function createEmbedCopy(msg, user, edited = false, previousContent) {
       .addField("Identifiant", user.id)
   }
   if (edited) {
-    embed.addField("Nouveau contenu du message", previousContent)
+    embed.addField("Nouveau contenu du message", msg.content)
   }
   if(msg.attachments) {
     let attachments = Array.from(msg.attachments.values())
