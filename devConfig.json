@@ -39,7 +39,10 @@
     "slow": false,
     "slowmode": false,
     "edit": false,
-    "delete": false
+    "delete": false,
+    "id": false,
+    "recherche": false,
+    "search": false
   },
   "ticuAuto" : {
     "monLevel" : false,
