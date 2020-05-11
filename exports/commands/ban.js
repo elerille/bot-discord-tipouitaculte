@@ -29,7 +29,7 @@ module.exports = {
                 reason ? target.ban(reason) : target.ban()
                 TiCu.Log.Commands.Ban(target, reason, msg)
               } else if (reaction === "👌") {
-                reason ? target.ban({days : 1, reason: reason}) : target.ban(1)
+                reason ? target.ban({days : 7, reason: reason}) : target.ban(7)
                 TiCu.Log.Commands.Ban(target, reason, msg)
               } else {
                 return TiCu.Log.Error("ban", "annulation", msg)

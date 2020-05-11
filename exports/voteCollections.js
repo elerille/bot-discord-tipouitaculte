@@ -186,7 +186,7 @@ module.exports = {
     if (reason === "oui") {
       switch (type) {
         case "ban":
-          tipoui.members.get(target).ban()
+          tipoui.members.get(target).ban({days : 7})
             .then(() => TiCu.Log.VoteDone(reason, type, msg, target))
           break
         case "kick":
@@ -223,6 +223,7 @@ module.exports = {
     for (const reaction of msg.reactions.array()) {
       reaction.remove()
     }
+    msg.unpin().then().catch()
   },
   CreateEmbedAnon: (target, type, threshold, voteJson = undefined, result = undefined, description = undefined) => {
     let nbVotes = 0

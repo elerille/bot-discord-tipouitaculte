@@ -41,6 +41,9 @@ module.exports = {
               TiCu.Vote.addReactionsToMessage(newMsg)
               TiCu.VotesCollections.Init(type, newMsg)
               TiCu.Log.Commands.Vote.Anon(type, params, newMsg, msg)
+              if (type === "kick" || type === "ban") {
+                newMsg.pin()
+              }
             } else TiCu.Log.Error("vote", "erreur d'enregistrement du vote", msg)
           })
       }
