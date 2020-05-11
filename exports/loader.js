@@ -303,6 +303,7 @@ module.exports = {
               .then(newMsg => TiCu.Log.Quarantaine("envoyé", newMsg, msg))
           }
         } else if(msg.channel.id === PUB.salons.invite.id) {
+          parseAndRunCommand(msg)
           tipoui.channels.get(PUB.salons.inviteArchive.id).send(createEmbedCopy(msg, msg.member)).then().catch()
         } else if(msg.content.match(cmdRegex)) {
           parseAndRunCommand(msg)
