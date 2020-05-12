@@ -54,13 +54,15 @@ function parseForAutoCommands(msg) {
 function createEmbedCopy(msg, user, edited = false, previousContent) {
   let embed = new DiscordNPM.RichEmbed()
     .setColor(user.displayColor)
-    .setAuthor(user.displayName, user.user.avatarURL)
+    .setAuthor(user.displayName, user.user.avatarURL, msg.url)
     .setDescription(edited ? previousContent : msg.content)
-    .addField("Utilisateurice", `<@${user.id}>`)
-    .addField("Identifiant", user.id)
     .setTimestamp()
+  if (msg.channel.id !== PUB.salons.invite.id) {
+    embed.addField("Utilisateurice", `<@${user.id}>`)
+      .addField("Identifiant", user.id)
+  }
   if (edited) {
-    embed.addField("Message édité", msg.content)
+    embed.addField("Nouveau contenu du message", msg.content)
   }
   if(msg.attachments) {
     let attachments = Array.from(msg.attachments.values())
@@ -151,6 +153,9 @@ module.exports = {
     hookConsoleLog(true)
     cron.schedule("0 0 0 * * *", () => {
       hookConsoleLog(false)
+    })
+    cron.schedule("0 30 2 * * *", () => {
+      TiCu.Purger.purgeChannels([PUB.salons.invite.id], 7*24*60*60*1000)
     })
     cron.schedule("0 30 3 * * *", () => {
       TiCu.Purger.purgeChannels(PUB.salonsEphemeres)
@@ -297,6 +302,11 @@ module.exports = {
             tipoui.channels.get(PUB.salons.quarantaineUser.id).send(msg.content)
               .then(newMsg => TiCu.Log.Quarantaine("envoyé", newMsg, msg))
           }
+        } else if(msg.channel.id === PUB.salons.invite.id) {
+          if(msg.content.match(cmdRegex)) {
+            parseAndRunCommand(msg)
+          }
+          tipoui.channels.get(PUB.salons.inviteArchive.id).send(createEmbedCopy(msg, msg.member)).then().catch()
         } else if(msg.content.match(cmdRegex)) {
           parseAndRunCommand(msg)
         } else {
@@ -348,6 +358,12 @@ module.exports = {
               let embed = createEmbedCopy(newMsg, newMsg.member, true, previousBotEmbed.embeds[0].description)
               previousBotEmbed.edit(embed).then(msgEdited => TiCu.Log.UpdatedQuarantaine("envoyé", msgEdited, newMsg))
             } else TiCu.Log.UpdatedQuarantaine("envoyé", undefined, newMsg, "Could not find previous bot message to update")
+          }
+        } else if(newMsg.channel.id === PUB.salons.invite.id) {
+          const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.salons.inviteArchive.id)
+          if (previousBotEmbed) {
+            let embed = createEmbedCopy(newMsg, newMsg.member, true, previousBotEmbed.embeds[0].description)
+            previousBotEmbed.edit(embed).then().catch()
           }
         }
       }
