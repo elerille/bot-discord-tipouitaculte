@@ -13,7 +13,7 @@ module.exports = {
     if(TiCu.Mention(params[0])) {target = TiCu.Mention(params[0])} else return TiCu.Log.Error("ban", "cible invalide", msg)
     let reason = !!params[1]
     if(reason) {reason = msg.content.substring(msg.content.match(crop)[1].length)}
-    msg.reply(`voulez-vous bannir <@${target.id}> du serveur ?\n👌 : Bannir en supprimant les messages des dernières 24h\n👍 : Bannir sans supprimer les messages\n👎 : Annuler`)
+    msg.reply(`voulez-vous bannir <@${target.id}> du serveur ?\n👌 : Bannir en supprimant les messages des derniers 7j\n👍 : Bannir sans supprimer les messages\n👎 : Annuler`)
       .then(newMsg => {
         newMsg
         .react("👍")
@@ -29,7 +29,7 @@ module.exports = {
                 reason ? target.ban(reason) : target.ban()
                 TiCu.Log.Commands.Ban(target, reason, msg)
               } else if (reaction === "👌") {
-                reason ? target.ban({days : 1, reason: reason}) : target.ban(1)
+                reason ? target.ban({days : 7, reason: reason}) : target.ban(7)
                 TiCu.Log.Commands.Ban(target, reason, msg)
               } else {
                 return TiCu.Log.Error("ban", "annulation", msg)
