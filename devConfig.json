@@ -35,7 +35,7 @@
     "lancer": false,
     "dice": false,
     "de": false,
-    "timer": false,
+    "timer": true,
     "slow": false,
     "slowmode": false,
     "edit": false,
