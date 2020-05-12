@@ -186,7 +186,7 @@ module.exports = {
     if (reason === "oui") {
       switch (type) {
         case "ban":
-          tipoui.members.get(target).ban({days : 7})
+          tipoui.members.get(target).ban()
             .then(() => TiCu.Log.VoteDone(reason, type, msg, target))
           break
         case "kick":
