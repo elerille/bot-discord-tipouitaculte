@@ -189,6 +189,10 @@
       "id" : "693783118032928848",
       "xpFactor" : 0
     },
+    "alertingVigiServ" : {
+      "id" : "710875780711972875",
+      "xpFactor" : 0
+    },
     "tictacboom" : {
       "id" : "479315447452532746",
       "xpFactor" : 1

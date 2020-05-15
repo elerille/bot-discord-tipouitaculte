@@ -184,6 +184,7 @@ module.exports = {
     global.KickedFile = "private/kicked.json"
     global.ReturnFile = "private/return.json"
     global.CensusFile = "private/census.json"
+    global.AlertingFile = "private/alerting.json"
     global.VotesEmojis = ["✅","⚪","🛑","⏱"]
     global.VotesProps = ["👍", "👎"]
     global.activeInvite = true
@@ -222,6 +223,7 @@ module.exports = {
       Messages : require("../exports/messages.js"),
       DiscordApi : require("../exports/discordApi.js"),
       Purger : require("../exports/purger.js"),
+      Alerte : require("../exports/alerte.js"),
       Commands : {},
       Reactions : {},
       Auto : {},
@@ -444,6 +446,7 @@ module.exports = {
 
     global.parseGuildMemberRemove = (member) => {
       if(member.guild.id === PUB.servers.commu.id) {
+        TiCu.Alerte.removeMember(member.id)
         const jsonActionData = {action : "read", target : KickedFile}
         const kickedData = TiCu.json(jsonActionData)
         jsonActionData.target = ReturnFile

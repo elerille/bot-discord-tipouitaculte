@@ -42,7 +42,9 @@
     "delete": false,
     "id": false,
     "recherche": false,
-    "search": false
+    "search": false,
+    "alert": false,
+    "alerte": false
   },
   "ticuAuto" : {
     "monLevel" : false,
@@ -52,7 +54,8 @@
     "merci" : false
   },
   "ticuReactions" : {
-    "pin" : false
+    "pin" : false,
+    "alert": false
   },
   "ticuAutoGames" : {
     "tictac" : false

@@ -604,6 +604,17 @@ module.exports = {
       roles : {
         type: "any"
       }
+    },
+    alert : {
+      chans : {
+        type : "any"
+      },
+      auths : {
+        type: "any"
+      },
+      roles : {
+        type: "any"
+      }
     }
   },
   debug: {

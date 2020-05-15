@@ -5,6 +5,7 @@ private/quarantaine.json
 private/kicked.json
 private/return.json
 private/census.json
+private/alerting.json
 
 # Logs
 logs
