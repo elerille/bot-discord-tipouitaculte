@@ -9,7 +9,7 @@ module.exports = function(data) {
   let write
   switch(action) {
     case "read":
-      TiCu.Log.Json("read", target)
+      // TiCu.Log.Json("read", target)
       return read
     case "write":
       write = read ? content ? {...read, ...content} : "" : ""
