@@ -94,6 +94,11 @@
       "id" : "260008409267568640",
       "bot" : false,
       "dev" : true
+    },
+    "echarpe" : {
+      "id" : "269231373330415637",
+      "bot" : false,
+      "dev" : false
     }
   },
   "salons": {

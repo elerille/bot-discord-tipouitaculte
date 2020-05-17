@@ -6,6 +6,7 @@ private/kicked.json
 private/return.json
 private/census.json
 private/alerting.json
+private/quizz.json
 
 # Logs
 logs

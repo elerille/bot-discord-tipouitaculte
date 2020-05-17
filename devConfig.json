@@ -44,7 +44,8 @@
     "recherche": false,
     "search": false,
     "alert": false,
-    "alerte": false
+    "alerte": false,
+    "quizz": false
   },
   "ticuAuto" : {
     "monLevel" : false,

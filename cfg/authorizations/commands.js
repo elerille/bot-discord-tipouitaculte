@@ -371,6 +371,19 @@ module.exports = {
       roles : {
         type: "any"
       }
+    },
+    quizz : {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.debug.id, PUB.salons.quizz.id]
+      },
+      auths : {
+        type: "whitelist",
+        list: [PUB.users.syrinx.id, PUB.users.xenolune.id, PUB.users.echarpe.id]
+      },
+      roles : {
+        type: "any"
+      }
     }
   },
   vigi : {

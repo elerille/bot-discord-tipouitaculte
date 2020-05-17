@@ -1,0 +1,13 @@
+{
+  "name": "quizz.json",
+  "teams": {
+    "pink" : {
+      "points" : 0,
+      "members" : []
+    },
+    "punk" : {
+      "points" : 0,
+      "members" : []
+    }
+  }
+}

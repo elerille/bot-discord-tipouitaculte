@@ -224,6 +224,7 @@ module.exports = {
       DiscordApi : require("../exports/discordApi.js"),
       Purger : require("../exports/purger.js"),
       Alerte : require("../exports/alerte.js"),
+      Quizz : require("../exports/quizz.js"),
       Commands : {},
       Reactions : {},
       Auto : {},
