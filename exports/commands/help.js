@@ -35,6 +35,35 @@ function getDesc(auth, type) {
   return desc
 }
 
+function displayCommands(msg, full = false) {
+  let cpt = 0
+  const aliasList = []
+  let embed = new DiscordNPM.RichEmbed()
+  embed.setColor(38600)
+
+  msg.channel.send(full ? "Voici la liste exhaustive de mes fonctions :" : "Voici la liste de mes fonctions que vous pouvez utiliser :")
+
+  if (!full) aliasList.push("help")
+  Object.keys(TiCu.Commands).forEach(key => {
+    if (!aliasList.find(v => v === key)) {
+      const cmd = TiCu.Commands[key]
+      if (full || TiCu.Authorizations.Command(key, msg)) {
+        embed.addField(cmd.name, cmd.desc)
+        cpt++
+        if (cpt > 24) {
+          msg.channel.send(embed)
+          embed = new DiscordNPM.RichEmbed()
+          embed.setColor(38600)
+          cpt = 0
+        }
+      }
+      cmd.alias.forEach(aliasName => {
+        aliasList.push(aliasName)
+      })
+    }
+  })
+  msg.channel.send(embed)
+}
 
 module.exports = {
   alias: [
@@ -47,8 +76,10 @@ module.exports = {
   authorizations : TiCu.Authorizations.getAuth("command", "help"),
   run : function(params, msg) {
     const target = params[0]
-    const embed = new DiscordNPM.RichEmbed()
+    let embed = new DiscordNPM.RichEmbed()
     embed.setColor(38600)
+    let cpt = 0
+    let firstEmbed = true
     const aliasList = []
     if(TiCu.Commands[target]) {
       const cmd = TiCu.Commands[target]
@@ -89,17 +120,7 @@ module.exports = {
       msg.channel.send("Voici la liste de mes réactions automatiques :")
       msg.channel.send(embed)
     } else if(target === "full") {
-      Object.keys(TiCu.Commands).forEach((key, i, array) => {
-        if (!aliasList.find(v => v === key)) {
-          const cmd = TiCu.Commands[key]
-          embed.addField(cmd.name, cmd.desc)
-          cmd.alias.forEach(aliasName => {
-            aliasList.push(aliasName)
-          })
-        }
-      })
-      msg.channel.send("Voici la liste exhaustive de mes fonctions :")
-      msg.channel.send(embed)
+      displayCommands(msg, true)
     } else if(target === "schema") {
       embed
         .setTitle("La description individuelle des commandes propose un champ \"Schéma\" pour expliciter son fonctionnement.")
@@ -143,20 +164,7 @@ module.exports = {
       }
       msg.channel.send(embed)
     } else if(!target) {
-      aliasList.push("help")
-      Object.keys(TiCu.Commands).forEach((key, i, array) => {
-        if (!aliasList.find(v => v === key)) {
-          const cmd = TiCu.Commands[key]
-          if(TiCu.Authorizations.Command(key, msg)) {
-            embed.addField(cmd.name, cmd.desc)
-          }
-          cmd.alias.forEach(aliasName => {
-            aliasList.push(aliasName)
-          })
-        }
-      })
-      msg.channel.send("Voici la liste de mes fonctions que vous pouvez utiliser :")
-      msg.channel.send(embed)
+      displayCommands(msg, false)
     } else {
       TiCu.Log.Error("help", "commande inconnue", msg)
     }
