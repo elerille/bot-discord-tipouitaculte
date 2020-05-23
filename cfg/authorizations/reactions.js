@@ -1,31 +1,9 @@
 module.exports = {
   commu : {
-    pin: {
-      messages : {
-        type: "any",
-        list: []
-      },
-      salons : {
-        type: "any"
-      },
-      users : {
-        type: "any"
-      }
-    }
+    pin: {}
   },
   vigi : {
-    alert: {
-      messages : {
-        type: "any",
-        list: []
-      },
-      salons : {
-        type: "any"
-      },
-      users : {
-        type: "any"
-      }
-    }
+    alert: {}
   },
   debug: {},
   cdc : {},

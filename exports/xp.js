@@ -86,12 +86,12 @@ function levelChange(entry, newLevel, previousLevel) {
 
 function categoryMultiplier(categoryId) {
   const category = TiCu.Categories.findById(categoryId)
-  return category ? category.xpFactor : 1
+  return category ? (category.xpFactor ? category.xpFactor : 1) : 1
 }
 
 function channelMultiplier(channelId) {
   const channel = TiCu.Channels.findById(channelId)
-  return channel ? channel.xpFactor : 1
+  return channel ? (channel.xpFactor ? channel.xpFactor : 1) : 1
 }
 
 function xpFromMessage(msg) {
@@ -106,7 +106,7 @@ module.exports = {
     let booster = 1
     for (const role of Object.values(PUB.roles)) {
       const member = tipoui.members.get(target)
-      if (member && member.roles && member.roles.get(role.id)) booster = booster + role.xpAddedMultiplicator
+      if (member && member.roles && member.roles.get(role.id)) booster += (role.xpAddedMultiplicator ? role.xpAddedMultiplicator : 0)
     }
     value = value * booster
     MemberXP.findOrCreate({where: {id: target}, defaults: {level: 0, xp: 0, activated: true}}).then(

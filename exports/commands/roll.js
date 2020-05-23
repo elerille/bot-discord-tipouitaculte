@@ -31,9 +31,9 @@ module.exports = {
       for(let i=0;i<nbDes;i++) {
         result += `${randomDice(nbFaces)}\n`
       }
-      msg.channel.send(result)
+      msg.channel.send(result).catch()
     } else if(params.length === 1 && params[0] > 1) {
-      msg.channel.send(randomDice(Number(params[0])))
+      msg.channel.send(randomDice(Number(params[0]))).catch()
     } else return TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
   }
 }

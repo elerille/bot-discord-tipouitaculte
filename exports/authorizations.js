@@ -1,4 +1,5 @@
 function authorized(authorization, value) {
+  if (authorization === undefined) return true
   switch (authorization.type) {
     case "any":
       return true
@@ -20,17 +21,19 @@ module.exports = {
     const chan = msg.channel.type === "dm" || authorized(target.chans, msg.channel.id)
     const auth = authorized(target.auths, msg.author.id)
     let role
-    if(target.roles.type !== "any") {
-      const member = tipoui.members.get(msg.author.id)
-      if (member) {
-        let array = Array.from(member.roles.values())
-        let filtered = array.filter(e => target.roles.list.includes(e.id))
-        if (target.roles.type === "whitelist") {
-          role = !!filtered.length
-        } else {
-          role = !filtered.length
-        }
-      } else role = false
+    if (target.roles) {
+      if (target.roles.type !== "any") {
+        const member = tipoui.members.get(msg.author.id)
+        if (member) {
+          let array = Array.from(member.roles.values())
+          let filtered = array.filter(e => target.roles.list.includes(e.id))
+          if (target.roles.type === "whitelist") {
+            role = !!filtered.length
+          } else {
+            role = !filtered.length
+          }
+        } else role = false
+      } else role = true
     } else role = true
     return chan && role && auth
   },

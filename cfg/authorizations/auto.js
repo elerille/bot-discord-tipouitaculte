@@ -4,64 +4,27 @@ module.exports = {
       salons : {
         type: "whitelist",
         list: [PUB.salons.debug.id, PUB.salons.magic.id]
-      },
-      users : {
-        type: "any",
       }
     },
     monlevel: {
       salons : {
         type: "whitelist",
         list: [PUB.salons.debug.id, PUB.salons.bots.id]
-      },
-      users : {
-        type: "any",
       }
     },
     tesParents: {
         salons: {
             type: "whitelist",
             list: [PUB.salons.debug.id, PUB.salons.bots.id]
-        },
-        users: {
-            type: "any",
         }
     },
-    xdy: {
-      salons : {
-        type: "any",
-      },
-      users : {
-        type: "any",
-      }
-    },
-    merci: {
-      salons : {
-        type: "any",
-      },
-      users : {
-        type: "any",
-      }
-    }
+    xdy: {},
+    merci: {}
   },
   vigi : {},
   debug: {
-    cardDisplay: {
-      salons : {
-        type: "any"
-      },
-      users : {
-        type: "any"
-      }
-    },
-    xdy: {
-      salons : {
-        type: "any",
-      },
-      users : {
-        type: "any",
-      }
-    }
+    cardDisplay: {},
+    xdy: {}
   },
   cdc : {},
   dm: {}

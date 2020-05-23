@@ -103,52 +103,41 @@
   },
   "salons": {
     "genTP": {
-      "id": "355041349147295744",
-      "xpFactor": 1
+      "id": "355041349147295744"
     },
     "genTutu": {
-      "id": "462953650772246528",
-      "xpFactor": 1
+      "id": "462953650772246528"
     },
     "invite": {
-      "id": "709477463742218381",
-      "xpFactor": 1
+      "id": "709477463742218381"
     },
     "inviteArchive" :  {
       "id": "355042383249014784",
       "xpFactor": 0
     },
     "automoderation": {
-      "id": "551780962686468111",
-      "xpFactor": 1
+      "id": "551780962686468111"
     },
     "salleDesVotes": {
-      "id": "437317393144872970",
-      "xpFactor": 1
+      "id": "437317393144872970"
     },
     "quarantaineUser": {
-      "id": "588452032839680031",
-      "xpFactor": 0
+      "id": "588452032839680031"
     },
     "quarantaineVigi": {
-      "id": "469268187335360532",
-      "xpFactor": 0
+      "id": "469268187335360532"
     },
     "botsecret": {
-      "id": "468843915500322826",
-      "xpFactor": 0
+      "id": "468843915500322826"
     },
     "debug": {
-      "id": "641333805445283850",
-      "xpFactor": 0
+      "id": "641333805445283850"
     },
     "miniLog": {
-      "id": "425379017055797258",
-      "xpFactor": 0
+      "id": "425379017055797258"
     },
     "maxiLog": {
-      "id": "655950138568867841",
-      "xpFactor": 0
+      "id": "655950138568867841"
     },
     "pluralKit": {
       "id": "518792870002688030",
@@ -163,44 +152,34 @@
       "xpFactor" : 0
     },
     "logsDev" : {
-      "id" : "620649266557222912",
-      "xpFactor" : 0
+      "id" : "620649266557222912"
     },
     "magic" : {
-      "id" : "664244570963312640",
-      "xpFactor" : 1
+      "id" : "664244570963312640"
     },
     "blueprint" : {
-      "id" : "533605292471222292",
-      "xpFactor" : 1
+      "id" : "533605292471222292"
     },
     "rolessalons" : {
-      "id" : "453702956315836436",
-      "xpFactor" : 0
+      "id" : "453702956315836436"
     },
     "interfaceVigiServ" : {
-      "id" : "693760448209747989",
-      "xpFactor" : 0
+      "id" : "693760448209747989"
     },
     "dmVigiServ" : {
-      "id" : "693760567390896158",
-      "xpFactor" : 0
+      "id" : "693760567390896158"
     },
     "quarantaineVigiServ" : {
-      "id" : "693760494883962950",
-      "xpFactor" : 0
+      "id" : "693760494883962950"
     },
     "testsVigiServ" : {
-      "id" : "693783118032928848",
-      "xpFactor" : 0
+      "id" : "693783118032928848"
     },
     "alertingVigiServ" : {
-      "id" : "710875780711972875",
-      "xpFactor" : 0
+      "id" : "710875780711972875"
     },
     "tictacboom" : {
-      "id" : "479315447452532746",
-      "xpFactor" : 1
+      "id" : "479315447452532746"
     },
     "quizz" : {
       "id" : "700457420656214037",
@@ -210,7 +189,6 @@
   "roles": {
     "quarantaineRole": {
       "id": "458559408667099136",
-      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "458559408667099136",
@@ -223,7 +201,6 @@
     },
     "nso": {
       "id": "420333202142396426",
-      "xpAddedMultiplicator": 0,
       "givable": false,
       "alias": [
         "420333202142396426",
@@ -232,7 +209,6 @@
     },
     "phosphate": {
       "id": "355047698698862592",
-      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "355047698698862592",
@@ -245,7 +221,6 @@
     },
     "pourfendeureuse": {
       "id": "451734752181878786",
-      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "451734752181878786",
@@ -261,7 +236,6 @@
     },
     "turquoise": {
       "id": "396989117164158978",
-      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "396989117164158978",
@@ -271,7 +245,6 @@
     },
     "turquoiseColor": {
       "id": "649433183087099944",
-      "xpAddedMultiplicator": 0,
       "givable": false,
       "alias": [
         "649433183087099944",
@@ -280,7 +253,6 @@
     },
     "luxure": {
       "id": "507916444701556739",
-      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "507916444701556739",
@@ -294,7 +266,6 @@
     },
     "demolisseureuse": {
       "id": "355060952422416386",
-      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "355060952422416386",
@@ -307,7 +278,6 @@
     },
     "hammer": {
       "id": "507916432462577715",
-      "xpAddedMultiplicator": 0,
       "givable": false,
       "alias": [
         "507916432462577715",
@@ -316,7 +286,6 @@
     },
     "grrrrl": {
       "id": "396988815266545665",
-      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "396988815266545665",
@@ -327,7 +296,6 @@
     },
     "naughty": {
       "id": "507916442826571776",
-      "xpAddedMultiplicator": 0,
       "givable": false,
       "alias": [
         "507916442826571776",
@@ -336,7 +304,6 @@
     },
     "queer": {
       "id": "396991048993341440",
-      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "396991048993341440",
@@ -345,7 +312,6 @@
     },
     "certainementpascis": {
       "id": "455720096799653902",
-      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias":[
         "455720096799653902",
@@ -357,7 +323,6 @@
     },
     "ace": {
       "id": "439068938123345940",
-      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "439068938123345940",
@@ -367,7 +332,6 @@
     },
     "aro": {
       "id": "525280639386386462",
-      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "525280639386386462",
@@ -379,7 +343,6 @@
     },
     "vote": {
       "id": "522444644999495680",
-      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "522444644999495680",
@@ -419,7 +382,6 @@
     },
     "notifyoutube": {
       "id": "578282816127631370",
-      "xpAddedMultiplicator": 0,
       "givable": false,
       "alias": [
         "578282816127631370",
@@ -431,7 +393,6 @@
     },
     "notiftwitch" : {
       "id" : "578282808859164672",
-      "xpAddedMultiplicator": 0,
       "givable": false,
       "alias": [
         "578282808859164672",
@@ -441,7 +402,6 @@
     },
     "notifactu" : {
       "id" : "620630188757221386",
-      "xpAddedMultiplicator": 0,
       "givable": false,
       "alias": [
         "620630188757221386",
@@ -451,7 +411,6 @@
     },
     "notifevent" : {
       "id" : "578282812545957899",
-      "xpAddedMultiplicator": 0,
       "givable": false,
       "alias": [
         "578282812545957899",
@@ -461,7 +420,6 @@
     },
     "espritruche" : {
       "id" : "588446918670286858",
-      "xpAddedMultiplicator": 0,
       "givable": false,
       "alias": [
         "588446918670286858",
@@ -471,7 +429,6 @@
     },
     "caat" : {
       "id" : "641935800464048128",
-      "xpAddedMultiplicator": 0,
       "givable": true,
       "alias": [
         "641935800464048128",
