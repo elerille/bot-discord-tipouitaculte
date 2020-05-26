@@ -77,6 +77,9 @@ module.exports = {
           censusData.members = []
           jsonData.content = censusData
           TiCu.json(jsonData)
+          TiCu.Messages.fetchMessageFromUrl("https://discordapp.com/channels/355041348476338182/453706061031931905/714803564609929326", {reply: function(){}}).then(
+            editMsg => editMsg.edit(`Le recensement courant pour les votant·e·s est disponible ici : ${msg.url}\nIl permet de conserver son rôle, de le récupérer et de s'en séparer par une simple réaction et sera renouvelé chaque 28 du mois.`).then().catch()
+          ).catch()
         }
       )
     }
