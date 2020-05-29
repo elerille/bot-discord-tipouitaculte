@@ -18,19 +18,23 @@ function getNameList(idList, type) {
 
 function getDesc(auth, type) {
   let desc = ""
-  switch(auth.type) {
-    case "any":
-      desc = type === "users" ? "Toustes" : "Tous"
-      break
-    case "whitelist":
-      desc = getNameList(auth.list, type)
-      desc = desc ? desc.substr(0, desc.length-2) : ""
-      break
-    case "blacklist":
-      desc = (type === "users" ? "Toustes" : "Tous") + " sauf "
-      desc += getNameList(auth.list, type)
-      desc = desc.substr(0, desc.length-2)
-      break
+  if (auth) {
+    switch (auth.type) {
+      case "any":
+        desc = type === "users" ? "Toustes" : "Tous"
+        break
+      case "whitelist":
+        desc = getNameList(auth.list, type)
+        desc = desc ? desc.substr(0, desc.length - 2) : ""
+        break
+      case "blacklist":
+        desc = (type === "users" ? "Toustes" : "Tous") + " sauf "
+        desc += getNameList(auth.list, type)
+        desc = desc.substr(0, desc.length - 2)
+        break
+    }
+  } else {
+    desc = type === "users" ? "Toustes" : "Tous"
   }
   return desc
 }
