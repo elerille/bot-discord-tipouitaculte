@@ -321,9 +321,7 @@ module.exports = {
     global.parseMessageDelete = (msg) => {
       if (msg.channel.type !== "dm" && msg.guild.id === PUB.servers.commu.id) {
         if (!PUB.salonsEphemeres.includes(msg.channel.id)) {
-          if (!PUB.salonsAnciens.includes(msg.channel.id)) {
-            TiCu.Xp.processXpFromMessage("remove", msg)
-          }
+          TiCu.Xp.processXpFromMessage("remove", msg)
         } else {
           if (msg.timestamp > Date.now() - 89*24*60*60*1000) {
             TiCu.Xp.processXpFromMessage("remove", msg)
