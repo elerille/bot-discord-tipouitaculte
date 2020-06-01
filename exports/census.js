@@ -100,10 +100,7 @@ module.exports = {
       }
     }
     if (!censusData.members.includes(userId)) {
-      censusData.members.push(userId)
-      jsonData.action = "write"
-      jsonData.content = censusData
-      TiCu.json(jsonData)
+      TiCu.Census.addUserToData(userId)
       msg.edit(createUpdateEmbed(msg.embeds[0], true))
     }
     if (reaction.emoji.name === "✅") {
@@ -119,6 +116,34 @@ module.exports = {
         }
       })
     }
+  },
+  addUserFromId : function(userId) {
+    const jsonData = {
+      action : "read",
+      target : CensusFile
+    }
+    let censusData = TiCu.json(jsonData)
+    let msg = TiCu.Census.collector.message
+    if (!censusData.members.includes(userId)) {
+      TiCu.Census.addUserToData(userId)
+      msg.edit(createUpdateEmbed(msg.embeds[0], true))
+    }
+    tipoui.fetchMember(userId).then(member => {
+      if (!member.roles.get(PUB.roles.vote.id)) {
+        member.addRole(PUB.roles.vote.id).then(() => member.send("Tu as récupéré le rôle de votant·e"))
+      }
+    })
+  },
+  addUserToData : function(userId) {
+    const jsonData = {
+      action : "read",
+      target : CensusFile
+    }
+    let censusData = TiCu.json(jsonData)
+    censusData.members.push(userId)
+    jsonData.action = "write"
+    jsonData.content = censusData
+    TiCu.json(jsonData)
   },
   collector : undefined
 }
