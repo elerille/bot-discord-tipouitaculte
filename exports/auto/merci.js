@@ -7,6 +7,6 @@ module.exports = {
   trigger: /(Merci|thanks?\s*(you)?)\s+(ttc|tipouitaculte)/i,
   authorizations : TiCu.Authorizations.getAuth("auto", "monlevel"),
   run : function(msg) {
-    msg.channel.send(`De rien ${msg.member.nickname}`)
+    msg.channel.send(`De rien ${msg.member.nickname ? msg.member.nickname : msg.member.user.username}`)
   }
 }
