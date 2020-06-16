@@ -158,10 +158,10 @@ module.exports = {
       TiCu.Purger.purgeChannels([PUB.salons.invite.id], 7*24*60*60*1000)
     })
     cron.schedule("0 30 3 * * *", () => {
-      TiCu.Purger.purgeChannels(PUB.salonsEphemeres)
+      TiCu.Purger.purgeChannels(PUB.salonsEphemeres.slice())
     })
     cron.schedule("0 30 6 * * *", () => {
-      TiCu.Purger.purgeChannels(PUB.salonsEphemeresCdC, 7*24*60*60*1000)
+      TiCu.Purger.purgeChannels(PUB.salonsEphemeresCdC.slice(), 7*24*60*60*1000)
     })
     cron.schedule("0 10 13 28 * *", () => {
       if (TiCu.Census.collector) {
