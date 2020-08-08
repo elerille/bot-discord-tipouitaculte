@@ -97,7 +97,9 @@ module.exports = {
     for (const memberId of kick) {
       const tipouiMember = tipoui.members.get(memberId)
       if (tipouiMember) {
-        tipouiMember.send(`<@${memberId}>, tu n'as pas encore fait ta présentation ou celle-ci n'a pas encore été validée depuis ton arrivée il y a quatre semaines. Je suis donc dans l'obligation de te retirer du serveur.\n Cela dit, rien n'est définitif et tu peux revenir si et quand tu le souhaites !`)
+        try {
+          tipouiMember.send(`<@${memberId}>, tu n'as pas encore fait ta présentation ou celle-ci n'a pas encore été validée depuis ton arrivée il y a quatre semaines. Je suis donc dans l'obligation de te retirer du serveur.\n Cela dit, rien n'est définitif et tu peux revenir si et quand tu le souhaites !`)
+        } catch {}
         TiCu.NewMembers.removeMember(memberId)
         tipouiMember.kick()
         TiCu.Log.NewMembers(memberId, false)
