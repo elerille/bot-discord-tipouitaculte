@@ -1,8 +1,7 @@
-const DISCORD_EPOCH = 1420070400000
 let nbMessages = 0
 
 module.exports = {
-  purgeChannels: function(salonIds, preservedTime = 90*24*60*60*1000) {
+  purgeChannels: function(salonIds, preservedTime = 90*DAY) {
     if (salonIds.length > 0) {
       const salonId = salonIds.shift()
       this.purgeSalon(salonIds, salonId, preservedTime)

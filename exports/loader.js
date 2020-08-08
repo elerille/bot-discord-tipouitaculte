@@ -151,17 +151,21 @@ module.exports = {
   },
   loadInit: function() {
     hookConsoleLog(true)
+    global.DAY = 24 * 60 * 60 * 1000
     cron.schedule("0 0 0 * * *", () => {
       hookConsoleLog(false)
     })
     cron.schedule("0 30 2 * * *", () => {
-      TiCu.Purger.purgeChannels([PUB.salons.invite.id], 7*24*60*60*1000)
+      TiCu.Purger.purgeChannels([PUB.salons.invite.id], 7*DAY)
     })
     cron.schedule("0 30 3 * * *", () => {
       TiCu.Purger.purgeChannels(PUB.salonsEphemeres.slice())
     })
     cron.schedule("0 30 6 * * *", () => {
-      TiCu.Purger.purgeChannels(PUB.salonsEphemeresCdC.slice(), 7*24*60*60*1000)
+      TiCu.Purger.purgeChannels(PUB.salonsEphemeresCdC.slice(), 7*DAY)
+    })
+    cron.schedule("0 30 8 * * *", () => {
+      TiCu.NewMembers.notificationAndKick()
     })
     cron.schedule("0 10 13 28 * *", () => {
       if (TiCu.Census.collector) {
@@ -192,6 +196,7 @@ module.exports = {
     global.maxReturnTime = 14 * 24 * 60 * 60 * 1000 // 2 semaines
     global.hash = (txt) => { return crypto.createHmac("sha256", CFG.expressSalt).update(txt).digest("hex") }
     global.pluralKitWebHookId = "641374991115485184"
+    global.DISCORD_EPOCH = 1420070400000
   },
   loadTicu: function(rootPath) {
     global.PUB = require("../cfg/public.json")
@@ -208,23 +213,24 @@ module.exports = {
       reaction: require("../cfg/authorizations/reactions"),
     }
     global.TiCu = {
-      Date : require("../exports/date.js"),
-      Log : require("../exports/log.js"),
-      json : require("../exports/json.js"),
-      Xp : require("../exports/xp.js"),
-      Mention : require("../exports/mention.js"),
-      Authorizations : require("../exports/authorizations.js"),
-      VotesCollections : require("../exports/voteCollections.js"),
-      Categories : require("../exports/categories.js"),
-      Channels : require("../exports/channels.js"),
-      Vote : require("../exports/vote.js"),
-      Profil : require("../exports/profil.js"),
-      Census : require("../exports/census.js"),
-      Messages : require("../exports/messages.js"),
-      DiscordApi : require("../exports/discordApi.js"),
-      Purger : require("../exports/purger.js"),
-      Alerte : require("../exports/alerte.js"),
-      Quizz : require("../exports/quizz.js"),
+      Date : require("../exports/methods/date.js"),
+      Log : require("../exports/methods/log.js"),
+      json : require("../exports/methods/json.js"),
+      Xp : require("../exports/methods/xp.js"),
+      Mention : require("../exports/methods/mention.js"),
+      Authorizations : require("../exports/methods/authorizations.js"),
+      VotesCollections : require("../exports/methods/voteCollections.js"),
+      Categories : require("../exports/methods/categories.js"),
+      Channels : require("../exports/methods/channels.js"),
+      Vote : require("../exports/methods/vote.js"),
+      Profil : require("../exports/methods/profil.js"),
+      Census : require("../exports/methods/census.js"),
+      Messages : require("../exports/methods/messages.js"),
+      DiscordApi : require("../exports/methods/discordApi.js"),
+      Purger : require("../exports/methods/purger.js"),
+      Alerte : require("../exports/methods/alerte.js"),
+      Quizz : require("../exports/methods/quizz.js"),
+      NewMembers : require("../exports/methods/newMembers.js"),
       Commands : {},
       Reactions : {},
       Auto : {},
@@ -395,6 +401,7 @@ module.exports = {
 
     global.parseGuildMemberAdd = (member) => {
       if (member.guild.id === PUB.servers.commu.id) {
+        TiCu.NewMembers.arrival(member.id)
         const jsonActionData = {action : "read", target : KickedFile}
         const kicked = TiCu.json(jsonActionData).list.includes(member.id)
         jsonActionData.target = ReturnFile
