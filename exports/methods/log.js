@@ -306,5 +306,13 @@ module.exports = {
   },
   Purger: function(salonId, memberId = false) {
     maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : purger\nPurge terminée pour le salon <#${salonId}>${memberId ? ' pour l\'ex-membre <@' + memberId + '>': ''}`)
+  },
+  NewMembers: function(memberId, notification) {
+    if (notification) {
+      maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : newMember\nRappel à <@${memberId}> de faire sa présentation`)
+    } else {
+      maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : newMember\nKick de <@${memberId}> pour absence de présentation en 4 semaines`)
+      minilog[PUB.servers.commu.id].send(`Kick de <@${memberId}> pour absence de présentation en 4 semaines.`)
+    }
   }
 }

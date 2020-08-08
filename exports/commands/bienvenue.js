@@ -15,6 +15,7 @@ module.exports = {
     if(TiCu.Mention(params[0])) {target = TiCu.Mention(params[0])} else return TiCu.Log.Error("bienvenue", "cible invalide", msg)
     if(!target.roles.find(e => e.id === PUB.roles.phosphate.id)) {
       target.addRole(PUB.roles.phosphate.id)
+      TiCu.NewMembers.removeMember(target.id)
       TiCu.Log.Commands.Bienvenue(target, msg)
     } else return TiCu.Log.Error("bienvenue", "cible déjà phosphate", msg)
   }

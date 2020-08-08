@@ -1,4 +1,4 @@
-const MAX = 50
+const MAX = 25
 const MIN = 3
 
 const boomTable = [
@@ -36,7 +36,7 @@ module.exports = {
     }
     maxilog[global[this.server].id].send(`${this.name} commence.`)
     this.nbMsg = 0
-    this.limit = Math.ceil(Math.random() * (MAX - MIN)) + MIN
+    this.limit = 1
     games[this.name] = global[this.server].channels.get(this.channel).createMessageCollector( m => !!m.content.match(this.trigger))
     games[this.name].on("end", () => maxilog[global[this.server].id].send(`${this.name} a pris fin.`))
     games[this.name].on("collect", m => {
