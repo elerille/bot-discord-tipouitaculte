@@ -31,6 +31,7 @@ module.exports = {
           jsonActionData.content = returnData
           TiCu.json(jsonActionData)
           TiCu.Log.Commands.Retour(msg)
+          TiCu.NewMembers.removeMember(msg.author.id)
         })
       } else {
         TiCu.Log.Error("retour", "impossible de rendre les anciens rôles et accès car le départ est trop ancien. Il est toujours possible de me contacter pour de plus amples informations", msg)
