@@ -26,7 +26,7 @@ const MemberXP = DB.define('memberxp', {
 });
 
 function xpByLevel(level) {
-  return 87 * level + 13 * level * level;
+  return 0.9 * (87 * level + 13 * level * level);
 }
 
 const levelToXP = []
