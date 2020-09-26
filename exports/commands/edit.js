@@ -7,7 +7,7 @@ module.exports = {
   desc : "Édite un message envoyé par l'intermédiaire de ce bot.",
   schema : "!edit <#channel> <idMessage> <texte>\nou\n!edit <urlMessage> <texte>",
   authorizations : TiCu.Authorizations.getAuth("command", "edit"),
-  run : function(params, msg, rawParams) {
+  run : function(params, msg) {
     if (params.length < 2) {
       return TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
     }
@@ -22,7 +22,14 @@ module.exports = {
       promiseToMessage.then(
         messageToEdit => {
           if (messageToEdit.author.id === PUB.users.tipouitaculte.id) {
-            const content = TiCu.Messages.getTextFromRawParams(rawParams, isById ? 2 : 1)
+            let crop = dev ?
+              isById ?
+                new RegExp(/^(%[e|E]dit\s+[^\s]+\s+[^\s]+\s+)/) :
+                new RegExp(/^(%[e|E]dit\s+[^\s]+\s+)/)
+              : isById ?
+                new RegExp(/^(![e|E]dit\s+[^\s]+\s+[^\s]+\s+)/) :
+                new RegExp(/^(![e|E]dit\s+[^\s]+\s+)/)
+            let content = msg.content.match(crop) ? msg.content.substring(msg.content.match(crop)[0].length) : false
             if (content !== "") {
               messageToEdit.edit(content).then(newMsg => TiCu.Log.Commands.Edit(newMsg, msg))
             } else TiCu.Log.Error("edit", "il manque le nouveau contenu du message", msg)
