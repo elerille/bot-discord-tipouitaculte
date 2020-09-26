@@ -419,6 +419,15 @@
         "event"
       ]
     },
+    "notifexistransinter" : {
+      "id" : "759345458178162698",
+      "givable": false,
+      "alias": [
+        "759345458178162698",
+        "notifexistransinter",
+        "existransinter"
+      ]
+    },
     "espritruche" : {
       "id" : "588446918670286858",
       "givable": false,

@@ -46,6 +46,7 @@ Discord.once("ready", () => {
     }
     if (!dev || (devConfig && devConfig.generic && devConfig.generic.autoRoles)) {
       const messageForRolesId = "578295166742560768"
+      const messageForExistransinterId = "759347410529943562"
       const emojisRoles = {
         "📹" : "notifyoutube",
         "🎥" : "notiftwitch",
@@ -68,6 +69,28 @@ Discord.once("ready", () => {
                   } else {
                     member.addRole(askedRoleId)
                     TiCu.Log.AutoRole(member, emojisRoles[reaction.emoji.name], "add")
+                  }
+                  reaction.remove(user.id)
+                }
+              }
+            }
+          )
+      })
+      tipoui.channels.get(PUB.salons.rolessalons.id).fetchMessage(messageForExistransinterId).then(msg => {
+        msg.createReactionCollector((reaction, user) => {return (!user.bot) && (["❌", "✅"].includes(reaction.emoji.name))})
+          .on(
+            "collect",
+            reaction => {
+              for (const user of reaction.users.array()) {
+                if (!user.bot) {
+                  const member = tipoui.members.get(user.id)
+                  const askedRoleId = PUB.roles.notifexistransinter.id
+                  if (member.roles.keyArray().includes(askedRoleId) && reaction.emoji.name === "❌") {
+                    member.removeRole(askedRoleId)
+                    TiCu.Log.AutoRole(member, "notifexistransinter", "remove")
+                  } else if (!member.roles.keyArray().includes(askedRoleId) && reaction.emoji.name === "✅") {
+                    member.addRole(askedRoleId)
+                    TiCu.Log.AutoRole(member, "notifexistransinter", "add")
                   }
                   reaction.remove(user.id)
                 }
