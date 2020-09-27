@@ -23,10 +23,8 @@ function makeEmbed(user, msg, entry) {
     .setAuthor(`Niveau de ${user.displayName}`, user.user.avatarURL, msg.url)
   embed.addField("Niveau", entry.level, true)
   embed.addField("Expérience", Math.floor(entry.xp), true)
-  if (user.roles.get(PUB.roles.turquoise.id)) {
-    embed.addField("Prochain niveau dans", Math.floor(relativeXpForNextLevel - xpInLevelForMember))
-    embed.addField("Complétion du niveau", `${completionPercentage}%\n${generateProgressionBar(completionPercentage)}`, true)
-  }
+  embed.addField("Prochain niveau dans", Math.floor(relativeXpForNextLevel - xpInLevelForMember))
+  embed.addField("Complétion du niveau", `${completionPercentage}%\n${generateProgressionBar(completionPercentage)}`, true)
   return embed
 }
 
