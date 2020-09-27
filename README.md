@@ -16,5 +16,5 @@ Ensuite vient la liste des évènements Discord surveillés et les actions de pa
 Ce fichier sert à activer sélectivement certaines fonctions pour le développement de l'application ; par défaut, tout est désactivé. L'activation du mode de développement se fait en lançant l'application avec le paramètre `-d` et éventuellement `-c [devConfig.json]` pour charger un autre fichier de configuration.
 
 ### ./tipouitaculte.json
-> Fichier de configuration pour le module NodeJS "Forever", permettant à l'instance principale de TiCu de tourner en tant que daemon. Il est envisagé de passer le process sous systemctl, lorsque nous aurons pris le temps de comprendre comment cela affectera les logs du bot.
+> Fichier de configuration pour le module NodeJS "Forever", permettant à l'instance principale de TiCu de tourner en tant que daemon. Il est envisagé de passer le process sous `systemctl`, lorsque nous aurons pris le temps de comprendre comment cela affectera les logs du bot.
 
