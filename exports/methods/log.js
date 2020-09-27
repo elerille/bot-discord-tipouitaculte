@@ -299,6 +299,9 @@ module.exports = {
     }
   },
   AutoRole: function(member, roleName, type) {
+    try {
+      member.send(`Vous avez bien ${type === "add" ? "récupéré" : "abandonné"} le rôle ${roleName}`)
+    } catch {}
     maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : autoRole\n${member.displayName} a ${type === "add" ? "adopté" : "renié"} le rôle de ${roleName}`)
   },
   Census: function(member) {
