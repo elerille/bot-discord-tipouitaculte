@@ -26,6 +26,10 @@ module.exports = {
       chans : {
         type: "whitelist",
         list: [PUB.salons.debug.id, PUB.salons.bots.id]
+      },
+      roles : {
+        type: "whitelist",
+        list: [PUB.roles.turquoise.id]
       }
     },
     help : {},
