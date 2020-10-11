@@ -20,6 +20,7 @@ module.exports = {
       return TiCu.Commands.help.run([this.alias[0], "pas de paramètre de couleur"], msg)
     }
     let input = params[0]
+    input = (input === "#000000") ? "#010101" : input
     let usr = msg.member
     let oldRole = usr.roles.find(e => !!e.name.match(colorHexa))
     let newRole = tipoui.roles.find(e => e.hexColor === input)
