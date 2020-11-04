@@ -7,7 +7,7 @@ module.exports = {
   desc : "Supprime un message.",
   schema : "!delete <#channel> <idMessage>\nou\n!delete <urlMessage>",
   authorizations : TiCu.Authorizations.getAuth("command", "delete"),
-  run : function(params, msg, rawParams) {
+  run : function(params, msg) {
     if (params.length < 1) {
       return TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
     }

@@ -19,11 +19,11 @@
   "dependencies": {
     "bignum": "^0.13.1",
     "dateformat": "^3.0.3",
-    "discord.js": "^11.5.1",
+    "discord.js": "^12.4.1",
     "express": "^4.17.1",
     "node-cron": "^2.0.3",
-    "pg": "^7.12.1",
+    "pg": "^8.4.2",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^5.21.1"
+    "sequelize": "^6.3.5"
   }
 }

@@ -6,7 +6,7 @@ module.exports = {
       case "ban":
         return 12
       case "turquoise":
-        return Math.floor(tipoui.roles.get(PUB.roles.vote.id).members.size*90/100)
+        return Math.floor(tipoui.roles.cache.get(PUB.roles.vote.id).members.size*90/100)
       case "text":
       case "prop":
       default:
@@ -35,9 +35,9 @@ module.exports = {
     return json
   },
   autoTurquoise: function(targetId, voteNumber) {
-    const targetMember = tipoui.members.get(targetId)
-    if (targetMember && !targetMember.roles.get(PUB.roles.turquoise.id)) {
-      tipoui.channels.get(PUB.salons.salleDesVotes.id).send(`<@&${PUB.roles.vote.id}>`, TiCu.VotesCollections.CreateEmbedAnon(targetMember, "auto", TiCu.Vote.voteThreshold("turquoise")))
+    const targetMember = tipoui.members.resolve(targetId)
+    if (targetMember && !targetMember.roles.cache.get(PUB.roles.turquoise.id)) {
+      tipoui.channels.resolve(PUB.salons.salleDesVotes.id).send(`<@&${PUB.roles.vote.id}>`, TiCu.VotesCollections.CreateEmbedAnon(targetMember, "auto", TiCu.Vote.voteThreshold("turquoise")))
         .then(newMsg => {
           if (TiCu.json(this.createJsonForAnonVote(targetMember, 'turquoise', newMsg))) {
             TiCu.Vote.addReactionsToMessage(newMsg)

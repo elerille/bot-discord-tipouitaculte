@@ -14,7 +14,7 @@ module.exports = {
     if (returnData.members[msg.author.id]) {
       const memberData = returnData.members[msg.author.id]
       if (TiCu.Date("raw") - memberData.date < maxReturnTime) {
-        msg.member.addRoles(memberData.roles).then(() => {
+        msg.member.roles.add(memberData.roles).then(() => {
           for (const nmAlias of memberData.nm) {
             let access = []
             for (const nm of Object.values(PUB.nonmixtes)) {
@@ -23,7 +23,7 @@ module.exports = {
               }
             }
             for (const chan of access) {
-              tipoui.channels.get(chan).overwritePermissions(msg.member, {VIEW_CHANNEL: true})
+              tipoui.channels.resolve(chan).createOverwrite(msg.member, {VIEW_CHANNEL: true})
             }
           }
           delete returnData.members[msg.author.id]

@@ -15,7 +15,7 @@ module.exports = {
     const resRegChannel = params[1].match(/(<#)?([0-9]+)(>)?/)
     let channel
     if (resRegChannel) {
-      channel = tipoui.channels.get(resRegChannel[2])
+      channel = tipoui.channels.resolve(resRegChannel[2])
     }
     if (!channel) {
       return TiCu.Commands.help.run([this.alias[0], "le second paramètre doit être un identifiant de salon"], msg)

@@ -13,9 +13,9 @@ module.exports = {
     return []
   },
   addMember: function (memberId) {
-    const member = tipoui.members.get(memberId)
+    const member = tipoui.members.resolve(memberId)
     if (member) {
-      if (member.roles.get(PUB.roles.turquoise.id)) {
+      if (member.roles.cache.get(PUB.roles.turquoise.id)) {
         const jsonAction = {
           action: "read",
           target: AlertingFile
@@ -27,7 +27,7 @@ module.exports = {
             alerting.members.push(memberId)
             jsonAction.content = alerting
             TiCu.json(jsonAction)
-            vigi.channels.get(PUB.salons.alertingVigiServ.id).send(`Inscription : <@${memberId}> - ${memberId}.`)
+            vigi.channels.resolve(PUB.salons.alertingVigiServ.id).send(`Inscription : <@${memberId}> - ${memberId}.`)
             member.send(`L'inscription a été validée, merci !`)
           } else member.send(`L'inscription a déjà été effectuée, merci !`)
         } else member.send(`L'inscription n'a pas pu être réalisée, désolæ...`)
@@ -35,7 +35,7 @@ module.exports = {
     }
   },
   removeMember: function (memberId) {
-    const member = tipoui.members.get(memberId)
+    const member = tipoui.members.resolve(memberId)
     const jsonAction = {
       action: "read",
       target: AlertingFile
@@ -47,7 +47,7 @@ module.exports = {
         alerting.members = alerting.members.filter(value => value !== memberId)
         jsonAction.content = alerting
         TiCu.json(jsonAction)
-        vigi.channels.get(PUB.salons.alertingVigiServ.id).send(`Désinscription : <@${memberId}> - ${memberId}.`)
+        vigi.channels.resolve(PUB.salons.alertingVigiServ.id).send(`Désinscription : <@${memberId}> - ${memberId}.`)
         if (member) {
           member.send(`La désinscription a été réalisée.`)
         }
@@ -61,13 +61,13 @@ module.exports = {
       const members = TiCu.Alerte.getMembers()
       const message = `Alerte lancée dans le salon <#${channel}> ${target ? "sur le message <" + target + "> " : ""}\n ${alert}`
       members.forEach(memberId => {
-        tipoui.members.get(memberId).send(message)
+        tipoui.members.resolve(memberId).send(message)
       })
       TiCu.Alerte.updateAlertTiming()
     }
   },
   sendVigi: function (author, channel, alert, target = null) {
-    vigi.channels.get(PUB.salons.alertingVigiServ.id).send(`Alerte lancée par <@${author}> dans le salon <#${channel}> ${target ? "sur le message <" + target + "> " : ""}\n ${alert}`)
+    vigi.channels.resolve(PUB.salons.alertingVigiServ.id).send(`Alerte lancée par <@${author}> dans le salon <#${channel}> ${target ? "sur le message <" + target + "> " : ""}\n ${alert}`)
   },
   updateAlertTiming: function() {
     const jsonAction = {

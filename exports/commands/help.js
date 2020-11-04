@@ -1,8 +1,8 @@
 function getNameList(idList, type) {
   let nameList = ""
   for (const id of idList) {
-    const tipouiMember = tipoui.members.get(id)
-    const tipouiRole = tipoui.roles.get(id)
+    const tipouiMember = tipoui.members.resolve(id)
+    const tipouiRole = tipoui.roles.cache.get(id)
     if (id !== PUB.salons.debug.id) {
       nameList += (
         type === "chans" ?
@@ -42,7 +42,7 @@ function getDesc(auth, type) {
 function displayCommands(msg, full = false) {
   let cpt = 0
   const aliasList = []
-  let embed = new DiscordNPM.RichEmbed()
+  let embed = new DiscordNPM.MessageEmbed()
   embed.setColor(38600)
 
   msg.channel.send(full ? "Voici la liste exhaustive de mes fonctions :" : "Voici la liste de mes fonctions que vous pouvez utiliser :")
@@ -56,7 +56,7 @@ function displayCommands(msg, full = false) {
         cpt++
         if (cpt > 24) {
           msg.channel.send(embed)
-          embed = new DiscordNPM.RichEmbed()
+          embed = new DiscordNPM.MessageEmbed()
           embed.setColor(38600)
           cpt = 0
         }
@@ -80,11 +80,8 @@ module.exports = {
   authorizations : TiCu.Authorizations.getAuth("command", "help"),
   run : function(params, msg) {
     const target = params[0]
-    let embed = new DiscordNPM.RichEmbed()
+    let embed = new DiscordNPM.MessageEmbed()
     embed.setColor(38600)
-    let cpt = 0
-    let firstEmbed = true
-    const aliasList = []
     if(TiCu.Commands[target]) {
       const cmd = TiCu.Commands[target]
       const chansDesc = getDesc(cmd.authorizations[msg.guild.id].chans, "chans")
@@ -115,7 +112,7 @@ module.exports = {
         .addField("Utilisateurices :", usersDesc, true)
       msg.channel.send(embed)
     } else if(target === "auto") {
-      Object.keys(TiCu.Auto).forEach((key, i, array) => {
+      Object.keys(TiCu.Auto).forEach((key) => {
         if(TiCu.Authorizations.Auto(TiCu.Auto[key], msg)) {
           let cmd = TiCu.Auto[key]
           embed.addField(cmd.name, `${cmd.desc}\nhelp command : \`!help ${cmd.methodName}\``)

@@ -1,6 +1,6 @@
 function createUpdateEmbed(previousEmbed, newVote = false) {
   const previousFields = previousEmbed ? previousEmbed.fields : undefined
-  const embed = new DiscordNPM.RichEmbed()
+  const embed = new DiscordNPM.MessageEmbed()
   embed.setAuthor("Recensement des votant-e-s")
   embed.setDescription("Vote de recensement des votant·e·s présent·es sur le serveur. Celui-ci sera relancé chaque 28 du mois à 13h12 et retirera le rôle de votant·e aux personnes n'ayant pas répondu ou répondant négativement.")
 
@@ -38,10 +38,10 @@ module.exports = {
       target : CensusFile
     }
     const censusData = TiCu.json(jsonData)
-    const voteMembers = tipoui.roles.get(PUB.roles.vote.id).members
+    const voteMembers = tipoui.roles.cache.get(PUB.roles.vote.id).members
     for (const member of voteMembers.array()) {
       if (!censusData.members.includes(member.id)) {
-        member.removeRole(PUB.roles.vote.id).then(() => {
+        member.roles.remove(PUB.roles.vote.id).then(() => {
           TiCu.Log.Census(member)
           member.send("Suite à l'absence de réaction sur le vote de recensement, je t'ai enlevé le rôle de votant-e. Tu peux le récupérer simplement en votant sur le prochain vote de recensement.")
         })
@@ -60,14 +60,14 @@ module.exports = {
     }
     const censusData = TiCu.json(jsonData)
     if (censusData.id) {
-      tipoui.channels.get(PUB.salons.salleDesVotes.id).fetchMessage(censusData.id).then(
+      tipoui.channels.resolve(PUB.salons.salleDesVotes.id).messages.fetch(censusData.id).then(
         msg => {
           msg.edit(createUpdateEmbed(msg.embeds[0]))
           createCollector(msg)
         }
       )
     } else {
-      tipoui.channels.get(PUB.salons.salleDesVotes.id).send(`<@&${PUB.roles.vote.id}>`, createUpdateEmbed()).then(
+      tipoui.channels.resolve(PUB.salons.salleDesVotes.id).send(`<@&${PUB.roles.vote.id}>`, createUpdateEmbed()).then(
         msg => {
           msg.react("✅")
           msg.react("❌")
@@ -104,15 +104,15 @@ module.exports = {
       msg.edit(createUpdateEmbed(msg.embeds[0], true))
     }
     if (reaction.emoji.name === "✅") {
-      tipoui.fetchMember(userId).then(member => {
-        if (!member.roles.get(PUB.roles.vote.id)) {
-          member.addRole(PUB.roles.vote.id).then(() => member.send("Tu as récupéré le rôle de votant·e"))
+      tipoui.members.resolve(userId).then(member => {
+        if (!member.roles.cache.get(PUB.roles.vote.id)) {
+          member.roles.add(PUB.roles.vote.id).then(() => member.send("Tu as récupéré le rôle de votant·e"))
         }
       })
     } else {
-      tipoui.fetchMember(userId).then(member => {
-        if (member.roles.get(PUB.roles.vote.id)) {
-          member.removeRole(PUB.roles.vote.id).then(() => member.send("Tu as abandonné le rôle de votant·e"))
+      tipoui.members.resolve(userId).then(member => {
+        if (member.roles.cache.get(PUB.roles.vote.id)) {
+          member.roles.remove(PUB.roles.vote.id).then(() => member.send("Tu as abandonné le rôle de votant·e"))
         }
       })
     }
@@ -128,9 +128,9 @@ module.exports = {
       TiCu.Census.addUserToData(userId)
       msg.edit(createUpdateEmbed(msg.embeds[0], true))
     }
-    tipoui.fetchMember(userId).then(member => {
-      if (!member.roles.get(PUB.roles.vote.id)) {
-        member.addRole(PUB.roles.vote.id).then(() => member.send("Tu as récupéré le rôle de votant·e"))
+    tipoui.members.resolve(userId).then(member => {
+      if (!member.roles.cache.get(PUB.roles.vote.id)) {
+        member.roles.add(PUB.roles.vote.id).then(() => member.send("Tu as récupéré le rôle de votant·e"))
       }
     })
   },

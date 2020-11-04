@@ -22,7 +22,7 @@ module.exports = {
       case "+":
       case "ajouter":
       case "add":
-        if(!(target.roles.get(PUB.roles.quarantaineRole.id))) {
+        if(!(target.roles.cache.get(PUB.roles.quarantaineRole.id))) {
           msg.reply(`voulez-vous mettre <@${target.id}> en quarantaine ?`)
             .then(newMsg => {
               newMsg
@@ -36,15 +36,15 @@ module.exports = {
                     const reaction = collected.firstKey();
                     if (reaction === "👍") {
                       let roles = []
-                      target.roles.array().forEach((role, i) => {if(!(role.name.match(colorRole) || role.name === "@everyone" || role.name === "@here" || role.id === PUB.roles.nso.id)) {roles.push(role.id)}})
+                      target.roles.array().forEach((role) => {if(!(role.name.match(colorRole) || role.name === "@everyone" || role.name === "@here" || role.id === PUB.roles.nso.id)) {roles.push(role.id)}})
                       let json = {"action": "write","content": {}}
                       json.target = quarantaineFile
                       json.content[target.id] = {"roles": roles}
                       json.content[target.id].date = TiCu.Date("fr")
                       if(TiCu.json(json)) {
                         try {
-                          target.addRole(PUB.roles.quarantaineRole.id)
-                          target.removeRoles(roles)
+                          target.roles.add(PUB.roles.quarantaineRole.id)
+                          target.roles.removes(roles)
                             .then(() => TiCu.Log.Commands.Quarantaine(true, target, reason, msg))
                         } catch (error) {TiCu.Log.Error("quarantaine", "erreur de modification des rôles", msg)}
                       } else TiCu.Log.Error("quarantaine", "impossible d'enregistrer les rôles actuels", msg)
@@ -64,7 +64,7 @@ module.exports = {
       case "retirer":
       case "supprimer":
       case "remove":
-        if((target.roles.get(PUB.roles.quarantaineRole.id))) {
+        if((target.roles.cache.get(PUB.roles.quarantaineRole.id))) {
           msg.reply(`voulez-vous sortir <@${target.id}> de quarantaine ?`)
             .then(newMsg => {
               newMsg
@@ -86,8 +86,8 @@ module.exports = {
                         if(read) {
                           if(TiCu.json(jsonRemove)) {
                             try {
-                              target.removeRole(PUB.roles.quarantaineRole.id)
-                              target.addRoles(read[target.id].roles)
+                              target.roles.remove(PUB.roles.quarantaineRole.id)
+                              target.roles.add(read[target.id].roles)
                                 .then(() => TiCu.Log.Commands.Quarantaine(false, target, reason, msg))
                             } catch (error) {TiCu.Log.Error("quarantaine", "erreur de modification des rôles")}
                           } else TiCu.Log.Error("quarantaine", "erreur de suppression des données de quarantaine", msg)
@@ -105,7 +105,7 @@ module.exports = {
         break
       case "statut":
       case "status":
-        return msg.reply(`<@${target.id}> ${!(target.roles.get(PUB.roles.quarantaineRole.id)) ? "est" : "n'est pas"} en quarantaine.`)
+        return msg.reply(`<@${target.id}> ${!(target.roles.cache.get(PUB.roles.quarantaineRole.id)) ? "est" : "n'est pas"} en quarantaine.`)
       default:
         return TiCu.Commands.help.run([this.alias[0], "action non reconnue"], msg)
       }

@@ -68,14 +68,14 @@ function levelChange(entry, newLevel, previousLevel) {
     switch (entry.notification) {
       case "dm":
       case "mp":
-        tipoui.members.get(entry.id).send(`Tu viens de passer niveau ${newLevel} ! Félicitations !\nSi tu ne souhaites plus recevoir ces notifications, n'hésites pas à désactiver cette fonctionnalité en allant dans le channel <#${PUB.salons.bots.id}> et en lançant la commande \`!level notif off\`\nEt si au contraire tu souhaites exposer au monde ces notifications, n'hésites pas à aller dans le channel <#${PUB.salons.bots.id}> et à lancer la commande \`!level notif public\``)
+        tipoui.members.resolve(entry.id).send(`Tu viens de passer niveau ${newLevel} ! Félicitations !\nSi tu ne souhaites plus recevoir ces notifications, n'hésites pas à désactiver cette fonctionnalité en allant dans le channel <#${PUB.salons.bots.id}> et en lançant la commande \`!level notif off\`\nEt si au contraire tu souhaites exposer au monde ces notifications, n'hésites pas à aller dans le channel <#${PUB.salons.bots.id}> et à lancer la commande \`!level notif public\``)
         break
       case "off":
         break
       case "":
       case "public":
       default:
-        tipoui.channels.get(PUB.salons.bots.id).send(`<@${entry.id}> vient de passer niveau ${newLevel} ! Félicitations !\nSi tu ne souhaites plus recevoir ces notifications, n'hésites pas à désactiver cette fonctionnalité en lançant ici-même la commande \`!level notif off\`\nEt si tu préfères avoir ces notifications en privé, tu peux lancer ici-même la commande \`!level notif dm\``)
+        tipoui.channels.resolve(PUB.salons.bots.id).send(`<@${entry.id}> vient de passer niveau ${newLevel} ! Félicitations !\nSi tu ne souhaites plus recevoir ces notifications, n'hésites pas à désactiver cette fonctionnalité en lançant ici-même la commande \`!level notif off\`\nEt si tu préfères avoir ces notifications en privé, tu peux lancer ici-même la commande \`!level notif dm\``)
         break
     }
     if (!dev && newLevel%4 === 0 && newLevel !== 0) {
@@ -105,8 +105,8 @@ module.exports = {
   updateXp: function (type, value, target) {
     let booster = 1
     for (const role of Object.values(PUB.roles)) {
-      const member = tipoui.members.get(target)
-      if (member && member.roles && member.roles.get(role.id)) booster += (role.xpAddedMultiplicator ? role.xpAddedMultiplicator : 0)
+      const member = tipoui.members.resolve(target)
+      if (member && member.roles && member.roles.cache.get(role.id)) booster += (role.xpAddedMultiplicator ? role.xpAddedMultiplicator : 0)
     }
     value = value * booster
     MemberXP.findOrCreate({where: {id: target}, defaults: {level: 0, xp: 0, activated: true}}).then(

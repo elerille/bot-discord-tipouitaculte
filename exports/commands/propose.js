@@ -15,7 +15,7 @@ module.exports = {
     for (let i=0;i<rawParams.length;i++) {
       description += " " + rawParams[i]
     }
-    tipoui.channels.get(PUB.salons.whiteboard.id).send(
+    tipoui.channels.resolve(PUB.salons.whiteboard.id).send(
       TiCu.VotesCollections.CreateEmbedAnon(
         undefined,
         type,

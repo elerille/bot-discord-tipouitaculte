@@ -30,7 +30,7 @@ module.exports = {
   },
   addMember: function(id) {
     const membersData = TiCu.NewMembers.getData()
-    const member = tipoui.members.get(id)
+    const member = tipoui.members.resolve(id)
     if (member && membersData) {
       membersData.members[id] = {
         id: id,
@@ -86,9 +86,9 @@ module.exports = {
     const notify = TiCu.NewMembers.getMembersToNotify()
     const kick = TiCu.NewMembers.getMembersToKick()
     for (const memberId of notify) {
-      const tipouiMember = tipoui.members.get(memberId)
-      if (tipouiMember && !tipouiMember.roles.get(PUB.roles.phosphate.id)) {
-        tipoui.channels.get(PUB.salons.genTP.id).send(`<@${memberId}>, tu n'as pas encore fait ta présentation ou celle-ci n'a pas encore été validée depuis ton arrivée il y a deux semaines. Je te laisse lire les Saintes Règles, rajouter tes pronoms dans ton pseudo et nous faire une ptite présentation dans le salon qui va bien (ou bien la compléter) :heart:`)
+      const tipouiMember = tipoui.members.resolve(memberId)
+      if (tipouiMember && !tipouiMember.roles.cache.get(PUB.roles.phosphate.id)) {
+        tipoui.channels.resolve(PUB.salons.genTP.id).send(`<@${memberId}>, tu n'as pas encore fait ta présentation ou celle-ci n'a pas encore été validée depuis ton arrivée il y a deux semaines. Je te laisse lire les Saintes Règles, rajouter tes pronoms dans ton pseudo et nous faire une ptite présentation dans le salon qui va bien (ou bien la compléter) :heart:`)
         TiCu.NewMembers.notifiedMember(memberId)
         TiCu.Log.NewMembers(memberId, true)
       } else {
@@ -96,8 +96,8 @@ module.exports = {
       }
     }
     for (const memberId of kick) {
-      const tipouiMember = tipoui.members.get(memberId)
-      if (tipouiMember && !tipouiMember.roles.get(PUB.roles.phosphate.id)) {
+      const tipouiMember = tipoui.members.resolve(memberId)
+      if (tipouiMember && !tipouiMember.roles.cache.get(PUB.roles.phosphate.id)) {
         try {
           tipouiMember.send(`<@${memberId}>, tu n'as pas encore fait ta présentation ou celle-ci n'a pas encore été validée depuis ton arrivée il y a quatre semaines. Je suis donc dans l'obligation de te retirer du serveur.\n Cela dit, rien n'est définitif et tu peux revenir si et quand tu le souhaites !`)
         } catch {}
@@ -116,9 +116,9 @@ module.exports = {
     if (lastArrivals.length > NB_MAX_ARRIVALS) {
       TiCu.Commands['raid'].run()
       for (const member of lastArrivals) {
-        const tipouiMember = tipoui.members.get(member.id)
+        const tipouiMember = tipoui.members.resolve(member.id)
         tipouiMember.ban()
-        vigi.channels.get(PUB.servers.vigi.grandeTour).send(`Ban de ${member.user.username} sur suspission de raid`)
+        vigi.channels.resolve(PUB.servers.vigi.grandeTour).send(`Ban de ${member.user.username} sur suspission de raid`)
       }
     }
   }

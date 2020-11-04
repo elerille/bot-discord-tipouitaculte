@@ -8,41 +8,41 @@ module.exports = function(param) {
   let type = param.match(role) ? "role" : param.match(user) ? "user" : param.match(channel) ? "channel" : param.match(discriminated) ? "discriminated" : param.match(snow) ? "snow" : "text"
   switch (type) {
     case "role":
-      target = tipoui.roles.get(param.match(snow)[1])
+      target = tipoui.roles.resolve(param.match(snow)[1])
       break
     case "user":
-      target = tipoui.members.get(param.match(snow)[1])
+      target = tipoui.members.resolve(param.match(snow)[1])
       break
     case "channel":
-      target = Discord.channels.get(param.match(snow)[1])
+      target = Discord.channels.resolve(param.match(snow)[1])
       break
     case "discriminated":
-      target = tipoui.members.find(e => e.user.tag === param)
+      target = tipoui.members.cache.find(e => e.user.tag === param)
       break
     case "snow":
-      if(tipoui.members.get(param.match(snow)[1])) {
-        target = tipoui.members.get(param.match(snow)[1])
-      } else if(Discord.channels.get(param.match(snow)[1])) {
-        target = Discord.channels.get(param.match(snow)[1])
-      } else if(tipoui.roles.get(param.match(snow)[1])) {
-        target = tipoui.roles.get(param.match(snow)[1])
+      if(tipoui.members.resolve(param.match(snow)[1])) {
+        target = tipoui.members.resolve(param.match(snow)[1])
+      } else if(Discord.channels.resolve(param.match(snow)[1])) {
+        target = Discord.channels.resolve(param.match(snow)[1])
+      } else if(tipoui.roles.cache.get(param.match(snow)[1])) {
+        target = tipoui.roles.cache.get(param.match(snow)[1])
       } else {
         target = false
       }
       break
     case "text":
-      if(tipoui.members.find(e => e.user.username === param)) {
-        target = tipoui.members.find(e => e.user.username === param)
-      } else if(tipoui.members.find(e => e.displayName === param)) {
-        target = tipoui.members.find(e => e.displayName === param)
-      } else if(tipoui.channels.find(e => e.name === param)) {
-        target = tipoui.channels.find(e => e.name === param)
-      } else if(Discord.guilds.get(PUB.servers.vigi.id).channels.find(e => e.name === param)) {
-        target = Discord.guilds.get(PUB.servers.vigi.id).channels.find(e => e.name === param)
-      } else if(Discord.guilds.get(PUB.servers.debug.id).channels.find(e => e.name === param)) {
-        target = Discord.guilds.get(PUB.servers.debug.id).channels.find(e => e.name === param)
-      } else if(tipoui.roles.find(e => e.name === param)) {
-        target = tipoui.roles.find(e => e.name === param)
+      if(tipoui.members.cache.find(e => e.user.username === param)) {
+        target = tipoui.members.cache.find(e => e.user.username === param)
+      } else if(tipoui.members.cache.find(e => e.displayName === param)) {
+        target = tipoui.members.cache.find(e => e.displayName === param)
+      } else if(tipoui.channels.cache.find(e => e.name === param)) {
+        target = tipoui.channels.cache.find(e => e.name === param)
+      } else if(Discord.guilds.resolve(PUB.servers.vigi.id).channels.cache.find(e => e.name === param)) {
+        target = Discord.guilds.resolve(PUB.servers.vigi.id).channels.cache.find(e => e.name === param)
+      } else if(Discord.guilds.resolve(PUB.servers.debug.id).channels.cache.find(e => e.name === param)) {
+        target = Discord.guilds.resolve(PUB.servers.debug.id).channels.cache.find(e => e.name === param)
+      } else if(tipoui.roles.cache.find(e => e.name === param)) {
+        target = tipoui.roles.cache.find(e => e.name === param)
       } else {
         target = false
       }

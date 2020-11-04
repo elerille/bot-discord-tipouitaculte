@@ -16,9 +16,9 @@ module.exports = {
     let content = msg.content.match(crop) ? msg.content.substring(msg.content.match(crop)[0].length) : false
     if(target) {
       if(content) {
-        let type = Discord.channels.get(target) ? "channels" : Discord.users.get(target) ? "users" : false
+        let type = Discord.channels.resolve(target) ? "channels" : Discord.users.resolve(target) ? "users" : false
         if(type){
-          Discord[type].get(target).send(content)
+          Discord[type].resolve(target).send(content)
             .then(sentMsg => TiCu.Log.Commands.Send(msg, sentMsg))
             .catch(error => TiCu.Log.Error("send", "erreur inattendue " + error, msg))
         } else TiCu.Log.Error("send", "envoyer à un rôle ?", msg)
