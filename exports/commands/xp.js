@@ -30,10 +30,10 @@ module.exports = {
       } else {
         const mentionParam = params[1] ? TiCu.Mention(params[1]) : null
         if (mentionParam) {
-          if (tipoui.members.get(mentionParam.id)) {
+          if (tipoui.members.resolve(mentionParam.id)) {
             TiCu.Xp.updateXp(params[0] === "give" ? "add" : "remove", Number(params[2]), mentionParam.id)
             TiCu.Log.Commands.Xp(mentionParam.displayName, params[2], params[0] === "give", reason, msg)
-          } else if (tipoui.roles.get(mentionParam.id) || tipoui.channels.get(mentionParam.id)) {
+          } else if (tipoui.roles.cache.get(mentionParam.id) || tipoui.channels.resolve(mentionParam.id)) {
             giveXpMembers(mentionParam, params, reason, msg)
           } else {
             TiCu.Commands.help.run([this.alias[0], "paramètres invalides"], msg)
@@ -48,7 +48,7 @@ module.exports = {
               }
             }
             if (roleId) {
-              giveXpMembers(tipoui.roles.get(roleId), params, reason, msg)
+              giveXpMembers(tipoui.roles.cache.get(roleId), params, reason, msg)
               break
             }
           }

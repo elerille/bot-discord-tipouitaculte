@@ -1,11 +1,11 @@
 module.exports = {
   fetchMessageFromUrl: function (url, msg, cmd = "react") {
     const urlParts = url.split("/")
-    const server = Discord.guilds.get(urlParts[4])
+    const server = Discord.guilds.resolve(urlParts[4])
     if(server) {
-      const chan = server.channels.get(urlParts[5])
+      const chan = server.channels.resolve(urlParts[5])
       if(chan) {
-        return chan.fetchMessage(urlParts[6])
+        return chan.messages.fetch(urlParts[6])
       } else return TiCu.Log.Error(cmd, "salon introuvable", msg)
     } else return TiCu.Log.Error(cmd, "serveur introuvable", msg)
   },
@@ -13,7 +13,7 @@ module.exports = {
     const server = tipoui
     const chan = TiCu.Mention(channelId)
     if (chan) {
-      return chan.fetchMessage(messageId)
+      return chan.messages.fetch(messageId)
     } else {
       return TiCu.Log.Error(cmd, "salon introuvable", msg)
     }

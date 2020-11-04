@@ -10,7 +10,7 @@ const fakeLog = {
 
 function createLogger(type, server) {
   if (server[type] && server[type] !== "") {
-    global[type][server.id] = Discord.channels.get(dev ? PUB.salons.logsDev.id : server[type])
+    global[type][server.id] = Discord.channels.resolve(dev ? PUB.salons.logsDev.id : server[type])
   } else {
     global[type][server.id] = fakeLog
   }
@@ -19,9 +19,9 @@ function createLogger(type, server) {
 // Discord
 Discord.login( CFG.discordToken )
 Discord.once("ready", () => {
-  global.tipoui = Discord.guilds.get(PUB.servers.commu.id)
-  global.vigi = Discord.guilds.get(PUB.servers.vigi.id)
-  global.cdc = Discord.guilds.get(PUB.servers.cdc.id)
+  global.tipoui = Discord.guilds.resolve(PUB.servers.commu.id)
+  global.vigi = Discord.guilds.resolve(PUB.servers.vigi.id)
+  global.cdc = Discord.guilds.resolve(PUB.servers.cdc.id)
   global.maxilog = []
   global.minilog = []
   for (const server of Object.values(PUB.servers)) {
@@ -54,45 +54,45 @@ Discord.once("ready", () => {
         "📜" : "notifactu",
         "🎉" : "notifevent"
       }
-      tipoui.channels.get(PUB.salons.rolessalons.id).fetchMessage(messageForRolesId).then(msg => {
+      tipoui.channels.resolve(PUB.salons.rolessalons.id).messages.fetch(messageForRolesId).then(msg => {
         msg.createReactionCollector((reaction, user) => {return (!user.bot) && (Object.keys(emojisRoles).includes(reaction.emoji.name))})
           .on(
             "collect",
             reaction => {
-              for (const user of reaction.users.array()) {
+              for (const user of reaction.users.cache.array()) {
                 if (!user.bot) {
-                  const member = tipoui.members.get(user.id)
+                  const member = tipoui.members.resolve(user.id)
                   const askedRoleId = PUB.roles[emojisRoles[reaction.emoji.name]].id
-                  if (member.roles.keyArray().includes(askedRoleId)) {
-                    member.removeRole(askedRoleId)
+                  if (member.roles.cache.keyArray().includes(askedRoleId)) {
+                    member.roles.remove(askedRoleId)
                     TiCu.Log.AutoRole(member, emojisRoles[reaction.emoji.name], "remove")
                   } else {
-                    member.addRole(askedRoleId)
+                    member.roles.add(askedRoleId)
                     TiCu.Log.AutoRole(member, emojisRoles[reaction.emoji.name], "add")
                   }
-                  reaction.remove(user.id)
+                  reaction.users.remove(user.id)
                 }
               }
             }
           )
       })
-      tipoui.channels.get(PUB.salons.rolessalons.id).fetchMessage(messageForExistransinterId).then(msg => {
+      tipoui.channels.resolve(PUB.salons.rolessalons.id).messages.fetch(messageForExistransinterId).then(msg => {
         msg.createReactionCollector((reaction, user) => {return (!user.bot) && (["❌", "✅"].includes(reaction.emoji.name))})
           .on(
             "collect",
             reaction => {
-              for (const user of reaction.users.array()) {
+              for (const user of reaction.users.cache.array()) {
                 if (!user.bot) {
-                  const member = tipoui.members.get(user.id)
+                  const member = tipoui.members.resolve(user.id)
                   const askedRoleId = PUB.roles.notifexistransinter.id
-                  if (member.roles.keyArray().includes(askedRoleId) && reaction.emoji.name === "❌") {
-                    member.removeRole(askedRoleId)
+                  if (member.roles.cache.keyArray().includes(askedRoleId) && reaction.emoji.name === "❌") {
+                    member.roles.remove(askedRoleId)
                     TiCu.Log.AutoRole(member, "notifexistransinter", "remove")
-                  } else if (!member.roles.keyArray().includes(askedRoleId) && reaction.emoji.name === "✅") {
-                    member.addRole(askedRoleId)
+                  } else if (!member.roles.cache.keyArray().includes(askedRoleId) && reaction.emoji.name === "✅") {
+                    member.roles.add(askedRoleId)
                     TiCu.Log.AutoRole(member, "notifexistransinter", "add")
                   }
-                  reaction.remove(user.id)
+                  reaction.users.remove(user.id)
                 }
               }
             }
@@ -106,7 +106,7 @@ Discord.once("ready", () => {
           const hashedDate = hash(TiCu.Date("raw").toString().substr(0, 8))
           if (activeInvite) {
             if (req.params.key === hashedDate) {
-              Discord.channels.get(PUB.salons.invite.id)
+              Discord.channels.resolve(PUB.salons.invite.id)
                 .createInvite({maxUses: 1, maxAge: 300})
                 .then(invite => {
                     res.send(invite.url)

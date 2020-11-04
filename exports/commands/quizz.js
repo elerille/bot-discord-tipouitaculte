@@ -20,7 +20,7 @@ module.exports = {
             result += "  -> Pas de membre\n"
           } else {
             for (const memberId of teamMembers[team]) {
-              const tipouiMember = tipoui.members.get(memberId)
+              const tipouiMember = tipoui.members.resolve(memberId)
               result += `  -> ${tipouiMember ? tipouiMember.nickname : "Utilisateur inconnu"} - ${memberId}\n`
             }
           }

@@ -19,7 +19,7 @@ module.exports = {
       case "add":
       case "+":
       case "addroles":
-        action = "addRoles"
+        action = "add"
         break
       case "enlever":
       case "retirer":
@@ -28,7 +28,7 @@ module.exports = {
       case "removeroles":
       case "-":
       case "removeRoles":
-        action = "removeRoles"
+        action = "remove"
         break
       default:
         action = false
@@ -46,7 +46,7 @@ module.exports = {
     if(target) {
       if(action) {
         if(roles && roles.length === params.length - 2) {
-          target[action](roles)
+          target.roles[action](roles)
             .then(() => TiCu.Log.Commands.Roles(target, action, roles, msg))
             .catch(() => TiCu.Log.Error("roles", "erreur API", msg))
         } else TiCu.Log.Error("roles", "liste de rôles invalide", msg)

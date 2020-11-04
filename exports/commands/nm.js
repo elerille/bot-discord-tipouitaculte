@@ -48,13 +48,13 @@ module.exports = {
         if(access && access.length > 0) {
           if(vigi) {
             if(msg.user.id === PUB.users.yuffy.id || msg.user.id === PUB.users.xenolune.id) {
-              Discord.guilds.get(PUB.servers.vigi.id).channels.get("554775874293989407").createInvite()
+              Discord.guilds.resolve(PUB.servers.vigi.id).channels.resolve("554775874293989407").createInvite()
                 .then(invite => target.send(`Bienvenue pami les Vigilant·es, félicitations pour la confiance que nous t'accordons, et merci pour celle que tu nous accordes.\nDe nouveaux salons te sont accessibles sur Tipoui Community +, ainsi que le serveur Vigi au complet, qui nous aide à séparer nos activités et à nous reposer un peu si besoin.\n${invite.url}`))
             } else return TiCu.Log.Error("non-mixtes", "seules les admins peuvent ajouter de nouveaulles Vigilant·es", msg)
           }
           const promises = []
           for(const chan of access) {
-            promises.push(tipoui.channels.get(chan).overwritePermissions(target, action))
+            promises.push(tipoui.channels.resolve(chan).createOverwrite(target, action))
           }
           Promise.all(promises).then(() => TiCu.Log.Commands.NM(target, action.VIEW_CHANNEL, access.length, msg))
             .catch(() => TiCu.Log.Error("NM", `erreur API, une admin doit vérifier les autorisations`, msg))

@@ -23,7 +23,7 @@ module.exports = {
     let role
     if (target.roles) {
       if (target.roles.type !== "any") {
-        const member = tipoui.members.get(msg.author.id)
+        const member = tipoui.members.resolve(msg.author.id)
         if (member) {
           let array = Array.from(member.roles.values())
           let filtered = array.filter(e => target.roles.list.includes(e.id))

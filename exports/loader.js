@@ -52,7 +52,7 @@ function parseForAutoCommands(msg) {
 }
 
 function createEmbedCopy(msg, user, edited = false, previousContent) {
-  let embed = new DiscordNPM.RichEmbed()
+  let embed = new DiscordNPM.MessageEmbed()
     .setColor(user.displayColor)
     .setAuthor(user.displayName, user.user.avatarURL, msg.url)
     .setDescription(edited ? previousContent : msg.content)
@@ -75,7 +75,7 @@ function createEmbedCopy(msg, user, edited = false, previousContent) {
 }
 
 function getMessageFromServ(serv, originMsg, channel) {
-  const chan = serv.channels.get(channel)
+  const chan = serv.channels.resolve(channel)
   if (chan) {
     return chan.messages.find(
       msg => msg.author.bot && msg.embeds && msg.embeds[0].author.url === originMsg.url
@@ -290,14 +290,14 @@ module.exports = {
       TiCu.Xp.processXpFromMessage("add", msg)
       if(!msg.author.bot) {
         if(msg.channel.type === "dm" ) {
-          let user = tipoui.members.get(msg.author.id) ? tipoui.members.get(msg.author.id) : undefined
+          let user = tipoui.members.resolve(msg.author.id) ? tipoui.members.resolve(msg.author.id) : undefined
           if(user) {
-            if(!user.roles.find(e => e.id === PUB.roles.quarantaineRole.id)) {
+            if(!user.roles.cache.find(e => e.id === PUB.roles.quarantaineRole.id)) {
               if(msg.content.match(cmdRegex)) {
                 parseAndRunCommand(msg)
               } else {
                 let embed = createEmbedCopy(msg, user)
-                vigi.channels.get(PUB.salons.dmVigiServ.id).send(embed)
+                vigi.channels.resolve(PUB.salons.dmVigiServ.id).send(embed)
                   .then(() => TiCu.Log.DM(embed, msg))
               }
             } else msg.reply("utilise plutôt <#" + PUB.salons.quarantaineUser.id + "> s'il te plaît. Ce message n'a pas été transmis.")
@@ -305,17 +305,17 @@ module.exports = {
         } else if(msg.channel.id === PUB.salons.quarantaineUser.id || msg.channel.id === PUB.salons.quarantaineVigiServ.id) {
           if(msg.channel.id === PUB.salons.quarantaineUser.id) {
             let user = msg.member
-            vigi.channels.get(PUB.salons.quarantaineVigiServ.id).send(createEmbedCopy(msg, user))
+            vigi.channels.resolve(PUB.salons.quarantaineVigiServ.id).send(createEmbedCopy(msg, user))
               .then(newMsg => TiCu.Log.Quarantaine("reçu", newMsg, msg))
           } else if(msg.channel.id === PUB.salons.quarantaineVigiServ.id) {
-            tipoui.channels.get(PUB.salons.quarantaineUser.id).send(msg.content)
+            tipoui.channels.resolve(PUB.salons.quarantaineUser.id).send(msg.content)
               .then(newMsg => TiCu.Log.Quarantaine("envoyé", newMsg, msg))
           }
         } else if(msg.channel.id === PUB.salons.invite.id) {
           if(msg.content.match(cmdRegex)) {
             parseAndRunCommand(msg)
           }
-          tipoui.channels.get(PUB.salons.inviteArchive.id).send(createEmbedCopy(msg, msg.member)).then().catch()
+          tipoui.channels.resolve(PUB.salons.inviteArchive.id).send(createEmbedCopy(msg, msg.member)).then().catch()
         } else if(msg.content.match(cmdRegex)) {
           parseAndRunCommand(msg)
         } else {
@@ -341,9 +341,9 @@ module.exports = {
       if(!oldMsg.author.bot) {
         if(newMsg.channel.type === "dm" ) {
           if(!oldMsg.content.match(cmdRegex)) {
-            let user = tipoui.members.get(newMsg.author.id) ? tipoui.members.get(newMsg.author.id) : undefined
+            let user = tipoui.members.resolve(newMsg.author.id) ? tipoui.members.resolve(newMsg.author.id) : undefined
             if (user) {
-              if (!user.roles.find(e => e.id === PUB.roles.quarantaineRole.id)) {
+              if (!user.roles.cache.find(e => e.id === PUB.roles.quarantaineRole.id)) {
                 const previousBotEmbed = retrieveMessageForEdit(oldMsg, PUB.salons.dmVigiServ.id)
                 if (previousBotEmbed) {
                   let embed = createEmbedCopy(newMsg, user, true, previousBotEmbed.embeds[0].description)
@@ -407,29 +407,29 @@ module.exports = {
         jsonActionData.target = ReturnFile
         const returnData = TiCu.json(jsonActionData)
         if (returnData.members[member.id] && TiCu.Date("raw") - returnData.members[member.id].date < maxReturnTime) {
-          tipoui.channels.get(PUB.salons.genTP.id).send(`Oh ! Rebienvenue <@${member.id}> ! Tu peux utiliser la fonction de retour (\`!retour\`) dans <#${PUB.salons.invite.id}> pour récupérer tes rôles et accès. N'oublie cependant pas de rajouter tes pronoms dans ton pseudo tout de même`)
+          tipoui.channels.resolve(PUB.salons.genTP.id).send(`Oh ! Rebienvenue <@${member.id}> ! Tu peux utiliser la fonction de retour (\`!retour\`) dans <#${PUB.salons.invite.id}> pour récupérer tes rôles et accès. N'oublie cependant pas de rajouter tes pronoms dans ton pseudo tout de même`)
         } else {
-          tipoui.channels.get(PUB.salons.genTP.id).send(`Oh ! Bienvenue <@${member.id}> ! Je te laisse lire les Saintes Règles, rajouter tes pronoms dans ton pseudo et nous faire une ptite présentation dans le salon qui va bien :heart:\nSi tu n'as pas fait vérifier ton numéro de téléphone ou d'abonnement Nitro, il va aussi te falloir aussi attendre 10 petites minutes que Discord s'assure tu n'es pas une sorte d'ordinateur mutant venu de l'espace... Même si en vrai ça serait trop cool quand même !`)
+          tipoui.channels.resolve(PUB.salons.genTP.id).send(`Oh ! Bienvenue <@${member.id}> ! Je te laisse lire les Saintes Règles, rajouter tes pronoms dans ton pseudo et nous faire une ptite présentation dans le salon qui va bien :heart:\nSi tu n'as pas fait vérifier ton numéro de téléphone ou d'abonnement Nitro, il va aussi te falloir aussi attendre 10 petites minutes que Discord s'assure tu n'es pas une sorte d'ordinateur mutant venu de l'espace... Même si en vrai ça serait trop cool quand même !`)
         }
         if (kicked || returnData.members[member.id]) {
           maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : Retour de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id} (${kicked ? "kické-e" : "départ volontaire"})`)
-          vigi.channels.get(PUB.servers.vigi.entreesSorties).send(`Retour de ${member.user.toString()} - ${member.user.tag} - ${member.id} (${kicked ? "kické-e" : "départ volontaire"})`)
+          vigi.channels.resolve(PUB.servers.vigi.entreesSorties).send(`Retour de ${member.user.toString()} - ${member.user.tag} - ${member.id} (${kicked ? "kické-e" : "départ volontaire"})`)
         } else {
           maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : Arrivée de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id}`)
-          vigi.channels.get(PUB.servers.vigi.entreesSorties).send(`Arrivée de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
+          vigi.channels.resolve(PUB.servers.vigi.entreesSorties).send(`Arrivée de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
         }
       } else if (member.guild.id === PUB.servers.cdc.id) {
-        let tipouiMember = tipoui.members.get(member.id)
+        let tipouiMember = tipoui.members.resolve(member.id)
         if (tipouiMember) {
           // Didn't want to store that in conf... Might be useful to though
           const turquoiseCdc = "695907116644302879"
           const phosphateCdc = "695907457515520061"
-          if (tipouiMember.roles.get(PUB.roles.turquoise.id)) {
-            member.addRole(turquoiseCdc)
-          } else if (tipouiMember.roles.get(PUB.roles.phosphate.id)) {
-            member.addRole(phosphateCdc)
+          if (tipouiMember.roles.cache.get(PUB.roles.turquoise.id)) {
+            member.roles.add(turquoiseCdc)
+          } else if (tipouiMember.roles.cache.get(PUB.roles.phosphate.id)) {
+            member.roles.add(phosphateCdc)
           } else {
-            member.guild.channels.get("610381774660436018").send(`<@${member.id}> n'est ni phosphate ni turquoise sur Tipoui`)
+            member.guild.channels.resolve("610381774660436018").send(`<@${member.id}> n'est ni phosphate ni turquoise sur Tipoui`)
           }
         } else {
           tipoui.fetchBans()
@@ -438,12 +438,12 @@ module.exports = {
                 if (bans.find(user => user.id === member.id)) {
                   member.kick("A été ban de Tipoui")
                 } else {
-                  member.guild.channels.get("610381774660436018").send(`<@${member.id}> n'est pas sur Tipoui`)
+                  member.guild.channels.resolve("610381774660436018").send(`<@${member.id}> n'est pas sur Tipoui`)
                 }
               }
             ).catch(
               () => {
-                member.guild.channels.get("610381774660436018").send(`<@${member.id}> n'est pas sur Tipoui et il est impossible de savoir si iel a été ban`)
+                member.guild.channels.resolve("610381774660436018").send(`<@${member.id}> n'est pas sur Tipoui et il est impossible de savoir si iel a été ban`)
               }
             )
         }
@@ -478,7 +478,7 @@ module.exports = {
             }
             for (const nm of Object.values(PUB.nonmixtes)) {
               if (nm.alias[0] !== "vigi") {
-                if (tipoui.channels.get(nm.salons[0]).memberPermissions(member).has("VIEW_CHANNEL")) {
+                if (tipoui.channels.resolve(nm.salons[0]).memberPermissions(member).has("VIEW_CHANNEL")) {
                   returnData.members[member.id].nm.push(nm.alias[0])
                 }
               }
@@ -491,28 +491,28 @@ module.exports = {
           maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : Départ de membre\nImpossible d'écrire le fichier de retour pour ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
         }
         maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : Départ de membre\n${member.user.toString()} - ${member.user.tag} - ${member.id}`)
-        vigi.channels.get(PUB.servers.vigi.entreesSorties).send(`Départ de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
+        vigi.channels.resolve(PUB.servers.vigi.entreesSorties).send(`Départ de ${member.user.toString()} - ${member.user.tag} - ${member.id}`)
       }
     }
 
     global.parseGuildMemberUpdate = (oldUsr, newUsr) => {
-      if(newUsr.roles.get(PUB.roles.turquoise.id) && !oldUsr.roles.get(PUB.roles.turquoise.id)) {
-        let cdcMember = tipoui.members.get(newUsr.id)
+      if(newUsr.roles.cache.get(PUB.roles.turquoise.id) && !oldUsr.roles.cache.get(PUB.roles.turquoise.id)) {
+        let cdcMember = tipoui.members.resolve(newUsr.id)
         if (cdcMember) {
-          cdcMember.addRole("695907116644302879")
+          cdcMember.roles.add("695907116644302879")
         }
-        newUsr.addRole(PUB.roles.turquoiseColor.id)
-        newUsr.addRole(PUB.roles.vote.id)
-        tipoui.channels.get(PUB.salons.genTutu.id).send("Bienvenue parmi les 💠Turquoises <@" + newUsr.id + "> ! <:turquoise_heart:417784485724028938>\nTu as désormais accès à de nouveaux salons, notamment <#453706061031931905> où tu pourras découvrir les spécificités de cette promotion. Par ailleurs, n'hésite pas à consulter <#453702956315836436> pour voir les rôles auxquels tu peux prétendre, et demande-les-moi par message privé.")
+        newUsr.roles.add(PUB.roles.turquoiseColor.id)
+        newUsr.roles.add(PUB.roles.vote.id)
+        tipoui.channels.resolve(PUB.salons.genTutu.id).send("Bienvenue parmi les 💠Turquoises <@" + newUsr.id + "> ! <:turquoise_heart:417784485724028938>\nTu as désormais accès à de nouveaux salons, notamment <#453706061031931905> où tu pourras découvrir les spécificités de cette promotion. Par ailleurs, n'hésite pas à consulter <#453702956315836436> pour voir les rôles auxquels tu peux prétendre, et demande-les-moi par message privé.")
       }
-      if(newUsr.roles.get(PUB.roles.luxure.id)) {
-        if(!newUsr.roles.get(PUB.roles.hammer.id) && newUsr.roles.get(PUB.roles.demolisseureuse.id)) {newUsr.addRole(PUB.roles.hammer.id)}
-        else if(newUsr.roles.get(PUB.roles.hammer.id) && !newUsr.roles.get(PUB.roles.demolisseureuse.id)) {newUsr.removeRole(PUB.roles.hammer.id)}
-        if(!newUsr.roles.get(PUB.roles.naughty.id) && newUsr.roles.get(PUB.roles.grrrrl.id)) {newUsr.addRole(PUB.roles.naughty.id)}
-        else if(newUsr.roles.get(PUB.roles.naughty.id) && !newUsr.roles.get(PUB.roles.grrrrl.id)) {newUsr.removeRole(PUB.roles.naughty.id)}
-      } else if(oldUsr.roles.get(PUB.roles.luxure.id) && !newUsr.roles.get(PUB.roles.luxure.id)) {
-        if(newUsr.roles.get(PUB.roles.hammer.id)) {newUsr.removeRole(PUB.roles.hammer.id)}
-        if(newUsr.roles.get(PUB.roles.naughty.id)) {newUsr.removeRole(PUB.roles.naughty.id)}
+      if(newUsr.roles.cache.get(PUB.roles.luxure.id)) {
+        if(!newUsr.roles.cache.get(PUB.roles.hammer.id) && newUsr.roles.cache.get(PUB.roles.demolisseureuse.id)) {newUsr.roles.add(PUB.roles.hammer.id)}
+        else if(newUsr.roles.cache.get(PUB.roles.hammer.id) && !newUsr.roles.cache.get(PUB.roles.demolisseureuse.id)) {newUsr.roles.remove(PUB.roles.hammer.id)}
+        if(!newUsr.roles.cache.get(PUB.roles.naughty.id) && newUsr.roles.cache.get(PUB.roles.grrrrl.id)) {newUsr.roles.add(PUB.roles.naughty.id)}
+        else if(newUsr.roles.cache.get(PUB.roles.naughty.id) && !newUsr.roles.cache.get(PUB.roles.grrrrl.id)) {newUsr.roles.remove(PUB.roles.naughty.id)}
+      } else if(oldUsr.roles.cache.get(PUB.roles.luxure.id) && !newUsr.roles.cache.get(PUB.roles.luxure.id)) {
+        if(newUsr.roles.cache.get(PUB.roles.hammer.id)) {newUsr.roles.remove(PUB.roles.hammer.id)}
+        if(newUsr.roles.cache.get(PUB.roles.naughty.id)) {newUsr.roles.remove(PUB.roles.naughty.id)}
       }
     }
   },
@@ -526,7 +526,7 @@ module.exports = {
   updateSalonsName : function() {
     global.salonsById = {}
     for (const value of Object.values(PUB.salons)) {
-      const tipouiSalon = tipoui.channels.get(value.id)
+      const tipouiSalon = tipoui.channels.resolve(value.id)
       if (tipouiSalon) {
         salonsById[value.id] = tipouiSalon.name
       }

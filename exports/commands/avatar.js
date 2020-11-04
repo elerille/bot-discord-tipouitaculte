@@ -1,5 +1,5 @@
 function createAvatarEmbed(target, entry = undefined) {
-  return new DiscordNPM.RichEmbed()
+  return new DiscordNPM.MessageEmbed()
     .setColor(target.displayColor)
     .setAuthor(`Avatar de ${target.displayName}`, target.user.avatarURL)
     .setImage(entry && entry.avatar ? entry.avatar : target.user.avatarURL)

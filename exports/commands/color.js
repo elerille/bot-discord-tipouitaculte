@@ -1,5 +1,5 @@
 function checkRoleUsage(role, usr, msg) {
-  if((role.members.size === 1 && role.members.get(msg.member.id) || role.members.size === 0) && role.name !== "#11e0e6") {
+  if((role.members.size === 1 && role.members.resolve(msg.member.id) || role.members.size === 0) && role.name !== "#11e0e6") {
     let roleName = role.name
     role.delete()
     TiCu.Log.Commands.Color("deleted", roleName, msg)
@@ -22,14 +22,14 @@ module.exports = {
     let input = params[0]
     input = (input === "#000000") ? "#010101" : input
     let usr = msg.member
-    let oldRole = usr.roles.find(e => !!e.name.match(colorHexa))
-    let newRole = tipoui.roles.find(e => e.hexColor === input)
-    if(usr.roles.get(PUB.roles.turquoise.id)) {
+    let oldRole = usr.roles.cache.find(e => !!e.name.match(colorHexa))
+    let newRole = tipoui.roles.cache.find(e => e.hexColor === input)
+    if(usr.roles.cache.get(PUB.roles.turquoise.id)) {
       if(input === "none" || input === "remove" || input === "reset" || input === "enlever" || input === "réinitialiser" || input === "turquoise" || input === "#11e0e6"){
-        if(!usr.roles.has(PUB.roles.turquoiseColor.id)) {
-          usr.addRole(PUB.roles.turquoiseColor.id)
+        if(!usr.roles.cache.has(PUB.roles.turquoiseColor.id)) {
+          usr.roles.add(PUB.roles.turquoiseColor.id)
           if(oldRole) {
-            usr.removeRole(oldRole)
+            usr.roles.remove(oldRole)
             checkRoleUsage(oldRole, usr, msg)
           }
           return TiCu.Log.Commands.Color("switched", "turquoise", msg)
@@ -37,19 +37,19 @@ module.exports = {
       } else {
         if(input.match(colorHexa)) {
           if(!newRole) {
-            tipoui.createRole({name: input, color: input, position: 33})
+            tipoui.roles.create({data: {name: input, color: input, position: 33}})
               .then(createdRole => {
-                usr.addRole(createdRole)
+                usr.roles.add(createdRole)
                 if(oldRole) {
-                  usr.removeRole(oldRole)
+                  usr.roles.remove(oldRole)
                   checkRoleUsage(oldRole, usr, msg)
                 }
                 return TiCu.Log.Commands.Color("switched", createdRole.name, msg)
                 })
           } else {
-            usr.addRole(newRole)
+            usr.roles.add(newRole)
             if(oldRole) {
-              usr.removeRole(oldRole)
+              usr.roles.remove(oldRole)
               checkRoleUsage(oldRole, usr, msg)
             }
             return TiCu.Log.Commands.Color("switched", newRole.name, msg)

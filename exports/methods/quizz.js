@@ -33,7 +33,7 @@ module.exports = {
     if (!resRegMember) return 3
     const memberId = resRegMember[2]
     const quizzData = TiCu.Quizz.getData()
-    if (tipoui.members.get(memberId)) {
+    if (tipoui.members.resolve(memberId)) {
       if (quizzData && quizzData.teams[team]) {
         for (const teamObject of Object.values(quizzData.teams)) {
           if (teamObject.members.includes(memberId)) {

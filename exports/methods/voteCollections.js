@@ -98,7 +98,7 @@ function updateVotes(reaction, collector) {
     reaction.message.edit(
       updateEmbed(
         TiCu.VotesCollections.CreateEmbedAnon(
-          tipoui.members.get(votesJSON[msg.id].target),
+          tipoui.members.resolve(votesJSON[msg.id].target),
           votesJSON[msg.id].type,
           votesJSON[msg.id].threshold,
           votesJSON[msg.id]
@@ -170,7 +170,7 @@ module.exports = {
     let votesJSON = JSON.parse(fs.readFileSync(VotesFile).toString());
     for (const [id, entry] of Object.entries(votesJSON)) {
       if (typeof entry === "object") {
-        (entry.guild ? Discord.guilds.get(entry.guild) : tipoui).channels.get(entry.chan).fetchMessage(id).then(msg => {
+        (entry.guild ? Discord.guilds.resolve(entry.guild) : tipoui).channels.resolve(entry.chan).messages.fetch(id).then(msg => {
           createCollector(entry.type, msg);
         })
       }
@@ -186,15 +186,15 @@ module.exports = {
     if (reason === "oui") {
       switch (type) {
         case "ban":
-          tipoui.members.get(target).ban()
+          tipoui.members.resolve(target).ban()
             .then(() => TiCu.Log.VoteDone(reason, type, msg, target))
           break
         case "kick":
-          tipoui.members.get(target).kick()
+          tipoui.members.resolve(target).kick()
             .then(() => TiCu.Log.VoteDone(reason, type, msg, target))
           break
         case "turquoise":
-          tipoui.members.get(target).addRoles([PUB.roles.turquoise.id, PUB.roles.turquoiseColor.id])
+          tipoui.members.resolve(target).roles.add([PUB.roles.turquoise.id, PUB.roles.turquoiseColor.id])
             .then(() => {
               TiCu.Log.VoteDone(reason, type, msg, target)
               TiCu.Census.addUserToData(target)
@@ -212,7 +212,7 @@ module.exports = {
     msg.edit(
       updateEmbed(
         TiCu.VotesCollections.CreateEmbedAnon(
-          tipoui.members.get(votesJSON[msg.id].target),
+          tipoui.members.resolve(votesJSON[msg.id].target),
           votesJSON[msg.id].type,
           votesJSON[msg.id].threshold,
           votesJSON[msg.id],
@@ -236,7 +236,7 @@ module.exports = {
         nbVotes += votes.length
       }
     }
-    const embed = new DiscordNPM.RichEmbed()
+    const embed = new DiscordNPM.MessageEmbed()
     if (target) {
       embed.setAuthor(`Vote ${type === "auto" ? "automatique " : "" }de ${type === "turquoise" || type === "auto" ? "passage" : ""} ${type === "auto" ? "TURQUOISE" : type.toUpperCase()} pour ${target.displayName}`, target.user.avatarURL)
       embed.setColor(target.displayColor)

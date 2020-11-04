@@ -11,7 +11,7 @@ module.exports = {
     if (!params && !msg) {
       activeInvite = false
       tipoui.fetchInvites().then(invites => invites.forEach(value => value.delete()))
-      vigi.channels.get(PUB.servers.vigi.grandeTour).send(`Trop d'arrivées récentes, activation du mode raid et bans préventifs des dernières arrivées`)
+      vigi.channels.resolve(PUB.servers.vigi.grandeTour).send(`Trop d'arrivées récentes, activation du mode raid et bans préventifs des dernières arrivées`)
     }
     if (params.length < 1) {
       return TiCu.Commands.help.run([this.alias[0]], msg)

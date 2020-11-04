@@ -163,7 +163,7 @@ module.exports = {
                 entry.fields[entryField.name] = entryField.value
               }
             }
-            let embed = new DiscordNPM.RichEmbed()
+            let embed = new DiscordNPM.MessageEmbed()
               .setAuthor(`Profil de ${target.displayName}`, target.user.avatarURL)
             entry.avatar ? embed.setImage(entry.avatar) : embed.setImage(target.user.avatarURL)
             entry.color ? embed.setColor(entry.color) : embed.setColor(target.displayColor)

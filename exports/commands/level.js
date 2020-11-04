@@ -18,9 +18,9 @@ function makeEmbed(user, msg, entry) {
   const xpInLevelForMember = entry.xp - totalXpForCurrentLevel
   const relativeXpForNextLevel = totalXpForNextLevel - totalXpForCurrentLevel
   const completionPercentage = Math.floor(xpInLevelForMember / relativeXpForNextLevel * 100)
-  const embed = new DiscordNPM.RichEmbed()
+  const embed = new DiscordNPM.MessageEmbed()
     .setColor(user.displayColor)
-    .setAuthor(`Niveau de ${user.displayName}`, user.user.avatarURL, msg.url)
+    .setAuthor(`Niveau de ${user.displayName}`, user.user.avatarURL(), msg.url)
   embed.addField("Niveau", entry.level, true)
   embed.addField("Expérience", Math.floor(entry.xp), true)
   embed.addField("Prochain niveau dans", Math.floor(relativeXpForNextLevel - xpInLevelForMember))
@@ -52,7 +52,7 @@ module.exports = {
         entry => {
           if (entry) {
             if (entry.activated) {
-              msg.channel.send(makeEmbed(tipoui.members.get(target), msg, entry))
+              msg.channel.send(makeEmbed(tipoui.members.resolve(target), msg, entry))
               TiCu.Log.Commands.Level(target, msg)
             } else {
               TiCu.Log.Error("level", "compte désactivé dans le système d'expérience", msg)
