@@ -25,7 +25,7 @@ module.exports = {
       if (target.roles.type !== "any") {
         const member = tipoui.members.resolve(msg.author.id)
         if (member) {
-          let array = Array.from(member.roles.values())
+          let array = Array.from(member.roles.cache.values())
           let filtered = array.filter(e => target.roles.list.includes(e.id))
           if (target.roles.type === "whitelist") {
             role = !!filtered.length

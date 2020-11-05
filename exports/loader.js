@@ -77,7 +77,7 @@ function createEmbedCopy(msg, user, edited = false, previousContent) {
 function getMessageFromServ(serv, originMsg, channel) {
   const chan = serv.channels.resolve(channel)
   if (chan) {
-    return chan.messages.find(
+    return chan.messages.cache.find(
       msg => msg.author.bot && msg.embeds && msg.embeds[0].author.url === originMsg.url
     )
   } else {

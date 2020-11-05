@@ -9,14 +9,12 @@ module.exports = function(data) {
   let write
   switch(action) {
     case "read":
-      // TiCu.Log.Json("read", target)
       return read
     case "write":
       write = read ? content ? {...read, ...content} : "" : ""
       if(write) {
         write = JSON.stringify(write, null, 2)
         fs.writeFileSync(target, write)
-        // TiCu.Log.Json("write", target)
         return true
       } else { TiCu.Log.Json("err", "write"); return false }
     case "delete":
@@ -24,7 +22,6 @@ module.exports = function(data) {
         delete read[content]
         write = JSON.stringify(read, null, 2)
         fs.writeFileSync(target, write)
-        // TiCu.Log.Json("delete", target)
         return true
       } else { TiCu.Log.Json("err", "delete"); return false }
     default:
