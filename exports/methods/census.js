@@ -95,7 +95,7 @@ module.exports = {
     for (const id of reaction.users.cache.keyArray()) {
       if (id !== PUB.users.tipouitaculte.id) {
         userId = id
-        reaction.remove(userId)
+        reaction.users.remove(userId)
         break
       }
     }

@@ -61,7 +61,7 @@ function updateVotes(reaction, collector) {
         collector.stop(reaction.emoji.name === VotesProps[0] ? "oui" : "non")
       }
     }
-    reaction.remove(reaction.users.cache.keyArray()[0])
+    reaction.users.remove(reaction.users.cache.keyArray()[0])
   } else {
     let votesJSON = JSON.parse(fs.readFileSync(VotesFile))
     let msg = reaction.message
@@ -69,7 +69,7 @@ function updateVotes(reaction, collector) {
     for (const id of reaction.users.cache.keyArray()) {
       if (id !== PUB.users.tipouitaculte.id) {
         userId = id
-        reaction.remove(userId)
+        reaction.users.remove(userId)
         break
       }
     }
@@ -224,7 +224,7 @@ module.exports = {
     delete votesJSON[msg.id]
     fs.writeFileSync(VotesFile, JSON.stringify(votesJSON, null, 2))
     for (const reaction of msg.reactions.array()) {
-      reaction.remove()
+      reaction.users.remove()
     }
     msg.unpin().then().catch()
   },
