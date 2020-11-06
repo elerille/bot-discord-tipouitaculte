@@ -196,6 +196,9 @@ module.exports = {
   getMember: function(id) {
     return MemberXP.findByPk(id)
   },
+  getAllMembers: function() {
+    return MemberXP.findAll()
+  },
   getXpByLevel: function(level) {
     return xpByLevel(level)
   },
