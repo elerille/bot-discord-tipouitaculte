@@ -57,16 +57,16 @@ function checkThreshold(vote, collector) {
 function updateVotes(reaction, collector) {
   if (VotesProps.indexOf(reaction.emoji.name) !== -1) {
     for (const devId of devTeam) {
-      if (reaction.users.keyArray().indexOf(devId) !== -1) {
+      if (reaction.users.cache.keyArray().indexOf(devId) !== -1) {
         collector.stop(reaction.emoji.name === VotesProps[0] ? "oui" : "non")
       }
     }
-    reaction.remove(reaction.users.keyArray()[0])
+    reaction.remove(reaction.users.cache.keyArray()[0])
   } else {
     let votesJSON = JSON.parse(fs.readFileSync(VotesFile))
     let msg = reaction.message
     let userId
-    for (const id of reaction.users.keyArray()) {
+    for (const id of reaction.users.cache.keyArray()) {
       if (id !== PUB.users.tipouitaculte.id) {
         userId = id
         reaction.remove(userId)
