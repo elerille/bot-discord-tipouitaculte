@@ -17,7 +17,7 @@ module.exports = {
         msg.reply("Seuls des votes publics peuvent être lancés sur ce serveur.")
       } else {
         if(params[2]) {target = TiCu.Mention(params[2])}
-        else { return TiCu.Log.Error("vote", "les votes anonymes nécessitent une cible")}
+        else { return TiCu.Log.Error("vote", "les votes anonymes nécessitent une cible", msg)}
         if(type === "kick" || type === "ban") {
           if (channel.guild.id === PUB.servers.vigi.id) {
             channel = tipoui.channels.resolve(PUB.salons.salleDesVotes.id)
@@ -31,7 +31,7 @@ module.exports = {
             return TiCu.Log.Error("vote", `les votes de passage Turquoise sont restreints au salon <#${PUB.salons.salleDesVotes.id}>`, msg)
           }
         } else if(type !== "text") {return TiCu.Log.Error("vote", "type de vote anonyme invalide", msg)}
-        if(typeof target != "object" && type !== "text") {return TiCu.Log.Error("vote", "cible invalide")}
+        if(typeof target != "object" && type !== "text") {return TiCu.Log.Error("vote", "cible invalide", msg)}
         crop = new RegExp(dev ? /^%vote\s+[^\s]+\s+/ : /^!vote\s+[^\s]+\s+/)
         if(!msg.content.match(crop)) {return TiCu.Log.Error("vote", "paramètres manquants", msg)}
         const msgMatch = msg.content.match(/^!vote\s+anon\s+(text|kick|ban|turquoise)\s+(.+)/s)
