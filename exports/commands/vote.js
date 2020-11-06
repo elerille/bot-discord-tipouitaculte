@@ -47,7 +47,7 @@ module.exports = {
             } else TiCu.Log.Error("vote", "erreur d'enregistrement du vote", msg)
           })
       }
-    } else if(channel.id === PUB.salons.salleDesVotes.id) {return TiCu.Log.Error("vote", `seuls les votes anonymisés sont autorisés dans <#${PUB.salons.salleDesVotes.id}>`)}
+    } else if(channel.id === PUB.salons.salleDesVotes.id) {return TiCu.Log.Error("vote", `seuls les votes anonymisés sont autorisés dans <#${PUB.salons.salleDesVotes.id}>`, msg)}
     else {
       TiCu.Vote.addReactionsToMessage(msg)
       TiCu.Log.Commands.Vote.Public(msg)
