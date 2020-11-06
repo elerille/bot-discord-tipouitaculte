@@ -25,7 +25,7 @@ Discord.once("ready", () => {
   TiCu.Xp.getAllMembers().then(members => {
     for (const member of members) {
       const id = member.id
-      tipoui.members.fetch(id).catch()
+      tipoui.members.fetch(id).then().catch()
     }
   })
 
