@@ -6,8 +6,7 @@ module.exports = {
       case "ban":
         return 12
       case "turquoise":
-        return 21
-        //return Math.floor(tipoui.roles.cache.get(PUB.roles.vote.id).members.size*90/100)
+        return Math.floor(tipoui.roles.cache.get(PUB.roles.vote.id).members.size*90/100)
       case "text":
       case "prop":
       default:
