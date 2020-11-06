@@ -22,6 +22,13 @@ Discord.once("ready", () => {
   global.tipoui = Discord.guilds.resolve(PUB.servers.commu.id)
   global.vigi = Discord.guilds.resolve(PUB.servers.vigi.id)
   global.cdc = Discord.guilds.resolve(PUB.servers.cdc.id)
+  TiCu.Xp.getAllMembers().then(members => {
+    for (const member of members) {
+      const id = member.id
+      tipoui.members.fetch(id).catch()
+    }
+  })
+
   global.maxilog = []
   global.minilog = []
   for (const server of Object.values(PUB.servers)) {
