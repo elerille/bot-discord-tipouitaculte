@@ -92,7 +92,7 @@ module.exports = {
     let censusData = TiCu.json(jsonData)
     let msg = reaction.message
     let userId
-    for (const id of reaction.users.keyArray()) {
+    for (const id of reaction.users.cache.keyArray()) {
       if (id !== PUB.users.tipouitaculte.id) {
         userId = id
         reaction.remove(userId)
