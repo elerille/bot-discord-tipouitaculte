@@ -113,8 +113,8 @@ function updateVotes(reaction, collector) {
 
 function createCollector(type, msg) {
   TiCu.VotesCollections.Collectors[msg.id] = msg.createReactionCollector(filterReactions(type === "prop" ? VotesEmojis.concat(VotesProps) : VotesEmojis));
-  TiCu.VotesCollections.Collectors[msg.id].on("collect", (reaction, collector) =>
-    TiCu.VotesCollections.Collected(type, reaction, collector))
+  TiCu.VotesCollections.Collectors[msg.id].on("collect", (reaction, user) =>
+    TiCu.VotesCollections.Collected(type, reaction, TiCu.VotesCollections.Collectors[msg.id]))
   TiCu.VotesCollections.Collectors[msg.id].on("end", (reactions, reason)  =>
     TiCu.VotesCollections.Done(type, reactions, reason, msg))
   TiCu.Log.VoteCollector(msg)
