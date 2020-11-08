@@ -182,7 +182,21 @@ module.exports = {
     global.DB = new SequelizeDB(CFG.sequelizeURL, {logging: false})
     global.DiscordNPM = require("discord.js")
     global.bignum = require('bignum')
-    global.Discord = new DiscordNPM.Client({disabledEvents: ["TYPING_START"]})
+    const intentFlags = DiscordNPM.Intents.FLAGS
+    global.Discord = new DiscordNPM.Client({
+      fetchAllMembers: true,
+      ws: {
+        intents: [
+          intentFlags.GUILDS,
+          intentFlags.GUILDS,
+          intentFlags.GUILD_MEMBERS,
+          intentFlags.GUILD_MESSAGES,
+          intentFlags.GUILD_MESSAGE_REACTIONS,
+          intentFlags.DIRECT_MESSAGES,
+          intentFlags.DIRECT_MESSAGE_REACTIONS
+        ]
+      }
+    })
     global.Event = new EventsModule.EventEmitter()
     global.VotesFile = "private/votes.json"
     global.KickedFile = "private/kicked.json"
