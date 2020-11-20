@@ -485,15 +485,17 @@ module.exports = {
               PUB.roles.nitro.id,
               PUB.roles.armu.id
             ]
-            for (const role of member.roles.array()) {
+            for (const role of member.roles.cache.array()) {
               if (!role.name.startsWith('#') && !noSaveRoles.includes(role.id)) {
                 returnData.members[member.id].roles.push(role.id)
               }
             }
             for (const nm of Object.values(PUB.nonmixtes)) {
               if (nm.alias[0] !== "vigi") {
-                if (tipoui.channels.resolve(nm.salons[0]).memberPermissions(member).has("VIEW_CHANNEL")) {
-                  returnData.members[member.id].nm.push(nm.alias[0])
+                for (const permission of tipoui.channels.resolve((nm.salons[0])).permissionOverwrites.array()) {
+                  if (permission.id === member.id && permission.has(Permissions.VIEW_CHANNEL)) {
+                    returnData.members[member.id].nm.push(nm.alias[0])
+                  }
                 }
               }
             }
@@ -511,7 +513,7 @@ module.exports = {
 
     global.parseGuildMemberUpdate = (oldUsr, newUsr) => {
       if(newUsr.roles.cache.get(PUB.roles.turquoise.id) && !oldUsr.roles.cache.get(PUB.roles.turquoise.id)) {
-        let cdcMember = tipoui.members.resolve(newUsr.id)
+        let cdcMember = cdc.members.resolve(newUsr.id)
         if (cdcMember) {
           cdcMember.roles.add("695907116644302879")
         }
