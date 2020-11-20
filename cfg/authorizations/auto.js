@@ -18,7 +18,6 @@ module.exports = {
             list: [PUB.salons.debug.id, PUB.salons.bots.id]
         }
     },
-    xdy: {},
     merci: {}
   },
   vigi : {},
