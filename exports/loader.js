@@ -12,37 +12,6 @@ Paramètres de index.js :
    --config, -c : Lit le fichier passé en valeur de paramètre et l'utilise pour l'activation/désactivation des fonctionnalités pour le mode dev
 `
 
-function hook_stream(stream, callback) {
-  const old_write = stream.write
-
-  stream.write = (function(write) {
-    return function(string, encoding, fd) {
-      write.apply(stream, arguments)  // comments this line if you don't want output in the console
-      callback(string, encoding, fd)
-    }
-  })(stream.write)
-
-  return function() {
-    stream.write = old_write
-  }
-}
-
-function hookConsoleLog(first) {
-  if (!first) {
-    unhook_stdout()
-    unhook_stderr()
-  }
-  const fileName = `./logs/${require("dateformat")(Date(), "yyyy-mm-dd")}.log`
-  const log_file = require('fs').createWriteStream(fileName, {flags : 'a'})
-  global.unhook_stdout = hook_stream(process.stdout, function(string, encoding, fd) {
-    log_file.write(string, encoding)
-  })
-
-  global.unhook_stderr = hook_stream(process.stderr, function(string, encoding, fd) {
-    log_file.write(string, encoding)
-  })
-}
-
 function parseForAutoCommands(msg) {
   for (const autoCommand of Object.values(TiCu.Auto)) {
     if (!!msg.content.match(autoCommand.trigger) && TiCu.Authorizations.Auto(autoCommand, msg)) {
@@ -150,11 +119,7 @@ module.exports = {
     this.loadParsing()
   },
   loadInit: function() {
-    hookConsoleLog(true)
     global.DAY = 24 * 60 * 60 * 1000
-    cron.schedule("0 0 0 * * *", () => {
-      hookConsoleLog(false)
-    })
     cron.schedule("0 30 2 * * *", () => {
       TiCu.Purger.purgeChannels([PUB.salons.invite.id], 7*DAY)
     })
