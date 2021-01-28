@@ -104,17 +104,19 @@ module.exports = {
       msg.edit(createUpdateEmbed(msg.embeds[0], true))
     }
     if (reaction.emoji.name === "✅") {
-      tipoui.members.resolve(userId).then(member => {
+      const member =  tipoui.members.resolve(userId)
+      if (member) {
         if (!member.roles.cache.get(PUB.roles.vote.id)) {
           member.roles.add(PUB.roles.vote.id).then(() => member.send("Tu as récupéré le rôle de votant·e"))
         }
-      })
+      }
     } else {
-      tipoui.members.resolve(userId).then(member => {
+      const member =  tipoui.members.resolve(userId)
+      if (member) {
         if (member.roles.cache.get(PUB.roles.vote.id)) {
           member.roles.remove(PUB.roles.vote.id).then(() => member.send("Tu as abandonné le rôle de votant·e"))
         }
-      })
+      }
     }
   },
   addUserFromId : function(userId) {
@@ -128,11 +130,12 @@ module.exports = {
       TiCu.Census.addUserToData(userId)
       msg.edit(createUpdateEmbed(msg.embeds[0], true))
     }
-    tipoui.members.resolve(userId).then(member => {
+    const member =  tipoui.members.resolve(userId)
+    if (member) {
       if (!member.roles.cache.get(PUB.roles.vote.id)) {
         member.roles.add(PUB.roles.vote.id).then(() => member.send("Tu as récupéré le rôle de votant·e"))
       }
-    })
+    }
   },
   addUserToData : function(userId) {
     const jsonData = {
