@@ -35,7 +35,7 @@ module.exports = {
         crop = new RegExp(dev ? /^%vote\s+[^\s]+\s+/ : /^!vote\s+[^\s]+\s+/)
         if(!msg.content.match(crop)) {return TiCu.Log.Error("vote", "paramètres manquants", msg)}
         const msgMatch = msg.content.match(/^!vote\s+anon\s+(text|kick|ban|turquoise)\s+(.+)/s)
-        channel.send(TiCu.VotesCollections.CreateEmbedAnon(target, type, TiCu.Vote.voteThreshold(type), undefined, undefined, msgMatch ? msgMatch[2] : undefined))
+        channel.send(`<@&${PUB.roles.vote.id}>`, TiCu.VotesCollections.CreateEmbedAnon(target, type, TiCu.Vote.voteThreshold(type), undefined, undefined, msgMatch ? msgMatch[2] : undefined))
           .then(newMsg => {
             if(TiCu.json(TiCu.Vote.createJsonForAnonVote(target, type, newMsg))) {
               TiCu.Vote.addReactionsToMessage(newMsg)
