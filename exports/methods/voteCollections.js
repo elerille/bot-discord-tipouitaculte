@@ -223,9 +223,7 @@ module.exports = {
     )
     delete votesJSON[msg.id]
     fs.writeFileSync(VotesFile, JSON.stringify(votesJSON, null, 2))
-    for (const reaction of msg.reactions.array()) {
-      reaction.users.remove()
-    }
+    msg.reactions.removeAll()
     msg.unpin().then().catch()
   },
   CreateEmbedAnon: (target, type, threshold, voteJson = undefined, result = undefined, description = undefined) => {
