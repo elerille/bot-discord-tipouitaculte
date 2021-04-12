@@ -440,6 +440,15 @@
         "ruche"
       ]
     },
+    "notifcamgirl" : {
+      "id" : "831132240402317343",
+      "givable": false,
+      "alias": [
+        "831132240402317343",
+        "notifcamgirl",
+        "camgirl"
+      ]
+    },
     "caat" : {
       "id" : "641935800464048128",
       "givable": true,

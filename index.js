@@ -46,14 +46,15 @@ Discord.once("ready", () => {
       TiCu.Census.initCensus()
     }
     if (!dev || (devConfig && devConfig.generic && devConfig.generic.autoRoles)) {
-      const messageForRolesId = "578295166742560768"
+      const messageForRolesId = "831134956205506570"
       const messageForExistransinterId = "759347410529943562"
       const emojisRoles = {
         "📹" : "notifyoutube",
         "🎥" : "notiftwitch",
         "🐝" : "espritruche",
         "📜" : "notifactu",
-        "🎉" : "notifevent"
+        "🎉" : "notifevent",
+        "🍑" : "notifcamgirl"
       }
       tipoui.channels.resolve(PUB.salons.rolessalons.id).messages.fetch(messageForRolesId).then(msg => {
         msg.createReactionCollector((reaction, user) => {return (!user.bot) && (Object.keys(emojisRoles).includes(reaction.emoji.name))})
