@@ -54,7 +54,7 @@ Discord.once("ready", () => {
         "🐝" : "espritruche",
         "📜" : "notifactu",
         "🎉" : "notifevent",
-        "🍑" : "notifcamgirl"
+        "🍑" : "notifnudes"
       }
       tipoui.channels.resolve(PUB.salons.rolessalons.id).messages.fetch(messageForRolesId).then(msg => {
         msg.createReactionCollector((reaction, user) => {return (!user.bot) && (Object.keys(emojisRoles).includes(reaction.emoji.name))})
