@@ -167,7 +167,7 @@ module.exports = {
     } else if(!target) {
       displayCommands(msg, false)
     } else {
-      TiCu.Log.Error("help", "commande inconnue", msg)
+      TiCu.Log.Error("help", `commande \`${target}\` inconnue`, msg)
     }
   }
 }
