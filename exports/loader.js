@@ -172,7 +172,7 @@ module.exports = {
     global.VotesProps = ["👍", "👎"]
     global.activeInvite = true
     global.colorHexa = new RegExp(/^#[\da-f]{6}$/)
-    global.maxReturnTime = 14 * 24 * 60 * 60 * 1000 // 2 semaines
+    global.maxReturnTime = 30 * 24 * 60 * 60 * 1000 // 30 jours
     global.hash = (txt) => { return crypto.createHmac("sha256", CFG.expressSalt).update(txt).digest("hex") }
     global.pluralKitWebHookId = "641374991115485184"
     global.DISCORD_EPOCH = 1420070400000
