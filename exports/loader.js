@@ -4,6 +4,7 @@ const EventsModule = require("events")
 const fs = require("fs")
 const cron = require('node-cron')
 const crypto = require('crypto');
+const {MessageAttachment} = require("discord.js");
 
 const helpText = `
 Paramètres de index.js :
@@ -33,7 +34,7 @@ function createEmbedCopy(msg, user, edited = false, previousContent) {
   if (edited) {
     embed.addField("Nouveau contenu du message", msg.content)
   }
-  if(msg.attachments) {
+  if (msg.attachments) {
     let attachments = Array.from(msg.attachments.values())
     for(let i=0;i<attachments.length;i++){
       embed.addField("Pièce-jointe URL #" + i, attachments[i].url)
@@ -295,6 +296,21 @@ module.exports = {
             parseAndRunCommand(msg)
           }
           tipoui.channels.resolve(PUB.salons.inviteArchive.id).send(createEmbedCopy(msg, msg.member)).then().catch()
+        } else if (msg.channel.id === PUB.salons.chaudron.id) {
+          let messageRepostAttachments = []
+          if (msg.attachments.size > 0) {
+            let attachments = Array.from(msg.attachments.values())
+            for (let i=0; i < attachments.length; i++) {
+              messageRepostAttachments.push(new MessageAttachment(attachments[i].attachment))
+            }
+            tipoui.channels.resolve(PUB.salons.photoChaudron.id).send("<@"+msg.member.id+">\n"+msg.content, messageRepostAttachments).then(
+              newMsg => tipoui.channels.resolve(PUB.salons.debug.id)
+                              .send("Auteurice : <@"+msg.member.id+">\nContenu d'origine du message : \"" + msg.content + "\"\nImages : " + newMsg.url)
+                              .then(() => {msg.delete()}).catch()
+            ).catch()
+          } else if(msg.content.match(cmdRegex)) {
+            parseAndRunCommand(msg)
+          }
         } else if(msg.content.match(cmdRegex)) {
           parseAndRunCommand(msg)
         } else {

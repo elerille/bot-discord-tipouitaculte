@@ -4,6 +4,8 @@ module.exports = {
       case "kick":
         return 8
       case "ban":
+        return 16
+      case "deturquoise":
         return 12
       case "turquoise":
         return Math.floor(tipoui.roles.cache.get(PUB.roles.vote.id).members.size*90/100)

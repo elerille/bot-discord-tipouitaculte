@@ -23,6 +23,7 @@ function checkThreshold(vote, collector) {
     case "ban":
     case "kick":
     case "text":
+    case "deturquoise":
       if (vote.votes.oui.length >= vote.threshold) {
         collector.stop("oui")
       }
@@ -186,12 +187,12 @@ module.exports = {
     if (reason === "oui") {
       switch (type) {
         case "ban":
-          tipoui.members.resolve(target).ban()
-            .then(() => TiCu.Log.VoteDone(reason, type, msg, target))
+          TiCu.Log.VoteDone(reason, type, msg, target)
+          tipoui.members.resolve(target).ban().then()
           break
         case "kick":
-          tipoui.members.resolve(target).kick()
-            .then(() => TiCu.Log.VoteDone(reason, type, msg, target))
+          TiCu.Log.VoteDone(reason, type, msg, target)
+          tipoui.members.resolve(target).kick().then()
           break
         case "turquoise":
           tipoui.members.resolve(target).roles.add([PUB.roles.turquoise.id, PUB.roles.turquoiseColor.id])
@@ -199,6 +200,12 @@ module.exports = {
               TiCu.Log.VoteDone(reason, type, msg, target)
               TiCu.Census.addUserToData(target)
             })
+          break
+        case "deturquoise":
+          tipoui.members.resolve(target).roles.remove([PUB.roles.turquoise.id, PUB.roles.turquoiseColor.id, PUB.roles.vote.id])
+                .then(() => {
+                  TiCu.Log.VoteDone(reason, type, msg, target)
+                })
           break
         case "text":
         case "prop":
