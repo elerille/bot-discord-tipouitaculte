@@ -54,7 +54,9 @@ Discord.once("ready", () => {
         "🐝" : "espritruche",
         "📜" : "notifactu",
         "🎉" : "notifevent",
-        "🍑" : "notifnudes"
+        "🍑" : "notifnudes",
+        "🐸" : "grenouille",
+        "frogangel2" : "grenouille-turquoise"
       }
       tipoui.channels.resolve(PUB.salons.rolessalons.id).messages.fetch(messageForRolesId).then(msg => {
         msg.createReactionCollector((reaction, user) => {return (!user.bot) && (Object.keys(emojisRoles).includes(reaction.emoji.name))})
@@ -65,12 +67,14 @@ Discord.once("ready", () => {
                 if (!user.bot) {
                   const member = tipoui.members.resolve(user.id)
                   const askedRoleId = PUB.roles[emojisRoles[reaction.emoji.name]].id
-                  if (member.roles.cache.keyArray().includes(askedRoleId)) {
-                    member.roles.remove(askedRoleId)
-                    TiCu.Log.AutoRole(member, emojisRoles[reaction.emoji.name], "remove")
-                  } else {
-                    member.roles.add(askedRoleId)
-                    TiCu.Log.AutoRole(member, emojisRoles[reaction.emoji.name], "add")
+                  if (askedRoleId !== PUB.roles["grenouille-turquoise"].id || member.roles.cache.keyArray().includes(PUB.roles.turquoise.id)) {
+                    if (member.roles.cache.keyArray().includes(askedRoleId)) {
+                      member.roles.remove(askedRoleId)
+                      TiCu.Log.AutoRole(member, emojisRoles[reaction.emoji.name], "remove")
+                    } else {
+                      member.roles.add(askedRoleId)
+                      TiCu.Log.AutoRole(member, emojisRoles[reaction.emoji.name], "add")
+                    }
                   }
                   reaction.users.remove(user.id)
                 }

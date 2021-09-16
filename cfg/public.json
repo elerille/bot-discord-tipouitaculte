@@ -437,6 +437,22 @@
         "existransinter"
       ]
     },
+    "grenouille" : {
+      "id" : "887275607740805160",
+      "givable": false,
+      "alias": [
+        "887275607740805160",
+        "grenouille"
+      ]
+    },
+    "grenouille-turquoise" : {
+      "id" : "887280925640114196",
+      "givable": false,
+      "alias": [
+        "887280925640114196",
+        "grenouille-turquoise"
+      ]
+    },
     "espritruche" : {
       "id" : "588446918670286858",
       "givable": false,

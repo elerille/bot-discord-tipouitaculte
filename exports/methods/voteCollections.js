@@ -245,6 +245,9 @@ module.exports = {
     if (target) {
       embed.setAuthor(`Vote ${type === "auto" ? "automatique " : "" }de ${type === "turquoise" || type === "auto" ? "passage" : ""} ${type === "auto" ? "TURQUOISE" : type.toUpperCase()} pour ${target.displayName}`, target.user.avatarURL)
       embed.setColor(target.displayColor)
+      if (type === "turquoise") {
+        embed.addField("Cible", "<@" + target.id + ">")
+      }
     } else {
       embed.setAuthor(type === "text" ? `Vote Anonyme` : "Proposition anonyme")
       if (description) {

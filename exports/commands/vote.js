@@ -27,7 +27,7 @@ module.exports = {
         } else if (type === "turquoise") {
           if (channel.guild.id === PUB.servers.vigi.id || channel.id === PUB.salons.plaidoierie.id) {
             channel = tipoui.channels.resolve(PUB.salons.salleDesVotes.id)
-          } else if (channel.id !== PUB.salons.salleDesVotes.id) {
+          } else if (channel.id !== PUB.salons.salleDesVotes.id && channel.id !== PUB.salons.debug.id) {
             return TiCu.Log.Error("vote", `les votes de passage Turquoise sont restreints au salon <#${PUB.salons.salleDesVotes.id}>`, msg)
           }
         } else if (type !== "text") {return TiCu.Log.Error("vote", "type de vote anonyme invalide", msg)}
