@@ -304,7 +304,7 @@ module.exports = {
               messageRepostAttachments.push(new MessageAttachment(attachments[i].attachment))
             }
             tipoui.channels.resolve(PUB.salons.photoChaudron.id).send("<@"+msg.member.id+">\n"+msg.content, messageRepostAttachments).then(
-              newMsg => tipoui.channels.resolve(PUB.salons.debug.id)
+              newMsg => tipoui.channels.resolve(PUB.salons.chaudron.id)
                               .send("Auteurice : <@"+msg.member.id+">\nContenu d'origine du message : \"" + msg.content + "\"\nImages : " + newMsg.url)
                               .then(() => {msg.delete()}).catch()
             ).catch()
