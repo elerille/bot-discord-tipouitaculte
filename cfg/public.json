@@ -453,6 +453,14 @@
         "grenouille-turquoise"
       ]
     },
+    "deposerLesArmes" : {
+      "id" : "892828102038790165",
+      "givable": false,
+      "alias": [
+        "892828102038790165",
+        "deposerLesArmes"
+      ]
+    },
     "espritruche" : {
       "id" : "588446918670286858",
       "givable": false,

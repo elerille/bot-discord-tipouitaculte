@@ -48,6 +48,7 @@ Discord.once("ready", () => {
     if (!dev || (devConfig && devConfig.generic && devConfig.generic.autoRoles)) {
       const messageForRolesId = "831134956205506570"
       const messageForExistransinterId = "759347410529943562"
+      const messageForDeposerLesArmesId = "892835638326489128"
       const emojisRoles = {
         "📹" : "notifyoutube",
         "🎥" : "notiftwitch",
@@ -103,6 +104,28 @@ Discord.once("ready", () => {
               }
             }
           )
+      })
+      tipoui.channels.resolve(PUB.salons.rolessalons.id).messages.fetch(messageForDeposerLesArmesId).then(msg => {
+        msg.createReactionCollector((reaction, user) => {return (!user.bot) && (["❌", "✅"].includes(reaction.emoji.name))})
+           .on(
+             "collect",
+             reaction => {
+               for (const user of reaction.users.cache.array()) {
+                 if (!user.bot) {
+                   const member = tipoui.members.resolve(user.id)
+                   const askedRoleId = PUB.roles.deposerLesArmes.id
+                   if (member.roles.cache.keyArray().includes(askedRoleId) && reaction.emoji.name === "❌") {
+                     member.roles.remove(askedRoleId)
+                     TiCu.Log.AutoRole(member, "Déposer Les Armes", "remove")
+                   } else if (!member.roles.cache.keyArray().includes(askedRoleId) && reaction.emoji.name === "✅") {
+                     member.roles.add(askedRoleId)
+                     TiCu.Log.AutoRole(member, "Déposer Les Armes", "add")
+                   }
+                   reaction.users.remove(user.id)
+                 }
+               }
+             }
+           )
       })
     }
     if (!dev || (devConfig && devConfig.server)) {
