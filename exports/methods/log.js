@@ -45,7 +45,9 @@ module.exports = {
   VoteUpdate : function(userId, emoji, previousVote, msg) {
     const user = tipoui.members.resolve(userId)
     maxilog[msg.guild.id].send(`${TiCu.Date("log")} : VoteCollections\n${hash(userId)} a ${previousVote ? "changé son vote \`" + previousVote + "\` en vote" : "voté"} \`"${emoji}"\` sur le vote :\n${msg.url}`)
-    user.send(`Votre ${previousVote ? "changement de vote \`" + previousVote + "\` en " : ""}vote \`"${emoji}"\` a bien été pris en compte.\n${msg.url}`)
+    if (TiCu.DM.getPref(userId) === "on") {
+      user.send(`Votre ${previousVote ? "changement de vote \`" + previousVote + "\` en " : ""}vote \`"${emoji}"\` a bien été pris en compte.\n${msg.url}`)
+    }
   },
   VoteCollector : function(msg) {
     maxilog[msg.guild.id].send(TiCu.Date("log") + " : VoteCollections\nInitialisation du vote pour le message :\n" + msg.url)
@@ -228,6 +230,10 @@ module.exports = {
     },
     Delete: function(oldMsg, msg) {
       maxilog[msg.guild.id].send(`${TiCu.Date("log")} : Delete \n${msg.member.displayName} a supprimé un message dans <#${oldMsg.channel.id}>`)
+      msg.react("✅")
+    },
+    DM: function(type, msg) {
+      maxilog[msg.guild.id].send(`${TiCu.Date("log")} : DM \n${msg.member.displayName} a changé ses préférences de DM pour ${type}`)
       msg.react("✅")
     }
   },

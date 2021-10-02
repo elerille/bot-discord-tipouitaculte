@@ -1,8 +1,8 @@
 function createAvatarEmbed(target, entry = undefined) {
   return new DiscordNPM.MessageEmbed()
     .setColor(target.displayColor)
-    .setAuthor(`Avatar de ${target.displayName}`, target.user.avatarURL)
-    .setImage(entry && entry.avatar ? entry.avatar : target.user.avatarURL)
+    .setAuthor(`Avatar de ${target.displayName}`, target.user.avatarURL())
+    .setImage(entry && entry.avatar ? entry.avatar : target.user.avatarURL())
 }
 
 module.exports = {
@@ -22,6 +22,7 @@ module.exports = {
           TiCu.Mention(msg.author.id)
         : TiCu.Mention(params[0])
       : TiCu.Mention(msg.author.id)
+    console.log(target)
     if (target.user) {
       if (params[0] && params[0] === 'profil') {
         TiCu.Profil.getBaseMemberProfil(target.id).then(

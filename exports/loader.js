@@ -211,6 +211,7 @@ module.exports = {
       Alerte : require("../exports/methods/alerte.js"),
       Quizz : require("../exports/methods/quizz.js"),
       NewMembers : require("../exports/methods/newMembers.js"),
+      DM : require("../exports/methods/dm.js"),
       Commands : {},
       Reactions : {},
       Auto : {},

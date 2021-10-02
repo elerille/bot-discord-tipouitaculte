@@ -196,6 +196,12 @@ module.exports = {
         type: "whitelist",
         list: [PUB.users.syrinx.id, PUB.users.xenolune.id, PUB.users.echarpe.id]
       }
+    },
+    dm : {
+      chans : {
+        type: "whitelist",
+        list: [PUB.salons.debug.id, PUB.salons.bots.id]
+      }
     }
   },
   vigi : {
@@ -220,7 +226,8 @@ module.exports = {
     edit: {},
     delete: {},
     id: {},
-    alert : {}
+    alert : {},
+    dm : {}
   },
   debug: {
     avatar: {},

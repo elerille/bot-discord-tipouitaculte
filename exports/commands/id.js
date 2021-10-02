@@ -19,19 +19,19 @@ module.exports = {
     const mention = TiCu.Mention(searchExpr)
     if (!mention) {
       const members = []
-      for (const member of tipoui.members) {
+      for (const member of tipoui.members.cache) {
         if (member[1].nickname ? member[1].nickname.toLowerCase().indexOf(searchExpr) !== -1 : member[1].user.username.toLowerCase().indexOf(searchExpr) !== -1) {
           members.push(member[1])
         }
       }
       const channels = []
-      for (const channel of tipoui.channels) {
+      for (const channel of tipoui.channels.cache) {
         if (channel[1].name.toLowerCase().indexOf(searchExpr) !== -1) {
           channels.push(channel[1])
         }
       }
       const roles = []
-      for (const role of tipoui.roles) {
+      for (const role of tipoui.roles.cache) {
         if (role[1].name.toLowerCase().indexOf(searchExpr) !== -1) {
           roles.push(role[1])
         }
