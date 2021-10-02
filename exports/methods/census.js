@@ -6,8 +6,8 @@ function createUpdateEmbed(previousEmbed, newVote = false) {
 
   const checkFieldName = "✅ : garder ou récupérer le rôle"
   const crossFieldName = "❌ : abandonner le rôle"
-  embed.addField(checkFieldName, previousFields ? previousFields[previousFields.findIndex((v) => {return v.name === checkFieldName})].value : 0)
-  embed.addField(crossFieldName, previousFields ? previousFields[previousFields.findIndex((v) => {return v.name === crossFieldName})].value : 0)
+  embed.addField(checkFieldName, 0)
+  embed.addField(crossFieldName, 0)
 
   const nbVotesName = "Nombre de votant·e·s"
   let nbVotes = previousFields ? previousFields[previousFields.findIndex((v) => {return v.name === nbVotesName})].value : 0
@@ -106,16 +106,12 @@ module.exports = {
     if (reaction.emoji.name === "✅") {
       const member =  tipoui.members.resolve(userId)
       if (member) {
-        if (!member.roles.cache.get(PUB.roles.vote.id)) {
-          member.roles.add(PUB.roles.vote.id).then(() => member.send("Tu as récupéré le rôle de votant·e"))
-        }
+        member.roles.add(PUB.roles.vote.id).then(() => member.send("Tu as récupéré le rôle de votant·e"))
       }
     } else {
       const member =  tipoui.members.resolve(userId)
       if (member) {
-        if (member.roles.cache.get(PUB.roles.vote.id)) {
-          member.roles.remove(PUB.roles.vote.id).then(() => member.send("Tu as abandonné le rôle de votant·e"))
-        }
+        member.roles.remove(PUB.roles.vote.id).then(() => member.send("Tu as abandonné le rôle de votant·e"))
       }
     }
   },
@@ -132,9 +128,7 @@ module.exports = {
     }
     const member =  tipoui.members.resolve(userId)
     if (member) {
-      if (!member.roles.cache.get(PUB.roles.vote.id)) {
-        member.roles.add(PUB.roles.vote.id).then(() => member.send("Tu as récupéré le rôle de votant·e"))
-      }
+      member.roles.add(PUB.roles.vote.id).then(() => member.send("Tu as récupéré le rôle de votant·e"))
     }
   },
   addUserToData : function(userId) {

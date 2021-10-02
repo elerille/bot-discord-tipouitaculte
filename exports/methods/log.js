@@ -162,6 +162,7 @@ module.exports = {
     React: function(emoji, target, msg) {
       maxilog[msg.guild.id].send(TiCu.Date("log") + " : React \n" + msg.member.displayName + " a réagi " + emoji + "à ce message : `" + target.url)
       minilog[msg.guild.id].send(msg.member.displayName + " a réagi " + emoji + " à un message dans <#" + target.channel.id + ">.")
+      msg.react("✅")
     },
     Roles : function(target, action, roles, msg) {
       let author = msg.member ? msg.member.displayName : msg.author.username
