@@ -305,11 +305,19 @@ module.exports = {
       maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : newMemberProfilField\n${tipoui.members.resolve(id).displayName} created a new field : ${entry.name} = ${entry.value}`)
     }
   },
-  AutoRole: function(member, roleName, type) {
+  AutoRole: function(member, roleName, type, nm = false) {
     try {
-      member.send(`Vous avez bien ${type === "add" ? "récupéré" : "abandonné"} le rôle ${roleName}`)
+      if (nm) {
+        member.send(`Vous avez bien ${type === "add" ? "récupéré" : "abandonné"} les accès aux salons non-mixtes ${roleName}`)
+      } else {
+        member.send(`Vous avez bien ${type === "add" ? "récupéré" : "abandonné"} le rôle ${roleName}`)
+      }
     } catch {}
-    maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : autoRole\n${member.displayName} a ${type === "add" ? "adopté" : "renié"} le rôle de ${roleName}`)
+    if (nm) {
+      maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : autoRole\n${member.displayName} a ${type === "add" ? "récupéré" : "abandonné"} les accès aux salons non-mixtes ${roleName}`)
+    } else {
+      maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : autoRole\n${member.displayName} a ${type === "add" ? "récupéré" : "abandonné"} le rôle de ${roleName}`)
+    }
   },
   Census: function(member) {
     maxilog[PUB.servers.commu.id].send(`${TiCu.Date("log")} : census\n${member.displayName} a été retiré·e du système de vote pour inactivité`)

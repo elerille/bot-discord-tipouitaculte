@@ -77,6 +77,6 @@
   "generic" : {
     "voteStartup" : false,
     "census" : false,
-    "autoRoles" : false
+    "autoRoles" : true
   }
 }

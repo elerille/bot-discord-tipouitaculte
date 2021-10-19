@@ -474,10 +474,9 @@ module.exports = {
             }
             for (const nm of Object.values(PUB.nonmixtes)) {
               if (nm.alias[0] !== "vigi") {
-                for (const permission of tipoui.channels.resolve((nm.salons[0])).permissionOverwrites.array()) {
-                  if (permission.id === member.id && permission.has(Permissions.VIEW_CHANNEL)) {
-                    returnData.members[member.id].nm.push(nm.alias[0])
-                  }
+                const channel = tipoui.channels.resolve(nm.salons[0])
+                if (channel.permissionOverwrites.has(member.id) && channel.permissionOverwrites.get(member.id).allow.has("VIEW_CHANNEL")) {
+                  returnData.members[member.id].nm.push(nm.alias[0])
                 }
               }
             }

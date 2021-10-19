@@ -36,8 +36,8 @@ module.exports = {
                     return type
                 }
             }
-            return "on"
+            return "ask"
         }
-        return "on"
+        return "ask"
     }
 }
