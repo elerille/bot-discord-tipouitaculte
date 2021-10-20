@@ -9,6 +9,11 @@ module.exports = {
         return 12
       case "turquoise":
         return Math.floor(tipoui.roles.cache.get(PUB.roles.vote.id).members.size*90/100)
+      case "lenton":
+      case "superlenton":
+      case "lentoff":
+      case "superlentoff":
+        return 1
       case "text":
       case "prop":
       default:

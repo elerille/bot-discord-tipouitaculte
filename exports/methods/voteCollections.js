@@ -24,6 +24,10 @@ function checkThreshold(vote, collector) {
     case "kick":
     case "text":
     case "deturquoise":
+    case "lenton":
+    case "superlenton":
+    case "lentoff":
+    case "superlentoff":
       if (vote.votes.oui.length >= vote.threshold) {
         collector.stop("oui")
       }
@@ -207,6 +211,30 @@ module.exports = {
                   TiCu.Log.VoteDone(reason, type, msg, target)
                 })
           break
+        case "lenton":
+          msg.channel.setRateLimitPerUser(60).then(() => {
+            msg.channel.send(`Le mode lent a été activé par la communauté sur ce salon`)
+            TiCu.Log.VoteDone(reason, type, msg, target)
+          })
+          break;
+        case "superlenton":
+          msg.channel.setRateLimitPerUser(30 * 60).then(() => {
+            msg.channel.send(`Le mode superlent a été activé par la communauté sur ce salon`)
+            TiCu.Log.VoteDone(reason, type, msg, target)
+          })
+          break;
+        case "lentoff":
+          msg.channel.setRateLimitPerUser(0).then(() => {
+            msg.channel.send(`Le mode lent a été désactivé par la communauté sur ce salon`)
+            TiCu.Log.VoteDone(reason, type, msg, target)
+          })
+          break;
+        case "superlentoff":
+          msg.channel.setRateLimitPerUser(0).then(() => {
+            msg.channel.send(`Le mode superlent a été désactivé par la communauté sur ce salon`)
+            TiCu.Log.VoteDone(reason, type, msg, target)
+          })
+          break;
         case "text":
         case "prop":
         default:

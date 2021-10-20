@@ -4,7 +4,7 @@ module.exports = {
       msg.channel.send("Erreur avec la commande `" + cmd + "` : " + err +".")
         .then(newMsg => {
           msg.delete()
-          newMsg.delete(10000)
+          newMsg.delete({timeout:10000})
         })
     } else {
         if (err === "permissions manquantes") {
@@ -53,7 +53,7 @@ module.exports = {
     maxilog[msg.guild.id].send(TiCu.Date("log") + " : VoteCollections\nInitialisation du vote pour le message :\n" + msg.url)
   },
   VoteDone : function (reason, type, msg, target) {
-    if (type === "text" || type === "prop") {
+    if (["text", "prop", "lenton", "lentoff", "superlenton", "superlentoff"].includes(type)) {
       maxilog[msg.guild.id].send(TiCu.Date("log") + " : VoteDone\nFin du vote pour le message :\n" + msg.url)
     } else {
       maxilog[msg.guild.id].send(
@@ -192,7 +192,7 @@ module.exports = {
       },
       Anon : function(type, params, newMsg, msg) {
         /* Might receive empty params[2] */
-        if(type === "text" || type === "prop") {
+        if(["text", "prop", "lenton", "lentoff", "superlenton", "superlentoff"].includes(type)) {
           minilog[msg.guild.id].send(`Un vote anonyme a été lancé dans ${newMsg.channel.name}`)
           maxilog[msg.guild.id].send(`${TiCu.Date("log")} : Vote\n${hash(msg.author.id)} a lancé un vote anonyme ${msg.url}`)
         } else {

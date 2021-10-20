@@ -5,7 +5,7 @@ module.exports = {
   activated: true,
   name : "Vote",
   desc : "Lancer un vote public ou anonymisé, éventuellement pour kick/ban/turquoise/deturquoise.",
-  schema : "!vote <anon|anonyme> <turquoise|kick|ban|deturquoise> <@>\nou\n!vote <anon|anonyme> <text> (texte)\nou\n!vote (texte)",
+  schema : "!vote <anon|anonyme> <turquoise|kick|ban|deturquoise|> <@>\nou\n!vote <anon|anonyme> <text> (texte)\nou\n!vote (texte)\nou\n!vote <lent|superlent> <on|off>",
   authorizations : TiCu.Authorizations.getAuth("command", "vote"),
   run : function(params, msg) {
     let crop, target
@@ -47,8 +47,24 @@ module.exports = {
             } else TiCu.Log.Error("vote", "erreur d'enregistrement du vote", msg)
           })
       }
-    } else if(channel.id === PUB.salons.salleDesVotes.id) {return TiCu.Log.Error("vote", `seuls les votes anonymisés sont autorisés dans <#${PUB.salons.salleDesVotes.id}>`, msg)}
-    else {
+    } else if(channel.id === PUB.salons.salleDesVotes.id) {
+      return TiCu.Log.Error("vote", `seuls les votes anonymisés sont autorisés dans <#${PUB.salons.salleDesVotes.id}>`, msg)
+    } else if(params[0] === "lent" || params[0] === "superlent") {
+      type = params[0] + params[1]
+      if (params[1] !== "on" && params[1] !== "off") {
+        return TiCu.Log.Error("vote", "les votes 'lent' et 'superlent' nécessitent un second paramètre 'on' ou 'off'", msg)
+      }
+      channel = msg.channel
+      channel.send(TiCu.VotesCollections.CreateEmbedAnon(target, type, TiCu.Vote.voteThreshold(type), undefined, undefined, (params[1] === "on" ? "Passage du salon en mode " : "Retrait du salon en mode ") + params[0]))
+             .then(newMsg => {
+               if(TiCu.json(TiCu.Vote.createJsonForAnonVote(target, type, newMsg))) {
+                 TiCu.Vote.addReactionsToMessage(newMsg)
+                 TiCu.VotesCollections.Init(type, newMsg)
+                 TiCu.Log.Commands.Vote.Anon(type, params, newMsg, msg)
+                 newMsg.pin()
+               } else TiCu.Log.Error("vote", "erreur d'enregistrement du vote", msg)
+             })
+    } else {
       TiCu.Vote.addReactionsToMessage(msg)
       TiCu.Log.Commands.Vote.Public(msg)
     }
