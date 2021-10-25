@@ -13,7 +13,7 @@ module.exports = {
       case "superlenton":
       case "lentoff":
       case "superlentoff":
-        return 1
+        return 10
       case "text":
       case "prop":
       default:
