@@ -41,6 +41,10 @@ Ce fichier sert à activer sélectivement certaines fonctions pour le développe
    - `cfg/public.json` adapter le hash `reverseServers`
    - `cfg/public.json` modifier la liste des utilisateurs
    - `cfg/authorizations/commands.js` supprimer les références à des utilisateurs Tipoui
+ - Personalisation
+   - `exports/auto/` contient les fonctions à executer (pas de commande mais juste une regex qui doit match avec le message)
+   - `exports/autoGames/` idem que `auto`
+   - `exports/commands/` contient les définitions des commandes
 
 ### Lancer manuellement le bot
 ```sh
@@ -53,5 +57,60 @@ Seul les modules marqueé comme activé dans `devConfig.json` sont actif
 node index.js -d -c devConfig.json
 ```
 
-en mode dev les log sont envoyer dans `cfg/public.json salons.logsDev`, Certaine chose ne sont pas active, comme les commandes par examples.
+en mode dev : 
+ - Les log sont envoyer dans `cfg/public.json salons.logsDev`
+ - Les commande commence par `%` aulieu de `!`
+
+## Feature
+
+### Discordtainment - tic-tac-boom
+
+Jeux - Envoie un gif de boom de manière aléatoire lors de l'envoie de message tic/tac.
+
+**configuration**:
+ - `exports/autoGames/tictac.js:MIN` Nombre minimum de tic/tac avant boom
+ - `exports/autoGames/tictac.js:MAX` Nombre maximum de tic/tac avant boom
+ - `exports/autoGames/tictac.js:boomTable` Liste des gifs faisant boom
+ - `cfg/public.json:salons.tictacboom` Identification du salon tic-tac-boom
+
+### Bot informations - tes parents ?
+
+Lors de l'envoie de la chaîne `tes parents ?` dans le cannal bot, le bot indique des infos à propos de lui. (fonctionne également avec `créateur`, `devs`, `déverloppeurs`, ainsi qu'au féminin et au neutre.
+
+**configuration**: Pas de configuration, mais le code est dans `exports/auto/tesParents.js`
+
+### Bot intéraction - merci ttc
+
+Lors de l'envoie de la chaîne `merci ttc` dans le cannal bot, le bot réponds de rien
+
+**configuration**: Pas de configuration, mais le code est dans `exports/auto/merci.js`
+
+### XP - Level
+
+Lors de chaque message, l'utilisateur gagne de l'XP. Grâce à cet XP il gagne des niveaux.
+
+Calcul et stockage de l'XP et du niveau : `exports/methods/xp.js`
+Commande pour gerer l'XP `exports/commands/xp.js`
+Commande pour voir l'XP `exports/commands/level.js`
+Commande pour désactivé l'XP pour un user `exports/commands/xpstatus.js`
+
+ - `!level` affiche le niveau d'un utilisateur ou du sien
+ - `!level` Modifie le mode de notification pour le passage de niveau
+ - `!xp` Ajoute ou retire de l'xp à un utilisateur
+ - `!xpstatus` Retire ou ajout un utilisateur au système d'XP
+ - `mon level ?` ou `notre niveau ?` affiche son propre niveau (voir `exports/auto/monLevel.js`
+
+**configuration**:
+ - `exports/methods/xp.js:XPREACTION`
+ - `exports/methods/xp.js:XPREACTEDTO`
+ - `exports/methods/xp.js:LEVELMAX`
+ - `cfg/public.json:categories.*.xpFactor`
+ - `cfg/public.json:salons.*.xpFactor`
+ - `cfg/public.json:roles.*.xpAddedMultiplicator`
+
+
+
+
+
+
 
