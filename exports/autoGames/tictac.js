@@ -10,8 +10,6 @@ const boomTable = [
   "https://media.giphy.com/media/xTiTnK1UBZjC4sW6mA/giphy.gif",
   "https://media.giphy.com/media/d4aVHC1HKnButuXC/giphy.gif",
   "https://media.giphy.com/media/l4lQW9KfRQscU0ds4/giphy.gif",
-  "https://media.giphy.com/media/C9rGEm6SUnOE/giphy-downsized.gif",
-  "https://media.giphy.com/media/AAWBs9MMvLfnW/giphy.gif",
   "https://media.giphy.com/media/laUY2MuoktHPy/giphy.gif",
   "https://media.giphy.com/media/XKCdA6ERnXp6M/giphy.gif",
   "exports/autoGames/images/kaboomBongoCat.gif",
