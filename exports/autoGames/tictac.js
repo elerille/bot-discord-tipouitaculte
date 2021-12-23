@@ -19,7 +19,7 @@ const boomTable = [
   "exports/autoGames/images/BOOM02.gif",
   "exports/autoGames/images/boomPump.gif",
   "exports/autoGames/images/dalekBoom.gif",
-  "exports/autoGames/images/ArgBoom.gif"
+  "exports/autoGames/images/ArgBoum.gif"
 ]
 
 module.exports = {
