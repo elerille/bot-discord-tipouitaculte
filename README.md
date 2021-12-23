@@ -18,3 +18,40 @@ Ce fichier sert à activer sélectivement certaines fonctions pour le développe
 ### ./tipouitaculte.json
 > Fichier de configuration pour le module NodeJS "Forever", permettant à l'instance principale de TiCu de tourner en tant que daemon. Il est envisagé de passer le process sous `systemctl`, lorsque nous aurons pris le temps de comprendre comment cela affectera les logs du bot.
 
+----------------
+
+## Démarrage rapide pour un nouveau serveur
+
+ - Créer un fichier `cfg/private.json`
+   - Modifier la valeur de `sequelizeURL` pour référencer la base de donnée au format `{driver}://{user}:{password}@{host}:{port}/{dbname}`
+   - Installer le driver utiliser https://sequelize.org/master/manual/getting-started.html
+   - Modifier la valeur de `discordToken` pour un token discord pour bot (https://discord.com/developers/applications)
+   - Modifier la valeur de `expressSalt` par une grande chaine aléatoire secrete
+ - Ajouter le bot à votre server
+   - dans votre application https://discord.com/developers/applications
+   - OAuth2 > URL Generator
+   - Générer un url pour le scope `bot` et les permissions voulues (à priori `Administrator`)
+   - Ouvrir le lien dans le navigateur
+ - Configuration du Bot (https://discord.com/developers/applications)
+   - Activer `presence intent`
+   - Activer `server members intent`
+   - Activer `message content intent`
+ - Configuration des fichiers
+   - `cfg/public.json` modifier les ids pour référencer vos propre servers
+   - `cfg/public.json` adapter le hash `reverseServers`
+   - `cfg/public.json` modifier la liste des utilisateurs
+   - `cfg/authorizations/commands.js` supprimer les références à des utilisateurs Tipoui
+
+### Lancer manuellement le bot
+```sh
+node index.js
+```
+
+### Lancer manuellement le bot pour débug
+Seul les modules marqueé comme activé dans `devConfig.json` sont actif
+```sh
+node index.js -d -c devConfig.json
+```
+
+en mode dev les log sont envoyer dans `cfg/public.json salons.logsDev`, Certaine chose ne sont pas active, comme les commandes par examples.
+
